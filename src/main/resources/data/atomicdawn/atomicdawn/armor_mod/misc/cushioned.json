@@ -1,0 +1,26 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "boots"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:white_wool",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:slime_ball",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "reduce_fall",
+      "amount": 0.5
+    }
+  ],
+  "order": 5
+}

@@ -1,0 +1,16 @@
+{
+  "special": "intelligence",
+  "sort": 162,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 26,
+      "effects": [
+        {
+          "type": "food_bonus",
+          "value": 0.15
+        }
+      ]
+    }
+  ]
+}

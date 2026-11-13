@@ -1,0 +1,15 @@
+{
+  "entity": "minecraft:skeleton",
+  "category": "undead",
+  "threat": 2,
+  "weaknesses": [
+    "smite",
+    "sunlight",
+    "blunt"
+  ],
+  "resistances": [
+    "drowning"
+  ],
+  "study_kills": 5,
+  "sort": 4
+}

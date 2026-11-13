@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "special_charisma",
+      "amount": 1
+    }
+  ]
+}

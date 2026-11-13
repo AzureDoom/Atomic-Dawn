@@ -1,0 +1,106 @@
+{
+  "category": "explosive",
+  "damage": {
+    "base": 120,
+    "falloff_start": 64,
+    "range": 96,
+    "min_falloff_multiplier": 1.0,
+    "headshot_multiplier": 1.0,
+    "type": "atomicdawn:nuclear"
+  },
+  "firing": {
+    "modes": [
+      "semi_auto"
+    ],
+    "interval_ticks": 40
+  },
+  "accuracy": {
+    "base_spread": 1.5,
+    "ads_multiplier": 0.3,
+    "moving_multiplier": 2.0,
+    "airborne_multiplier": 3.0,
+    "bloom_per_shot": 0.0,
+    "max_bloom": 0.0,
+    "bloom_recovery_per_tick": 0.5
+  },
+  "recoil": {
+    "vertical": 12.0,
+    "horizontal": 2.0,
+    "ads_multiplier": 0.7
+  },
+  "ammo": {
+    "item": "atomicdawn:mini_nuke",
+    "magazine_size": 1
+  },
+  "reload": {
+    "type": "single_shot",
+    "ticks": 70,
+    "empty_ticks": 70
+  },
+  "draw_ticks": 24,
+  "sounds": {
+    "fire": "atomicdawn:weapon.fat_man.fire",
+    "dry_fire": "atomicdawn:weapon.dry_fire",
+    "reload": "atomicdawn:weapon.fat_man.reload",
+    "draw": "atomicdawn:weapon.fat_man.draw"
+  },
+  "projectile": {
+    "speed": 1.4,
+    "gravity": 0.035,
+    "blast_radius": 10,
+    "explosion_power": 6,
+    "break_blocks": true,
+    "nuclear": true,
+    "fuse_ticks": 200
+  },
+  "condition": {
+    "max": 60,
+    "loss_per_use": 1,
+    "repair_cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 6
+      },
+      {
+        "ingredient": "minecraft:redstone",
+        "count": 2
+      }
+    ]
+  },
+  "crafting": {
+    "cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 20
+      },
+      {
+        "ingredient": "minecraft:redstone",
+        "count": 8
+      },
+      {
+        "ingredient": "minecraft:gold_ingot",
+        "count": 4
+      },
+      {
+        "ingredient": "minecraft:tnt",
+        "count": 2
+      }
+    ],
+    "scrap": [
+      {
+        "item": "minecraft:iron_ingot",
+        "count": 6
+      },
+      {
+        "item": "minecraft:redstone",
+        "count": 3
+      }
+    ],
+    "scrap_experience": 25
+  },
+  "vats": {
+    "ap_cost": 60,
+    "crit_multiplier": 1.5,
+    "hit_chance_multiplier": 0.9
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:guardian",
+  "category": "aquatic",
+  "threat": 2,
+  "weaknesses": [
+    "impaling",
+    "melee"
+  ],
+  "resistances": [
+    "thorns"
+  ],
+  "study_kills": 5,
+  "sort": 20
+}

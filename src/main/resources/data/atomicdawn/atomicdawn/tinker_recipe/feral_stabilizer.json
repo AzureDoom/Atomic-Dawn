@@ -1,0 +1,24 @@
+{
+  "category": "chems",
+  "result": "atomicdawn:feral_stabilizer",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:glass_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:rotten_flesh",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:glow_berries",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:sugar",
+      "count": 1
+    }
+  ],
+  "order": 42
+}

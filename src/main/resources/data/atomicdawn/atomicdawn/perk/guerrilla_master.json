@@ -1,0 +1,48 @@
+{
+  "special": "agility",
+  "sort": 210,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 2,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.04,
+          "categories": [
+            "pistol"
+          ],
+          "automatic": true
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 6,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.08,
+          "categories": [
+            "pistol"
+          ],
+          "automatic": true
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 10,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.12,
+          "categories": [
+            "pistol"
+          ],
+          "automatic": true
+        }
+      ]
+    }
+  ]
+}

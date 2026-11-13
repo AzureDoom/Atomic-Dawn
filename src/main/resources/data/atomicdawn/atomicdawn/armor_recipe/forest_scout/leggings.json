@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:forest_scout_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:green_dye",
+      "count": 1
+    }
+  ],
+  "order": 110
+}

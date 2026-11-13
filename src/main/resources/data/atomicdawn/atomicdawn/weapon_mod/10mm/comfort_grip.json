@@ -1,0 +1,31 @@
+{
+  "slot": "grip",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "moving_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.25
+    },
+    {
+      "stat": "recoil_horizontal",
+      "operation": "add_percent",
+      "amount": -0.2
+    }
+  ],
+  "show_bones": [
+    "grip_comfort"
+  ],
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    }
+  ]
+}

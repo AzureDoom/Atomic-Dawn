@@ -1,0 +1,14 @@
+{
+  "result": "minecraft:netherite_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:netherite_ingot",
+      "count": 1
+    }
+  ],
+  "order": 25
+}

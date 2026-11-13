@@ -1,0 +1,104 @@
+{
+  "category": "shotgun",
+  "damage": {
+    "base": 2.6,
+    "pellets": 8,
+    "headshot_multiplier": 1.25,
+    "falloff_start": 6,
+    "range": 28,
+    "min_falloff_multiplier": 0.3
+  },
+  "firing": {
+    "modes": [
+      "semi_auto"
+    ],
+    "interval_ticks": 7
+  },
+  "accuracy": {
+    "base_spread": 6.5,
+    "ads_multiplier": 0.7,
+    "moving_multiplier": 1.2,
+    "bloom_per_shot": 1.0,
+    "max_bloom": 3.0,
+    "bloom_recovery_per_tick": 0.4
+  },
+  "recoil": {
+    "vertical": 5.0,
+    "horizontal": 1.5,
+    "ads_multiplier": 0.75
+  },
+  "ammo": {
+    "item": "atomicdawn:shotgun_shell",
+    "magazine_size": 8
+  },
+  "reload": {
+    "type": "magazine",
+    "ticks": 28,
+    "empty_ticks": 34
+  },
+  "draw_ticks": 12,
+  "sounds": {
+    "fire": "atomicdawn:weapon.combat_shotgun.fire",
+    "dry_fire": "atomicdawn:weapon.dry_fire",
+    "reload": "atomicdawn:weapon.combat_shotgun.pump",
+    "reload_insert": "atomicdawn:weapon.shell_insert",
+    "draw": "atomicdawn:weapon.hunting_rifle.draw"
+  },
+  "condition": {
+    "max": 250,
+    "loss_per_use": 2,
+    "repair_cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 3
+      }
+    ]
+  },
+  "crafting": {
+    "cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 9
+      },
+      {
+        "ingredient": "minecraft:copper_ingot",
+        "count": 3
+      },
+      {
+        "ingredient": "minecraft:leather",
+        "count": 1
+      }
+    ],
+    "scrap": [
+      {
+        "item": "minecraft:iron_ingot",
+        "count": 3
+      },
+      {
+        "item": "minecraft:copper_ingot",
+        "count": 1
+      }
+    ],
+    "scrap_experience": 8
+  },
+  "modifications": {
+    "slots": [
+      "receiver",
+      "barrel",
+      "stock",
+      "magazine",
+      "muzzle"
+    ],
+    "defaults": {
+      "receiver": "atomicdawn:combat_shotgun/standard_receiver",
+      "barrel": "atomicdawn:combat_shotgun/standard_barrel",
+      "stock": "atomicdawn:combat_shotgun/standard_stock",
+      "magazine": "atomicdawn:combat_shotgun/standard_magazine"
+    }
+  },
+  "vats": {
+    "ap_cost": 30,
+    "crit_multiplier": 1.75,
+    "hit_chance_multiplier": 0.95
+  }
+}

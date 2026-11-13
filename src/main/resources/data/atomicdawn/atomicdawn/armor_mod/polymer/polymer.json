@@ -1,0 +1,32 @@
+{
+  "kind": "material",
+  "sets": [
+    "#polymer",
+    "#combat"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:slime_ball",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 1.5
+    },
+    {
+      "type": "toughness",
+      "amount": 0.25
+    },
+    {
+      "type": "reduce_energy",
+      "amount": 0.03
+    }
+  ],
+  "order": 3
+}

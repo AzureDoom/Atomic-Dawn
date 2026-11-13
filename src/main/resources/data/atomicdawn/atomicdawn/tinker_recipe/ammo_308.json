@@ -1,0 +1,16 @@
+{
+  "category": "ammo",
+  "result": "atomicdawn:ammo_308",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:gunpowder",
+      "count": 1
+    }
+  ],
+  "order": 1
+}

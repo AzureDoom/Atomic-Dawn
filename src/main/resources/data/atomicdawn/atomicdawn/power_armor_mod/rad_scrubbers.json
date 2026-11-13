@@ -1,0 +1,32 @@
+{
+  "slot": "helmet",
+  "group": "internals",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:coal",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:slime_ball",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "rad_scrub",
+      "amount": 1
+    },
+    {
+      "type": "radiation_resistance",
+      "amount": 0.25
+    }
+  ],
+  "order": 3
+}

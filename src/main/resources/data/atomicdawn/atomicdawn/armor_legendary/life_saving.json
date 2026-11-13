@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "life_saving",
+      "amount": 0.25
+    }
+  ]
+}

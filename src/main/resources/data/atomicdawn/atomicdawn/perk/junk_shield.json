@@ -1,0 +1,36 @@
+{
+  "special": "luck",
+  "sort": 222,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 26,
+      "effects": [
+        {
+          "type": "armor",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 30,
+      "effects": [
+        {
+          "type": "armor",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 34,
+      "effects": [
+        {
+          "type": "armor",
+          "value": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:bogged",
+  "category": "undead",
+  "threat": 2,
+  "weaknesses": [
+    "smite",
+    "sunlight"
+  ],
+  "resistances": [
+    "poison"
+  ],
+  "study_kills": 5,
+  "sort": 6
+}

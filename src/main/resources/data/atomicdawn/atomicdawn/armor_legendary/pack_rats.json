@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "item_magnet",
+      "amount": 1
+    }
+  ]
+}

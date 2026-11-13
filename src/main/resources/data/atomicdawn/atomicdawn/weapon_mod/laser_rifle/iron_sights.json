@@ -1,0 +1,9 @@
+{
+  "slot": "sight",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "show_bones": [
+    "sight_iron"
+  ]
+}

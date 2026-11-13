@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "atomicdawn:secret_service_helmet",
+    "atomicdawn:heavy_robot_helmet",
+    "atomicdawn:heavy_raider_helmet",
+    "atomicdawn:heavy_metal_helmet",
+    "atomicdawn:heavy_leather_helmet",
+    "atomicdawn:heavy_combat_helmet",
+    "atomicdawn:brotherhood_recon_helmet",
+    "atomicdawn:botsmith_helmet",
+    "atomicdawn:trapper_helmet",
+    "atomicdawn:sturdy_robot_helmet",
+    "atomicdawn:sturdy_raider_helmet",
+    "atomicdawn:sturdy_metal_helmet",
+    "atomicdawn:marine_helmet",
+    "atomicdawn:sturdy_leather_helmet",
+    "atomicdawn:sturdy_combat_helmet",
+    "atomicdawn:civil_engineer_helmet",
+    "atomicdawn:arctic_marine_helmet",
+    "atomicdawn:wood_helmet",
+    "atomicdawn:urban_scout_helmet",
+    "atomicdawn:thorn_helmet",
+    "atomicdawn:solar_helmet",
+    "atomicdawn:light_robot_helmet",
+    "atomicdawn:light_raider_helmet",
+    "atomicdawn:light_metal_helmet",
+    "atomicdawn:light_leather_helmet",
+    "atomicdawn:light_combat_helmet",
+    "atomicdawn:covert_scout_helmet",
+    "atomicdawn:forest_scout_helmet"
+  ]
+}

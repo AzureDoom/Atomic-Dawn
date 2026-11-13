@@ -1,0 +1,23 @@
+{
+  "kind": "material",
+  "sets": [
+    "#metal"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:red_dye",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 0.5
+    }
+  ],
+  "order": 0
+}

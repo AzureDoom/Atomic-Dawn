@@ -1,0 +1,15 @@
+{
+  "entity": "minecraft:warden",
+  "category": "boss",
+  "threat": 5,
+  "weaknesses": [
+    "stealth",
+    "avoidance"
+  ],
+  "resistances": [
+    "melee",
+    "projectiles"
+  ],
+  "study_kills": 1,
+  "sort": 31
+}

@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:drowned",
+  "category": "undead",
+  "threat": 2,
+  "weaknesses": [
+    "smite",
+    "impaling"
+  ],
+  "resistances": [
+    "drowning"
+  ],
+  "study_kills": 5,
+  "sort": 3
+}

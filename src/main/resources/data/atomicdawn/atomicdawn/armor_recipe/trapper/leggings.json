@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:trapper_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 10
+    },
+    {
+      "ingredient": "minecraft:rabbit_hide",
+      "count": 2
+    }
+  ],
+  "order": 34
+}

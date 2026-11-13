@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "ap_regen",
+      "amount": 0.05
+    }
+  ]
+}

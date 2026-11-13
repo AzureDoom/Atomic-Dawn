@@ -1,0 +1,23 @@
+{
+  "slot": "magazine",
+  "weapons": [
+    "atomicdawn:hunting_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "magazine_size",
+      "operation": "add",
+      "amount": 5
+    }
+  ],
+  "show_bones": [
+    "magazine_large"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    }
+  ],
+  "requires_unlock": true
+}

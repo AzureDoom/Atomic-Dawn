@@ -1,0 +1,31 @@
+{
+  "slot": "grip",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "ads_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.2
+    },
+    {
+      "stat": "moving_spread_multiplier",
+      "operation": "add_percent",
+      "amount": 0.1
+    }
+  ],
+  "show_bones": [
+    "grip_sharpshooter"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 1
+    }
+  ]
+}

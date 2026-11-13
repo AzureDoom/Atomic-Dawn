@@ -1,0 +1,19 @@
+{
+  "result": "atomicdawn:t45_torso",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 18
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 6
+    }
+  ],
+  "order": 1
+}

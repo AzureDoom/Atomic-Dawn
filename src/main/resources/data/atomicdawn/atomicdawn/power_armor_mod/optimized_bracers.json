@@ -1,0 +1,24 @@
+{
+  "slot": "arm",
+  "group": "bracers",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "melee_ap_cost",
+      "amount": 0.25
+    }
+  ],
+  "order": 0
+}

@@ -1,0 +1,13 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "immunity",
+      "effects": [
+        "minecraft:nausea",
+        "minecraft:darkness",
+        "minecraft:blindness"
+      ]
+    }
+  ]
+}

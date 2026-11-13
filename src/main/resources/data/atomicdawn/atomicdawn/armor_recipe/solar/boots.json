@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:solar_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 1
+    }
+  ],
+  "order": 83
+}

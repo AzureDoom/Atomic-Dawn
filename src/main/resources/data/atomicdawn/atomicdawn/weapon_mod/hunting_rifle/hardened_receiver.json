@@ -1,0 +1,24 @@
+{
+  "slot": "receiver",
+  "weapons": [
+    "atomicdawn:hunting_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": 0.25
+    },
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": 0.1
+    }
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    }
+  ]
+}

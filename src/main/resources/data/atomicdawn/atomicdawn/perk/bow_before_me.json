@@ -1,0 +1,45 @@
+{
+  "special": "perception",
+  "sort": 72,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 26,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "bow"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 30,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "bow"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 34,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "bow"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:brotherhood_recon_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 3
+    }
+  ],
+  "order": 24
+}

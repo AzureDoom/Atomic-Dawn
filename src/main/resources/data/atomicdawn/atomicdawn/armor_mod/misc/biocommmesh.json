@@ -1,0 +1,30 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:string",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:glowstone_dust",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "chem_duration",
+      "amount": 0.25
+    }
+  ],
+  "order": 2
+}

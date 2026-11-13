@@ -1,0 +1,16 @@
+{
+  "special": "intelligence",
+  "sort": 167,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 31,
+      "effects": [
+        {
+          "type": "healing_received",
+          "value": 0.1
+        }
+      ]
+    }
+  ]
+}

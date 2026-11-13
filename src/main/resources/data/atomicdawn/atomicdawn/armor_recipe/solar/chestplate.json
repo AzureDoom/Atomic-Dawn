@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:solar_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 2
+    }
+  ],
+  "order": 81
+}

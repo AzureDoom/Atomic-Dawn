@@ -1,0 +1,15 @@
+{
+  "entity": "minecraft:wither_skeleton",
+  "category": "undead",
+  "threat": 4,
+  "weaknesses": [
+    "smite",
+    "blunt"
+  ],
+  "resistances": [
+    "fire",
+    "wither"
+  ],
+  "study_kills": 8,
+  "sort": 7
+}

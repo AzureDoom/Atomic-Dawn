@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:elder_guardian",
+  "category": "boss",
+  "threat": 4,
+  "weaknesses": [
+    "impaling"
+  ],
+  "resistances": [
+    "thorns",
+    "mining_fatigue"
+  ],
+  "study_kills": 1,
+  "sort": 21
+}

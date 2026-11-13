@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:leather_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 5
+    }
+  ],
+  "order": 0
+}

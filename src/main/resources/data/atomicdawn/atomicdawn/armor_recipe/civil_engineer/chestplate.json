@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:civil_engineer_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:yellow_dye",
+      "count": 1
+    }
+  ],
+  "order": 61
+}

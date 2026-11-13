@@ -1,0 +1,64 @@
+{
+  "sort": 26,
+  "tags": [
+    "ghoul"
+  ],
+  "ranks": [
+    {
+      "coin_cost": 0,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "kill_heal",
+          "value": 1
+        },
+        {
+          "type": "kill_stability",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "coin_cost": 50,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "kill_heal",
+          "value": 2
+        },
+        {
+          "type": "kill_stability",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "coin_cost": 100,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "kill_heal",
+          "value": 3
+        },
+        {
+          "type": "kill_stability",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "coin_cost": 150,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "kill_heal",
+          "value": 4
+        },
+        {
+          "type": "kill_stability",
+          "value": 8
+        }
+      ]
+    }
+  ]
+}

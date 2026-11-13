@@ -1,0 +1,16 @@
+{
+  "special": "luck",
+  "sort": 232,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 6,
+      "effects": [
+        {
+          "type": "last_laugh",
+          "value": 8
+        }
+      ]
+    }
+  ]
+}

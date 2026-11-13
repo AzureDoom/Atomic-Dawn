@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ILI",
+    "ICI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "L": "minecraft:leather",
+    "C": "minecraft:chest"
+  },
+  "result": {
+    "id": "atomicdawn:ammo_container",
+    "count": 1
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "max_health",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:sturdy_robot_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 2
+    }
+  ],
+  "order": 37
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "unarmed_damage",
+      "amount": 0.25
+    }
+  ],
+  "order": 4
+}

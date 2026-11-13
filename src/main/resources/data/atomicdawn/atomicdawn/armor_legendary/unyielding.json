@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "unyielding",
+      "amount": 2
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:diamond_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 5
+    }
+  ],
+  "order": 20
+}

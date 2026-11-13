@@ -1,0 +1,27 @@
+{
+  "slot": "magazine",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "modifiers": [
+    {
+      "stat": "magazine_size",
+      "operation": "add",
+      "amount": 4
+    },
+    {
+      "stat": "draw_ticks",
+      "operation": "add",
+      "amount": 2
+    }
+  ],
+  "show_bones": [
+    "magazine_extended"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    }
+  ]
+}

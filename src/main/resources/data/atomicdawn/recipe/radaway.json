@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "minecraft:glow_berries",
+    "minecraft:sugar",
+    "minecraft:redstone"
+  ],
+  "result": {
+    "id": "atomicdawn:radaway",
+    "count": 1
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "special": "luck",
+  "sort": 234,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 20,
+      "effects": [
+        {
+          "type": "stagger_chance",
+          "value": 0.05,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 24,
+      "effects": [
+        {
+          "type": "stagger_chance",
+          "value": 0.1,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 28,
+      "effects": [
+        {
+          "type": "stagger_chance",
+          "value": 0.15,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    }
+  ]
+}

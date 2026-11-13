@@ -1,0 +1,9 @@
+{
+  "slot": "grip",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "show_bones": [
+    "grip_standard"
+  ]
+}

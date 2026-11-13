@@ -1,0 +1,16 @@
+{
+  "special": "intelligence",
+  "sort": 172,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 6,
+      "effects": [
+        {
+          "type": "chem_duration",
+          "value": 0.25
+        }
+      ]
+    }
+  ]
+}

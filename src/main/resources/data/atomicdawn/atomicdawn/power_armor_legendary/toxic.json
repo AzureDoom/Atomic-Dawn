@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "retaliate_poison",
+      "amount": 0.5
+    }
+  ]
+}

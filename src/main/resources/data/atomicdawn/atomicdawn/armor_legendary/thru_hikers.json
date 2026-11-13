@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "exhaustion",
+      "amount": 0.03
+    }
+  ]
+}

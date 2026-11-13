@@ -1,0 +1,51 @@
+{
+  "special": "strength",
+  "sort": 93,
+  "tags": [
+    "ghoul"
+  ],
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 23,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.08,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 27,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.16,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 31,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.24,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:thorn_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:cactus",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 1
+    }
+  ],
+  "order": 79
+}

@@ -1,0 +1,31 @@
+{
+  "slot": "barrel",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": -0.25
+    },
+    {
+      "stat": "range",
+      "operation": "add_percent",
+      "amount": -0.1
+    }
+  ],
+  "show_bones": [
+    "barrel_ported"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 2
+    }
+  ]
+}

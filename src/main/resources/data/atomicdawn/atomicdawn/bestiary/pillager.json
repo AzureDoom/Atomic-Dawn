@@ -1,0 +1,12 @@
+{
+  "entity": "minecraft:pillager",
+  "category": "illager",
+  "threat": 2,
+  "weaknesses": [
+    "shields",
+    "melee"
+  ],
+  "resistances": [],
+  "study_kills": 5,
+  "sort": 26
+}

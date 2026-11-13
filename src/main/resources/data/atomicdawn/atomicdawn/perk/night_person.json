@@ -1,0 +1,20 @@
+{
+  "special": "perception",
+  "sort": 84,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 20,
+      "effects": [
+        {
+          "type": "night_vision",
+          "value": 1
+        },
+        {
+          "type": "night_damage",
+          "value": 0.05
+        }
+      ]
+    }
+  ]
+}

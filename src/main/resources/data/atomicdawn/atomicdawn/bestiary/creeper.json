@@ -1,0 +1,12 @@
+{
+  "entity": "minecraft:creeper",
+  "category": "monster",
+  "threat": 3,
+  "weaknesses": [
+    "bows",
+    "explosives_early"
+  ],
+  "resistances": [],
+  "study_kills": 5,
+  "sort": 8
+}

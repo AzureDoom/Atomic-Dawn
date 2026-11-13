@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:light_raider_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 10
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:flint",
+      "count": 1
+    }
+  ],
+  "order": 90
+}

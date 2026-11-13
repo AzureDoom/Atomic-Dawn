@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "YAY",
+    "IBI"
+  ],
+  "key": {
+    "I": "minecraft:iron_block",
+    "Y": "minecraft:yellow_dye",
+    "A": "minecraft:anvil",
+    "B": "minecraft:iron_bars"
+  },
+  "result": {
+    "id": "atomicdawn:power_armor_station",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "misc",
+  "exclude": [
+    "wood",
+    "brotherhood_recon",
+    "civil_engineer",
+    "secret_service"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:white_wool",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "stealth",
+      "amount": 0.15
+    }
+  ],
+  "order": 12
+}

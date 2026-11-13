@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "reduce_experience",
+      "amount": 0.04
+    }
+  ]
+}

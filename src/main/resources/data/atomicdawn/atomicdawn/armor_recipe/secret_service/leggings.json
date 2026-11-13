@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:secret_service_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 10
+    },
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:black_dye",
+      "count": 3
+    }
+  ],
+  "order": 2
+}

@@ -1,0 +1,9 @@
+{
+  "slot": "stock",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "show_bones": [
+    "stock_standard"
+  ]
+}

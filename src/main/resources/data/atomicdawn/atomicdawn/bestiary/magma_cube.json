@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:magma_cube",
+  "category": "nether",
+  "threat": 2,
+  "weaknesses": [
+    "splitting"
+  ],
+  "resistances": [
+    "fire",
+    "fall"
+  ],
+  "study_kills": 5,
+  "sort": 16
+}

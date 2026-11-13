@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:copper_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 8
+    }
+  ],
+  "order": 9
+}

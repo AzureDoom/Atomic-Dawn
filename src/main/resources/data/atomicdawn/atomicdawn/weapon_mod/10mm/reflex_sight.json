@@ -1,0 +1,36 @@
+{
+  "slot": "sight",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "ads_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.15
+    },
+    {
+      "stat": "base_spread",
+      "operation": "add_percent",
+      "amount": -0.05
+    }
+  ],
+  "show_bones": [
+    "sight_reflex"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 1
+    }
+  ],
+  "requires_unlock": true
+}

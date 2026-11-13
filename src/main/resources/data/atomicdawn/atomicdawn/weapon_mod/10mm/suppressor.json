@@ -1,0 +1,37 @@
+{
+  "slot": "muzzle",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": -0.05
+    },
+    {
+      "stat": "range",
+      "operation": "add_percent",
+      "amount": -0.1
+    },
+    {
+      "stat": "recoil_horizontal",
+      "operation": "add_percent",
+      "amount": -0.1
+    }
+  ],
+  "show_bones": [
+    "muzzle_suppressor"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "#minecraft:wool",
+      "count": 1
+    }
+  ],
+  "requires_unlock": true
+}

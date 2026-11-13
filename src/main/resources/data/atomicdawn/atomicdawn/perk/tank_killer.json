@@ -1,0 +1,48 @@
+{
+  "special": "perception",
+  "sort": 86,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 4,
+      "effects": [
+        {
+          "type": "armor_penetration",
+          "value": 0.08,
+          "categories": [
+            "rifle",
+            "pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 8,
+      "effects": [
+        {
+          "type": "armor_penetration",
+          "value": 0.16,
+          "categories": [
+            "rifle",
+            "pistol"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 12,
+      "effects": [
+        {
+          "type": "armor_penetration",
+          "value": 0.24,
+          "categories": [
+            "rifle",
+            "pistol"
+          ]
+        }
+      ]
+    }
+  ]
+}

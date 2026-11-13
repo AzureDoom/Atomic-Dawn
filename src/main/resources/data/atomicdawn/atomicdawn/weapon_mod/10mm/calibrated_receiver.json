@@ -1,0 +1,29 @@
+{
+  "slot": "receiver",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "headshot_multiplier",
+      "operation": "add",
+      "amount": 0.25
+    },
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": 0.1
+    }
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 1
+    }
+  ],
+  "requires_unlock": true
+}

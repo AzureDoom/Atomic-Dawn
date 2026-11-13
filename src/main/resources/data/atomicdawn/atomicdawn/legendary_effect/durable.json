@@ -1,0 +1,10 @@
+{
+  "star": 3,
+  "modifiers": [
+    {
+      "stat": "condition_loss",
+      "operation": "add_percent",
+      "amount": -0.5
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "leggings",
+    "boots"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:slime_ball",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "speed",
+      "amount": 0.03
+    }
+  ],
+  "order": 16
+}

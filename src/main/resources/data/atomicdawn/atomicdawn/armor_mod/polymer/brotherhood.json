@@ -1,0 +1,35 @@
+{
+  "kind": "material",
+  "sets": [
+    "#combat"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 2.0
+    },
+    {
+      "type": "toughness",
+      "amount": 0.5
+    },
+    {
+      "type": "reduce_energy",
+      "amount": 0.04
+    }
+  ],
+  "order": 4
+}

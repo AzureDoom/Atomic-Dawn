@@ -1,0 +1,13 @@
+{
+  "entity": "minecraft:breeze",
+  "category": "monster",
+  "threat": 3,
+  "weaknesses": [
+    "melee"
+  ],
+  "resistances": [
+    "projectiles"
+  ],
+  "study_kills": 5,
+  "sort": 32
+}

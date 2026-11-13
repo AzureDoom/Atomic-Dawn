@@ -1,0 +1,28 @@
+{
+  "slot": "muzzle",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "modifiers": [
+    {
+      "stat": "base_spread",
+      "operation": "add_percent",
+      "amount": -0.4
+    },
+    {
+      "stat": "falloff_start",
+      "operation": "add_percent",
+      "amount": 0.3
+    }
+  ],
+  "show_bones": [
+    "muzzle_choke"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    }
+  ],
+  "requires_unlock": true
+}

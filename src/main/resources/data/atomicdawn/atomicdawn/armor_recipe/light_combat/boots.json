@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:light_combat_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:green_dye",
+      "count": 1
+    }
+  ],
+  "order": 103
+}

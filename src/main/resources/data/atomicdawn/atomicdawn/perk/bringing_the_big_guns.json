@@ -1,0 +1,45 @@
+{
+  "special": "strength",
+  "sort": 60,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 2,
+      "effects": [
+        {
+          "type": "ammo_save",
+          "value": 0.04,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 6,
+      "effects": [
+        {
+          "type": "ammo_save",
+          "value": 0.08,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 10,
+      "effects": [
+        {
+          "type": "ammo_save",
+          "value": 0.12,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    }
+  ]
+}

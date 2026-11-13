@@ -1,0 +1,26 @@
+{
+  "slot": "stock",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "modifiers": [
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": -0.35
+    }
+  ],
+  "show_bones": [
+    "stock_recoil"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 1
+    }
+  ]
+}

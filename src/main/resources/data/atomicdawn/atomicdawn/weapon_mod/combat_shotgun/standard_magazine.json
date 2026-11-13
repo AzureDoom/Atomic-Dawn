@@ -1,0 +1,9 @@
+{
+  "slot": "magazine",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "show_bones": [
+    "magazine_standard"
+  ]
+}

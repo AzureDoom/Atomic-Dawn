@@ -1,0 +1,23 @@
+{
+  "kind": "misc",
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 3
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor_durability",
+      "amount": 0.25
+    }
+  ],
+  "order": 6
+}

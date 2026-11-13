@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "atomicdawn:secret_service_boots",
+    "atomicdawn:heavy_robot_boots",
+    "atomicdawn:heavy_raider_boots",
+    "atomicdawn:heavy_metal_boots",
+    "atomicdawn:heavy_leather_boots",
+    "atomicdawn:heavy_combat_boots",
+    "atomicdawn:brotherhood_recon_boots",
+    "atomicdawn:botsmith_boots",
+    "atomicdawn:trapper_boots",
+    "atomicdawn:sturdy_robot_boots",
+    "atomicdawn:sturdy_raider_boots",
+    "atomicdawn:sturdy_metal_boots",
+    "atomicdawn:marine_boots",
+    "atomicdawn:sturdy_leather_boots",
+    "atomicdawn:sturdy_combat_boots",
+    "atomicdawn:civil_engineer_boots",
+    "atomicdawn:arctic_marine_boots",
+    "atomicdawn:wood_boots",
+    "atomicdawn:urban_scout_boots",
+    "atomicdawn:thorn_boots",
+    "atomicdawn:solar_boots",
+    "atomicdawn:light_robot_boots",
+    "atomicdawn:light_raider_boots",
+    "atomicdawn:light_metal_boots",
+    "atomicdawn:light_leather_boots",
+    "atomicdawn:light_combat_boots",
+    "atomicdawn:covert_scout_boots",
+    "atomicdawn:forest_scout_boots"
+  ]
+}

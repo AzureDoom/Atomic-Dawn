@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:chainmail_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 24
+    }
+  ],
+  "order": 5
+}

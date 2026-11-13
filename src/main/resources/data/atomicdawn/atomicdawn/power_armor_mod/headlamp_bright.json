@@ -1,0 +1,28 @@
+{
+  "slot": "helmet",
+  "group": "lamp",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:glowstone_dust",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "headlamp",
+      "amount": 15
+    }
+  ],
+  "order": 1
+}

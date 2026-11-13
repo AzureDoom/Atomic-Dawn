@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "reduce_irradiated",
+      "amount": 0.05
+    }
+  ]
+}

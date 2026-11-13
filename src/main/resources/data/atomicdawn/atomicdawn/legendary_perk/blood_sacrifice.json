@@ -1,0 +1,45 @@
+{
+  "sort": 1,
+  "ranks": [
+    {
+      "coin_cost": 0,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "vats_health_cost",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "coin_cost": 50,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "vats_health_cost",
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "coin_cost": 100,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "vats_health_cost",
+          "value": 0.75
+        }
+      ]
+    },
+    {
+      "coin_cost": 150,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "vats_health_cost",
+          "value": 1.0
+        }
+      ]
+    }
+  ]
+}

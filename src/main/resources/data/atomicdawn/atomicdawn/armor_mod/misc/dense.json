@@ -1,0 +1,26 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:obsidian",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "reduce_explosion",
+      "amount": 0.25
+    }
+  ],
+  "order": 8
+}

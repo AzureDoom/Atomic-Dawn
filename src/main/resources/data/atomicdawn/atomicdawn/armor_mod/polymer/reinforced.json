@@ -1,0 +1,24 @@
+{
+  "kind": "material",
+  "sets": [
+    "#polymer",
+    "#combat"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 0.5
+    }
+  ],
+  "order": 0
+}

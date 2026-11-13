@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:golden_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 7
+    }
+  ],
+  "order": 18
+}

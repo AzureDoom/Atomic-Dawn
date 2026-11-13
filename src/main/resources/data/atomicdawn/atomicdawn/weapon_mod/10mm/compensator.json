@@ -1,0 +1,22 @@
+{
+  "slot": "muzzle",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": -0.3
+    }
+  ],
+  "show_bones": [
+    "muzzle_compensator"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    }
+  ]
+}

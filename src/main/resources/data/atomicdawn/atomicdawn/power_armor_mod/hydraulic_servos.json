@@ -1,0 +1,24 @@
+{
+  "slot": "leg",
+  "group": "servos",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:piston",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "speed",
+      "amount": 0.08
+    }
+  ],
+  "order": 2
+}

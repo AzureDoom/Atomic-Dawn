@@ -1,0 +1,15 @@
+{
+  "star": 3,
+  "modifiers": [
+    {
+      "stat": "draw_ticks",
+      "operation": "add_percent",
+      "amount": -0.5
+    },
+    {
+      "stat": "moving_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.25
+    }
+  ]
+}

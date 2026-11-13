@@ -1,0 +1,57 @@
+{
+  "start": "greeting",
+  "nodes": {
+    "greeting": {
+      "text": "npc.atomicdawn.example_trader.greeting",
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_trader.trade",
+          "next": "trade"
+        },
+        {
+          "text": "npc.atomicdawn.example_trader.bye"
+        }
+      ]
+    },
+    "trade": {
+      "text": "npc.atomicdawn.example_trader.trade_reply",
+      "actions": [
+        {
+          "type": "emote",
+          "value": "swing"
+        }
+      ],
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_trader.accept",
+          "next": "thanks",
+          "conditions": [
+            {
+              "type": "has_item",
+              "id": "minecraft:iron_ingot",
+              "amount": 3
+            }
+          ],
+          "actions": [
+            {
+              "type": "take_item",
+              "id": "minecraft:iron_ingot",
+              "amount": 3
+            },
+            {
+              "type": "give_item",
+              "id": "atomicdawn:radaway",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "text": "npc.atomicdawn.example_trader.bye"
+        }
+      ]
+    },
+    "thanks": {
+      "text": "npc.atomicdawn.example_trader.thanks"
+    }
+  }
+}

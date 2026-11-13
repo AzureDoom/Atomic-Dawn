@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:diamond_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 7
+    }
+  ],
+  "order": 22
+}

@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "ap_cost",
+      "amount": 0.03
+    }
+  ]
+}

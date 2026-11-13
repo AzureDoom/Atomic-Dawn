@@ -1,0 +1,27 @@
+{
+  "slot": "magazine",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "magazine_size",
+      "operation": "add",
+      "amount": 8
+    },
+    {
+      "stat": "reload_ticks",
+      "operation": "add_percent",
+      "amount": 0.15
+    }
+  ],
+  "show_bones": [
+    "magazine_large"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    }
+  ]
+}

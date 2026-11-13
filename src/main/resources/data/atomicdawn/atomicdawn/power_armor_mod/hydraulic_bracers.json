@@ -1,0 +1,24 @@
+{
+  "slot": "arm",
+  "group": "bracers",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:piston",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "unarmed_damage",
+      "amount": 0.4
+    }
+  ],
+  "order": 2
+}

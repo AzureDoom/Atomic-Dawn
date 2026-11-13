@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:tinkers_bench"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "atomicdawn:tinkers_bench",
+          "properties": {
+            "column": "0",
+            "row": "0"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "atomicdawn:blocks/tinkers_bench"
+}

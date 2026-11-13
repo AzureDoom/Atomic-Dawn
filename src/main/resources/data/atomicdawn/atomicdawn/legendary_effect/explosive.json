@@ -1,0 +1,16 @@
+{
+  "star": 2,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive"
+  ],
+  "behavior": {
+    "type": "atomicdawn:explosive",
+    "fraction": 0.2,
+    "radius": 1.5
+  }
+}

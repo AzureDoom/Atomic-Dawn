@@ -1,0 +1,36 @@
+{
+  "slot": "sight",
+  "weapons": [
+    "atomicdawn:hunting_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "ads_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.8
+    },
+    {
+      "stat": "draw_ticks",
+      "operation": "add",
+      "amount": 4
+    }
+  ],
+  "show_bones": [
+    "sight_scope"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 1
+    }
+  ],
+  "requires_unlock": true
+}

@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "regenerating",
+      "amount": 0.25
+    }
+  ]
+}

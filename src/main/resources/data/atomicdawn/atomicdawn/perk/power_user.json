@@ -1,0 +1,36 @@
+{
+  "special": "intelligence",
+  "sort": 183,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 23,
+      "effects": [
+        {
+          "type": "pa_core_drain",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 27,
+      "effects": [
+        {
+          "type": "pa_core_drain",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 31,
+      "effects": [
+        {
+          "type": "pa_core_drain",
+          "value": 0.3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "special": "strength",
+  "sort": 39,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 5,
+      "effects": [
+        {
+          "type": "spread",
+          "value": 0.1,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 9,
+      "effects": [
+        {
+          "type": "spread",
+          "value": 0.2,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 13,
+      "effects": [
+        {
+          "type": "spread",
+          "value": 0.3,
+          "categories": [
+            "heavy"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "material",
+  "sets": [
+    "#metal"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:quartz",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 2.0
+    },
+    {
+      "type": "toughness",
+      "amount": 0.5
+    }
+  ],
+  "order": 4
+}

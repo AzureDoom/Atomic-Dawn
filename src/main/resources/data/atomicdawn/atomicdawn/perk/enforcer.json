@@ -1,0 +1,45 @@
+{
+  "special": "agility",
+  "sort": 204,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 20,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.05,
+          "categories": [
+            "shotgun"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 24,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.1,
+          "categories": [
+            "shotgun"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 28,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.15,
+          "categories": [
+            "shotgun"
+          ]
+        }
+      ]
+    }
+  ]
+}

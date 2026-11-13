@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:light_robot_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 1
+    }
+  ],
+  "order": 87
+}

@@ -1,0 +1,36 @@
+{
+  "category": "main",
+  "auto_start": true,
+  "sort": 0,
+  "objectives": [
+    {
+      "type": "discover",
+      "target": "#minecraft:village"
+    },
+    {
+      "type": "kill",
+      "target": "#atomicdawn:pipboy/undead_targets",
+      "count": 5
+    },
+    {
+      "type": "reach_level",
+      "count": 3
+    }
+  ],
+  "rewards": {
+    "xp": 250,
+    "perk_picks": 1,
+    "items": [
+      {
+        "item": "atomicdawn:radaway",
+        "count": 2
+      }
+    ],
+    "holotapes": [
+      "atomicdawn:test"
+    ],
+    "start_quests": [
+      "atomicdawn:lost_signal"
+    ]
+  }
+}

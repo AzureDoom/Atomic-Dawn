@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/10mm_pistol",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
+  }
+}

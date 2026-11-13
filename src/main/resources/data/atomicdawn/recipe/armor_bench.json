@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LCL",
+    "IAI",
+    "I I"
+  ],
+  "key": {
+    "L": "minecraft:leather",
+    "C": "minecraft:crafting_table",
+    "I": "minecraft:iron_ingot",
+    "A": "minecraft:anvil"
+  },
+  "result": {
+    "id": "atomicdawn:armor_bench",
+    "count": 1
+  }
+}

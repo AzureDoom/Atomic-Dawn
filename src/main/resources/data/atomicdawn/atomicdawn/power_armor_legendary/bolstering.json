@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "reduce_low_health",
+      "amount": 0.06
+    }
+  ]
+}

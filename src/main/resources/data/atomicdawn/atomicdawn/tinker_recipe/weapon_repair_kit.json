@@ -1,0 +1,20 @@
+{
+  "category": "repair",
+  "result": "atomicdawn:weapon_repair_kit",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    }
+  ],
+  "order": 0
+}

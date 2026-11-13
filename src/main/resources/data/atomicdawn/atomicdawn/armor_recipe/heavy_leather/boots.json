@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:heavy_leather_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 4
+    }
+  ],
+  "order": 19
+}

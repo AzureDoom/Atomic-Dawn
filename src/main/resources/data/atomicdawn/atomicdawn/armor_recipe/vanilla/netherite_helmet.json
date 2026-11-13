@@ -1,0 +1,14 @@
+{
+  "result": "minecraft:netherite_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:netherite_ingot",
+      "count": 1
+    }
+  ],
+  "order": 24
+}

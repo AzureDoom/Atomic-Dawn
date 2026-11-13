@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:wood_boots",
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 1
+    }
+  ],
+  "order": 71
+}

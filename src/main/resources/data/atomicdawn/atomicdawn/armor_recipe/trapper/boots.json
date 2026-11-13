@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:trapper_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:rabbit_hide",
+      "count": 1
+    }
+  ],
+  "order": 35
+}

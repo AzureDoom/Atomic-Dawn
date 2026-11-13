@@ -1,0 +1,16 @@
+{
+  "special": "perception",
+  "sort": 70,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 12,
+      "effects": [
+        {
+          "type": "lockpick_tier",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}

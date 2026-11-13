@@ -1,0 +1,110 @@
+{
+  "category": "rifle",
+  "damage": {
+    "base": 16,
+    "headshot_multiplier": 2.0,
+    "falloff_start": 48,
+    "range": 160,
+    "min_falloff_multiplier": 0.7
+  },
+  "firing": {
+    "modes": [
+      "manual_cycling"
+    ],
+    "interval_ticks": 24
+  },
+  "accuracy": {
+    "base_spread": 3.0,
+    "ads_multiplier": 0.05,
+    "moving_multiplier": 2.0,
+    "airborne_multiplier": 3.0,
+    "bloom_per_shot": 2.0,
+    "max_bloom": 4.0,
+    "bloom_recovery_per_tick": 0.4
+  },
+  "recoil": {
+    "vertical": 6.0,
+    "horizontal": 1.2,
+    "ads_multiplier": 0.6
+  },
+  "ammo": {
+    "item": "atomicdawn:ammo_308",
+    "magazine_size": 5
+  },
+  "reload": {
+    "type": "individual_round",
+    "ticks": 10,
+    "per_round_ticks": 14,
+    "end_ticks": 12
+  },
+  "draw_ticks": 14,
+  "sounds": {
+    "fire": "atomicdawn:weapon.hunting_rifle.fire",
+    "dry_fire": "atomicdawn:weapon.dry_fire",
+    "reload": "atomicdawn:weapon.hunting_rifle.bolt",
+    "reload_insert": "atomicdawn:weapon.shell_insert",
+    "draw": "atomicdawn:weapon.hunting_rifle.draw"
+  },
+  "condition": {
+    "max": 300,
+    "loss_per_use": 2,
+    "repair_cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 3
+      },
+      {
+        "ingredient": "#minecraft:planks",
+        "count": 2
+      }
+    ]
+  },
+  "crafting": {
+    "cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 8
+      },
+      {
+        "ingredient": "#minecraft:planks",
+        "count": 4
+      },
+      {
+        "ingredient": "minecraft:redstone",
+        "count": 2
+      }
+    ],
+    "scrap": [
+      {
+        "item": "minecraft:iron_ingot",
+        "count": 2
+      },
+      {
+        "item": "minecraft:stick",
+        "count": 3
+      }
+    ],
+    "scrap_experience": 8
+  },
+  "modifications": {
+    "slots": [
+      "receiver",
+      "barrel",
+      "stock",
+      "magazine",
+      "sight"
+    ],
+    "defaults": {
+      "receiver": "atomicdawn:hunting_rifle/standard_receiver",
+      "barrel": "atomicdawn:hunting_rifle/standard_barrel",
+      "stock": "atomicdawn:hunting_rifle/standard_stock",
+      "magazine": "atomicdawn:hunting_rifle/standard_magazine",
+      "sight": "atomicdawn:hunting_rifle/iron_sights"
+    }
+  },
+  "vats": {
+    "ap_cost": 30,
+    "crit_multiplier": 2.5,
+    "hit_chance_multiplier": 1.05
+  }
+}

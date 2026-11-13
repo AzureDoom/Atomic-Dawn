@@ -1,0 +1,23 @@
+{
+  "kind": "material",
+  "sets": [
+    "#leather"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:sugar",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 0.5
+    }
+  ],
+  "order": 0
+}

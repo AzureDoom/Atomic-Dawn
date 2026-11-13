@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "auto_stim",
+      "amount": 0.1
+    }
+  ]
+}

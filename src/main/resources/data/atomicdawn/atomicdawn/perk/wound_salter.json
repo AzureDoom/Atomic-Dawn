@@ -1,0 +1,48 @@
+{
+  "special": "strength",
+  "sort": 30,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 2,
+      "effects": [
+        {
+          "type": "bleed_chance",
+          "value": 0.05,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 6,
+      "effects": [
+        {
+          "type": "bleed_chance",
+          "value": 0.1,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 10,
+      "effects": [
+        {
+          "type": "bleed_chance",
+          "value": 0.15,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    }
+  ]
+}

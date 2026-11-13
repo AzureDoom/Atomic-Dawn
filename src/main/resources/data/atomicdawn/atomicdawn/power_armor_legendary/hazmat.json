@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "radiation_resistance",
+      "amount": 0.07
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "special": "intelligence",
+  "sort": 178,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 18,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.08,
+          "categories": [
+            "energy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 22,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.16,
+          "categories": [
+            "energy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 26,
+      "effects": [
+        {
+          "type": "cripple_chance",
+          "value": 0.24,
+          "categories": [
+            "energy"
+          ]
+        }
+      ]
+    }
+  ]
+}

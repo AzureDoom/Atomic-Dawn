@@ -1,0 +1,9 @@
+{
+  "slot": "capacitor",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "show_bones": [
+    "capacitor_standard"
+  ]
+}

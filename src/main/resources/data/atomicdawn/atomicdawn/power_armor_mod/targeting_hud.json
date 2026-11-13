@@ -1,0 +1,27 @@
+{
+  "slot": "helmet",
+  "group": "internals",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:quartz",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "targeting_hud"
+    }
+  ],
+  "order": 0
+}

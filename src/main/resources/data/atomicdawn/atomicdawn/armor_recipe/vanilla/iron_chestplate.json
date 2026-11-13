@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:iron_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 8
+    }
+  ],
+  "order": 13
+}

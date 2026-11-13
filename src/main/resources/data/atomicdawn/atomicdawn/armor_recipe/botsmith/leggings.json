@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:botsmith_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 9
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 1
+    }
+  ],
+  "order": 30
+}

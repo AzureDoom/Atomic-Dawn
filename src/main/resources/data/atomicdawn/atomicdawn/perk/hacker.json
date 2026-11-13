@@ -1,0 +1,16 @@
+{
+  "special": "intelligence",
+  "sort": 160,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 12,
+      "effects": [
+        {
+          "type": "hack_tier",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}

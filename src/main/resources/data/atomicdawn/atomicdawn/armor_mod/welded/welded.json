@@ -1,0 +1,19 @@
+{
+  "kind": "material",
+  "sets": [
+    "#welded"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 0.5
+    }
+  ],
+  "order": 0
+}

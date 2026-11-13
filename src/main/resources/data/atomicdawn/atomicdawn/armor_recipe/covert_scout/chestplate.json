@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:covert_scout_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:black_dye",
+      "count": 1
+    }
+  ],
+  "order": 105
+}

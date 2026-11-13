@@ -1,0 +1,13 @@
+{
+  "entity": "minecraft:zoglin",
+  "category": "undead",
+  "threat": 3,
+  "weaknesses": [
+    "bows"
+  ],
+  "resistances": [
+    "smite"
+  ],
+  "study_kills": 5,
+  "sort": 30
+}

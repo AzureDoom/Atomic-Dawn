@@ -1,0 +1,11 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "immunity",
+      "effects": [
+        "minecraft:hunger"
+      ]
+    }
+  ]
+}

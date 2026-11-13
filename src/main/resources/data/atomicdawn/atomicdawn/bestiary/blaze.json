@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:blaze",
+  "category": "nether",
+  "threat": 3,
+  "weaknesses": [
+    "snowballs",
+    "water"
+  ],
+  "resistances": [
+    "fire"
+  ],
+  "study_kills": 5,
+  "sort": 17
+}

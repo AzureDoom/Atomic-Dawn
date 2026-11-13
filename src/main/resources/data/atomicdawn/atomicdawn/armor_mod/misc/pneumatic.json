@@ -1,0 +1,27 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "leggings",
+    "boots"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:piston",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "knockback_resistance",
+      "amount": 0.15
+    }
+  ],
+  "order": 14
+}

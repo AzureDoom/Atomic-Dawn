@@ -1,0 +1,48 @@
+{
+  "special": "strength",
+  "sort": 54,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 20,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 24,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 28,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    }
+  ]
+}

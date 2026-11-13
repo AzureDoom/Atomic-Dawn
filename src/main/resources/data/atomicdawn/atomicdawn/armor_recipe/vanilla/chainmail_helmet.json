@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:chainmail_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 15
+    }
+  ],
+  "order": 4
+}

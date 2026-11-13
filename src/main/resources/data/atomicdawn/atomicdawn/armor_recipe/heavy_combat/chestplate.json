@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:heavy_combat_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 7
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:green_dye",
+      "count": 1
+    }
+  ],
+  "order": 21
+}

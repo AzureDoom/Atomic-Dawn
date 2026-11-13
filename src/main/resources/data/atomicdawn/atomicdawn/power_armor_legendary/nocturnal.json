@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "reduce_at_night",
+      "amount": 0.05
+    }
+  ]
+}

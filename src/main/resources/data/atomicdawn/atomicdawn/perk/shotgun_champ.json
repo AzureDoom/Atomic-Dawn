@@ -1,0 +1,48 @@
+{
+  "special": "strength",
+  "sort": 58,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 18,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "shotgun"
+          ],
+          "automatic": false
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 22,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "shotgun"
+          ],
+          "automatic": false
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 26,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "shotgun"
+          ],
+          "automatic": false
+        }
+      ]
+    }
+  ]
+}

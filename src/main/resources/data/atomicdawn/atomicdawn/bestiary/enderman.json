@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:enderman",
+  "category": "monster",
+  "threat": 3,
+  "weaknesses": [
+    "water",
+    "rain"
+  ],
+  "resistances": [
+    "projectiles"
+  ],
+  "study_kills": 5,
+  "sort": 11
+}

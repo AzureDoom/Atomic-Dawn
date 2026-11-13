@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:husk",
+  "category": "undead",
+  "threat": 2,
+  "weaknesses": [
+    "smite",
+    "fire"
+  ],
+  "resistances": [
+    "sunlight"
+  ],
+  "study_kills": 5,
+  "sort": 2
+}

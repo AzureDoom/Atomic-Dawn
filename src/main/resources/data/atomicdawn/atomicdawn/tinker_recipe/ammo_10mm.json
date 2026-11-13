@@ -1,0 +1,16 @@
+{
+  "category": "ammo",
+  "result": "atomicdawn:ammo_10mm",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:gunpowder",
+      "count": 1
+    }
+  ],
+  "order": 0
+}

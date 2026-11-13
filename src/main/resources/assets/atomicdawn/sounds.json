@@ -1,0 +1,398 @@
+{
+  "weapon.10mm_pistol.fire": {
+    "subtitle": "subtitles.atomicdawn.weapon.10mm_pistol.fire",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/10mm_pistol/fire",
+        "attenuation_distance": 48
+      }
+    ]
+  },
+  "weapon.10mm_pistol.reload": {
+    "subtitle": "subtitles.atomicdawn.weapon.reload",
+    "sounds": [
+      "atomicdawn:weapon/10mm_pistol/reload"
+    ]
+  },
+  "weapon.10mm_pistol.draw": {
+    "subtitle": "subtitles.atomicdawn.weapon.draw",
+    "sounds": [
+      "atomicdawn:weapon/10mm_pistol/draw"
+    ]
+  },
+  "weapon.dry_fire": {
+    "subtitle": "subtitles.atomicdawn.weapon.dry_fire",
+    "sounds": [
+      "atomicdawn:weapon/dry_fire"
+    ]
+  },
+  "weapon.hunting_rifle.fire": {
+    "subtitle": "subtitles.atomicdawn.weapon.hunting_rifle.fire",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/hunting_rifle/fire",
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "weapon.hunting_rifle.bolt": {
+    "subtitle": "subtitles.atomicdawn.weapon.reload",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/hunting_rifle/bolt"
+      }
+    ]
+  },
+  "weapon.hunting_rifle.draw": {
+    "subtitle": "subtitles.atomicdawn.weapon.draw",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/hunting_rifle/draw"
+      }
+    ]
+  },
+  "weapon.combat_shotgun.fire": {
+    "subtitle": "subtitles.atomicdawn.weapon.combat_shotgun.fire",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/combat_shotgun/fire",
+        "attenuation_distance": 48
+      }
+    ]
+  },
+  "weapon.combat_shotgun.pump": {
+    "subtitle": "subtitles.atomicdawn.weapon.reload",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/combat_shotgun/pump"
+      }
+    ]
+  },
+  "weapon.shell_insert": {
+    "subtitle": "subtitles.atomicdawn.weapon.reload",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/shell_insert"
+      }
+    ]
+  },
+  "weapon.laser_rifle.fire": {
+    "subtitle": "subtitles.atomicdawn.weapon.laser_rifle.fire",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/laser_rifle/fire",
+        "attenuation_distance": 40
+      }
+    ]
+  },
+  "weapon.laser_rifle.reload": {
+    "subtitle": "subtitles.atomicdawn.weapon.reload",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/laser_rifle/reload"
+      }
+    ]
+  },
+  "weapon.laser_rifle.draw": {
+    "subtitle": "subtitles.atomicdawn.weapon.draw",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/laser_rifle/draw"
+      }
+    ]
+  },
+  "weapon.super_sledge.swing": {
+    "subtitle": "subtitles.atomicdawn.weapon.super_sledge.swing",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/super_sledge/swing"
+      }
+    ]
+  },
+  "weapon.super_sledge.impact": {
+    "subtitle": "subtitles.atomicdawn.weapon.super_sledge.impact",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/super_sledge/impact"
+      }
+    ]
+  },
+  "weapon.heavy_draw": {
+    "subtitle": "subtitles.atomicdawn.weapon.draw",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/heavy_draw"
+      }
+    ]
+  },
+  "weapon.fat_man.fire": {
+    "subtitle": "subtitles.atomicdawn.weapon.fat_man.fire",
+    "sounds": [
+      {
+        "name": "atomicdawn:weapon/fat_man/fire",
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "weapon.fat_man.reload": {
+    "subtitle": "subtitles.atomicdawn.weapon.reload",
+    "sounds": [
+      "atomicdawn:weapon/fat_man/reload"
+    ]
+  },
+  "weapon.fat_man.draw": {
+    "subtitle": "subtitles.atomicdawn.weapon.draw",
+    "sounds": [
+      "atomicdawn:weapon/fat_man/draw"
+    ]
+  },
+  "explosion.mini_nuke": {
+    "subtitle": "subtitles.atomicdawn.explosion.mini_nuke",
+    "sounds": [
+      {
+        "name": "atomicdawn:explosion/mini_nuke",
+        "attenuation_distance": 256
+      }
+    ]
+  },
+  "radiation.geiger": {
+    "subtitle": "subtitles.atomicdawn.radiation.geiger",
+    "sounds": [
+      "atomicdawn:radiation/geiger"
+    ]
+  },
+  "vats.ui_vats_enter": {
+    "subtitle": "subtitles.atomicdawn.vats.ui_vats_enter",
+    "sounds": [
+      "atomicdawn:vats/ui_vats_enter"
+    ]
+  },
+  "ui.ui_repairweapon_01": {
+    "subtitle": "subtitles.atomicdawn.ui.ui_repairweapon_01",
+    "sounds": [
+      "atomicdawn:ui_repairweapon_01"
+    ]
+  },
+  "vats.ui_vats_select": {
+    "subtitle": "subtitles.atomicdawn.vats.ui_vats_select",
+    "sounds": [
+      "atomicdawn:vats/ui_vats_select"
+    ]
+  },
+  "vats.ui_vats_deselect": {
+    "subtitle": "subtitles.atomicdawn.vats.ui_vats_deselect",
+    "sounds": [
+      "atomicdawn:vats/ui_vats_deselect"
+    ]
+  },
+  "vats.ui_vats_selecttargetpart": {
+    "subtitle": "subtitles.atomicdawn.vats.ui_vats_selecttargetpart",
+    "sounds": [
+      "atomicdawn:vats/ui_vats_selecttargetpart"
+    ]
+  },
+  "pipboy.open": {
+    "subtitle": "subtitles.atomicdawn.pipboy.open",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/open",
+        "pitch": 1.25,
+        "volume": 0.7
+      }
+    ]
+  },
+  "pipboy.close": {
+    "subtitle": "subtitles.atomicdawn.pipboy.close",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/close",
+        "pitch": 0.85,
+        "volume": 0.7
+      }
+    ]
+  },
+  "pipboy.tab_switch": {
+    "subtitle": "subtitles.atomicdawn.pipboy.tab_switch",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/tab_switch",
+        "pitch": 1.1,
+        "volume": 0.6
+      }
+    ]
+  },
+  "pipboy.select": {
+    "subtitle": "subtitles.atomicdawn.pipboy.select",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/select",
+        "pitch": 1.3,
+        "volume": 0.5
+      }
+    ]
+  },
+  "pipboy.back": {
+    "subtitle": "subtitles.atomicdawn.pipboy.back",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/back",
+        "pitch": 1.1,
+        "volume": 0.5
+      }
+    ]
+  },
+  "pipboy.error": {
+    "subtitle": "subtitles.atomicdawn.pipboy.error",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/error",
+        "pitch": 1.4,
+        "volume": 0.6
+      }
+    ]
+  },
+  "pipboy.notification": {
+    "subtitle": "subtitles.atomicdawn.pipboy.notification",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/notification",
+        "pitch": 0.9,
+        "volume": 0.6
+      }
+    ]
+  },
+  "music.i_dont_want_to_set_the_world_on_fire": {
+    "subtitle": "subtitles.atomicdawn.music.i_dont_want_to_set_the_world_on_fire",
+    "sounds": [
+      {
+        "name": "atomicdawn:music/i_dont_want_to_set_the_world_on_fire",
+        "stream": true
+      }
+    ]
+  },
+  "music.fallout_theme": {
+    "subtitle": "subtitles.atomicdawn.music.fallout_theme",
+    "sounds": [
+      {
+        "name": "atomicdawn:music/fallout_theme",
+        "stream": true
+      }
+    ]
+  },
+  "music.country_roads": {
+    "subtitle": "subtitles.atomicdawn.music.country_roads",
+    "sounds": [
+      {
+        "name": "atomicdawn:music/country_roads",
+        "stream": true
+      }
+    ]
+  },
+  "music.maybe": {
+    "subtitle": "subtitles.atomicdawn.music.maybe",
+    "sounds": [
+      {
+        "name": "atomicdawn:music/maybe",
+        "stream": true
+      }
+    ]
+  },
+  "music.big_iron": {
+    "subtitle": "subtitles.atomicdawn.music.big_iron",
+    "sounds": [
+      {
+        "name": "atomicdawn:music/big_iron",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.test": {
+    "subtitle": "subtitles.atomicdawn.holotape.test",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/test",
+        "stream": true
+      }
+    ]
+  },
+  "power_armor.land": {
+    "subtitle": "subtitles.atomicdawn.power_armor.land",
+    "sounds": [
+      {
+        "name": "minecraft:block.anvil.land",
+        "type": "event",
+        "volume": 1.0,
+        "pitch": 0.55
+      }
+    ]
+  },
+  "power_armor.step": {
+    "subtitle": "subtitles.atomicdawn.power_armor.step",
+    "sounds": [
+      {
+        "name": "minecraft:entity.iron_golem.step",
+        "type": "event",
+        "volume": 0.8,
+        "pitch": 1.1
+      }
+    ]
+  },
+  "power_armor.enter": {
+    "subtitle": "subtitles.atomicdawn.power_armor.enter",
+    "sounds": [
+      {
+        "name": "minecraft:block.piston.extend",
+        "type": "event",
+        "volume": 1.0,
+        "pitch": 0.7
+      }
+    ]
+  },
+  "power_armor.exit": {
+    "subtitle": "subtitles.atomicdawn.power_armor.exit",
+    "sounds": [
+      {
+        "name": "minecraft:block.piston.contract",
+        "type": "event",
+        "volume": 1.0,
+        "pitch": 0.7
+      }
+    ]
+  },
+  "power_armor.core_insert": {
+    "subtitle": "subtitles.atomicdawn.power_armor.core_insert",
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.activate",
+        "type": "event",
+        "volume": 0.7,
+        "pitch": 1.6
+      }
+    ]
+  },
+  "holotape.start": {
+    "subtitle": "subtitles.atomicdawn.holotape.start",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/start"
+      }
+    ]
+  },
+  "holotape.stop": {
+    "subtitle": "subtitles.atomicdawn.holotape.stop",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/stop"
+      }
+    ]
+  },
+  "pipboy.boot_typing": {
+    "subtitle": "subtitles.atomicdawn.pipboy.boot_typing",
+    "sounds": [
+      {
+        "name": "atomicdawn:pipboy/boot_typing",
+        "volume": 0.8
+      }
+    ]
+  }
+}

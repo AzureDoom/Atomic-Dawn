@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:light_metal_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    }
+  ],
+  "order": 92
+}

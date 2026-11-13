@@ -1,0 +1,66 @@
+{
+  "special": "strength",
+  "sort": 35,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 7,
+      "effects": [
+        {
+          "type": "stagger_chance",
+          "value": 0.05,
+          "categories": [
+            "melee"
+          ]
+        },
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "melee"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 11,
+      "effects": [
+        {
+          "type": "stagger_chance",
+          "value": 0.1,
+          "categories": [
+            "melee"
+          ]
+        },
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "melee"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 15,
+      "effects": [
+        {
+          "type": "stagger_chance",
+          "value": 0.15,
+          "categories": [
+            "melee"
+          ]
+        },
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "melee"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "result": "atomicdawn:t45_right_arm",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 10
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:piston",
+      "count": 1
+    }
+  ],
+  "order": 3
+}

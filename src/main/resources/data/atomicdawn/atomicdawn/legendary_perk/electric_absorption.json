@@ -1,0 +1,45 @@
+{
+  "sort": 5,
+  "ranks": [
+    {
+      "coin_cost": 0,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "energy_absorb",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "coin_cost": 50,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "energy_absorb",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "coin_cost": 100,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "energy_absorb",
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "coin_cost": 150,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "energy_absorb",
+          "value": 0.4
+        }
+      ]
+    }
+  ]
+}

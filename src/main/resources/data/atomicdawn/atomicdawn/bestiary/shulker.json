@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:shulker",
+  "category": "end",
+  "threat": 3,
+  "weaknesses": [
+    "melee",
+    "axes"
+  ],
+  "resistances": [
+    "projectiles"
+  ],
+  "study_kills": 5,
+  "sort": 22
+}

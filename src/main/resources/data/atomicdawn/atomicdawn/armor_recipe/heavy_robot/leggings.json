@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:heavy_robot_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 3
+    }
+  ],
+  "order": 6
+}

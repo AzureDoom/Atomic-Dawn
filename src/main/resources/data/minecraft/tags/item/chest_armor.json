@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "atomicdawn:secret_service_chestplate",
+    "atomicdawn:heavy_robot_chestplate",
+    "atomicdawn:heavy_raider_chestplate",
+    "atomicdawn:heavy_metal_chestplate",
+    "atomicdawn:heavy_leather_chestplate",
+    "atomicdawn:heavy_combat_chestplate",
+    "atomicdawn:brotherhood_recon_chestplate",
+    "atomicdawn:botsmith_chestplate",
+    "atomicdawn:trapper_chestplate",
+    "atomicdawn:sturdy_robot_chestplate",
+    "atomicdawn:sturdy_raider_chestplate",
+    "atomicdawn:sturdy_metal_chestplate",
+    "atomicdawn:marine_chestplate",
+    "atomicdawn:sturdy_leather_chestplate",
+    "atomicdawn:sturdy_combat_chestplate",
+    "atomicdawn:civil_engineer_chestplate",
+    "atomicdawn:arctic_marine_chestplate",
+    "atomicdawn:wood_chestplate",
+    "atomicdawn:urban_scout_chestplate",
+    "atomicdawn:thorn_chestplate",
+    "atomicdawn:solar_chestplate",
+    "atomicdawn:light_robot_chestplate",
+    "atomicdawn:light_raider_chestplate",
+    "atomicdawn:light_metal_chestplate",
+    "atomicdawn:light_leather_chestplate",
+    "atomicdawn:light_combat_chestplate",
+    "atomicdawn:covert_scout_chestplate",
+    "atomicdawn:forest_scout_chestplate"
+  ]
+}

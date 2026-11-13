@@ -1,0 +1,36 @@
+{
+  "special": "luck",
+  "sort": 219,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 5,
+      "effects": [
+        {
+          "type": "loot_bonus",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 9,
+      "effects": [
+        {
+          "type": "loot_bonus",
+          "value": 0.06
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 13,
+      "effects": [
+        {
+          "type": "loot_bonus",
+          "value": 0.09
+        }
+      ]
+    }
+  ]
+}

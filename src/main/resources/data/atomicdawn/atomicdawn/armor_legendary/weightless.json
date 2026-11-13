@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "weight_reduction",
+      "amount": 1
+    }
+  ]
+}

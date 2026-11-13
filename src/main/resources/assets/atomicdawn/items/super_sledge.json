@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/super_sledge",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
+  }
+}

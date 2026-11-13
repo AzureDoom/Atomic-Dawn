@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CGC",
+    "IAI",
+    "I I"
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "G": "minecraft:gunpowder",
+    "I": "minecraft:iron_ingot",
+    "A": "minecraft:anvil"
+  },
+  "result": {
+    "id": "atomicdawn:tinkers_bench",
+    "count": 1
+  }
+}

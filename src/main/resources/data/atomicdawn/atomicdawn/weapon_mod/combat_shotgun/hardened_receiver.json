@@ -1,0 +1,19 @@
+{
+  "slot": "receiver",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": 0.2
+    }
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    }
+  ]
+}

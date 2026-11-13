@@ -1,0 +1,28 @@
+{
+  "category": "chems",
+  "result": "atomicdawn:ghoulification_treatment",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:glass_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:rotten_flesh",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:glowstone_dust",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:fermented_spider_eye",
+      "count": 2
+    },
+    {
+      "ingredient": "atomicdawn:radaway",
+      "count": 1
+    }
+  ],
+  "order": 40
+}

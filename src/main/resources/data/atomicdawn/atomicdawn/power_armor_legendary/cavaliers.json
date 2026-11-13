@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "reduce_moving",
+      "amount": 0.03
+    }
+  ]
+}

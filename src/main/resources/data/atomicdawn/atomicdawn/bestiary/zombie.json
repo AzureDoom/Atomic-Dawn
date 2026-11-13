@@ -1,0 +1,15 @@
+{
+  "entity": "minecraft:zombie",
+  "category": "undead",
+  "threat": 1,
+  "weaknesses": [
+    "smite",
+    "sunlight",
+    "headshots"
+  ],
+  "resistances": [
+    "drowning"
+  ],
+  "study_kills": 5,
+  "sort": 0
+}

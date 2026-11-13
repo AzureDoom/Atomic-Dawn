@@ -1,0 +1,19 @@
+{
+  "special": "perception",
+  "sort": 90,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 2,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "explosive"
+          ]
+        }
+      ]
+    }
+  ]
+}

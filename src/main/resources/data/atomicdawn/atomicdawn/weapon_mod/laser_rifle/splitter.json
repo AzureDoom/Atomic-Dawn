@@ -1,0 +1,46 @@
+{
+  "slot": "barrel",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "pellets",
+      "operation": "add",
+      "amount": 2
+    },
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": -0.55
+    },
+    {
+      "stat": "base_spread",
+      "operation": "add_percent",
+      "amount": 2.5
+    },
+    {
+      "stat": "range",
+      "operation": "add_percent",
+      "amount": -0.5
+    }
+  ],
+  "show_bones": [
+    "barrel_splitter"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 2
+    }
+  ],
+  "requires_unlock": true
+}

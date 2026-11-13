@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:copper_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 5
+    }
+  ],
+  "order": 8
+}

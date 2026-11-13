@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:light_robot_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 2
+    }
+  ],
+  "order": 85
+}

@@ -1,0 +1,13 @@
+{
+  "entity": "minecraft:vex",
+  "category": "illager",
+  "threat": 2,
+  "weaknesses": [
+    "melee"
+  ],
+  "resistances": [
+    "walls"
+  ],
+  "study_kills": 5,
+  "sort": 23
+}

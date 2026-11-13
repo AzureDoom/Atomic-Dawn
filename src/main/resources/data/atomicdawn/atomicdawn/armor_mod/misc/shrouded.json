@@ -1,0 +1,23 @@
+{
+  "kind": "misc",
+  "sets": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:black_dye",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "stealth_night",
+      "amount": 0.3
+    }
+  ],
+  "order": 21
+}

@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:turtle_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:turtle_scute",
+      "count": 5
+    }
+  ],
+  "order": 100
+}

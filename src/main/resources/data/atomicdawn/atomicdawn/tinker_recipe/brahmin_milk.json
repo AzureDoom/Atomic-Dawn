@@ -1,0 +1,16 @@
+{
+  "category": "chems",
+  "result": "atomicdawn:brahmin_milk",
+  "count": 3,
+  "cost": [
+    {
+      "ingredient": "minecraft:milk_bucket",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:glass_bottle",
+      "count": 3
+    }
+  ],
+  "order": 1
+}

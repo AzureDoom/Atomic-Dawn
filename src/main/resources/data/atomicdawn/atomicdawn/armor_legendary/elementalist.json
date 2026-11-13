@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "reduce_energy",
+      "amount": 0.06
+    }
+  ]
+}

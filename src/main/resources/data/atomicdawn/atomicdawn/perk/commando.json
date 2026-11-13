@@ -1,0 +1,51 @@
+{
+  "special": "perception",
+  "sort": 2,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 3,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "rifle",
+            "energy"
+          ],
+          "automatic": true
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 6,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "rifle",
+            "energy"
+          ],
+          "automatic": true
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 10,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "rifle",
+            "energy"
+          ],
+          "automatic": true
+        }
+      ]
+    }
+  ]
+}

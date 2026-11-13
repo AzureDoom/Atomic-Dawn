@@ -1,0 +1,23 @@
+{
+  "kind": "misc",
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:clay_ball",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "reduce_fire",
+      "amount": 0.08
+    }
+  ],
+  "order": 1
+}

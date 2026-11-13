@@ -1,0 +1,30 @@
+{
+  "slot": "sight",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "ads_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.2
+    }
+  ],
+  "show_bones": [
+    "sight_reflex"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "star": 1,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive"
+  ],
+  "modifiers": [
+    {
+      "stat": "magazine_size",
+      "operation": "multiply",
+      "amount": 3.0
+    }
+  ]
+}

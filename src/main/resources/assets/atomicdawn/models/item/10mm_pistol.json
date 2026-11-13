@@ -1,0 +1,39 @@
+{
+  "parent": "builtin/entity",
+  "textures": {
+    "particle": "atomicdawn:item/10mm_pistol"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "translation": [0, -1.25, 0.5]
+    },
+    "thirdperson_lefthand": {
+      "translation": [0, -1.25, 0.5]
+    },
+    "firstperson_righthand": {
+      "translation": [-2.5, 0.5, 1.5],
+      "scale": [1.5, 1.5, 1.5]
+    },
+    "firstperson_lefthand": {
+      "translation": [-2.5, 0.5, 1.5],
+      "scale": [1.5, 1.5, 1.5]
+    },
+    "gui": {
+      "rotation": [38, 38, 0],
+      "translation": [0.5, -2.25, 0],
+      "scale": [2, 2, 2]
+    },
+    "ground": {
+      "translation": [0, 2, 0],
+      "scale": [1.5, 1.5, 1.5]
+    },
+    "head": {
+      "scale": [0, 0, 0]
+    },
+    "fixed": {
+      "rotation": [0, -90, 0],
+      "translation": [-1.5, -1.25, 0],
+      "scale": [2, 2, 2]
+    }
+  }
+}

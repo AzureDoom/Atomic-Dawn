@@ -1,0 +1,27 @@
+{
+  "kind": "material",
+  "sets": [
+    "#leather"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 2.0
+    },
+    {
+      "type": "toughness",
+      "amount": 0.25
+    }
+  ],
+  "order": 4
+}

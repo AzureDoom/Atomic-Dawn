@@ -1,0 +1,16 @@
+{
+  "special": "charisma",
+  "sort": 143,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 13,
+      "effects": [
+        {
+          "type": "barter",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}

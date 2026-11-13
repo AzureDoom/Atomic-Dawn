@@ -1,0 +1,36 @@
+{
+  "slot": "barrel",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "range",
+      "operation": "add_percent",
+      "amount": 0.3
+    },
+    {
+      "stat": "base_spread",
+      "operation": "add_percent",
+      "amount": -0.2
+    },
+    {
+      "stat": "draw_ticks",
+      "operation": "add",
+      "amount": 2
+    }
+  ],
+  "show_bones": [
+    "barrel_long"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 2
+    }
+  ]
+}

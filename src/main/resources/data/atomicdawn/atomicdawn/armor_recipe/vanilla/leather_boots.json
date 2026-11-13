@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:leather_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    }
+  ],
+  "order": 3
+}

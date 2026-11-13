@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/hunting_rifle",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
+  }
+}

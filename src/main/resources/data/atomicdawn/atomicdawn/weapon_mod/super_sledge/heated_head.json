@@ -1,0 +1,27 @@
+{
+  "slot": "head",
+  "weapons": [
+    "atomicdawn:super_sledge"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": 0.2
+    }
+  ],
+  "show_bones": [
+    "head_heated"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:blaze_powder",
+      "count": 2
+    }
+  ],
+  "requires_unlock": true
+}

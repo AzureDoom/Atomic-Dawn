@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "atomicdawn:arctic_marine"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "atomicdawn:arctic_marine"
+      }
+    ]
+  }
+}

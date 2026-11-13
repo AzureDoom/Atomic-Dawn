@@ -1,0 +1,43 @@
+{
+  "slot": "receiver",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": -0.2
+    },
+    {
+      "stat": "fire_interval",
+      "operation": "add_percent",
+      "amount": -0.34
+    },
+    {
+      "stat": "recoil_horizontal",
+      "operation": "add_percent",
+      "amount": 0.25
+    },
+    {
+      "stat": "bloom_per_shot",
+      "operation": "add_percent",
+      "amount": 0.2
+    }
+  ],
+  "fire_modes": [
+    "automatic",
+    "semi_auto"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 2
+    }
+  ],
+  "requires_unlock": true
+}

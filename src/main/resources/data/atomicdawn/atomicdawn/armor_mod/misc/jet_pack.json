@@ -1,0 +1,32 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "sets": [
+    "brotherhood_recon",
+    "civil_engineer",
+    "secret_service"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 12
+    },
+    {
+      "ingredient": "minecraft:blaze_powder",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 6
+    }
+  ],
+  "effects": [
+    {
+      "type": "jet_pack",
+      "amount": 0.09
+    }
+  ],
+  "order": 9
+}

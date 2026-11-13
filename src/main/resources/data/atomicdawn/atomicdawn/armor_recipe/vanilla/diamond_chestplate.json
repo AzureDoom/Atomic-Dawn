@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:diamond_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 8
+    }
+  ],
+  "order": 21
+}

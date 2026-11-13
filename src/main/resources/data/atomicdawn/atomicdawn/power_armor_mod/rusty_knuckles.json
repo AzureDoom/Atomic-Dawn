@@ -1,0 +1,24 @@
+{
+  "slot": "arm",
+  "group": "bracers",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 12
+    },
+    {
+      "ingredient": "minecraft:flint",
+      "count": 3
+    }
+  ],
+  "effects": [
+    {
+      "type": "bleed",
+      "amount": 4
+    }
+  ],
+  "order": 3
+}

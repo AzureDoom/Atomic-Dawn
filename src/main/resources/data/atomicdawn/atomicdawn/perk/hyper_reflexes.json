@@ -1,0 +1,39 @@
+{
+  "special": "agility",
+  "sort": 247,
+  "tags": [
+    "ghoul"
+  ],
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 21,
+      "effects": [
+        {
+          "type": "sprint_reduction",
+          "value": 0.06
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 25,
+      "effects": [
+        {
+          "type": "sprint_reduction",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 29,
+      "effects": [
+        {
+          "type": "sprint_reduction",
+          "value": 0.18
+        }
+      ]
+    }
+  ]
+}

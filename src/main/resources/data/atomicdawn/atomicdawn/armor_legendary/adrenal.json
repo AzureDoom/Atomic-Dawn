@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "adrenal",
+      "amount": 4
+    }
+  ]
+}

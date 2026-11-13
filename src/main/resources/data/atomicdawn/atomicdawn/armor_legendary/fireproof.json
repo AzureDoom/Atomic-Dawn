@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "reduce_fire",
+      "amount": 0.08
+    }
+  ]
+}

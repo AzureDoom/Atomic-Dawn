@@ -1,0 +1,28 @@
+{
+  "kind": "material",
+  "sets": [
+    "#polymer",
+    "#combat"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 1.0
+    },
+    {
+      "type": "reduce_energy",
+      "amount": 0.02
+    }
+  ],
+  "order": 2
+}

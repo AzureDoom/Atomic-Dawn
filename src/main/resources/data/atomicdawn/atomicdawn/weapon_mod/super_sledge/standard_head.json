@@ -1,0 +1,9 @@
+{
+  "slot": "head",
+  "weapons": [
+    "atomicdawn:super_sledge"
+  ],
+  "show_bones": [
+    "head_standard"
+  ]
+}

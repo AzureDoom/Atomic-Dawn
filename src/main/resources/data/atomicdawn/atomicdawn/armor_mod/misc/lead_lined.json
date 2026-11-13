@@ -1,0 +1,24 @@
+{
+  "kind": "misc",
+  "exclude": [
+    "wood",
+    "secret_service"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:coal",
+      "count": 3
+    }
+  ],
+  "effects": [
+    {
+      "type": "radiation_resistance",
+      "amount": 0.1
+    }
+  ],
+  "order": 10
+}

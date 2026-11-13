@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:leather_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 8
+    }
+  ],
+  "order": 1
+}

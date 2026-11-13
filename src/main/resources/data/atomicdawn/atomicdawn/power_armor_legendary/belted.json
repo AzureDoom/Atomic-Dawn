@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "max_ap",
+      "amount": 5
+    }
+  ]
+}

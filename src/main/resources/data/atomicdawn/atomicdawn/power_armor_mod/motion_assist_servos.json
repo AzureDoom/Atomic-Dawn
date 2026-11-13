@@ -1,0 +1,32 @@
+{
+  "slot": "torso",
+  "group": "misc",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:piston",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "speed",
+      "amount": 0.1
+    },
+    {
+      "type": "ap_regen",
+      "amount": 0.2
+    }
+  ],
+  "order": 1
+}

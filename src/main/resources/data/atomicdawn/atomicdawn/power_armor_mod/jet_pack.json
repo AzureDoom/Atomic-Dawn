@@ -1,0 +1,28 @@
+{
+  "slot": "torso",
+  "group": "misc",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 16
+    },
+    {
+      "ingredient": "minecraft:blaze_powder",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 6
+    }
+  ],
+  "effects": [
+    {
+      "type": "jet_pack",
+      "amount": 0.09
+    }
+  ],
+  "order": 0
+}

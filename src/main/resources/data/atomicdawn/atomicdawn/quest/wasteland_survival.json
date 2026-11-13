@@ -1,0 +1,33 @@
+{
+  "category": "side",
+  "auto_start": true,
+  "prerequisites": [
+    "atomicdawn:welcome_to_appalachia"
+  ],
+  "sequential": false,
+  "sort": 0,
+  "objectives": [
+    {
+      "type": "collect",
+      "target": "minecraft:iron_ingot",
+      "count": 10
+    },
+    {
+      "type": "visit_biome",
+      "target": "#atomicdawn:wasteland_biomes"
+    },
+    {
+      "type": "study",
+      "target": "minecraft:zombie"
+    }
+  ],
+  "rewards": {
+    "xp": 400,
+    "items": [
+      {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "slot": "stock",
+  "weapons": [
+    "atomicdawn:hunting_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": -0.35
+    },
+    {
+      "stat": "recoil_horizontal",
+      "operation": "add_percent",
+      "amount": -0.25
+    }
+  ],
+  "show_bones": [
+    "stock_recoil"
+  ],
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:brotherhood_recon_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 9
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 4
+    }
+  ],
+  "order": 26
+}

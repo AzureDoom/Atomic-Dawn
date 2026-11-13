@@ -1,0 +1,38 @@
+{
+  "slot": "receiver",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": -0.25
+    },
+    {
+      "stat": "fire_interval",
+      "operation": "add_percent",
+      "amount": -0.3
+    },
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": 0.2
+    }
+  ],
+  "fire_modes": [
+    "automatic",
+    "semi_auto"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 3
+    }
+  ],
+  "requires_unlock": true
+}

@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:bone",
+    "minecraft:string",
+    "minecraft:rotten_flesh",
+    "minecraft:iron_nugget",
+    "minecraft:gold_nugget",
+    "minecraft:leather",
+    "minecraft:feather",
+    "minecraft:flint"
+  ]
+}

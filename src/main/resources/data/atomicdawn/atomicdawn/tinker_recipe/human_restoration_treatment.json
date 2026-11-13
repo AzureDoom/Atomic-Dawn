@@ -1,0 +1,24 @@
+{
+  "category": "chems",
+  "result": "atomicdawn:human_restoration_treatment",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:glass_bottle",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:golden_apple",
+      "count": 1
+    },
+    {
+      "ingredient": "atomicdawn:radaway",
+      "count": 2
+    },
+    {
+      "ingredient": "atomicdawn:rad_x",
+      "count": 1
+    }
+  ],
+  "order": 41
+}

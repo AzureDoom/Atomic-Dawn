@@ -1,0 +1,45 @@
+{
+  "special": "intelligence",
+  "sort": 164,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 10,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "explosive"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 14,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "explosive"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 18,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "explosive"
+          ]
+        }
+      ]
+    }
+  ]
+}

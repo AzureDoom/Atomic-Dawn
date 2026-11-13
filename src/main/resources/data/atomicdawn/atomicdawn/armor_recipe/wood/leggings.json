@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:wood_leggings",
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 7
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    }
+  ],
+  "order": 70
+}

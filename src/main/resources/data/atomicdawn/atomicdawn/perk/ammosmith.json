@@ -1,0 +1,26 @@
+{
+  "special": "agility",
+  "sort": 213,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 23,
+      "effects": [
+        {
+          "type": "craft_ammo_bonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 27,
+      "effects": [
+        {
+          "type": "craft_ammo_bonus",
+          "value": 0.4
+        }
+      ]
+    }
+  ]
+}

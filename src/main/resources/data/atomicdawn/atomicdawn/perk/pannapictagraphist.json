@@ -1,0 +1,16 @@
+{
+  "special": "perception",
+  "sort": 75,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 17,
+      "effects": [
+        {
+          "type": "xp_bonus",
+          "value": 0.02
+        }
+      ]
+    }
+  ]
+}

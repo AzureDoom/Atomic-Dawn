@@ -1,0 +1,29 @@
+{
+  "special": "charisma",
+  "sort": 21,
+  "tags": [
+    "ghoul"
+  ],
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 5,
+      "effects": [
+        {
+          "type": "glow_max",
+          "value": 25
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 12,
+      "effects": [
+        {
+          "type": "glow_max",
+          "value": 50
+        }
+      ]
+    }
+  ]
+}

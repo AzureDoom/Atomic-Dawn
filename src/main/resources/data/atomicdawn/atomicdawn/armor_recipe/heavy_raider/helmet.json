@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:heavy_raider_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 14
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:flint",
+      "count": 1
+    }
+  ],
+  "order": 8
+}

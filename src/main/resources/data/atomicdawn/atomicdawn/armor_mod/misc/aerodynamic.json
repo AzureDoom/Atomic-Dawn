@@ -1,0 +1,27 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "leggings",
+    "boots"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:feather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "ap_regen",
+      "amount": 0.1
+    }
+  ],
+  "order": 0
+}

@@ -1,0 +1,19 @@
+{
+  "category": "main",
+  "sort": 1,
+  "objectives": [
+    {
+      "type": "holotape",
+      "target": "atomicdawn:test"
+    }
+  ],
+  "rewards": {
+    "xp": 150,
+    "items": [
+      {
+        "item": "atomicdawn:rad_x",
+        "count": 2
+      }
+    ]
+  }
+}

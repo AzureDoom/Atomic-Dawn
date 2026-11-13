@@ -1,0 +1,12 @@
+{
+  "entity": "minecraft:evoker",
+  "category": "illager",
+  "threat": 4,
+  "weaknesses": [
+    "rushing",
+    "bows"
+  ],
+  "resistances": [],
+  "study_kills": 3,
+  "sort": 25
+}

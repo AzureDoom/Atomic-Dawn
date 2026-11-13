@@ -1,0 +1,54 @@
+{
+  "parent": "builtin/entity",
+  "textures": {
+    "particle": "atomicdawn:item/t45_right_arm"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        2,
+        -4,
+        2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        2,
+        -4,
+        2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    }
+  }
+}

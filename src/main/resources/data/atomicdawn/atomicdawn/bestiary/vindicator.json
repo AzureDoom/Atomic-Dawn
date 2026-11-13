@@ -1,0 +1,12 @@
+{
+  "entity": "minecraft:vindicator",
+  "category": "illager",
+  "threat": 3,
+  "weaknesses": [
+    "shields",
+    "bows"
+  ],
+  "resistances": [],
+  "study_kills": 5,
+  "sort": 24
+}

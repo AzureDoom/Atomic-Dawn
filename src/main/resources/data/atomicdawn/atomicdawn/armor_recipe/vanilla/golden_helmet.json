@@ -1,0 +1,10 @@
+{
+  "result": "minecraft:golden_helmet",
+  "cost": [
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 5
+    }
+  ],
+  "order": 16
+}

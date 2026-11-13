@@ -1,0 +1,27 @@
+{
+  "kind": "material",
+  "sets": [
+    "#metal"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:black_dye",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 0.5
+    },
+    {
+      "type": "stealth_dark",
+      "amount": 0.1
+    }
+  ],
+  "order": 1
+}

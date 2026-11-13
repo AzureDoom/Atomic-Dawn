@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "mod.azure.atomicdawn.client.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "FoodDataAccessor"
+  ],
+  "client": [
+    "LocalPlayerHealthMixin",
+    "PowerArmorPlayerModelMixin",
+    "ModelPartMixin",
+    "TargetingHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

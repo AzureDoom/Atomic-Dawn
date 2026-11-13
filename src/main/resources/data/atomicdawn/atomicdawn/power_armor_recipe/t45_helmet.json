@@ -1,0 +1,19 @@
+{
+  "result": "atomicdawn:t45_helmet",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 10
+    },
+    {
+      "ingredient": "minecraft:glass_pane",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 4
+    }
+  ],
+  "order": 0
+}

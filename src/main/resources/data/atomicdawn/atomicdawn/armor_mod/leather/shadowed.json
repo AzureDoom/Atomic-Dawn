@@ -1,0 +1,27 @@
+{
+  "kind": "material",
+  "sets": [
+    "#leather"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:black_dye",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 0.5
+    },
+    {
+      "type": "stealth_dark",
+      "amount": 0.1
+    }
+  ],
+  "order": 3
+}

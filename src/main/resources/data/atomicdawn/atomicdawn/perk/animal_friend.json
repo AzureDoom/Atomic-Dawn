@@ -1,0 +1,36 @@
+{
+  "special": "charisma",
+  "sort": 144,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 20,
+      "effects": [
+        {
+          "type": "pacify",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 24,
+      "effects": [
+        {
+          "type": "pacify",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 28,
+      "effects": [
+        {
+          "type": "pacify",
+          "value": 0.3
+        }
+      ]
+    }
+  ]
+}

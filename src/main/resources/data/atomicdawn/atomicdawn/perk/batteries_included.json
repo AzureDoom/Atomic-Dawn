@@ -1,0 +1,45 @@
+{
+  "special": "intelligence",
+  "sort": 170,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 22,
+      "effects": [
+        {
+          "type": "ammo_save",
+          "value": 0.04,
+          "categories": [
+            "energy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 26,
+      "effects": [
+        {
+          "type": "ammo_save",
+          "value": 0.08,
+          "categories": [
+            "energy"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 30,
+      "effects": [
+        {
+          "type": "ammo_save",
+          "value": 0.12,
+          "categories": [
+            "energy"
+          ]
+        }
+      ]
+    }
+  ]
+}

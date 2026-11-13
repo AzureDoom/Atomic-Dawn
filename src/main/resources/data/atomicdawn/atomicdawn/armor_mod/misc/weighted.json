@@ -1,0 +1,26 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:stone",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "melee_damage",
+      "amount": 0.1
+    }
+  ],
+  "order": 20
+}

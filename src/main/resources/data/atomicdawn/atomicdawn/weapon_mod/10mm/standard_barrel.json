@@ -1,0 +1,9 @@
+{
+  "slot": "barrel",
+  "weapons": [
+    "atomicdawn:10mm_pistol"
+  ],
+  "show_bones": [
+    "barrel_standard"
+  ]
+}

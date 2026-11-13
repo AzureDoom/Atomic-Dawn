@@ -1,0 +1,11 @@
+{
+  "entity": "minecraft:silverfish",
+  "category": "arthropod",
+  "threat": 1,
+  "weaknesses": [
+    "bane_of_arthropods"
+  ],
+  "resistances": [],
+  "study_kills": 5,
+  "sort": 13
+}

@@ -1,0 +1,24 @@
+{
+  "slot": "receiver",
+  "weapons": [
+    "atomicdawn:hunting_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "headshot_multiplier",
+      "operation": "add",
+      "amount": 0.5
+    }
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 1
+    }
+  ],
+  "requires_unlock": true
+}

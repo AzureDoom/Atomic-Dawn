@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:light_raider_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:flint",
+      "count": 1
+    }
+  ],
+  "order": 91
+}

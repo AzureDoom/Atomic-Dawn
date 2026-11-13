@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "atomicdawn:item/irradiated_water_bucket"
+  }
+}

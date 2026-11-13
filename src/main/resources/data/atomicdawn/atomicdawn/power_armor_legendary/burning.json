@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "retaliate_fire",
+      "amount": 1
+    }
+  ]
+}

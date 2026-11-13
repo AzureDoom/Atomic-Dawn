@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:wood_helmet",
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 5
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 1
+    }
+  ],
+  "order": 68
+}

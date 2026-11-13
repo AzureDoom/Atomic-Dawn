@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:arctic_marine_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:prismarine_shard",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:white_wool",
+      "count": 2
+    }
+  ],
+  "order": 66
+}

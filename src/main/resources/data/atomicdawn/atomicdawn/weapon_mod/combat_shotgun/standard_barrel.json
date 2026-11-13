@@ -1,0 +1,9 @@
+{
+  "slot": "barrel",
+  "weapons": [
+    "atomicdawn:combat_shotgun"
+  ],
+  "show_bones": [
+    "barrel_standard"
+  ]
+}

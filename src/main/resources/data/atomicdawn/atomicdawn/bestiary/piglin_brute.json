@@ -1,0 +1,11 @@
+{
+  "entity": "minecraft:piglin_brute",
+  "category": "nether",
+  "threat": 4,
+  "weaknesses": [
+    "bows"
+  ],
+  "resistances": [],
+  "study_kills": 3,
+  "sort": 28
+}

@@ -1,0 +1,41 @@
+{
+  "slot": "head",
+  "weapons": [
+    "atomicdawn:super_sledge"
+  ],
+  "modifiers": [
+    {
+      "stat": "damage",
+      "operation": "add_percent",
+      "amount": 0.4
+    },
+    {
+      "stat": "fire_interval",
+      "operation": "add_percent",
+      "amount": 0.15
+    },
+    {
+      "stat": "knockback",
+      "operation": "add_percent",
+      "amount": 1.0
+    }
+  ],
+  "show_bones": [
+    "head_rocket"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:gunpowder",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 2
+    }
+  ],
+  "requires_unlock": true
+}

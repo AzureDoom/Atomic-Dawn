@@ -1,0 +1,30 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:piston",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "spread",
+      "amount": 0.3
+    }
+  ],
+  "order": 17
+}

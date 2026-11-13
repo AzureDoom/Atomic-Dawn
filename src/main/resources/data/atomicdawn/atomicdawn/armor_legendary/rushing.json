@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "effects": [
+    {
+      "type": "speed",
+      "amount": 0.02
+    }
+  ]
+}

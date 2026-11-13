@@ -1,0 +1,45 @@
+{
+  "sort": 11,
+  "ranks": [
+    {
+      "coin_cost": 0,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "special_strength",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "coin_cost": 50,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "special_strength",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "coin_cost": 100,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "special_strength",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "coin_cost": 150,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "special_strength",
+          "value": 5
+        }
+      ]
+    }
+  ]
+}

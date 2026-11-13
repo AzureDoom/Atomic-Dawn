@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:ghast",
+  "category": "nether",
+  "threat": 3,
+  "weaknesses": [
+    "deflected_fireballs",
+    "bows"
+  ],
+  "resistances": [
+    "fire"
+  ],
+  "study_kills": 5,
+  "sort": 18
+}

@@ -1,0 +1,13 @@
+{
+  "entity": "minecraft:spider",
+  "category": "arthropod",
+  "threat": 1,
+  "weaknesses": [
+    "bane_of_arthropods"
+  ],
+  "resistances": [
+    "fall"
+  ],
+  "study_kills": 5,
+  "sort": 9
+}

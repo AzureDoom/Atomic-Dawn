@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "condition_loss",
+      "amount": 0.05
+    }
+  ]
+}

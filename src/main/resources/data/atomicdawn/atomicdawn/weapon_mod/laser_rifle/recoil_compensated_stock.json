@@ -1,0 +1,31 @@
+{
+  "slot": "stock",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "recoil_vertical",
+      "operation": "add_percent",
+      "amount": -0.4
+    },
+    {
+      "stat": "moving_spread_multiplier",
+      "operation": "add_percent",
+      "amount": -0.15
+    }
+  ],
+  "show_bones": [
+    "stock_recoil"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    }
+  ]
+}

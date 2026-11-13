@@ -1,0 +1,23 @@
+{
+  "kind": "misc",
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 3
+    }
+  ],
+  "effects": [
+    {
+      "type": "weight_reduction",
+      "amount": 0.5
+    }
+  ],
+  "order": 11
+}

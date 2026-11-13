@@ -1,0 +1,112 @@
+{
+  "category": "pistol",
+  "damage": {
+    "base": 5.0,
+    "pellets": 1,
+    "headshot_multiplier": 1.5,
+    "falloff_start": 24,
+    "range": 80,
+    "min_falloff_multiplier": 0.6
+  },
+  "firing": {
+    "modes": [
+      "semi_auto"
+    ],
+    "interval_ticks": 3.0
+  },
+  "accuracy": {
+    "base_spread": 1.8,
+    "ads_multiplier": 0.3,
+    "crouch_multiplier": 0.8,
+    "moving_multiplier": 1.5,
+    "airborne_multiplier": 2.5,
+    "bloom_per_shot": 0.7,
+    "max_bloom": 3.5,
+    "bloom_recovery_per_tick": 0.3
+  },
+  "recoil": {
+    "vertical": 2.2,
+    "horizontal": 0.7,
+    "ads_multiplier": 0.65
+  },
+  "ammo": {
+    "item": "atomicdawn:ammo_10mm",
+    "magazine_size": 12,
+    "per_shot": 1
+  },
+  "reload": {
+    "type": "magazine",
+    "ticks": 34,
+    "empty_ticks": 40
+  },
+  "draw_ticks": 10,
+  "sounds": {
+    "fire": "atomicdawn:weapon.10mm_pistol.fire",
+    "dry_fire": "atomicdawn:weapon.dry_fire",
+    "reload": "atomicdawn:weapon.10mm_pistol.reload",
+    "draw": "atomicdawn:weapon.10mm_pistol.draw"
+  },
+  "modifications": {
+    "slots": [
+      "receiver",
+      "barrel",
+      "grip",
+      "magazine",
+      "sight",
+      "muzzle"
+    ],
+    "defaults": {
+      "receiver": "atomicdawn:10mm/standard_receiver",
+      "barrel": "atomicdawn:10mm/standard_barrel",
+      "grip": "atomicdawn:10mm/standard_grip",
+      "magazine": "atomicdawn:10mm/standard_magazine",
+      "sight": "atomicdawn:10mm/iron_sights"
+    }
+  },
+  "condition": {
+    "max": 250,
+    "loss_per_use": 1,
+    "repair_cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 2
+      },
+      {
+        "ingredient": "minecraft:copper_ingot",
+        "count": 1
+      }
+    ]
+  },
+  "crafting": {
+    "cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 6
+      },
+      {
+        "ingredient": "minecraft:copper_ingot",
+        "count": 2
+      },
+      {
+        "ingredient": "minecraft:redstone",
+        "count": 1
+      }
+    ],
+    "scrap": [
+      {
+        "item": "minecraft:iron_nugget",
+        "count": 12
+      },
+      {
+        "item": "minecraft:copper_ingot",
+        "count": 1
+      }
+    ],
+    "scrap_experience": 5
+  },
+  "vats": {
+    "ap_cost": 20,
+    "crit_multiplier": 2.0,
+    "hit_chance_multiplier": 1.1
+  }
+}

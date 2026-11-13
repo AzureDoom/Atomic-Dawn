@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:secret_service_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 11
+    },
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:black_dye",
+      "count": 3
+    }
+  ],
+  "order": 1
+}

@@ -1,0 +1,16 @@
+{
+  "special": "charisma",
+  "sort": 152,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 16,
+      "effects": [
+        {
+          "type": "strange_in_numbers",
+          "value": 0.25
+        }
+      ]
+    }
+  ]
+}

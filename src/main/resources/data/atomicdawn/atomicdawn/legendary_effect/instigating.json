@@ -1,0 +1,7 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:instigating",
+    "multiplier": 2.0
+  }
+}

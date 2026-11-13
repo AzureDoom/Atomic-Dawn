@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:ravager",
+  "category": "illager",
+  "threat": 4,
+  "weaknesses": [
+    "shields",
+    "bows"
+  ],
+  "resistances": [
+    "knockback"
+  ],
+  "study_kills": 3,
+  "sort": 27
+}

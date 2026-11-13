@@ -1,0 +1,24 @@
+{
+  "category": "chems",
+  "result": "atomicdawn:plague_walker_serum",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:fermented_spider_eye",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:glowstone_dust",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:poisonous_potato",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:glass_bottle",
+      "count": 1
+    }
+  ],
+  "order": 23
+}

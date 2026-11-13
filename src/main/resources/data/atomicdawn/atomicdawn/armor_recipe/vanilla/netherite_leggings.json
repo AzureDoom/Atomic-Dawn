@@ -1,0 +1,14 @@
+{
+  "result": "minecraft:netherite_leggings",
+  "cost": [
+    {
+      "ingredient": "minecraft:diamond",
+      "count": 7
+    },
+    {
+      "ingredient": "minecraft:netherite_ingot",
+      "count": 1
+    }
+  ],
+  "order": 26
+}

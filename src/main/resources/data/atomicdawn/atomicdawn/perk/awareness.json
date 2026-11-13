@@ -1,0 +1,16 @@
+{
+  "special": "perception",
+  "sort": 81,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 29,
+      "effects": [
+        {
+          "type": "armor_penetration",
+          "value": 0.05
+        }
+      ]
+    }
+  ]
+}

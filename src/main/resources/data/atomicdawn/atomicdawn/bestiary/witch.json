@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:witch",
+  "category": "illager",
+  "threat": 3,
+  "weaknesses": [
+    "burst_damage"
+  ],
+  "resistances": [
+    "potions",
+    "magic"
+  ],
+  "study_kills": 5,
+  "sort": 14
+}

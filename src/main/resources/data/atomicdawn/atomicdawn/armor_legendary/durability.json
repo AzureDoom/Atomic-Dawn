@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "armor_durability",
+      "amount": 0.1
+    }
+  ]
+}

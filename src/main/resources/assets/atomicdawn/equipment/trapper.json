@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "atomicdawn:trapper"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "atomicdawn:trapper"
+      }
+    ]
+  }
+}

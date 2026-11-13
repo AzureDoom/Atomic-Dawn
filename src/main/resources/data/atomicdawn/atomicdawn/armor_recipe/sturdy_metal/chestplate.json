@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:sturdy_metal_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 7
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    }
+  ],
+  "order": 45
+}

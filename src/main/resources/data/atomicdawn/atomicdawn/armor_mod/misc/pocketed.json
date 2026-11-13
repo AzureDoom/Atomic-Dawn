@@ -1,0 +1,26 @@
+{
+  "kind": "misc",
+  "pieces": [
+    "chestplate"
+  ],
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "item_magnet",
+      "amount": 2
+    }
+  ],
+  "order": 15
+}

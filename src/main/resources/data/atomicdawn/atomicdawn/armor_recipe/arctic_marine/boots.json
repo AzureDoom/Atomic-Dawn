@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:arctic_marine_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:prismarine_shard",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:white_wool",
+      "count": 1
+    }
+  ],
+  "order": 67
+}

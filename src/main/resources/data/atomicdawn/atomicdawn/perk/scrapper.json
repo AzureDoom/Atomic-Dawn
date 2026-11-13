@@ -1,0 +1,16 @@
+{
+  "special": "intelligence",
+  "sort": 165,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 17,
+      "effects": [
+        {
+          "type": "craft_duplicate",
+          "value": 0.05
+        }
+      ]
+    }
+  ]
+}

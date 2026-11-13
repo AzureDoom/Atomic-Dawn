@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:furious",
+    "per_hit": 0.05,
+    "max": 0.45
+  }
+}

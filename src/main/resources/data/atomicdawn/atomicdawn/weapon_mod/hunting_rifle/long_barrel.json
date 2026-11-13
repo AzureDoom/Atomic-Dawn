@@ -1,0 +1,32 @@
+{
+  "slot": "barrel",
+  "weapons": [
+    "atomicdawn:hunting_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "range",
+      "operation": "add_percent",
+      "amount": 0.3
+    },
+    {
+      "stat": "falloff_start",
+      "operation": "add_percent",
+      "amount": 0.3
+    },
+    {
+      "stat": "draw_ticks",
+      "operation": "add",
+      "amount": 3
+    }
+  ],
+  "show_bones": [
+    "barrel_long"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    }
+  ]
+}

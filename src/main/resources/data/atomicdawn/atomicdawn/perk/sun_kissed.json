@@ -1,0 +1,29 @@
+{
+  "special": "endurance",
+  "sort": 128,
+  "tags": [
+    "human"
+  ],
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 28,
+      "effects": [
+        {
+          "type": "rad_decay",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 32,
+      "effects": [
+        {
+          "type": "rad_decay",
+          "value": 6
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "entity": "minecraft:slime",
+  "category": "monster",
+  "threat": 1,
+  "weaknesses": [
+    "splitting"
+  ],
+  "resistances": [
+    "fall"
+  ],
+  "study_kills": 5,
+  "sort": 15
+}

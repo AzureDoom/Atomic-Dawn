@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:wood_chestplate",
+  "cost": [
+    {
+      "ingredient": "#minecraft:planks",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    }
+  ],
+  "order": 69
+}

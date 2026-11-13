@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "reduce_still",
+      "amount": 0.03
+    }
+  ]
+}

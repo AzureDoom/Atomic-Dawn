@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:sturdy_leather_boots",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 3
+    }
+  ],
+  "order": 55
+}

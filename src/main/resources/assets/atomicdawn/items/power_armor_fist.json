@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/power_armor_fist",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
+  }
+}

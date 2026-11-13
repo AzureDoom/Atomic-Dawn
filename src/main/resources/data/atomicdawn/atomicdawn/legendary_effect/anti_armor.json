@@ -1,0 +1,7 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:anti_armor",
+    "penetration": 0.5
+  }
+}

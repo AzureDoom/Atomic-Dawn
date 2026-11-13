@@ -1,0 +1,11 @@
+{
+  "entity": "minecraft:hoglin",
+  "category": "nether",
+  "threat": 3,
+  "weaknesses": [
+    "warped_fungus"
+  ],
+  "resistances": [],
+  "study_kills": 5,
+  "sort": 29
+}

@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/armor_bench",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
+  }
+}

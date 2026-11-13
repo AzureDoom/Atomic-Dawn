@@ -1,0 +1,10 @@
+{
+  "star": 2,
+  "modifiers": [
+    {
+      "stat": "fire_interval",
+      "operation": "add_percent",
+      "amount": -0.25
+    }
+  ]
+}

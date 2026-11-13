@@ -1,0 +1,45 @@
+{
+  "special": "perception",
+  "sort": 77,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 31,
+      "effects": [
+        {
+          "type": "spread",
+          "value": 0.06,
+          "categories": [
+            "rifle"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 35,
+      "effects": [
+        {
+          "type": "spread",
+          "value": 0.12,
+          "categories": [
+            "rifle"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 39,
+      "effects": [
+        {
+          "type": "spread",
+          "value": 0.18,
+          "categories": [
+            "rifle"
+          ]
+        }
+      ]
+    }
+  ]
+}

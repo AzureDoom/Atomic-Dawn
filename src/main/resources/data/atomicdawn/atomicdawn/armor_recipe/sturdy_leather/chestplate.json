@@ -1,0 +1,18 @@
+{
+  "result": "atomicdawn:sturdy_leather_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:leather",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:string",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 6
+    }
+  ],
+  "order": 53
+}

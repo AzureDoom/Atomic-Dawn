@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:ender_dragon",
+  "category": "boss",
+  "threat": 5,
+  "weaknesses": [
+    "end_crystals_destroyed",
+    "bows"
+  ],
+  "resistances": [
+    "fire"
+  ],
+  "study_kills": 1,
+  "sort": 34
+}

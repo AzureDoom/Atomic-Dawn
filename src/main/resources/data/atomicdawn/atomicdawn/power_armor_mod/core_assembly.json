@@ -1,0 +1,28 @@
+{
+  "slot": "torso",
+  "group": "misc",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 6
+    }
+  ],
+  "effects": [
+    {
+      "type": "core_drain",
+      "amount": 0.3
+    }
+  ],
+  "order": 2
+}

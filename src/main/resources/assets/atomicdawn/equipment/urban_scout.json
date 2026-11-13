@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "atomicdawn:urban_scout"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "atomicdawn:urban_scout"
+      }
+    ]
+  }
+}

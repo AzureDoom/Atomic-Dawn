@@ -1,0 +1,82 @@
+{
+  "category": "melee",
+  "damage": {
+    "base": 18,
+    "type": "atomicdawn:melee"
+  },
+  "firing": {
+    "modes": [
+      "semi_auto",
+      "charged"
+    ],
+    "interval_ticks": 22,
+    "charge": {
+      "ticks": 24,
+      "min_charge": 0.3,
+      "min_damage": 1.0,
+      "max_damage": 2.0
+    }
+  },
+  "recoil": {
+    "vertical": 0,
+    "horizontal": 0
+  },
+  "melee": {
+    "reach": 3.5,
+    "knockback": 1.4,
+    "sweep_radius": 1.4,
+    "sweep_damage_multiplier": 0.4
+  },
+  "draw_ticks": 14,
+  "sounds": {
+    "fire": "atomicdawn:weapon.super_sledge.swing",
+    "impact": "atomicdawn:weapon.super_sledge.impact",
+    "draw": "atomicdawn:weapon.heavy_draw"
+  },
+  "condition": {
+    "max": 400,
+    "loss_per_use": 1,
+    "repair_cost": [
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 4
+      }
+    ]
+  },
+  "crafting": {
+    "cost": [
+      {
+        "ingredient": "minecraft:iron_block",
+        "count": 2
+      },
+      {
+        "ingredient": "minecraft:iron_ingot",
+        "count": 4
+      },
+      {
+        "ingredient": "minecraft:leather",
+        "count": 2
+      }
+    ],
+    "scrap": [
+      {
+        "item": "minecraft:iron_ingot",
+        "count": 8
+      }
+    ],
+    "scrap_experience": 8
+  },
+  "modifications": {
+    "slots": [
+      "head"
+    ],
+    "defaults": {
+      "head": "atomicdawn:super_sledge/standard_head"
+    }
+  },
+  "vats": {
+    "ap_cost": 25,
+    "crit_multiplier": 2.5,
+    "hit_chance_multiplier": 1.0
+  }
+}

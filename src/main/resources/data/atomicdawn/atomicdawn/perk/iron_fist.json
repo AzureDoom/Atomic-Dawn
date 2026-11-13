@@ -1,0 +1,45 @@
+{
+  "special": "strength",
+  "sort": 1,
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 1,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 4,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 8,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "unarmed"
+          ]
+        }
+      ]
+    }
+  ]
+}

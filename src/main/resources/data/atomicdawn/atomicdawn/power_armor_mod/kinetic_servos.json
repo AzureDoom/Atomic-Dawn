@@ -1,0 +1,24 @@
+{
+  "slot": "leg",
+  "group": "servos",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 6
+    }
+  ],
+  "effects": [
+    {
+      "type": "kinetic_charge",
+      "amount": 1.5
+    }
+  ],
+  "order": 1
+}

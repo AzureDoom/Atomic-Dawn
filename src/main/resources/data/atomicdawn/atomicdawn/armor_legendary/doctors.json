@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "effects": [
+    {
+      "type": "healing_received",
+      "amount": 0.05
+    }
+  ]
+}

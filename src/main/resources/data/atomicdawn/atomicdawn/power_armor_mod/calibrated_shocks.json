@@ -1,0 +1,28 @@
+{
+  "slot": "leg",
+  "group": "servos",
+  "sets": [
+    "t45"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:slime_ball",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "type": "landing_absorb",
+      "amount": 0.5
+    },
+    {
+      "type": "jump",
+      "amount": 0.15
+    }
+  ],
+  "order": 0
+}

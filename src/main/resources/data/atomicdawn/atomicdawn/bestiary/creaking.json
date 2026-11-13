@@ -1,0 +1,13 @@
+{
+  "entity": "minecraft:creaking",
+  "category": "monster",
+  "threat": 3,
+  "weaknesses": [
+    "destroy_heart"
+  ],
+  "resistances": [
+    "melee"
+  ],
+  "study_kills": 3,
+  "sort": 33
+}

@@ -1,0 +1,15 @@
+{
+  "category": "misc",
+  "auto_start": true,
+  "sort": 0,
+  "objectives": [
+    {
+      "type": "kill",
+      "target": "minecraft:spider",
+      "count": 10
+    }
+  ],
+  "rewards": {
+    "xp": 120
+  }
+}

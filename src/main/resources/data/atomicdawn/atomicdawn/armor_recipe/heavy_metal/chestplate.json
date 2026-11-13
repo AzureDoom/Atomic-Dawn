@@ -1,0 +1,14 @@
+{
+  "result": "atomicdawn:heavy_metal_chestplate",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 10
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 2
+    }
+  ],
+  "order": 13
+}

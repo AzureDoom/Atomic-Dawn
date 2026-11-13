@@ -1,0 +1,10 @@
+{
+  "star": 1,
+  "effects": [
+    {
+      "type": "reduce_from",
+      "amount": 0.15,
+      "target": "#minecraft:arthropod"
+    }
+  ]
+}

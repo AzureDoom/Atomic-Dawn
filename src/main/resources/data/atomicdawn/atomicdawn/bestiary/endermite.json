@@ -1,0 +1,11 @@
+{
+  "entity": "minecraft:endermite",
+  "category": "arthropod",
+  "threat": 1,
+  "weaknesses": [
+    "bane_of_arthropods"
+  ],
+  "resistances": [],
+  "study_kills": 3,
+  "sort": 12
+}

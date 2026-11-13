@@ -1,0 +1,14 @@
+{
+  "entity": "minecraft:zombie_villager",
+  "category": "undead",
+  "threat": 1,
+  "weaknesses": [
+    "smite",
+    "sunlight"
+  ],
+  "resistances": [
+    "drowning"
+  ],
+  "study_kills": 5,
+  "sort": 1
+}

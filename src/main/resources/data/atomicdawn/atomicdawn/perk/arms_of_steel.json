@@ -1,0 +1,51 @@
+{
+  "special": "strength",
+  "sort": 91,
+  "tags": [
+    "ghoul"
+  ],
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 9,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.05,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 2,
+      "min_level": 13,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.1,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    },
+    {
+      "cost": 3,
+      "min_level": 17,
+      "effects": [
+        {
+          "type": "damage",
+          "value": 0.15,
+          "categories": [
+            "melee",
+            "unarmed"
+          ]
+        }
+      ]
+    }
+  ]
+}

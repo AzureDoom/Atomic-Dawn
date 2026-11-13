@@ -1,0 +1,23 @@
+{
+  "kind": "misc",
+  "exclude": [
+    "wood"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:white_wool",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "type": "reduce_melee",
+      "amount": 0.08
+    }
+  ],
+  "order": 13
+}

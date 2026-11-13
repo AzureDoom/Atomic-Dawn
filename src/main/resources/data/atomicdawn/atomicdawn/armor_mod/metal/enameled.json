@@ -1,0 +1,23 @@
+{
+  "kind": "material",
+  "sets": [
+    "#metal"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:lapis_lazuli",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "type": "armor",
+      "amount": 1.0
+    }
+  ],
+  "order": 2
+}

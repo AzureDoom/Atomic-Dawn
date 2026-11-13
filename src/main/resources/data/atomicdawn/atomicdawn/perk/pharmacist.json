@@ -1,0 +1,19 @@
+{
+  "special": "intelligence",
+  "sort": 187,
+  "tags": [
+    "human"
+  ],
+  "ranks": [
+    {
+      "cost": 1,
+      "min_level": 21,
+      "effects": [
+        {
+          "type": "disease_resistance",
+          "value": 0.2
+        }
+      ]
+    }
+  ]
+}

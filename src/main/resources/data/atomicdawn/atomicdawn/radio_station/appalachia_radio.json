@@ -1,0 +1,11 @@
+{
+  "frequency": 101.5,
+  "shuffle": true,
+  "tracks": [
+    "atomicdawn:music.fallout_theme",
+    "atomicdawn:music.country_roads",
+    "atomicdawn:music.i_dont_want_to_set_the_world_on_fire",
+    "atomicdawn:music.maybe",
+    "atomicdawn:music.big_iron"
+  ]
+}

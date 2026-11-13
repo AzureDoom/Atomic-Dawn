@@ -1,0 +1,31 @@
+{
+  "slot": "capacitor",
+  "weapons": [
+    "atomicdawn:laser_rifle"
+  ],
+  "modifiers": [
+    {
+      "stat": "charge_ticks",
+      "operation": "add_percent",
+      "amount": -0.2
+    }
+  ],
+  "fire_modes": [
+    "charged",
+    "semi_auto"
+  ],
+  "show_bones": [
+    "capacitor_charging"
+  ],
+  "cost": [
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:gold_ingot",
+      "count": 2
+    }
+  ],
+  "requires_unlock": true
+}
