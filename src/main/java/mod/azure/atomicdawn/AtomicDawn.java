@@ -18,6 +18,9 @@ import mod.azure.atomicdawn.armor.ArmorRecipe;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
 import mod.azure.atomicdawn.armor.upgrade.ArmorLegendary;
 import mod.azure.atomicdawn.armor.upgrade.ArmorMod;
+import mod.azure.atomicdawn.camp.CampAttachments;
+import mod.azure.atomicdawn.camp.CampBuildable;
+import mod.azure.atomicdawn.camp.CampPlanLootModifier;
 import mod.azure.atomicdawn.config.ADConfig;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
 import mod.azure.atomicdawn.mutation.MutationService;
@@ -66,6 +69,8 @@ public final class AtomicDawn {
         ADMenus.REGISTER.register(modBus);
         ADSounds.REGISTER.register(modBus);
         ADAttachments.REGISTER.register(modBus);
+        CampAttachments.REGISTER.register(modBus);
+        CampPlanLootModifier.REGISTER.register(modBus);
         ADCreativeTabs.REGISTER.register(modBus);
         LegendaryBehaviors.REGISTER.register(modBus);
         ADDataSerializers.REGISTER.register(modBus);
@@ -112,6 +117,7 @@ public final class AtomicDawn {
         event.worldRegistry(ADRegistries.ARMOR_RECIPE, ArmorRecipe.CODEC, ArmorRecipe.CODEC);
         event.worldRegistry(ADRegistries.ARMOR_MOD, ArmorMod.CODEC, ArmorMod.CODEC);
         event.worldRegistry(ADRegistries.ARMOR_LEGENDARY, ArmorLegendary.CODEC, ArmorLegendary.CODEC);
+        event.worldRegistry(ADRegistries.CAMP_BUILDABLE, CampBuildable.CODEC, CampBuildable.CODEC);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

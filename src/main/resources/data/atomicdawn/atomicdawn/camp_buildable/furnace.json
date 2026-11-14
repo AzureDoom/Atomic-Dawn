@@ -1,0 +1,13 @@
+{
+  "block": "minecraft:furnace",
+  "category": "crafting",
+  "cost": [
+    {
+      "ingredient": "minecraft:cobblestone",
+      "count": 8
+    }
+  ],
+  "budget": 5,
+  "limit": 4,
+  "order": 1
+}

@@ -1,0 +1,20 @@
+{
+  "block": "minecraft:lantern",
+  "category": "lighting",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 4
+    },
+    {
+      "ingredient": "minecraft:torch",
+      "count": 1
+    }
+  ],
+  "budget": 2,
+  "modes": [
+    "collision",
+    "free"
+  ],
+  "order": 1
+}

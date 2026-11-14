@@ -1,0 +1,17 @@
+{
+  "block": "minecraft:glass",
+  "category": "structure",
+  "cost": [
+    {
+      "ingredient": "minecraft:glass",
+      "count": 1
+    }
+  ],
+  "budget": 1,
+  "modes": [
+    "snap",
+    "collision",
+    "free"
+  ],
+  "order": 4
+}

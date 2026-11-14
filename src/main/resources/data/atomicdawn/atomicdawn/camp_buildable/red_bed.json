@@ -1,0 +1,17 @@
+{
+  "block": "minecraft:red_bed",
+  "category": "furniture",
+  "cost": [
+    {
+      "ingredient": "minecraft:red_wool",
+      "count": 3
+    },
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 3
+    }
+  ],
+  "budget": 4,
+  "limit": 4,
+  "order": 0
+}

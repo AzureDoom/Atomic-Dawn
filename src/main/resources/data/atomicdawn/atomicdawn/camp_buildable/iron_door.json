@@ -1,0 +1,16 @@
+{
+  "block": "minecraft:iron_door",
+  "category": "doors",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    }
+  ],
+  "budget": 3,
+  "modes": [
+    "snap",
+    "collision"
+  ],
+  "order": 1
+}

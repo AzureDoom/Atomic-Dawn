@@ -1,0 +1,25 @@
+{
+  "values": [
+    "#minecraft:planks",
+    "#minecraft:logs",
+    "minecraft:stick",
+    "minecraft:cobblestone",
+    "minecraft:stone",
+    "minecraft:stone_bricks",
+    "minecraft:brick",
+    "minecraft:glass",
+    "minecraft:iron_ingot",
+    "minecraft:iron_nugget",
+    "minecraft:copper_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:gold_nugget",
+    "minecraft:redstone",
+    "minecraft:coal",
+    "minecraft:leather",
+    "minecraft:string",
+    "#minecraft:wool",
+    "minecraft:obsidian",
+    "minecraft:diamond",
+    "minecraft:netherite_scrap"
+  ]
+}

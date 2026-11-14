@@ -315,49 +315,18 @@ public class PipBoyScreen extends Screen {
     }
 
     private void layoutSubtabs(PipBoyTab tab, List<String> subtabs, String selected, int y) {
-        var labels = new ArrayList<Component>();
-        var total = 0;
-        for (var id : subtabs) {
-            var label = tab.subtabLabel(id);
-            labels.add(label);
-            total += font.width(label);
-        }
-        var gap = 16;
-        if (total + gap * (subtabs.size() - 1) <= inner.width() - 8) {
-            var slot = inner.width() / (float) subtabs.size();
-            for (var i = 0; i < subtabs.size(); i++) {
-                var x0 = inner.x() + Math.round(slot * i);
-                var x1 = inner.x() + Math.round(slot * (i + 1));
-                var w = font.width(labels.get(i));
-                subtabHits.add(
-                    new SubtabHit(
-                        subtabs.get(i),
-                        new Rect(x0, y, x1 - x0, SUBTAB_H),
-                        labels.get(i),
-                        x0 + (x1 - x0 - w) / 2
-                    )
-                );
-            }
-            return;
-        }
-
-        var index = subtabs.indexOf(selected);
-        var centre = inner.x() + inner.width() / 2;
-        var xs = new int[subtabs.size()];
-        xs[index] = centre - font.width(labels.get(index)) / 2;
-        for (var i = index - 1; i >= 0; i--) {
-            xs[i] = xs[i + 1] - gap - font.width(labels.get(i));
-        }
-        for (var i = index + 1; i < subtabs.size(); i++) {
-            xs[i] = xs[i - 1] + font.width(labels.get(i - 1)) + gap;
-        }
+        var slot = (inner.width() - 4) / (float) subtabs.size();
         for (var i = 0; i < subtabs.size(); i++) {
-            var w = font.width(labels.get(i));
-            if (xs[i] < inner.x() + 2 || xs[i] + w > inner.right() - 2) {
-                continue;
-            }
+            var x0 = inner.x() + 2 + Math.round(slot * i);
+            var x1 = inner.x() + 2 + Math.round(slot * (i + 1));
+            var label = tab.subtabLabel(subtabs.get(i));
             subtabHits.add(
-                new SubtabHit(subtabs.get(i), new Rect(xs[i] - gap / 2, y, w + gap, SUBTAB_H), labels.get(i), xs[i])
+                new SubtabHit(
+                    subtabs.get(i),
+                    new Rect(x0, y, x1 - x0, SUBTAB_H),
+                    label,
+                    x0 + (x1 - x0) / 2
+                )
             );
         }
     }
@@ -743,7 +712,13 @@ public class PipBoyScreen extends Screen {
             var selected = hit.id().equals(currentSubtab());
             var hovered = hit.rect().contains(mouseX, mouseY);
             var c = selected || hovered ? PipBoyTheme.text() : PipBoyTheme.disabled();
-            text(graphics, hit.label(), hit.labelX(), hit.rect().y() + 2, c);
+            var available = Math.max(1, hit.rect().width() - 4);
+            var labelWidth = font.width(hit.label());
+            if (labelWidth <= available) {
+                text(graphics, hit.label(), hit.labelX() - labelWidth / 2, hit.rect().y() + 2, c);
+            } else {
+                fitted(graphics, hit.label(), hit.rect().x() + 2, hit.rect().y() + 2, available, c);
+            }
         }
     }
 

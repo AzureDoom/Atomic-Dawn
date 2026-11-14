@@ -1,0 +1,17 @@
+{
+  "block": "atomicdawn:armor_bench",
+  "category": "crafting",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:leather",
+      "count": 4
+    }
+  ],
+  "budget": 10,
+  "limit": 1,
+  "order": 12
+}

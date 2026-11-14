@@ -24,6 +24,7 @@ import mod.azure.atomicdawn.armor.ArmorPiece;
 import mod.azure.atomicdawn.armor.ArmorPieceItem;
 import mod.azure.atomicdawn.armor.ArmorSet;
 import mod.azure.atomicdawn.ghoul.GhoulTreatmentService;
+import mod.azure.atomicdawn.item.CampPlanItem;
 import mod.azure.atomicdawn.item.FeralStabilizerItem;
 import mod.azure.atomicdawn.item.GhoulTreatmentItem;
 import mod.azure.atomicdawn.item.HolotapeItem;
@@ -168,6 +169,22 @@ public final class ADItems {
     public static final DeferredItem<BlockItem> ARMOR_BENCH = REGISTER.registerSimpleBlockItem(
         "armor_bench",
         ADBlocks.ARMOR_BENCH
+    );
+
+    public static final DeferredItem<BlockItem> CAMP_MODULE = REGISTER.registerSimpleBlockItem(
+        "camp_module",
+        ADBlocks.CAMP_MODULE
+    );
+
+    public static final DeferredItem<BlockItem> CAMP_STASH = REGISTER.registerSimpleBlockItem(
+        "camp_stash",
+        ADBlocks.CAMP_STASH
+    );
+
+    public static final DeferredItem<CampPlanItem> CAMP_PLAN = REGISTER.registerItem(
+        "camp_plan",
+        CampPlanItem::new,
+        CampPlanItem::properties
     );
 
     public static final Map<ArmorSet, Map<ArmorPiece, DeferredItem<ArmorPieceItem>>> ARMOR = armor();

@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class ADNetwork {
 
-    private static final String PROTOCOL_VERSION = "13";
+    private static final String PROTOCOL_VERSION = "17";
 
     private ADNetwork() {}
 
@@ -93,6 +93,18 @@ public final class ADNetwork {
         );
         registrar.playToClient(LockpickOpenPayload.TYPE, LockpickOpenPayload.STREAM_CODEC);
         registrar.playToClient(LockpickStatePayload.TYPE, LockpickStatePayload.STREAM_CODEC);
+        registrar.playToServer(
+            CampActionPayload.TYPE,
+            CampActionPayload.STREAM_CODEC,
+            CampActionPayload::handleOnServer
+        );
+        registrar.playToClient(CampSyncPayload.TYPE, CampSyncPayload.STREAM_CODEC);
+        registrar.playToServer(CampTrustPayload.TYPE, CampTrustPayload.STREAM_CODEC, CampTrustPayload::handleOnServer);
+        registrar.playToServer(
+            CampWorkshopPayload.TYPE,
+            CampWorkshopPayload.STREAM_CODEC,
+            CampWorkshopPayload::handleOnServer
+        );
     }
 
     public static void sendTo(ServerPlayer player, CustomPacketPayload payload) {

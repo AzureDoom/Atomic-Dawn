@@ -1,0 +1,16 @@
+{
+  "block": "minecraft:oak_trapdoor",
+  "category": "doors",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 2
+    }
+  ],
+  "budget": 2,
+  "modes": [
+    "snap",
+    "collision"
+  ],
+  "order": 2
+}

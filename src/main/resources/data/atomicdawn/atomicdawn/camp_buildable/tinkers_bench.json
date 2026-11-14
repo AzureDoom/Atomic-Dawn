@@ -1,0 +1,17 @@
+{
+  "block": "atomicdawn:tinkers_bench",
+  "category": "crafting",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:copper_ingot",
+      "count": 4
+    }
+  ],
+  "budget": 10,
+  "limit": 1,
+  "order": 11
+}

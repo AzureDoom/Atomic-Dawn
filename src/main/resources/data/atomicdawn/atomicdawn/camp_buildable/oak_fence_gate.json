@@ -1,0 +1,20 @@
+{
+  "block": "minecraft:oak_fence_gate",
+  "category": "doors",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:stick",
+      "count": 2
+    }
+  ],
+  "budget": 2,
+  "modes": [
+    "snap",
+    "collision"
+  ],
+  "order": 3
+}

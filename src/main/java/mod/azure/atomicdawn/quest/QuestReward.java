@@ -11,7 +11,8 @@ public record QuestReward(
     int perkPicks,
     List<ItemReward> items,
     List<Identifier> holotapes,
-    List<Identifier> startQuests
+    List<Identifier> startQuests,
+    List<Identifier> plans
 ) {
 
     public record ItemReward(
@@ -27,7 +28,7 @@ public record QuestReward(
         );
     }
 
-    public static final QuestReward NONE = new QuestReward(0, 0, List.of(), List.of(), List.of());
+    public static final QuestReward NONE = new QuestReward(0, 0, List.of(), List.of(), List.of(), List.of());
 
     public static final Codec<QuestReward> CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
@@ -35,7 +36,8 @@ public record QuestReward(
             Codec.intRange(0, 100).optionalFieldOf("perk_picks", 0).forGetter(QuestReward::perkPicks),
             ItemReward.CODEC.listOf().optionalFieldOf("items", List.of()).forGetter(QuestReward::items),
             Identifier.CODEC.listOf().optionalFieldOf("holotapes", List.of()).forGetter(QuestReward::holotapes),
-            Identifier.CODEC.listOf().optionalFieldOf("start_quests", List.of()).forGetter(QuestReward::startQuests)
+            Identifier.CODEC.listOf().optionalFieldOf("start_quests", List.of()).forGetter(QuestReward::startQuests),
+            Identifier.CODEC.listOf().optionalFieldOf("plans", List.of()).forGetter(QuestReward::plans)
         ).apply(instance, QuestReward::new)
     );
 }

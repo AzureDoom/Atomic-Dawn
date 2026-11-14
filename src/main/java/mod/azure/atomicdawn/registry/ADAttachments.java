@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.camp.CampRegistry;
 import mod.azure.atomicdawn.ghoul.GhoulAppearance;
 import mod.azure.atomicdawn.ghoul.GhoulState;
 import mod.azure.atomicdawn.lock.LockMap;
@@ -162,6 +163,11 @@ public final class ADAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<LockMap>> LOCKS = REGISTER.register(
         "locks",
         () -> AttachmentType.builder(() -> LockMap.EMPTY).serialize(LockMap.MAP_CODEC).build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampRegistry>> CAMPS = REGISTER.register(
+        "camps",
+        () -> AttachmentType.builder(() -> CampRegistry.EMPTY).serialize(CampRegistry.MAP_CODEC).build()
     );
 
     private ADAttachments() {}

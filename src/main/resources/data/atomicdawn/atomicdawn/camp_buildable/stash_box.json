@@ -1,0 +1,21 @@
+{
+  "block": "atomicdawn:camp_stash",
+  "category": "storage",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 2
+    }
+  ],
+  "budget": 5,
+  "limit": 1,
+  "modes": [
+    "snap",
+    "collision"
+  ],
+  "order": -1
+}

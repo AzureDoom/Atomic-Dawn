@@ -70,6 +70,9 @@ public class ADConfig {
     @Configurable
     public Locks locks = new Locks();
 
+    @Configurable
+    public Camp camp = new Camp();
+
     public static class Weapons {
 
         @Comment("Global multiplier applied to all Atomic Dawn weapon damage.")
@@ -1253,6 +1256,88 @@ public class ADConfig {
         @Configurable.Synchronized
         @Range(min = 0, max = 10000)
         public int LOCKPICK_XP = 10;
+
+    }
+
+    public static class Camp {
+
+        @Comment("Whether players can deploy C.A.M.P. modules.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_ENABLED = true;
+
+        @Comment("Horizontal radius of a C.A.M.P. claim, in blocks.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 8, max = 128)
+        public int CAMP_RADIUS = 24;
+
+        @Comment("How far above the module a claim extends.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 4, max = 256)
+        public int CAMP_HEIGHT_UP = 32;
+
+        @Comment("How far below the module a claim extends.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 256)
+        public int CAMP_HEIGHT_DOWN = 16;
+
+        @Comment("Minimum horizontal distance between two C.A.M.P. modules. Never smaller than twice the radius.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 4096)
+        public int CAMP_MIN_SPACING = 64;
+
+        @Comment("C.A.M.P. slots per player. Only one can be deployed at a time.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 1, max = 10)
+        public int CAMP_SLOTS = 2;
+
+        @Comment("Build budget for each C.A.M.P.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 50, max = 100000)
+        public int CAMP_BUDGET = 500;
+
+        @Comment("Dimensions (\"namespace:id\") where modules may be deployed. Empty allows every dimension.")
+        @Configurable
+        @Configurable.Synchronized
+        public String[] CAMP_DIMENSIONS = new String[] { "minecraft:overworld" };
+
+        @Comment("Creative mode players can manage and remove any C.A.M.P.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_CREATIVE_BYPASS = true;
+
+        @Comment("How far from the player Workshop Mode can place or scrap objects.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 4, max = 64)
+        public int CAMP_BUILD_REACH = 16;
+
+        @Comment("Fraction of an object's material cost returned when it is scrapped.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double CAMP_SCRAP_REFUND = 0.5;
+
+        @Comment("Buildables that name a plan stay locked until the player learns that plan.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_REQUIRE_PLANS = true;
+
+        @Comment("Catalogue blocks the owner places by hand inside their territory become C.A.M.P. objects.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_TRACK_MANUAL = true;
+
+        @Comment("Explosions can't destroy C.A.M.P. modules or objects.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_PROTECT_EXPLOSIONS = true;
 
     }
 

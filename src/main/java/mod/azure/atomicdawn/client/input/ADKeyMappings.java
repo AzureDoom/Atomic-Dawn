@@ -31,6 +31,14 @@ public final class ADKeyMappings {
 
     public static final KeyMapping HUD_EDITOR = key("hud_editor", InputConstants.UNKNOWN.getValue());
 
+    public static final KeyMapping WORKSHOP = key("workshop", InputConstants.KEY_N);
+
+    public static final KeyMapping WORKSHOP_CATALOG = key("workshop_catalog", InputConstants.KEY_Y);
+
+    public static final KeyMapping WORKSHOP_ROTATE = key("workshop_rotate", InputConstants.KEY_COMMA);
+
+    public static final KeyMapping WORKSHOP_MODE = key("workshop_mode", InputConstants.KEY_PERIOD);
+
     private ADKeyMappings() {}
 
     public static void register(RegisterKeyMappingsEvent event) {
@@ -45,6 +53,10 @@ public final class ADKeyMappings {
         event.register(WAYPOINT_HUD);
         event.register(HUD_EDITOR);
         event.register(EXIT_POWER_ARMOR);
+        event.register(WORKSHOP);
+        event.register(WORKSHOP_CATALOG);
+        event.register(WORKSHOP_ROTATE);
+        event.register(WORKSHOP_MODE);
     }
 
     private static KeyMapping key(String name, int glfwKey) {

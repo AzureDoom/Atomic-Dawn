@@ -1,0 +1,18 @@
+{
+  "block": "atomicdawn:power_armor_station",
+  "category": "crafting",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 12
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 8
+    }
+  ],
+  "budget": 15,
+  "limit": 1,
+  "plan": "atomicdawn:power_armor_station",
+  "order": 13
+}

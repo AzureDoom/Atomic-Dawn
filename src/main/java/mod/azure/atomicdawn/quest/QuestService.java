@@ -11,6 +11,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.ArrayDeque;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.item.CampPlanItem;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 import mod.azure.atomicdawn.pipboy.PipBoyNotifications;
@@ -327,6 +328,9 @@ public final class QuestService {
         }
         for (var holotape : reward.holotapes()) {
             give(player, HolotapeService.stack(holotape));
+        }
+        for (var plan : reward.plans()) {
+            give(player, CampPlanItem.stack(plan));
         }
         for (var next : reward.startQuests()) {
             start(player, next);

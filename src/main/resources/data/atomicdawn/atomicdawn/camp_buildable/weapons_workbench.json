@@ -1,0 +1,17 @@
+{
+  "block": "atomicdawn:weapons_workbench",
+  "category": "crafting",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 8
+    },
+    {
+      "ingredient": "minecraft:redstone",
+      "count": 4
+    }
+  ],
+  "budget": 10,
+  "limit": 1,
+  "order": 10
+}

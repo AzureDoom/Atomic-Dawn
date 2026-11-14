@@ -65,6 +65,12 @@ public final class ADDataComponents {
             builder -> builder.persistent(Identifier.CODEC).networkSynchronized(Identifier.STREAM_CODEC)
         );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Identifier>> CAMP_PLAN = REGISTER
+        .registerComponentType(
+            "camp_plan",
+            builder -> builder.persistent(Identifier.CODEC).networkSynchronized(Identifier.STREAM_CODEC)
+        );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> CORE_CHARGE = REGISTER
         .registerComponentType(
             "core_charge",

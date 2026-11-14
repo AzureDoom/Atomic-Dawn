@@ -1,0 +1,13 @@
+{
+  "block": "minecraft:crafting_table",
+  "category": "crafting",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 4
+    }
+  ],
+  "budget": 5,
+  "limit": 2,
+  "order": 0
+}

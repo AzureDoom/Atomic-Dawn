@@ -1,0 +1,17 @@
+{
+  "block": "minecraft:barrel",
+  "category": "storage",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 6
+    },
+    {
+      "ingredient": "minecraft:oak_slab",
+      "count": 2
+    }
+  ],
+  "budget": 3,
+  "limit": 10,
+  "order": 1
+}

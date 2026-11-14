@@ -11,14 +11,17 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.camp.CampClientState;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 import mod.azure.atomicdawn.client.pipboy.map.PipBoyMapRenderer;
 import mod.azure.atomicdawn.config.ADConfigHelper;
+import mod.azure.atomicdawn.network.CampSyncPayload;
 import mod.azure.atomicdawn.network.WaypointActionPayload;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 import mod.azure.atomicdawn.registry.ADAttachments;
@@ -324,6 +327,41 @@ public final class MapTab implements PipBoyTab {
             if (d < hoveredDistance) {
                 hoveredDistance = d;
                 hovered = WaypointsPage.name(waypoint, i);
+            }
+        }
+
+        var camps = CampClientState.get();
+        if (camps != null) {
+            var dimension = level.dimension().identifier().toString();
+            var markers = new ArrayList<CampSyncPayload.CampView>();
+            camps.camp().ifPresent(markers::add);
+            for (var view : camps.nearby()) {
+                if (view.mapIcon() || view.canBuild()) {
+                    markers.add(view);
+                }
+            }
+            for (var view : markers) {
+                if (!view.dimension().equals(dimension)) {
+                    continue;
+                }
+                var cx = toScreenX(map, view.origin().getX() + 0.5, scale);
+                var cz = toScreenY(map, view.origin().getZ() + 0.5, scale);
+                if (!map.contains(cx, cz)) {
+                    continue;
+                }
+                var color = view.own()
+                    ? PipBoyTheme.text()
+                    : view.canBuild() ? PipBoyTheme.highlight() : PipBoyTheme.dim();
+                graphics.fill(cx - 3, cz - 3, cx + 4, cz + 4, 0xFF000000);
+                graphics.fill(cx - 2, cz - 2, cx + 3, cz + 3, color);
+                graphics.fill(cx - 1, cz - 1, cx + 2, cz + 2, 0xFF000000);
+                var d = (cx - mouseX) * (cx - mouseX) + (cz - mouseY) * (cz - mouseY);
+                if (d < hoveredDistance) {
+                    hoveredDistance = d;
+                    hovered = view.own()
+                        ? Component.translatable("pipboy.atomicdawn.camp.map_own")
+                        : Component.translatable("pipboy.atomicdawn.camp.map_other", view.ownerName());
+                }
             }
         }
 

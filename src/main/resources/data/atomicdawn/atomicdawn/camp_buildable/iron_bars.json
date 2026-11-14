@@ -1,0 +1,16 @@
+{
+  "block": "minecraft:iron_bars",
+  "category": "structure",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_nugget",
+      "count": 3
+    }
+  ],
+  "budget": 1,
+  "modes": [
+    "snap",
+    "collision"
+  ],
+  "order": 5
+}

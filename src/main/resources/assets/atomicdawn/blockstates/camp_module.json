@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "atomicdawn:block/camp_module"
+    },
+    "facing=east": {
+      "model": "atomicdawn:block/camp_module",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "atomicdawn:block/camp_module",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "atomicdawn:block/camp_module",
+      "y": 270
+    }
+  }
+}

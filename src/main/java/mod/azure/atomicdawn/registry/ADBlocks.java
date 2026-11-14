@@ -13,6 +13,8 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.block.ArmorBenchBlock;
 import mod.azure.atomicdawn.block.TinkersBenchBlock;
 import mod.azure.atomicdawn.block.WeaponsWorkbenchBlock;
+import mod.azure.atomicdawn.camp.CampModuleBlock;
+import mod.azure.atomicdawn.camp.CampStashBlock;
 import mod.azure.atomicdawn.pipboy.light.PipBoyLightBlock;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
 
@@ -89,6 +91,29 @@ public final class ADBlocks {
             .noLootTable()
             .pushReaction(PushReaction.POPPED)
             .lightLevel(state -> state.getValue(PipBoyLightBlock.LEVEL))
+    );
+
+    public static final DeferredBlock<CampModuleBlock> CAMP_MODULE = REGISTER.registerBlock(
+        "camp_module",
+        CampModuleBlock::new,
+        properties -> properties.mapColor(MapColor.METAL)
+            .strength(3.5F, 3600000.0F)
+            .sound(SoundType.METAL)
+            .requiresCorrectToolForDrops()
+            .lightLevel(_ -> 7)
+            .noOcclusion()
+            .isViewBlocking((_, _, _, _) -> false)
+            .isSuffocating((_, _, _) -> false)
+            .pushReaction(PushReaction.IMMOVEABLE)
+    );
+
+    public static final DeferredBlock<CampStashBlock> CAMP_STASH = REGISTER.registerBlock(
+        "camp_stash",
+        CampStashBlock::new,
+        properties -> properties.mapColor(MapColor.WOOD)
+            .strength(2.5F, 6.0F)
+            .sound(SoundType.WOOD)
+            .pushReaction(PushReaction.IMMOVEABLE)
     );
 
     private ADBlocks() {}

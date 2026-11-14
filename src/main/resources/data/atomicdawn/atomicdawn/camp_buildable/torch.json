@@ -1,0 +1,16 @@
+{
+  "block": "minecraft:torch",
+  "category": "lighting",
+  "cost": [
+    {
+      "ingredient": "minecraft:stick",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:coal",
+      "count": 1
+    }
+  ],
+  "budget": 1,
+  "order": 0
+}

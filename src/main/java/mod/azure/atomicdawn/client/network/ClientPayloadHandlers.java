@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
 import mod.azure.atomicdawn.client.ClientWeaponState;
+import mod.azure.atomicdawn.client.camp.CampClientState;
 import mod.azure.atomicdawn.client.effect.NukeEffects;
 import mod.azure.atomicdawn.client.ghoul.GhoulClient;
 import mod.azure.atomicdawn.client.lock.LockpickClient;
@@ -16,6 +17,7 @@ import mod.azure.atomicdawn.client.radiation.HealthClampClient;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
 import mod.azure.atomicdawn.client.vats.VatsClient;
+import mod.azure.atomicdawn.network.CampSyncPayload;
 import mod.azure.atomicdawn.network.GhoulPromptPayload;
 import mod.azure.atomicdawn.network.HealthClampPayload;
 import mod.azure.atomicdawn.network.HolotapePlayPayload;
@@ -58,6 +60,7 @@ public final class ClientPayloadHandlers {
         event.register(NpcPickerPayload.TYPE, (payload, _) -> NpcClient.onPicker(payload));
         event.register(LockpickOpenPayload.TYPE, (payload, _) -> LockpickClient.onOpen(payload));
         event.register(LockpickStatePayload.TYPE, (payload, _) -> LockpickClient.onState(payload));
+        event.register(CampSyncPayload.TYPE, (payload, _) -> CampClientState.accept(payload));
         event.register(
             WorkbenchResultPayload.TYPE,
             (payload, _) -> {

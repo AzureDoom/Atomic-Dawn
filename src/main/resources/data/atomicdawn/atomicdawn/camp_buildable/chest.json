@@ -1,0 +1,13 @@
+{
+  "block": "minecraft:chest",
+  "category": "storage",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 8
+    }
+  ],
+  "budget": 3,
+  "limit": 10,
+  "order": 0
+}

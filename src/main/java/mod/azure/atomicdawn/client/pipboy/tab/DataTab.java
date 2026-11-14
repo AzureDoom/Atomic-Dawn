@@ -19,7 +19,19 @@ public final class DataTab implements PipBoyTab {
 
     public static final String NOTES = "notes";
 
-    private static final List<String> SUBTABS = List.of(QUESTS, LOCATIONS, BESTIARY, HOLOTAPES, NOTES);
+    public static final String CAMP = "camp";
+
+    public static final String CAMP_ACCESS = "camp_access";
+
+    private static final List<String> SUBTABS = List.of(
+        QUESTS,
+        LOCATIONS,
+        CAMP,
+        CAMP_ACCESS,
+        BESTIARY,
+        HOLOTAPES,
+        NOTES
+    );
 
     @Override
     public String id() {
@@ -38,6 +50,8 @@ public final class DataTab implements PipBoyTab {
             case BESTIARY -> BestiaryPage.init(screen, area);
             case HOLOTAPES -> HolotapesPage.init(screen, area);
             case NOTES -> NotesPage.init(screen, area);
+            case CAMP -> CampPage.init(screen, area);
+            case CAMP_ACCESS -> CampAccessPage.init(screen, area);
             default -> QuestsPage.init(screen, area);
         }
     }
@@ -56,6 +70,8 @@ public final class DataTab implements PipBoyTab {
             case BESTIARY -> BestiaryPage.render(graphics, screen, area);
             case HOLOTAPES -> HolotapesPage.render(graphics, screen, area);
             case NOTES -> NotesPage.render(graphics, screen, area);
+            case CAMP -> CampPage.render(graphics, screen, area);
+            case CAMP_ACCESS -> CampAccessPage.render(graphics, screen, area);
             default -> QuestsPage.render(graphics, screen, area);
         }
     }
@@ -68,6 +84,7 @@ public final class DataTab implements PipBoyTab {
             case BESTIARY -> BestiaryPage.scroll(direction, area);
             case HOLOTAPES -> HolotapesPage.scroll(direction, area);
             case NOTES -> NotesPage.scroll(direction, area);
+            case CAMP, CAMP_ACCESS -> false;
             default -> QuestsPage.scroll(direction, area);
         };
     }
@@ -76,6 +93,12 @@ public final class DataTab implements PipBoyTab {
     public void tick(PipBoyScreen screen, String subtab) {
         if (HOLOTAPES.equals(subtab) && screen.ticks() % 20 == 0) {
             screen.refresh();
+        }
+        if (CAMP.equals(subtab)) {
+            CampPage.tick(screen);
+        }
+        if (CAMP_ACCESS.equals(subtab)) {
+            CampAccessPage.tick(screen);
         }
     }
 }

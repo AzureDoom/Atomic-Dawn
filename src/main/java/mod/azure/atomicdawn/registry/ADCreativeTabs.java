@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.item.CampPlanItem;
 import mod.azure.atomicdawn.pipboy.holotape.HolotapeService;
 
 @SuppressWarnings("unused")
@@ -44,6 +45,8 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.WEAPONS_WORKBENCH.get());
                 output.accept(ADItems.TINKERS_BENCH.get());
                 output.accept(ADItems.ARMOR_BENCH.get());
+                output.accept(ADItems.CAMP_MODULE.get());
+                output.accept(ADItems.CAMP_STASH.get());
                 output.accept(ADItems.POWER_ARMOR_STATION.get());
                 output.accept(ADItems.POWER_ARMOR_CHASSIS.get());
                 output.accept(ADItems.POWER_CORE.get());
@@ -54,6 +57,14 @@ public final class ADCreativeTabs {
                     .ifPresent(
                         registry -> registry.listElements()
                             .forEach(holder -> output.accept(HolotapeService.stack(holder.key().identifier())))
+                    );
+                parameters.holders()
+                    .lookup(ADRegistries.CAMP_BUILDABLE)
+                    .ifPresent(
+                        registry -> registry.listElements()
+                            .flatMap(holder -> holder.value().plan().stream())
+                            .distinct()
+                            .forEach(plan -> output.accept(CampPlanItem.stack(plan)))
                     );
             })
             .build()

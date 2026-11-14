@@ -1,0 +1,16 @@
+{
+  "block": "minecraft:oak_door",
+  "category": "doors",
+  "cost": [
+    {
+      "ingredient": "minecraft:oak_planks",
+      "count": 2
+    }
+  ],
+  "budget": 3,
+  "modes": [
+    "snap",
+    "collision"
+  ],
+  "order": 0
+}

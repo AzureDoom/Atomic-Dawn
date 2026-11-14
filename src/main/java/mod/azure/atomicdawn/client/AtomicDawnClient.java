@@ -18,6 +18,7 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.camp.CampWorkshopHud;
 import mod.azure.atomicdawn.client.effect.NukeEffects;
 import mod.azure.atomicdawn.client.fluid.IrradiatedWaterClient;
 import mod.azure.atomicdawn.client.ghoul.GhoulClient;
@@ -139,6 +140,7 @@ public final class AtomicDawnClient {
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("power_armor_hud"), new PowerArmorHud());
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("waypoint_hud"), new WaypointHud());
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("party_hud"), new PartyHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("camp_workshop_hud"), new CampWorkshopHud());
         event.registerAboveAll(AtomicDawn.id("nuke_flash"), new NukeEffects.FlashLayer());
     }
 

@@ -1,0 +1,12 @@
+{
+  "block": "minecraft:flower_pot",
+  "category": "decor",
+  "cost": [
+    {
+      "ingredient": "minecraft:brick",
+      "count": 3
+    }
+  ],
+  "budget": 1,
+  "order": 0
+}
