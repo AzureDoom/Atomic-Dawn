@@ -1,6 +1,10 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "atomicdawn:item/ammo_10mm"
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/ammo_10mm",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
   }
 }
+

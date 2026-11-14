@@ -122,6 +122,7 @@ public final class AtomicDawn {
 
     private static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> ADItems.weapons().forEach(AzIdentityRegistry::register));
+        event.enqueueWork(() -> AzIdentityRegistry.hasIdentity(ADItems.AMMO_10MM.get()));
         ADWorldgen.commonSetup(event);
     }
 }

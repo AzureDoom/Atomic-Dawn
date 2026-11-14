@@ -35,6 +35,7 @@ import mod.azure.atomicdawn.client.powerarmor.PowerArmorHud;
 import mod.azure.atomicdawn.client.radiation.RadiationHud;
 import mod.azure.atomicdawn.client.render.WeaponClientExtensions;
 import mod.azure.atomicdawn.client.render.WeaponItemRenderer;
+import mod.azure.atomicdawn.client.render.ammo.AmmoRenderer;
 import mod.azure.atomicdawn.client.render.entity.MiniNukeRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorItemRenderers;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorRenderer;
@@ -88,6 +89,12 @@ public final class AtomicDawnClient {
         );
         event.enqueueWork(
             () -> AzItemRendererRegistry.register(ADItems.POWER_ARMOR_FIST.get(), PowerArmorItemRenderers.Fist::new)
+        );
+        event.enqueueWork(
+            () -> AzItemRendererRegistry.register(
+                ADItems.AMMO_10MM.get(),
+                () -> new AmmoRenderer(AtomicDawn.id("ammo_10mm"))
+            )
         );
     }
 
