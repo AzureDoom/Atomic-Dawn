@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulAppearance;
 import mod.azure.atomicdawn.ghoul.GhoulState;
+import mod.azure.atomicdawn.lock.LockMap;
 import mod.azure.atomicdawn.mutation.Mutations;
 import mod.azure.atomicdawn.pipboy.PipBoyData;
 import mod.azure.atomicdawn.pipboy.PipBoyStats;
@@ -157,6 +158,11 @@ public final class ADAttachments {
                 .sync((holder, to) -> true, GhoulAppearance.STREAM_CODEC)
                 .build()
         );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<LockMap>> LOCKS = REGISTER.register(
+        "locks",
+        () -> AttachmentType.builder(() -> LockMap.EMPTY).serialize(LockMap.MAP_CODEC).build()
+    );
 
     private ADAttachments() {}
 }

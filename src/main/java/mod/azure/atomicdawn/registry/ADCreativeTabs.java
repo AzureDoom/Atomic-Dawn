@@ -28,6 +28,8 @@ public final class ADCreativeTabs {
                 ADItems.ammo().forEach(output::accept);
                 output.accept(ADItems.AMMO_CONTAINER.get());
                 output.accept(ADItems.REPAIR_KIT.get());
+                output.accept(ADItems.BOBBY_PIN.get());
+                ADItems.PADLOCKS.values().forEach(padlock -> output.accept(padlock.get()));
                 output.accept(ADItems.LEGENDARY_MODULE.get());
                 output.accept(ADItems.RADAWAY.get());
                 output.accept(ADItems.RAD_X.get());

@@ -86,6 +86,13 @@ public final class ADNetwork {
         registrar.playToClient(ReloadStatusPayload.TYPE, ReloadStatusPayload.STREAM_CODEC);
         registrar.playToClient(WorkbenchResultPayload.TYPE, WorkbenchResultPayload.STREAM_CODEC);
         registrar.playToClient(PartySyncPayload.TYPE, PartySyncPayload.STREAM_CODEC);
+        registrar.playToServer(
+            LockpickActionPayload.TYPE,
+            LockpickActionPayload.STREAM_CODEC,
+            LockpickActionPayload::handleOnServer
+        );
+        registrar.playToClient(LockpickOpenPayload.TYPE, LockpickOpenPayload.STREAM_CODEC);
+        registrar.playToClient(LockpickStatePayload.TYPE, LockpickStatePayload.STREAM_CODEC);
     }
 
     public static void sendTo(ServerPlayer player, CustomPacketPayload payload) {

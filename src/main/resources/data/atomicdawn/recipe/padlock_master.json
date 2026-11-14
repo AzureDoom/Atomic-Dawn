@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "atomicdawn:padlock_expert",
+    "minecraft:netherite_scrap",
+    "minecraft:obsidian"
+  ],
+  "result": {
+    "id": "atomicdawn:padlock_master",
+    "count": 1
+  }
+}

@@ -28,10 +28,12 @@ import mod.azure.atomicdawn.item.FeralStabilizerItem;
 import mod.azure.atomicdawn.item.GhoulTreatmentItem;
 import mod.azure.atomicdawn.item.HolotapeItem;
 import mod.azure.atomicdawn.item.MutationSerumItem;
+import mod.azure.atomicdawn.item.PadlockItem;
 import mod.azure.atomicdawn.item.RadAwayItem;
 import mod.azure.atomicdawn.item.RadRemoverItem;
 import mod.azure.atomicdawn.item.RadXItem;
 import mod.azure.atomicdawn.item.WeaponItem;
+import mod.azure.atomicdawn.lock.LockLevel;
 import mod.azure.atomicdawn.mutation.Mutation;
 import mod.azure.atomicdawn.npc.NpcWandItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorChassisItem;
@@ -141,6 +143,13 @@ public final class ADItems {
         HolotapeItem::properties
     );
 
+    public static final DeferredItem<Item> BOBBY_PIN = REGISTER.registerSimpleItem(
+        "bobby_pin",
+        properties -> properties.stacksTo(64)
+    );
+
+    public static final Map<LockLevel, DeferredItem<PadlockItem>> PADLOCKS = padlocks();
+
     public static final DeferredItem<Item> LEGENDARY_MODULE = REGISTER.registerSimpleItem(
         "legendary_module",
         properties -> properties.stacksTo(64).rarity(Rarity.RARE)
@@ -246,6 +255,25 @@ public final class ADItems {
             );
         }
         return Collections.unmodifiableMap(serums);
+    }
+
+    private static Map<LockLevel, DeferredItem<PadlockItem>> padlocks() {
+        var padlocks = new EnumMap<LockLevel, DeferredItem<PadlockItem>>(LockLevel.class);
+        for (var level : LockLevel.values()) {
+            padlocks.put(
+                level,
+                REGISTER.registerItem(
+                    "padlock_" + level.getSerializedName(),
+                    properties -> new PadlockItem(properties, level),
+                    properties -> PadlockItem.properties(properties, level)
+                )
+            );
+        }
+        return Collections.unmodifiableMap(padlocks);
+    }
+
+    public static PadlockItem padlock(LockLevel level) {
+        return PADLOCKS.get(level).get();
     }
 
     private static Map<ArmorSet, Map<ArmorPiece, DeferredItem<ArmorPieceItem>>> armor() {

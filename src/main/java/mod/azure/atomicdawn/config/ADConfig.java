@@ -67,6 +67,9 @@ public class ADConfig {
     @Configurable
     public ClientGhoul clientGhoul = new ClientGhoul();
 
+    @Configurable
+    public Locks locks = new Locks();
+
     public static class Weapons {
 
         @Comment("Global multiplier applied to all Atomic Dawn weapon damage.")
@@ -1199,6 +1202,57 @@ public class ADConfig {
         @Configurable(side = Configurable.Side.CLIENT)
         @DecimalRange(min = 0.0, max = 10.0)
         public double SKYLINE_SKY_SPIN = 1.0;
+
+    }
+
+    public static class Locks {
+
+        @Comment(
+            "Whether padlocks and lockpicking are active. Disabling leaves saved locks in place but stops enforcing them."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        public boolean LOCKS_ENABLED = true;
+
+        @Comment("Stop players who do not own a lock from breaking the locked block.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean LOCKS_PROTECT_BLOCKS = true;
+
+        @Comment("Creative mode players ignore locks and can remove any lock.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean LOCKS_CREATIVE_BYPASS = true;
+
+        @Comment(
+            "Whether players can pick locks placed by other players (locks without an owner can always be picked)."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        public boolean LOCKS_ALLOW_PICKING_PLAYER_LOCKS = true;
+
+        @Comment("Require the Picklock perk tier for Advanced, Expert and Master locks.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean LOCKPICK_REQUIRE_PERKS = true;
+
+        @Comment("Multiplier for the size of the hidden sweet spot.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.25, max = 4.0)
+        public double LOCKPICK_SWEET_SPOT_SCALE = 1.0;
+
+        @Comment("Multiplier for how long a bobby pin survives being forced.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.25, max = 10.0)
+        public double LOCKPICK_PIN_DURABILITY_SCALE = 1.0;
+
+        @Comment("Atomic Dawn XP per lock tier for a successful pick (Novice x1 through Master x4).")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 10000)
+        public int LOCKPICK_XP = 10;
 
     }
 

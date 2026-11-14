@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "atomicdawn:padlock_advanced",
+    "minecraft:diamond",
+    "minecraft:redstone"
+  ],
+  "result": {
+    "id": "atomicdawn:padlock_expert",
+    "count": 1
+  }
+}

@@ -6,6 +6,7 @@ import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlers
 import mod.azure.atomicdawn.client.ClientWeaponState;
 import mod.azure.atomicdawn.client.effect.NukeEffects;
 import mod.azure.atomicdawn.client.ghoul.GhoulClient;
+import mod.azure.atomicdawn.client.lock.LockpickClient;
 import mod.azure.atomicdawn.client.npc.NpcClient;
 import mod.azure.atomicdawn.client.party.PartyClient;
 import mod.azure.atomicdawn.client.pipboy.PipBoyClient;
@@ -18,6 +19,8 @@ import mod.azure.atomicdawn.client.vats.VatsClient;
 import mod.azure.atomicdawn.network.GhoulPromptPayload;
 import mod.azure.atomicdawn.network.HealthClampPayload;
 import mod.azure.atomicdawn.network.HolotapePlayPayload;
+import mod.azure.atomicdawn.network.LockpickOpenPayload;
+import mod.azure.atomicdawn.network.LockpickStatePayload;
 import mod.azure.atomicdawn.network.NpcDialoguePayload;
 import mod.azure.atomicdawn.network.NpcEditorPayload;
 import mod.azure.atomicdawn.network.NpcPickerPayload;
@@ -53,6 +56,8 @@ public final class ClientPayloadHandlers {
         event.register(NpcDialoguePayload.TYPE, (payload, _) -> NpcClient.onDialogue(payload));
         event.register(NpcEditorPayload.TYPE, (payload, _) -> NpcClient.onEditor(payload));
         event.register(NpcPickerPayload.TYPE, (payload, _) -> NpcClient.onPicker(payload));
+        event.register(LockpickOpenPayload.TYPE, (payload, _) -> LockpickClient.onOpen(payload));
+        event.register(LockpickStatePayload.TYPE, (payload, _) -> LockpickClient.onState(payload));
         event.register(
             WorkbenchResultPayload.TYPE,
             (payload, _) -> {
