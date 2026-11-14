@@ -39,7 +39,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+
+import mod.azure.atomicdawn.util.PlayerItems;
 
 public class PowerArmorStationBlock extends BaseEntityBlock {
 
@@ -53,11 +57,33 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
 
     public static final IntegerProperty LAYER = IntegerProperty.create("layer", 0, SIZE - 1);
 
-    private static final double PLATFORM_HEIGHT = 4.0 / 16.0;
+    private static final double PLATFORM_HEIGHT = 0.0;
 
-    private static final VoxelShape PLATFORM = Block.box(0, 0, 0, 16, 4, 16);
+    private static final double[][] MODEL_BOXES = {
+        { -0.0948, 0.0074, 0.3076, 0.2052, 0.1574, 1.8826 },
+        { -0.0573, 0.0449, 2.3326, 0.1677, 2.4074, 2.5576 },
+        { -1.2573, 0.0449, 2.3326, -1.0323, 2.4074, 2.5576 },
+        { -0.0666, 1.9737, 1.8167, 0.1583, 2.68, 2.6134 },
+        { -1.2479, 1.9737, 1.8167, -1.0229, 2.68, 2.6134 },
+        { -0.0573, 2.3214, 1.4511, 0.0927, 2.8189, 2.0104 },
+        { -1.1854, 2.3214, 1.4324, -1.0354, 2.8189, 1.9917 },
+        { -0.0479, 2.5089, 1.0011, 0.0646, 3.0064, 1.5604 },
+        { -1.1823, 2.5089, 0.9824, -1.0698, 3.0064, 1.5417 },
+        { -0.0479, 2.3137, 1.6785, 0.1021, 2.5752, 1.9285 },
+        { -1.201, 2.3137, 1.6785, -1.051, 2.5752, 1.9285 },
+        { -0.0104, 1.3093, 1.7909, 0.0646, 2.4753, 2.7936 },
+        { -0.0479, 1.1794, 2.166, 0.1021, 1.4409, 2.416 },
+        { -1.1635, 1.3093, 1.7909, -1.0885, 2.4753, 2.7936 },
+        { -1.201, 1.1794, 2.166, -1.051, 1.4409, 2.416 },
+        { -1.1858, 0.4314, 2.3795, 0.0376, 1.4885, 2.5295 },
+        { -1.1483, 0, 2.3607, 0.0751, 1.0385, 2.5107 },
+        { -0.0198, 0.0393, 1.5787, 0.1302, 1.0609, 2.4576 },
+        { -1.2198, 0.0393, 1.5787, -1.0698, 1.0609, 2.4576 },
+        { -1.2948, 0.0074, 0.3076, -0.9948, 0.1574, 1.8826 },
+        { -1.2948, 0.0074, 1.8826, -0.9948, 0.1574, 2.5951 },
+        { -0.0948, 0.0074, 1.8826, 0.2052, 0.1574, 2.5951 } };
 
-    private static final VoxelShape PILLAR = Block.box(3, 0, 3, 13, 16, 13);
+    private static final Map<Direction, VoxelShape[]> SHAPES = shapes();
 
     public PowerArmorStationBlock(Properties properties) {
         super(properties);
@@ -205,6 +231,16 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
         var armor = docked(level, master);
         if (armor == null) {
             serverPlayer.sendSystemMessage(Component.translatable("power_armor.atomicdawn.station_empty"));
+            return InteractionResult.SUCCESS;
+        }
+        if (serverPlayer.isSecondaryUseActive() && armor.getPassengers().isEmpty()) {
+            armor.undock();
+            PlayerItems.give(serverPlayer, PowerArmorChassisItem.fromEntity(armor));
+            armor.discard();
+            serverPlayer.sendSystemMessage(
+                Component.translatable("power_armor.atomicdawn.station_picked_up"),
+                true
+            );
             return InteractionResult.SUCCESS;
         }
         openMenu(serverPlayer, armor);
@@ -403,16 +439,65 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
         @NotNull BlockPos pos,
         @NotNull CollisionContext context
     ) {
-        var row = state.getValue(ROW);
-        var column = state.getValue(COLUMN);
-        var layer = state.getValue(LAYER);
-        if (row == 0) {
-            return PLATFORM;
+        var index = index(state.getValue(COLUMN), state.getValue(ROW), state.getValue(LAYER));
+        return SHAPES.get(state.getValue(FACING))[index];
+    }
+
+    private static int index(int column, int row, int layer) {
+        return (layer * SIZE + row) * SIZE + column;
+    }
+
+    private static Map<Direction, VoxelShape[]> shapes() {
+        var map = new EnumMap<Direction, VoxelShape[]>(Direction.class);
+        for (var facing : Direction.Plane.HORIZONTAL) {
+            var shapes = new VoxelShape[SIZE * SIZE * SIZE];
+            for (var layer = 0; layer < SIZE; layer++) {
+                for (var row = 0; row < SIZE; row++) {
+                    for (var column = 0; column < SIZE; column++) {
+                        shapes[index(column, row, layer)] = cellShape(facing, column, row, layer);
+                    }
+                }
+            }
+            map.put(facing, shapes);
         }
-        if (layer == SIZE - 1 && column != 1) {
-            return PILLAR;
+        return map;
+    }
+
+    private static VoxelShape cellShape(Direction facing, int column, int row, int layer) {
+        var cellX = -column;
+        var cellY = row;
+        var cellZ = layer;
+        var shape = Shapes.empty();
+        for (var box : MODEL_BOXES) {
+            var minX = Math.max(box[0], cellX) - cellX;
+            var minY = Math.max(box[1], cellY) - cellY;
+            var minZ = Math.max(box[2], cellZ) - cellZ;
+            var maxX = Math.min(box[3], cellX + 1) - cellX;
+            var maxY = Math.min(box[4], cellY + 1) - cellY;
+            var maxZ = Math.min(box[5], cellZ + 1) - cellZ;
+            if (maxX - minX < 0.001 || maxY - minY < 0.001 || maxZ - minZ < 0.001) {
+                continue;
+            }
+            shape = Shapes.or(shape, rotated(facing, minX, minY, minZ, maxX, maxY, maxZ));
         }
-        return Shapes.empty();
+        return shape.optimize();
+    }
+
+    private static VoxelShape rotated(
+        Direction facing,
+        double minX,
+        double minY,
+        double minZ,
+        double maxX,
+        double maxY,
+        double maxZ
+    ) {
+        return switch (facing) {
+            case EAST -> Shapes.box(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX);
+            case SOUTH -> Shapes.box(1 - maxX, minY, 1 - maxZ, 1 - minX, maxY, 1 - minZ);
+            case WEST -> Shapes.box(minZ, minY, 1 - maxX, maxZ, maxY, 1 - minX);
+            default -> Shapes.box(minX, minY, minZ, maxX, maxY, maxZ);
+        };
     }
 
     @Override
