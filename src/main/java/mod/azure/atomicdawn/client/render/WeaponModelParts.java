@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +21,23 @@ import mod.azure.atomicdawn.weapon.modification.ModificationResolver;
 public final class WeaponModelParts {
 
     private static final Map<ResourceKey<WeaponDefinition>, Set<String>> MANAGED = new HashMap<>();
+
+    private static final Map<String, Set<String>> MODEL_OPTIONAL_BONES = Map.of(
+        "atomicdawn:10mm_pistol",
+        Set.of(
+            "slide_front_standard",
+            "barrel_front_standard",
+            "slide_front_long",
+            "slide_front_stub",
+            "barrel_long",
+            "barrel_stub",
+            "mag",
+            "mag_large",
+            "sights",
+            "sight_reflex",
+            "sight_recon"
+        )
+    );
 
     private static RegistryAccess cachedAccess;
 
@@ -78,6 +96,10 @@ public final class WeaponModelParts {
             MANAGED.clear();
             cachedAccess = access;
         }
-        return MANAGED.computeIfAbsent(weaponKey, key -> ModificationResolver.managedBones(access, key));
+        return MANAGED.computeIfAbsent(weaponKey, key -> {
+            var bones = new LinkedHashSet<String>(ModificationResolver.managedBones(access, key));
+            bones.addAll(MODEL_OPTIONAL_BONES.getOrDefault(key.identifier().toString(), Set.of()));
+            return Set.copyOf(bones);
+        });
     }
 }

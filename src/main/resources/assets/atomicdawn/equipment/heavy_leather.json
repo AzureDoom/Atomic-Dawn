@@ -2,12 +2,18 @@
   "layers": {
     "humanoid": [
       {
-        "texture": "atomicdawn:heavy_leather"
+        "texture": "atomicdawn:heavy_leather",
+        "dyeable": {
+          "color_when_undyed": -6265536
+        }
       }
     ],
     "humanoid_leggings": [
       {
-        "texture": "atomicdawn:heavy_leather"
+        "texture": "atomicdawn:heavy_leather",
+        "dyeable": {
+          "color_when_undyed": -6265536
+        }
       }
     ]
   }

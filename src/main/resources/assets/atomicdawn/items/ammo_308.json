@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "atomicdawn:item/ammo_308"
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/ammo_308",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
   }
 }

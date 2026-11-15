@@ -20,9 +20,7 @@
       "amount": -0.1
     }
   ],
-  "show_bones": [
-    "muzzle_suppressor"
-  ],
+  "show_bones": [],
   "cost": [
     {
       "ingredient": "minecraft:iron_ingot",

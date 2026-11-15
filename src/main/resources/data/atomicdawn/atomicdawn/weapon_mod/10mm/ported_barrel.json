@@ -16,7 +16,8 @@
     }
   ],
   "show_bones": [
-    "barrel_ported"
+    "slide_front_standard",
+    "barrel_front_standard"
   ],
   "cost": [
     {

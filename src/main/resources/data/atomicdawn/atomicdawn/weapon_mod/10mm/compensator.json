@@ -10,9 +10,7 @@
       "amount": -0.3
     }
   ],
-  "show_bones": [
-    "muzzle_compensator"
-  ],
+  "show_bones": [],
   "cost": [
     {
       "ingredient": "minecraft:iron_ingot",

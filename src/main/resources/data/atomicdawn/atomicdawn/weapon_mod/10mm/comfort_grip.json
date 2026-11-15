@@ -15,9 +15,7 @@
       "amount": -0.2
     }
   ],
-  "show_bones": [
-    "grip_comfort"
-  ],
+  "show_bones": [],
   "cost": [
     {
       "ingredient": "#minecraft:planks",

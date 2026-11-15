@@ -113,6 +113,7 @@ public final class ADBlocks {
         properties -> properties.mapColor(MapColor.WOOD)
             .strength(2.5F, 6.0F)
             .sound(SoundType.WOOD)
+            .noOcclusion()
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 

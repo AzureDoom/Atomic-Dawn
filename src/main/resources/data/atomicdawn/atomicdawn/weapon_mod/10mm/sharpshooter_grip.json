@@ -15,9 +15,7 @@
       "amount": 0.1
     }
   ],
-  "show_bones": [
-    "grip_sharpshooter"
-  ],
+  "show_bones": [],
   "cost": [
     {
       "ingredient": "minecraft:leather",

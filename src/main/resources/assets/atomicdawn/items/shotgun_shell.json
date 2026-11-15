@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "atomicdawn:item/shotgun_shell"
+    "type": "minecraft:special",
+    "base": "atomicdawn:item/shotgun_shell",
+    "model": {
+      "type": "azurelib:azurelib"
+    }
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "atomicdawn:item/padlock_master"
+    "layer0": "atomicdawn:item/padlock_novice"
   }
 }

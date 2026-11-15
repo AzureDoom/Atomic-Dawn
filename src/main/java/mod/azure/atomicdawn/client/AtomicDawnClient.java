@@ -96,6 +96,18 @@ public final class AtomicDawnClient {
                 () -> new AmmoRenderer(AtomicDawn.id("ammo_10mm"))
             )
         );
+        event.enqueueWork(
+            () -> AzItemRendererRegistry.register(
+                ADItems.AMMO_308.get(),
+                () -> new AmmoRenderer(AtomicDawn.id("ammo_308"))
+            )
+        );
+        event.enqueueWork(
+            () -> AzItemRendererRegistry.register(
+                ADItems.SHOTGUN_SHELL.get(),
+                () -> new AmmoRenderer(AtomicDawn.id("shotgun_shell"))
+            )
+        );
     }
 
     @SubscribeEvent

@@ -4,6 +4,7 @@
     "atomicdawn:10mm_pistol"
   ],
   "show_bones": [
-    "barrel_standard"
+    "slide_front_standard",
+    "barrel_front_standard"
   ]
 }
