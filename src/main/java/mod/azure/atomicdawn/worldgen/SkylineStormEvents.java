@@ -18,14 +18,6 @@ import mod.azure.atomicdawn.AtomicDawn;
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
 public final class SkylineStormEvents {
 
-    private static final int CHECK_INTERVAL_TICKS = 100;
-
-    private static final int STRIKE_CHANCE_DENOMINATOR = 5;
-
-    private static final int MIN_DISTANCE = 24;
-
-    private static final int EXTRA_DISTANCE = 48;
-
     private SkylineStormEvents() {}
 
     @SubscribeEvent
@@ -33,15 +25,15 @@ public final class SkylineStormEvents {
         if (!(event.getEntity().level() instanceof ServerLevel level))
             return;
         var player = event.getEntity();
-        if (player.tickCount % CHECK_INTERVAL_TICKS != 0)
+        if (player.tickCount % 100 != 0)
             return;
         if (!level.getBiome(player.blockPosition()).is(ADBiomes.SKYLINE_VALLEY))
             return;
-        if (level.getRandom().nextInt(STRIKE_CHANCE_DENOMINATOR) != 0)
+        if (level.getRandom().nextInt(5) != 0)
             return;
 
         double angle = level.getRandom().nextDouble() * Math.PI * 2.0;
-        int radius = MIN_DISTANCE + level.getRandom().nextInt(EXTRA_DISTANCE + 1);
+        int radius = 24 + level.getRandom().nextInt(48 + 1);
         int x = player.getBlockX() + (int) Math.round(Math.cos(angle) * radius);
         int z = player.getBlockZ() + (int) Math.round(Math.sin(angle) * radius);
         BlockPos probe = new BlockPos(x, player.getBlockY(), z);

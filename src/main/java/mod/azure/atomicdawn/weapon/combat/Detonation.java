@@ -43,8 +43,6 @@ public final class Detonation {
         }
     };
 
-    private static final double EFFECT_BROADCAST_RANGE = 512.0;
-
     private Detonation() {}
 
     public static void detonate(
@@ -84,7 +82,7 @@ public final class Detonation {
             at.x,
             at.y,
             at.z,
-            EFFECT_BROADCAST_RANGE,
+            512.0D,
             new NukeExplosionPayload(at, radius)
         );
         radiationBurst(level, radius * 2F, at);
