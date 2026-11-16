@@ -38,7 +38,7 @@ import java.util.UUID;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.ArmorPiece;
 import mod.azure.atomicdawn.armor.ArmorPieceItem;
-import mod.azure.atomicdawn.client.mixin.FoodDataAccessor;
+import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.perks.PerkHooks;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.RadiationService;

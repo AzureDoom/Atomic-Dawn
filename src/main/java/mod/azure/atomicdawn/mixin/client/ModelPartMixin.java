@@ -1,4 +1,4 @@
-package mod.azure.atomicdawn.client.mixin;
+package mod.azure.atomicdawn.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

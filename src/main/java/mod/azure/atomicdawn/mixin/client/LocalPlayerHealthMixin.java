@@ -1,4 +1,4 @@
-package mod.azure.atomicdawn.client.mixin;
+package mod.azure.atomicdawn.mixin.client;
 
 import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;

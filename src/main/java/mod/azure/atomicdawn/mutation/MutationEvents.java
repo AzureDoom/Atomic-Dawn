@@ -48,7 +48,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 import mod.azure.atomicdawn.AtomicDawn;
-import mod.azure.atomicdawn.client.mixin.FoodDataAccessor;
+import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.perks.PerkEffectType;
 import mod.azure.atomicdawn.radiation.RadiationService;

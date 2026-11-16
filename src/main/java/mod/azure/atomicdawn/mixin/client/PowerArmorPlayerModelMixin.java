@@ -1,4 +1,4 @@
-package mod.azure.atomicdawn.client.mixin;
+package mod.azure.atomicdawn.mixin.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.player.PlayerModel;

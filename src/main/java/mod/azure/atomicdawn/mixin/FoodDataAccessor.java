@@ -1,4 +1,4 @@
-package mod.azure.atomicdawn.client.mixin;
+package mod.azure.atomicdawn.mixin;
 
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.Mixin;

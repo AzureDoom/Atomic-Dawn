@@ -34,7 +34,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
-import mod.azure.atomicdawn.client.mixin.FoodDataAccessor;
+import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.mutation.MutationEvents;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.RadiationService;
