@@ -19,7 +19,7 @@ public class PowerCoreItem extends Item {
     }
 
     public static int capacity() {
-        return AtomicDawn.CONFIG.powerArmor.POWER_CORE_CAPACITY;
+        return AtomicDawn.CONFIG.powerArmor.FUSION_CORE_CAPACITY;
     }
 
     public static int charge(ItemStack stack) {

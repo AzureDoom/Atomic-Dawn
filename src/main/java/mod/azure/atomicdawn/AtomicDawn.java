@@ -23,6 +23,7 @@ import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampPlanLootModifier;
 import mod.azure.atomicdawn.config.ADConfig;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
+import mod.azure.atomicdawn.item.NukaColaEffects;
 import mod.azure.atomicdawn.mutation.MutationService;
 import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.npc.NpcModelDefinition;
@@ -83,6 +84,7 @@ public final class AtomicDawn {
         SpecialStatResolver.registerTemporarySource(MutationService::specialBonus);
         SpecialStatResolver.registerTemporarySource(ArmorEvents::specialBonus);
         SpecialStatResolver.registerTemporarySource(PerkHooks::specialBonus);
+        SpecialStatResolver.registerTemporarySource(NukaColaEffects::specialBonus);
         modBus.addListener((ModConfigEvent.Loading _) -> SpecialStatResolver.invalidateAll());
         modBus.addListener((ModConfigEvent.Reloading _) -> SpecialStatResolver.invalidateAll());
 

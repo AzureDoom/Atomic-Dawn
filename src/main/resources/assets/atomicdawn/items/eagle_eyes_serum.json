@@ -1,6 +1,16 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "atomicdawn:item/eagle_eyes_serum"
+    "model": "atomicdawn:item/serum",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      },
+      {
+        "type": "minecraft:constant",
+        "value": 15251514
+      }
+    ]
   }
 }

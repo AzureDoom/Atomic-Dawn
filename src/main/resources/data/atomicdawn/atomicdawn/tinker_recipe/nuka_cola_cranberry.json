@@ -1,0 +1,24 @@
+{
+  "category": "chems",
+  "result": "atomicdawn:nuka_cola_cranberry",
+  "count": 1,
+  "cost": [
+    {
+      "ingredient": "minecraft:sugar",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:sweet_berries",
+      "count": 2
+    },
+    {
+      "ingredient": "minecraft:beetroot",
+      "count": 1
+    },
+    {
+      "ingredient": "minecraft:glass_bottle",
+      "count": 1
+    }
+  ],
+  "order": 3
+}

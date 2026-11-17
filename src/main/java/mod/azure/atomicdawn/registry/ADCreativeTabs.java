@@ -34,6 +34,7 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.LEGENDARY_MODULE.get());
                 output.accept(ADItems.RADAWAY.get());
                 output.accept(ADItems.RAD_X.get());
+                ADItems.NUKA_COLAS.values().forEach(cola -> output.accept(cola.get()));
                 output.accept(ADItems.NUKA_GRAPE.get());
                 output.accept(ADItems.BRAHMIN_MILK.get());
                 output.accept(ADItems.GHOULIFICATION_TREATMENT.get());
@@ -49,9 +50,7 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.CAMP_STASH.get());
                 output.accept(ADItems.POWER_ARMOR_STATION.get());
                 output.accept(ADItems.POWER_ARMOR_CHASSIS.get());
-                output.accept(ADItems.POWER_CORE.get());
-                ADItems.powerArmorPieces().forEach(output::accept);
-                ADItems.armorPieces().forEach(output::accept);
+                output.accept(ADItems.FUSION_CORE.get());
                 parameters.holders()
                     .lookup(ADRegistries.HOLOTAPE)
                     .ifPresent(
@@ -66,6 +65,8 @@ public final class ADCreativeTabs {
                             .distinct()
                             .forEach(plan -> output.accept(CampPlanItem.stack(plan)))
                     );
+                ADItems.powerArmorPieces().forEach(output::accept);
+                ADItems.armorPieces().forEach(output::accept);
             })
             .build()
     );

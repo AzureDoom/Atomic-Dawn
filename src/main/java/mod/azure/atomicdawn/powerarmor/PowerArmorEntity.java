@@ -551,7 +551,7 @@ public class PowerArmorEntity extends LivingEntity {
             var dx = getX() - lastX;
             var dz = getZ() - lastZ;
             if (dx * dx + dz * dz > 0.0001 && isFunctioning()) {
-                drain((float) AtomicDawn.CONFIG.powerArmor.POWER_CORE_MOVE_COST);
+                drain((float) AtomicDawn.CONFIG.powerArmor.FUSION_CORE_MOVE_COST);
                 var kinetic = PowerArmorBonuses.of(this).get(PowerArmorEffectType.KINETIC_CHARGE);
                 if (kinetic > 0F) {
                     recharge(kinetic * (float) Math.sqrt(dx * dx + dz * dz));

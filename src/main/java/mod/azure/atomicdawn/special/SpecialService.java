@@ -25,6 +25,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulPerks;
 import mod.azure.atomicdawn.ghoul.GhoulService;
 import mod.azure.atomicdawn.ghoul.PlayerForm;
+import mod.azure.atomicdawn.item.NukaColaEffects;
 import mod.azure.atomicdawn.network.SpecialActionPayload;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.perks.LegendaryPerkCatalog;
@@ -433,7 +434,7 @@ public final class SpecialService {
             return;
         }
         var stats = SpecialStatResolver.resolve(player);
-        var bonus = stats.xpBonus + teamAura(player);
+        var bonus = stats.xpBonus + teamAura(player) + NukaColaEffects.xpBonus(player);
         var total = Math.round(amount * (1.0 + Math.min(bonus, AtomicDawn.CONFIG.perks.PERKS_MAX_XP_BONUS)));
         addXp(player, total);
     }

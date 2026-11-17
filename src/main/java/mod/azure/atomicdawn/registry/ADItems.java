@@ -29,6 +29,8 @@ import mod.azure.atomicdawn.item.FeralStabilizerItem;
 import mod.azure.atomicdawn.item.GhoulTreatmentItem;
 import mod.azure.atomicdawn.item.HolotapeItem;
 import mod.azure.atomicdawn.item.MutationSerumItem;
+import mod.azure.atomicdawn.item.NukaCola;
+import mod.azure.atomicdawn.item.NukaColaItem;
 import mod.azure.atomicdawn.item.PadlockItem;
 import mod.azure.atomicdawn.item.RadAwayItem;
 import mod.azure.atomicdawn.item.RadRemoverItem;
@@ -200,8 +202,8 @@ public final class ADItems {
         PowerArmorChassisItem::properties
     );
 
-    public static final DeferredItem<PowerCoreItem> POWER_CORE = REGISTER.registerItem(
-        "power_core",
+    public static final DeferredItem<PowerCoreItem> FUSION_CORE = REGISTER.registerItem(
+        "fusion_core",
         PowerCoreItem::new,
         PowerCoreItem::properties
     );
@@ -211,6 +213,8 @@ public final class ADItems {
         properties -> new RadRemoverItem(properties, () -> AtomicDawn.CONFIG.radiation.NUKA_GRAPE_RADS),
         RadRemoverItem::properties
     );
+
+    public static final Map<NukaCola, DeferredItem<NukaColaItem>> NUKA_COLAS = nukaColas();
 
     public static final DeferredItem<RadRemoverItem> BRAHMIN_MILK = REGISTER.registerItem(
         "brahmin_milk",
@@ -257,6 +261,21 @@ public final class ADItems {
 
     public static Stream<Item> weapons() {
         return WEAPONS.stream().map(DeferredHolder::get);
+    }
+
+    private static Map<NukaCola, DeferredItem<NukaColaItem>> nukaColas() {
+        var colas = new EnumMap<NukaCola, DeferredItem<NukaColaItem>>(NukaCola.class);
+        for (var variant : NukaCola.values()) {
+            colas.put(
+                variant,
+                REGISTER.registerItem(
+                    variant.id(),
+                    properties -> new NukaColaItem(properties, variant),
+                    NukaColaItem::properties
+                )
+            );
+        }
+        return Collections.unmodifiableMap(colas);
     }
 
     private static Map<Mutation, DeferredItem<MutationSerumItem>> serums() {

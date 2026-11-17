@@ -73,6 +73,9 @@ public class ADConfig {
     @Configurable
     public Camp camp = new Camp();
 
+    @Configurable
+    public NukaColas nukaCola = new NukaColas();
+
     public static class Weapons {
 
         @Comment("Global multiplier applied to all Atomic Dawn weapon damage.")
@@ -333,19 +336,19 @@ public class ADConfig {
         @Configurable
         @Configurable.Synchronized
         @Range(min = 1, max = 10000000)
-        public int POWER_CORE_CAPACITY = 30000;
+        public int FUSION_CORE_CAPACITY = 30000;
 
         @Comment("Core energy drained per tick while walking in Power Armor.")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 1000.0)
-        public double POWER_CORE_MOVE_COST = 1.0;
+        public double FUSION_CORE_MOVE_COST = 1.0;
 
         @Comment("Core energy drained per attack made while in Power Armor.")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 10000.0)
-        public double POWER_CORE_ATTACK_COST = 12.0;
+        public double FUSION_CORE_ATTACK_COST = 12.0;
 
         @Comment("Movement speed multiplier while piloting Power Armor.")
         @Configurable
@@ -1338,6 +1341,112 @@ public class ADConfig {
         @Configurable
         @Configurable.Synchronized
         public boolean CAMP_PROTECT_EXPLOSIONS = true;
+
+    }
+
+    public static class NukaColas {
+
+        @Comment("Health restored by Nuka-Cola, Nuka-Cola Orange, Nuka-Cola Wild and Nuka-Cola Vaccinated.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double NUKA_COLA_HEALTH = 4.0;
+
+        @Comment("Action Points restored by Nuka-Cola, Nuka-Cola Orange, Nuka-Cola Wild and Nuka-Cola Vaccinated.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 10000.0)
+        public double NUKA_COLA_AP = 25.0;
+
+        @Comment("Rads received from Nuka-Cola, Nuka-Cola Orange, Nuka-Cola Wild and Nuka-Cola Vaccinated.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double NUKA_COLA_RADS = 5.0;
+
+        @Comment("Health restored by Nuka-Cola Cranberry.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double NUKA_CRANBERRY_HEALTH = 4.0;
+
+        @Comment("Bonus XP fraction granted while Nuka-Cola Cranberry is active (0.1 = +10%).")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 10.0)
+        public double NUKA_CRANBERRY_XP_BONUS = 0.1;
+
+        @Comment("Minutes the Nuka-Cola Cranberry XP bonus lasts.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 1440)
+        public int NUKA_CRANBERRY_MINUTES = 20;
+
+        @Comment("Health restored by Nuka-Cherry.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double NUKA_CHERRY_HEALTH = 10.0;
+
+        @Comment("Action Points restored by Nuka-Cherry.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 10000.0)
+        public double NUKA_CHERRY_AP = 25.0;
+
+        @Comment("Rads received from Nuka-Cherry.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double NUKA_CHERRY_RADS = 4.0;
+
+        @Comment("Health restored by Nuka-Cola Quantum.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double NUKA_QUANTUM_HEALTH = 20.0;
+
+        @Comment("Action Points restored by Nuka-Cola Quantum.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 10000.0)
+        public double NUKA_QUANTUM_AP = 100.0;
+
+        @Comment("Rads received from Nuka-Cola Quantum.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double NUKA_QUANTUM_RADS = 10.0;
+
+        @Comment("Seconds the Nuka-Cola Dark effect lasts.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 86400)
+        public int NUKA_DARK_SECONDS = 180;
+
+        @Comment("Strength and Endurance gained while Nuka-Cola Dark is active.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 15)
+        public int NUKA_DARK_BONUS = 1;
+
+        @Comment("Perception lost while Nuka-Cola Dark is active.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 15)
+        public int NUKA_DARK_PENALTY = 1;
+
+        @Comment("Minutes the Nuka-Cola Twist S.P.E.C.I.A.L. boost lasts.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 1440)
+        public int NUKA_TWIST_MINUTES = 10;
+
+        @Comment("Points added to a random S.P.E.C.I.A.L. stat by Nuka-Cola Twist.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 15)
+        public int NUKA_TWIST_BONUS = 2;
 
     }
 

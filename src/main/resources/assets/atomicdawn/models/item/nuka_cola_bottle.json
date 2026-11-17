@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "atomicdawn:item/nuka-cola_base",
+    "layer1": "atomicdawn:item/nuka-cola_tint"
+  }
+}

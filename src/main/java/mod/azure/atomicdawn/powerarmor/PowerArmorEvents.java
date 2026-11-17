@@ -65,7 +65,7 @@ public final class PowerArmorEvents {
                 .getVehicle() instanceof PowerArmorEntity armor
         ) {
             if (event.getEntity() != armor) {
-                armor.drain((float) AtomicDawn.CONFIG.powerArmor.POWER_CORE_ATTACK_COST);
+                armor.drain((float) AtomicDawn.CONFIG.powerArmor.FUSION_CORE_ATTACK_COST);
             }
         }
         if (

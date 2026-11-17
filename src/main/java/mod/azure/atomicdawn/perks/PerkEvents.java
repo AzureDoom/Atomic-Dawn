@@ -51,8 +51,8 @@ import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.ArmorPiece;
-import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.RadiationService;

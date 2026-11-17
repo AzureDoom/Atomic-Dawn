@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "atomicdawn:item/unstable_isotope_serum"
-  }
-}
