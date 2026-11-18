@@ -7,3 +7,5 @@ run/
 *.iml
 .vscode/
 bin/
+*.zip
+*.patch
