@@ -55,6 +55,7 @@ import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorUpgradeEvents;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.registry.ADSounds;
 import mod.azure.atomicdawn.util.PlayerItems;
+import mod.azure.atomicdawn.weapon.action.VatsActions;
 
 @SuppressWarnings("unused")
 public class PowerArmorEntity extends LivingEntity {
@@ -68,6 +69,8 @@ public class PowerArmorEntity extends LivingEntity {
     public static final float WALK_SPEED = 0.11F;
 
     public static final double JUMP_VELOCITY = 0.42;
+
+    public static final int JET_PACK_AP_DELAY = 6;
 
     public static final int ENTER_TICKS = 20;
 
@@ -123,6 +126,8 @@ public class PowerArmorEntity extends LivingEntity {
     private double lastZ;
 
     private boolean warnedEmpty;
+
+    private int jetPackTicks;
 
     private int animationState = -1;
 
@@ -561,7 +566,15 @@ public class PowerArmorEntity extends LivingEntity {
                 !onGround() && !isFlying() && player.getLastClientInput().jump()
                     && PowerArmorBonuses.of(this).has(PowerArmorEffectType.JET_PACK)
             ) {
-                drain((float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_COST);
+                jetPackTicks++;
+                if (jetPackTicks >= JET_PACK_AP_DELAY && canJetPack()) {
+                    var apCost = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_AP_COST;
+                    if (player.hasInfiniteMaterials() || apCost <= 0F || VatsActions.spend(player, apCost)) {
+                        drain((float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_COST);
+                    }
+                }
+            } else {
+                jetPackTicks = 0;
             }
             if (!isFunctioning() && !getCore().isEmpty() && !warnedEmpty) {
                 warnedEmpty = true;

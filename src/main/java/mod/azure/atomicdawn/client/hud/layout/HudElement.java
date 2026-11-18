@@ -15,6 +15,7 @@ public enum HudElement {
     RADIATION((w, h) -> new Rect(w / 2 - 131, h - 19, 36, 17)),
     GHOUL((w, h) -> new Rect(w / 2 - 173, h - 47, 78, 24)),
     POWER_ARMOR((w, h) -> new Rect(6, h - 92, 150, 86)),
+    POWER_ARMOR_AP((w, h) -> new Rect(6, h - 110, 150, 15)),
     COMPASS((w, h) -> {
         var width = Math.min(AtomicDawn.CONFIG.clientPipboy.WAYPOINT_HUD_WIDTH, w - 8);
         return new Rect((w - width) / 2, AtomicDawn.CONFIG.clientPipboy.WAYPOINT_HUD_Y, width, 12);

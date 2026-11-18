@@ -38,6 +38,7 @@ import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorLegendary;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorMod;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorUpgrades;
 import mod.azure.atomicdawn.registry.ADItems;
+import mod.azure.atomicdawn.weapon.action.VatsActions;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID, value = Dist.CLIENT)
@@ -58,6 +59,8 @@ public final class PowerArmorClient {
     private static int flightToggleWindow;
 
     private static boolean jumpWasDown;
+
+    private static long lastJetPackTime = Long.MIN_VALUE / 2;
 
     @Nullable
     private static ItemStack fist;
@@ -114,12 +117,18 @@ public final class PowerArmorClient {
             return;
         }
 
-        if (jumpDown && !armor.onGround() && jumpCooldown <= JUMP_COOLDOWN - 6 && armor.canJetPack()) {
-            var motion = armor.getDeltaMovement();
-            var thrust = PowerArmorBonuses.of(armor).get(PowerArmorEffectType.JET_PACK);
-            armor.setDeltaMovement(motion.x, Math.min(JET_PACK_MAX_RISE, motion.y + thrust), motion.z);
-            armor.resetFallDistance();
-            return;
+        if (
+            jumpDown && !armor.onGround() && jumpCooldown <= JUMP_COOLDOWN - PowerArmorEntity.JET_PACK_AP_DELAY
+                && armor.canJetPack()
+        ) {
+            lastJetPackTime = armor.level().getGameTime();
+            if (hasJetPackAp(minecraft)) {
+                var motion = armor.getDeltaMovement();
+                var thrust = PowerArmorBonuses.of(armor).get(PowerArmorEffectType.JET_PACK);
+                armor.setDeltaMovement(motion.x, Math.min(JET_PACK_MAX_RISE, motion.y + thrust), motion.z);
+                armor.resetFallDistance();
+                return;
+            }
         }
         if (jumpCooldown > 0) {
             return;
@@ -131,6 +140,19 @@ public final class PowerArmorClient {
             armor.setOnGround(false);
             jumpCooldown = JUMP_COOLDOWN;
         }
+    }
+
+    public static long lastJetPackTime() {
+        return lastJetPackTime;
+    }
+
+    private static boolean hasJetPackAp(Minecraft minecraft) {
+        var player = minecraft.player;
+        if (player == null) {
+            return false;
+        }
+        var cost = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_AP_COST;
+        return player.hasInfiniteMaterials() || cost <= 0F || VatsActions.actionPoints(player).points() >= cost;
     }
 
     private static boolean tickFlight(Minecraft minecraft, PowerArmorEntity armor, boolean jumpPressed) {

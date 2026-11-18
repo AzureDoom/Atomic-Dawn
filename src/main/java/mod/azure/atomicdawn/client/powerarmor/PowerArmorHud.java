@@ -4,12 +4,14 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
 import java.util.Locale;
 
+import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
@@ -17,14 +19,25 @@ import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorPieceItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorSlot;
 import mod.azure.atomicdawn.powerarmor.PowerCoreItem;
+import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorBonuses;
+import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorEffectType;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADAttachments;
+import mod.azure.atomicdawn.weapon.action.VatsActions;
 
 public final class PowerArmorHud implements GuiLayer {
 
     private static final int PANEL_W = 150;
 
     private static final int PANEL_H = 86;
+
+    private static final int AP_H = 15;
+
+    private static final int AP_GAP = 3;
+
+    private static final long AP_LINGER_TICKS = 20L;
+
+    private static final long AP_REFILL_TICKS = 100L;
 
     private static final int[][] SILHOUETTE = {
         { 11, 0, 8, 7 },
@@ -43,6 +56,57 @@ public final class PowerArmorHud implements GuiLayer {
         ) {
             return;
         }
+        renderPanel(graphics, minecraft, player, armor);
+        renderJetPackAp(graphics, minecraft, player, armor);
+    }
+
+    private static void renderJetPackAp(
+        GuiGraphicsExtractor graphics,
+        Minecraft minecraft,
+        LocalPlayer player,
+        PowerArmorEntity armor
+    ) {
+        if (!PowerArmorBonuses.of(armor).has(PowerArmorEffectType.JET_PACK)) {
+            return;
+        }
+        var since = armor.level().getGameTime() - PowerArmorClient.lastJetPackTime();
+        var ap = VatsActions.actionPoints(player);
+        var max = VatsActions.maxActionPoints(player);
+        var full = ap.points() >= max - 0.01F;
+        if (since > AP_REFILL_TICKS || (since > AP_LINGER_TICKS && full)) {
+            return;
+        }
+        var height = minecraft.getWindow().getGuiScaledHeight();
+        var x = 6;
+        var y = height - PANEL_H - 6 - AP_GAP - AP_H;
+        if (!HudLayout.push(graphics, HudElement.POWER_ARMOR_AP, x, y, PANEL_W, AP_H)) {
+            return;
+        }
+        graphics.fill(x, y, x + PANEL_W, y + AP_H, 0xB0000000);
+        graphics.fill(x, y, x + PANEL_W, y + 1, PipBoyTheme.border());
+        var cost = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_AP_COST;
+        var empty = !player.hasInfiniteMaterials() && ap.points() < cost;
+        var blink = (player.tickCount / 5) % 2 == 0;
+        bar(
+            graphics,
+            minecraft.font,
+            x + 4,
+            y + 1,
+            PANEL_W - 8,
+            Component.translatable("power_armor.atomicdawn.hud.ap"),
+            max <= 0F ? 0F : ap.points() / max,
+            empty && blink ? PipBoyTheme.bad() : PipBoyTheme.text(),
+            Math.round(ap.points()) + "/" + Math.round(max)
+        );
+        HudLayout.pop(graphics);
+    }
+
+    private static void renderPanel(
+        GuiGraphicsExtractor graphics,
+        Minecraft minecraft,
+        LocalPlayer player,
+        PowerArmorEntity armor
+    ) {
         var font = minecraft.font;
         var height = minecraft.getWindow().getGuiScaledHeight();
         var x = 6;

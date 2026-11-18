@@ -410,6 +410,12 @@ public class ADConfig {
         @DecimalRange(min = 0.0, max = 1000.0)
         public double POWER_ARMOR_JETPACK_COST = 6.0;
 
+        @Comment("Action Points drained per tick while the Power Armor jet pack fires.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double POWER_ARMOR_JETPACK_AP_COST = 1.5;
+
     }
 
     public static class Armor {
