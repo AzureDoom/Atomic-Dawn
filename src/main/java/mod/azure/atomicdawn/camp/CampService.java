@@ -1,6 +1,7 @@
 package mod.azure.atomicdawn.camp;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -24,6 +25,10 @@ public final class CampService {
     private CampService() {}
 
     public static void handle(ServerPlayer player, CampActionPayload.Action action, UUID campId, int value) {
+        if (action == CampActionPayload.Action.MODULE_FACING) {
+            CampModuleFacing.set(player.getUUID(), Direction.from2DDataValue(value));
+            return;
+        }
         var server = player.level().getServer();
         var now = server.overworld().getGameTime();
         var last = LAST_ACTION.get(player.getUUID());
@@ -45,6 +50,7 @@ public final class CampService {
             case PIN -> owned(player, campId).ifPresent(camp -> pin(player, camp));
             case TOGGLE_ACCESS -> updateAccess(player, access -> access.toggled(CampAccess.Flag.byIndex(value)));
             case UNTRUST -> updateAccess(player, access -> access.withoutTrusted(campId));
+            case MODULE_FACING -> {}
         }
     }
 
@@ -110,5 +116,6 @@ public final class CampService {
 
     public static void forget(UUID player) {
         LAST_ACTION.remove(player);
+        CampModuleFacing.forget(player);
     }
 }

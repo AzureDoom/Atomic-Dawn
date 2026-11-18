@@ -3,6 +3,7 @@ package mod.azure.atomicdawn.camp;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -109,9 +110,37 @@ public final class CampSync {
                     )
                     .toList(),
                 CampPlacementService.selectedSlot(server, player.getUUID()),
-                deployed.map(CampSync::access).or(() -> owned.stream().findFirst().map(CampSync::access))
+                deployed.map(CampSync::access).or(() -> owned.stream().findFirst().map(CampSync::access)),
+                blueprint(player)
             )
         );
+    }
+
+    private static List<CampSyncPayload.BlueprintPart> blueprint(ServerPlayer player) {
+        var server = player.level().getServer();
+        var selected = CampManager.inSlot(
+            server,
+            player.getUUID(),
+            CampPlacementService.selectedSlot(server, player.getUUID())
+        );
+        if (selected.isEmpty() || selected.get().deployed()) {
+            return List.of();
+        }
+        var parts = new ArrayList<CampSyncPayload.BlueprintPart>();
+        for (var object : selected.get().objects()) {
+            if (!object.stored()) {
+                continue;
+            }
+            for (var snapshot : object.snapshot()) {
+                if (parts.size() >= CampSyncPayload.MAX_BLUEPRINT) {
+                    return parts;
+                }
+                snapshot.state()
+                    .filter(state -> !state.isAir())
+                    .ifPresent(state -> parts.add(new CampSyncPayload.BlueprintPart(snapshot.offset(), state)));
+            }
+        }
+        return parts;
     }
 
     public static void changed(MinecraftServer server) {

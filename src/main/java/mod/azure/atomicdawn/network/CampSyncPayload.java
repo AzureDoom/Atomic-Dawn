@@ -7,6 +7,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public record CampSyncPayload(
     List<CampView> nearby,
     List<SlotView> slots,
     int selectedSlot,
-    Optional<AccessView> access
+    Optional<AccessView> access,
+    List<BlueprintPart> blueprint
 ) implements CustomPacketPayload {
 
     public static final int MAX_NEARBY = 64;
@@ -42,6 +45,8 @@ public record CampSyncPayload(
     public static final int MAX_SLOTS = 10;
 
     public static final int MAX_TRUSTED = 32;
+
+    public static final int MAX_BLUEPRINT = 8192;
 
     private static <T> void writeList(ByteBuf buf, List<T> list, int max, StreamCodec<ByteBuf, T> codec) {
         var count = Math.min(list.size(), max);
@@ -188,6 +193,23 @@ public record CampSyncPayload(
         );
     }
 
+    public record BlueprintPart(
+        BlockPos offset,
+        BlockState state
+    ) {
+
+        static final StreamCodec<ByteBuf, BlueprintPart> STREAM_CODEC = StreamCodec.of(
+            (buf, part) -> {
+                BlockPos.STREAM_CODEC.encode(buf, part.offset());
+                ByteBufCodecs.VAR_INT.encode(buf, Block.getId(part.state()));
+            },
+            buf -> new BlueprintPart(
+                BlockPos.STREAM_CODEC.decode(buf),
+                Block.stateById(ByteBufCodecs.VAR_INT.decode(buf))
+            )
+        );
+    }
+
     public record TrustedView(
         UUID id,
         String name
@@ -242,6 +264,7 @@ public record CampSyncPayload(
             ByteBufCodecs.VAR_INT.encode(buf, payload.selectedSlot());
             ByteBufCodecs.BOOL.encode(buf, payload.access().isPresent());
             payload.access().ifPresent(view -> AccessView.STREAM_CODEC.encode(buf, view));
+            writeList(buf, payload.blueprint(), MAX_BLUEPRINT, BlueprintPart.STREAM_CODEC);
         },
         buf -> {
             var enabled = ByteBufCodecs.BOOL.decode(buf);
@@ -261,6 +284,7 @@ public record CampSyncPayload(
             var access = ByteBufCodecs.BOOL.decode(buf)
                 ? Optional.of(AccessView.STREAM_CODEC.decode(buf))
                 : Optional.<AccessView>empty();
+            var blueprint = readList(buf, MAX_BLUEPRINT, BlueprintPart.STREAM_CODEC::decode);
             return new CampSyncPayload(
                 enabled,
                 camp,
@@ -274,7 +298,8 @@ public record CampSyncPayload(
                 nearby,
                 slots,
                 selected,
-                access
+                access,
+                blueprint
             );
         }
     );

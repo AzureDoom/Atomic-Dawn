@@ -44,7 +44,12 @@ public class CampModuleBlock extends Block {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        var player = context.getPlayer();
+        var chosen = player == null ? null : CampModuleFacing.get(player.getUUID());
+        return defaultBlockState().setValue(
+            FACING,
+            chosen != null ? chosen : context.getHorizontalDirection().getOpposite()
+        );
     }
 
     @Override

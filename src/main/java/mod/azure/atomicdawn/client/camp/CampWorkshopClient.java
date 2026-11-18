@@ -131,7 +131,7 @@ public final class CampWorkshopClient {
         return CampBuildable.get(level.registryAccess(), selected);
     }
 
-    private static void toast(Component message) {
+    static void toast(Component message) {
         toast = message;
         toastTicks = TOAST_TICKS;
     }
@@ -154,6 +154,7 @@ public final class CampWorkshopClient {
             toggle(player);
         }
         if (!active) {
+            CampModulePlacementClient.tick(player);
             drain();
             return;
         }
@@ -221,6 +222,7 @@ public final class CampWorkshopClient {
         active = false;
         selected = null;
         scrapArmed = null;
+        CampModulePlacementClient.reset();
         CampClientState.clear();
     }
 

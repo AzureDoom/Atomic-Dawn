@@ -2939,6 +2939,7 @@
   "camp.atomicdawn.module.unregistered": "This module isn't linked to a C.A.M.P.",
   "camp.atomicdawn.module.owner": "Your C.A.M.P. | Budget %s / %s | Radius %s",
   "camp.atomicdawn.module.visitor": "C.A.M.P. owned by %s",
+  "camp.atomicdawn.module.facing": "C.A.M.P. facing: %s | %s to rotate (sneak to reverse)",
   "commands.atomicdawn.camp.none": "No C.A.M.P.s are deployed",
   "commands.atomicdawn.camp.entry": "%s: %s at %s, %s, %s (%s)",
   "commands.atomicdawn.camp.unknown": "No C.A.M.P. with that id",

@@ -29,7 +29,8 @@ public record CampActionPayload(
         REBUILD,
         DELETE,
         TOGGLE_ACCESS,
-        UNTRUST;
+        UNTRUST,
+        MODULE_FACING;
 
         private static final Action[] VALUES = values();
 

@@ -125,14 +125,18 @@ public final class CampBoundaryRenderer {
         if (holding) {
             var target = moduleTarget(minecraft);
             if (target != null) {
-                var color = CampClientState.canDeployAt(target) ? VALID : INVALID;
+                var deployable = CampClientState.canDeployAt(target);
+                var color = deployable ? VALID : INVALID;
                 walls.add(new Wall(Vec3.atBottomCenterOf(target), radius, down, up, color));
                 modulePreview = target;
                 modulePreviewState = ((BlockItem) (isModule(player.getMainHandItem().getItem())
                     ? player.getMainHandItem().getItem()
                     : player.getOffhandItem().getItem())).getBlock()
                     .defaultBlockState()
-                    .setValue(CampModuleBlock.FACING, player.getDirection().getOpposite());
+                    .setValue(CampModuleBlock.FACING, CampModulePlacementClient.facing());
+                for (var ghost : CampModulePlacementClient.ghosts(target, deployable)) {
+                    addShapeBoxes(boxes, level, ghost.pos(), ghost.state(), ghost.valid() ? VALID : INVALID);
+                }
             }
             for (var other : state.nearby()) {
                 if (other.origin().distSqr(player.blockPosition()) < NEARBY_RANGE_SQR) {
@@ -253,12 +257,37 @@ public final class CampBoundaryRenderer {
         }
     }
 
+    private static void addShapeBoxes(ArrayList<Box> boxes, Level level, BlockPos pos, BlockState state, int color) {
+        var alpha = 0.22F;
+        var shape = state.getShape(level, pos);
+        if (shape.isEmpty()) {
+            boxes.add(new Box(pos, color, alpha));
+            return;
+        }
+        shape.forAllBoxes(
+            (x0, y0, z0, x1, y1, z1) -> boxes.add(
+                new Box(
+                    new AABB(
+                        pos.getX() + x0,
+                        pos.getY() + y0,
+                        pos.getZ() + z0,
+                        pos.getX() + x1,
+                        pos.getY() + y1,
+                        pos.getZ() + z1
+                    ),
+                    color,
+                    alpha
+                )
+            )
+        );
+    }
+
     private static boolean holdingModule(LocalPlayer player) {
-        return isModule(player.getMainHandItem().getItem()) || isModule(player.getOffhandItem().getItem());
+        return CampModulePlacementClient.holdingModule(player);
     }
 
     private static boolean isModule(Item item) {
-        return item instanceof BlockItem blockItem && blockItem.getBlock() instanceof CampModuleBlock;
+        return CampModulePlacementClient.isModule(item);
     }
 
     private static @Nullable BlockPos moduleTarget(Minecraft minecraft) {
