@@ -19,8 +19,10 @@ import net.minecraft.util.FormattedCharSequence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
@@ -30,6 +32,7 @@ import mod.azure.atomicdawn.client.pipboy.tab.MapTab;
 import mod.azure.atomicdawn.client.pipboy.tab.PipBoyTab;
 import mod.azure.atomicdawn.client.pipboy.tab.RadioTab;
 import mod.azure.atomicdawn.client.pipboy.tab.StatTab;
+import mod.azure.atomicdawn.config.ADConfig.ClientPipBoy.PipBoyLayout;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.registry.ADSounds;
 import mod.azure.atomicdawn.special.SpecialXp;
@@ -49,7 +52,7 @@ public class PipBoyScreen extends Screen {
 
     public static final int HOVER_NONE = -1;
 
-    public static final int HOVER_POWER = 3;
+    public static final int HOVER_POWER = 100;
 
     private static final int HEADER_H = 17;
 
@@ -59,11 +62,26 @@ public class PipBoyScreen extends Screen {
 
     private static final int SHUTDOWN_MS = 260;
 
+    private static final int CLASSIC_CLOCK_H = 22;
+
+    private static final int CLASSIC_STATS_H = 32;
+
+    private static final int CLASSIC_TAB_H = 14;
+
+    private static final int CARD_GAP = 14;
+
+    private static final int CLASSIC_STATUS_H = 11;
+
     private record SubtabHit(
         String id,
         Rect rect,
         Component label,
         int labelX
+    ) {}
+
+    private record StatusLine(
+        Component text,
+        int color
     ) {}
 
     private PipBoyHousing.Layout layout = PipBoyHousing.layout(0, 0, true);
@@ -73,6 +91,12 @@ public class PipBoyScreen extends Screen {
     private Rect inner = new Rect(0, 0, 0, 0);
 
     private Rect content = new Rect(0, 0, 0, 0);
+
+    private PipBoyLayout style = PipBoyLayout.FALLOUT_76;
+
+    private Rect sidebar = new Rect(0, 0, 0, 0);
+
+    private boolean verticalSubtabs;
 
     private final List<PipBoyButton> buttons = new ArrayList<>();
 
@@ -290,23 +314,16 @@ public class PipBoyScreen extends Screen {
         layout = PipBoyHousing.layout(width, height, AtomicDawn.CONFIG.clientPipboy.PIPBOY_FULLSCREEN);
         screenArea = layout.screen();
         inner = screenArea.inset(layout.fullscreen() ? 6 : 5);
-
-        var slot = inner.width() / (float) TABS.size();
-        for (var i = 0; i < TABS.size(); i++) {
-            var x0 = inner.x() + Math.round(slot * i);
-            var x1 = inner.x() + Math.round(slot * (i + 1));
-            tabHits.add(new Rect(x0, inner.y(), x1 - x0, HEADER_H));
-        }
+        style = PipBoyModel.layout();
+        verticalSubtabs = false;
 
         var tab = currentTab();
         var subtab = currentSubtab();
-        var subtabs = tab.subtabs();
-        var subY = inner.y() + HEADER_H + 1;
-        if (subtabs.size() > 1) {
-            layoutSubtabs(tab, subtabs, subtab, subY);
+        switch (style) {
+            case NEW_VEGAS, FALLOUT_3 -> initFallout3000(tab);
+            case FALLOUT_1_2 -> initClassic(tab);
+            default -> initModern(tab, subtab);
         }
-        var top = subY + (subtabs.size() > 1 ? SUBTAB_H + 5 : 3);
-        content = new Rect(inner.x() + 2, top, inner.width() - 4, inner.bottom() - FOOTER_H - 3 - top);
 
         contentReady = !booting();
         if (contentReady) {
@@ -314,11 +331,111 @@ public class PipBoyScreen extends Screen {
         }
     }
 
-    private void layoutSubtabs(PipBoyTab tab, List<String> subtabs, String selected, int y) {
-        var slot = (inner.width() - 4) / (float) subtabs.size();
+    private void initModern(PipBoyTab tab, String subtab) {
+        var slot = inner.width() / (float) TABS.size();
+        for (var i = 0; i < TABS.size(); i++) {
+            var x0 = inner.x() + Math.round(slot * i);
+            var x1 = inner.x() + Math.round(slot * (i + 1));
+            tabHits.add(new Rect(x0, inner.y(), x1 - x0, HEADER_H));
+        }
+        var subtabs = tab.subtabs();
+        var subY = inner.y() + HEADER_H + 1;
+        if (subtabs.size() > 1) {
+            if (style == PipBoyLayout.FALLOUT_4) {
+                layoutCarousel(tab, subtabs, subtab, subY);
+            } else {
+                layoutSubtabs(tab, subtabs, inner.x() + 2, inner.width() - 4, subY);
+            }
+        }
+        var top = subY + (subtabs.size() > 1 ? SUBTAB_H + 5 : 3);
+        content = new Rect(inner.x() + 2, top, inner.width() - 4, inner.bottom() - FOOTER_H - 3 - top);
+    }
+
+    private void initFallout3000(PipBoyTab tab) {
+        if (layout.fullscreen()) {
+            var x = inner.x() + 2;
+            for (var candidate : TABS) {
+                var w = font.width(candidate.label()) + 12;
+                tabHits.add(new Rect(x, inner.y(), w, HEADER_H));
+                x += w;
+            }
+        }
+        var subtabs = tab.subtabs();
+        var rowY = inner.bottom() - SUBTAB_H - 2;
+        if (subtabs.size() > 1) {
+            layoutSubtabs(tab, subtabs, inner.x() + 8, inner.width() - 16, rowY);
+        } else {
+            subtabHits.add(
+                new SubtabHit(
+                    subtabs.getFirst(),
+                    new Rect(inner.x() + 8, rowY, inner.width() - 16, SUBTAB_H),
+                    tab.label(),
+                    inner.x() + inner.width() / 2
+                )
+            );
+        }
+        var top = inner.y() + HEADER_H + 3;
+        content = new Rect(inner.x() + 6, top, inner.width() - 12, rowY - 6 - top);
+    }
+
+    private void initClassic(PipBoyTab tab) {
+        if (!layout.fullscreen()) {
+            initClassicHoused(tab);
+            return;
+        }
+        var sideW = Math.clamp(inner.width() / 4, 72, 112);
+        sidebar = new Rect(inner.x() + 2, inner.y() + 2, sideW, inner.height() - 4);
+        var y = sidebar.y() + CLASSIC_CLOCK_H + 6;
+        for (var i = 0; i < TABS.size(); i++) {
+            tabHits.add(new Rect(sidebar.x() + 3, y, sidebar.width() - 6, CLASSIC_TAB_H));
+            y += CLASSIC_TAB_H + 3;
+        }
+        var contentX = sidebar.right() + 8;
+        var contentW = inner.right() - 5 - contentX;
+        var contentTop = inner.y() + 5;
+        var subtabs = tab.subtabs();
+        if (subtabs.size() > 1) {
+            var statsTop = sidebar.bottom() - CLASSIC_STATS_H;
+            var rowH = Math.min(12, (statsTop - y - 4) / subtabs.size());
+            if (rowH >= 10) {
+                verticalSubtabs = true;
+                y += 2;
+                for (var subtab : subtabs) {
+                    subtabHits.add(
+                        new SubtabHit(
+                            subtab,
+                            new Rect(sidebar.x() + 6, y, sidebar.width() - 9, rowH),
+                            tab.subtabLabel(subtab),
+                            sidebar.x() + 14
+                        )
+                    );
+                    y += rowH;
+                }
+            } else {
+                layoutSubtabs(tab, subtabs, contentX, contentW, contentTop);
+                contentTop += SUBTAB_H + 5;
+            }
+        }
+        content = new Rect(contentX, contentTop, contentW, inner.bottom() - 5 - contentTop);
+    }
+
+    private void initClassicHoused(PipBoyTab tab) {
+        sidebar = new Rect(0, 0, 0, 0);
+        var titleW = font.width(tab.label()) + 14;
+        var top = inner.y() + 3;
+        var subtabs = tab.subtabs();
+        if (subtabs.size() > 1) {
+            layoutSubtabs(tab, subtabs, inner.x() + 2 + titleW, inner.width() - 4 - titleW, top);
+        }
+        top += SUBTAB_H + 6;
+        content = new Rect(inner.x() + 7, top, inner.width() - 14, inner.bottom() - 7 - CLASSIC_STATUS_H - top);
+    }
+
+    private void layoutSubtabs(PipBoyTab tab, List<String> subtabs, int left, int width, int y) {
+        var slot = width / (float) subtabs.size();
         for (var i = 0; i < subtabs.size(); i++) {
-            var x0 = inner.x() + 2 + Math.round(slot * i);
-            var x1 = inner.x() + 2 + Math.round(slot * (i + 1));
+            var x0 = left + Math.round(slot * i);
+            var x1 = left + Math.round(slot * (i + 1));
             var label = tab.subtabLabel(subtabs.get(i));
             subtabHits.add(
                 new SubtabHit(
@@ -329,6 +446,39 @@ public class PipBoyScreen extends Screen {
                 )
             );
         }
+    }
+
+    private void layoutCarousel(PipBoyTab tab, List<String> subtabs, String selected, int y) {
+        var index = Math.max(0, subtabs.indexOf(selected));
+        var left = inner.x() + 2;
+        var right = inner.right() - 2;
+        var widths = new int[subtabs.size()];
+        for (var i = 0; i < subtabs.size(); i++) {
+            widths[i] = Math.min(font.width(tab.subtabLabel(subtabs.get(i))), right - left - 6);
+        }
+        var start = inner.x() + (inner.width() - widths[index]) / 2;
+        addCard(tab, subtabs.get(index), start, widths[index], y);
+        var cursor = start - CARD_GAP;
+        for (var i = index - 1; i >= 0; i--) {
+            var x0 = cursor - widths[i];
+            if (x0 < left) {
+                break;
+            }
+            addCard(tab, subtabs.get(i), x0, widths[i], y);
+            cursor = x0 - CARD_GAP;
+        }
+        cursor = start + widths[index] + CARD_GAP;
+        for (var i = index + 1; i < subtabs.size(); i++) {
+            if (cursor + widths[i] > right) {
+                break;
+            }
+            addCard(tab, subtabs.get(i), cursor, widths[i], y);
+            cursor += widths[i] + CARD_GAP;
+        }
+    }
+
+    private void addCard(PipBoyTab tab, String subtab, int x, int w, int y) {
+        subtabHits.add(new SubtabHit(subtab, new Rect(x - 4, y, w + 8, SUBTAB_H), tab.subtabLabel(subtab), x + w / 2));
     }
 
     public void switchTab(int index) {
@@ -347,8 +497,13 @@ public class PipBoyScreen extends Screen {
     }
 
     private void pressSelector(int index) {
-        var target = SELECTOR_TABS[index];
-        if (index == SELECTOR_TABS.length - 1 && PipBoyClientState.tab >= target) {
+        var selectors = layout.selectorTabs();
+        if (index < 0 || index >= selectors.length) {
+            return;
+        }
+        var target = selectors[index];
+        var cycles = selectors.length < TABS.size() && index == selectors.length - 1;
+        if (cycles && PipBoyClientState.tab >= target) {
             switchTab(PipBoyClientState.tab + 1 >= TABS.size() ? target : PipBoyClientState.tab + 1);
         } else {
             switchTab(target);
@@ -356,9 +511,10 @@ public class PipBoyScreen extends Screen {
     }
 
     private int selectorLit() {
+        var selectors = layout.selectorTabs();
         var tab = PipBoyClientState.tab;
-        for (var i = SELECTOR_TABS.length - 1; i >= 0; i--) {
-            if (tab >= SELECTOR_TABS[i]) {
+        for (var i = selectors.length - 1; i >= 0; i--) {
+            if (tab >= selectors[i]) {
                 return i;
             }
         }
@@ -641,12 +797,20 @@ public class PipBoyScreen extends Screen {
         if (booting()) {
             boot.render(graphics, this, screenArea, now);
         } else {
-            renderHeader(graphics, mouseX, mouseY);
+            switch (style) {
+                case NEW_VEGAS, FALLOUT_3 -> renderFallout3000(graphics, mouseX, mouseY);
+                case FALLOUT_1_2 -> renderClassic(graphics, mouseX, mouseY);
+                default -> renderHeader(graphics, mouseX, mouseY);
+            }
             currentTab().render(graphics, this, content, currentSubtab(), mouseX, mouseY);
             for (var button : buttons) {
                 button.render(graphics, this, mouseX, mouseY);
             }
-            renderFooter(graphics);
+            if (style == PipBoyLayout.FALLOUT_76) {
+                renderFooter(graphics);
+            } else if (style == PipBoyLayout.FALLOUT_4) {
+                renderPanelFooter(graphics);
+            }
             if (boot != null) {
                 boot.renderReveal(graphics, screenArea, now);
             }
@@ -757,26 +921,407 @@ public class PipBoyScreen extends Screen {
         var fill = Math.round((barW - 2) * Math.clamp(SpecialXp.fraction(progress.xp(), progress.level()), 0F, 1F));
         graphics.fill(bx + 1, y + 3, bx + 1 + fill, y + 7, PipBoyTheme.text());
 
+        var right = footerStatus(apLine());
+        var maxW = inner.right() - (bx + barW + 8) - 2;
+        var w = Math.min(font.width(right.text()), maxW);
+        fitted(graphics, right.text(), inner.right() - w - 2, y + 1, maxW, right.color());
+    }
+
+    private Component apLine() {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return Component.empty();
+        }
+        var ap = player.getData(ADAttachments.ACTION_POINTS.get());
+        return Component.translatable(
+            "pipboy.atomicdawn.footer.ap",
+            Math.round(ap.points()),
+            Math.round(VatsActions.maxActionPoints(player))
+        );
+    }
+
+    private Component hpLine() {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return Component.empty();
+        }
+        return Component.translatable(
+            "pipboy.atomicdawn.footer.hp",
+            Math.round(player.getHealth()),
+            Math.round(player.getMaxHealth())
+        );
+    }
+
+    private int playerLevel() {
+        var player = minecraft == null ? null : minecraft.player;
+        return player == null ? 1 : player.getData(ADAttachments.SPECIAL_PROGRESS.get()).level();
+    }
+
+    private float levelFraction() {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return 0F;
+        }
+        var progress = player.getData(ADAttachments.SPECIAL_PROGRESS.get());
+        return Math.clamp(SpecialXp.fraction(progress.xp(), progress.level()), 0F, 1F);
+    }
+
+    private StatusLine footerStatus(Component fallback) {
         var status = PipBoyClientState.status;
-        Component right;
-        int rightColor;
+        if (
+            status != null && minecraft != null && minecraft.level != null
+                && minecraft.level.getGameTime() < PipBoyClientState.statusUntil
+        ) {
+            return new StatusLine(status, PipBoyClientState.statusColor);
+        }
+        return new StatusLine(fallback, PipBoyTheme.text());
+    }
+
+    private void renderPanelFooter(GuiGraphicsExtractor graphics) {
+        if (minecraft == null || minecraft.player == null) {
+            return;
+        }
+        var y = inner.bottom() - FOOTER_H + 1;
+        var h = FOOTER_H - 2;
+        var gap = 3;
+        var total = inner.width() - 4;
+        var sideW = total * 27 / 100;
+        var midW = total - sideW * 2 - gap * 2;
+        var left = new Rect(inner.x() + 2, y, sideW, h);
+        var middle = new Rect(left.right() + gap, y, midW, h);
+        var right = new Rect(middle.right() + gap, y, sideW, h);
+        var fill = PipBoyTheme.selection();
+        PipBoyDraw.fill(graphics, left, fill);
+        PipBoyDraw.fill(graphics, middle, fill);
+        PipBoyDraw.fill(graphics, right, fill);
+        var ty = y + (h - 8) / 2 + 1;
+        fitted(graphics, hpLine(), left.x() + 4, ty, left.width() - 8, PipBoyTheme.text());
+
+        var level = Component.translatable("pipboy.atomicdawn.footer.level", playerLevel());
+        var levelW = Math.min(font.width(level), middle.width() / 2);
+        fitted(graphics, level, middle.x() + 4, ty, levelW, PipBoyTheme.text());
+        var barX = middle.x() + 4 + levelW + 6;
+        var barW = middle.right() - 4 - barX;
+        if (barW > 6) {
+            var barY = y + h / 2 - 2;
+            PipBoyDraw.outline(graphics, new Rect(barX, barY, barW, 5), PipBoyTheme.text());
+            var filled = Math.round((barW - 2) * levelFraction());
+            graphics.fill(barX + 1, barY + 1, barX + 1 + filled, barY + 4, PipBoyTheme.text());
+        }
+
+        var status = footerStatus(apLine());
+        var maxW = right.width() - 8;
+        var w = Math.min(font.width(status.text()), maxW);
+        fitted(graphics, status.text(), right.right() - 4 - w, ty, maxW, status.color());
+    }
+
+    private void renderFallout3000(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        var color = PipBoyTheme.text();
+        var frameTop = inner.y() + 5;
+        var left = inner.x() + 2;
+        var right = inner.right() - 3;
+        var titleEnd = left + 4;
+        if (layout.fullscreen()) {
+            var lineY = inner.y() + HEADER_H - 3;
+            graphics.fill(inner.x(), lineY, inner.right(), lineY + 1, color);
+            for (var i = 0; i < TABS.size(); i++) {
+                var hit = tabHits.get(i);
+                titleEnd = Math.max(titleEnd, hit.right());
+                var label = TABS.get(i).label();
+                var w = font.width(label);
+                var x = hit.x() + 6;
+                var y = inner.y() + 3;
+                if (i == PipBoyClientState.tab) {
+                    bracketUp(graphics, x - 4, x + w + 3, y - 3, lineY, color);
+                    glowText(graphics, label, x, y, color);
+                } else {
+                    if (hit.contains(mouseX, mouseY)) {
+                        graphics.fill(x - 3, y - 2, x + w + 3, lineY - 1, PipBoyTheme.highlight());
+                    }
+                    text(graphics, label, x, y, PipBoyTheme.dim());
+                }
+            }
+        } else {
+            var title = currentTab().label();
+            var titleX = left + 10;
+            graphics.fill(left, frameTop, titleX - 3, frameTop + 1, color);
+            glowText(graphics, title, titleX, inner.y() + 2, color);
+            titleEnd = titleX + font.width(title) + 4;
+        }
+        if (style == PipBoyLayout.NEW_VEGAS) {
+            renderVegasHeader(graphics, titleEnd, frameTop, color);
+        } else {
+            renderStatSegments(graphics, titleEnd, color);
+        }
+
+        if (subtabHits.isEmpty()) {
+            return;
+        }
+        var rowY = subtabHits.getFirst().rect().y();
+        var rowMid = rowY + SUBTAB_H / 2;
+        if (!layout.fullscreen()) {
+            graphics.fill(left, frameTop, left + 1, rowMid + 1, color);
+            graphics.fill(right, frameTop + 8, right + 1, rowMid + 1, color);
+        }
+        graphics.fill(left, rowMid, right + 1, rowMid + 1, color);
+        for (var hit : subtabHits) {
+            var selected = hit.id().equals(currentSubtab());
+            var hovered = hit.rect().contains(mouseX, mouseY);
+            var available = Math.max(1, hit.rect().width() - 12);
+            var labelWidth = Math.min(available, font.width(hit.label()));
+            var x = hit.labelX() - labelWidth / 2;
+            var box = new Rect(x - 5, rowY - 1, labelWidth + 10, SUBTAB_H + 1);
+            PipBoyDraw.fill(graphics, box, PipBoyTheme.glass());
+            if (selected) {
+                PipBoyDraw.outline(graphics, box, color);
+            } else if (hovered) {
+                PipBoyDraw.fill(graphics, box.inset(1), PipBoyTheme.highlight());
+            }
+            fitted(graphics, hit.label(), x, rowY + 2, available, selected || hovered ? color : PipBoyTheme.dim());
+        }
+    }
+
+    private void renderStatSegments(GuiGraphicsExtractor graphics, int start, int color) {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return;
+        }
+        var x0 = start + 6;
+        var available = inner.right() - 3 - x0;
+        if (available < 30) {
+            return;
+        }
+        var status = PipBoyClientState.status;
         if (
             status != null && minecraft.level != null && minecraft.level.getGameTime() < PipBoyClientState.statusUntil
         ) {
-            right = status;
-            rightColor = PipBoyClientState.statusColor;
-        } else {
-            var ap = player.getData(ADAttachments.ACTION_POINTS.get());
-            right = Component.translatable(
-                "pipboy.atomicdawn.footer.ap",
-                Math.round(ap.points()),
-                Math.round(VatsActions.maxActionPoints(player))
-            );
-            rightColor = PipBoyTheme.text();
+            segment(graphics, x0, inner.right() - 3, Component.empty(), status, PipBoyClientState.statusColor, color);
+            return;
         }
-        var maxW = inner.right() - (bx + barW + 8) - 2;
-        var w = Math.min(font.width(right), maxW);
-        fitted(graphics, right, inner.right() - w - 2, y + 1, maxW, rightColor);
+        var ap = player.getData(ADAttachments.ACTION_POINTS.get());
+        Component[] labels = {
+            Component.translatable("pipboy.atomicdawn.header.level"),
+            Component.translatable("pipboy.atomicdawn.header.hp"),
+            Component.translatable("pipboy.atomicdawn.header.ap") };
+        Component[] values = {
+            Component.literal(String.valueOf(playerLevel())),
+            Component.literal(Math.round(player.getHealth()) + "/" + Math.round(player.getMaxHealth())),
+            Component.literal(Math.round(ap.points()) + "/" + Math.round(VatsActions.maxActionPoints(player))) };
+        var segmentW = available / labels.length;
+        for (var i = 0; i < labels.length; i++) {
+            var sx = x0 + segmentW * i;
+            var ex = i == labels.length - 1 ? inner.right() - 3 : sx + segmentW - 4;
+            segment(graphics, sx, ex, labels[i], values[i], color, color);
+        }
+    }
+
+    private void segment(
+        GuiGraphicsExtractor graphics,
+        int x0,
+        int x1,
+        Component label,
+        Component value,
+        int valueColor,
+        int color
+    ) {
+        var top = inner.y() + 1;
+        graphics.fill(x0, top, x1, top + 1, color);
+        graphics.fill(x0, top, x0 + 1, top + HEADER_H - 5, color);
+        var y = inner.y() + 4;
+        var labelW = font.width(label);
+        if (labelW > 0) {
+            text(graphics, label, x0 + 4, y, color);
+        }
+        var room = Math.max(1, x1 - x0 - 10 - labelW);
+        var valueW = Math.min(room, font.width(value));
+        fitted(graphics, value, x1 - 3 - valueW, y, room, valueColor);
+    }
+
+    private void renderVegasHeader(GuiGraphicsExtractor graphics, int start, int frameTop, int color) {
+        var dayNumber = minecraft == null || minecraft.level == null
+            ? 1L
+            : minecraft.level.getGameTime() / 24000L + 1L;
+        var now = LocalTime.now();
+        var date = Component.translatable(
+            "pipboy.atomicdawn.header.date",
+            String.format(Locale.ROOT, "%04d", Math.min(9999L, dayNumber)),
+            String.format(Locale.ROOT, "%02d:%02d", now.getHour(), now.getMinute())
+        );
+        var dateW = font.width(date) + 12;
+        var dateX = Math.max(start + 20, inner.right() - 3 - dateW);
+        segment(graphics, dateX, inner.right() - 3, Component.empty(), date, color, color);
+        var status = footerStatus(location());
+        var locationEnd = dateX - 6;
+        var room = locationEnd - (start + 8);
+        graphics.fill(start, frameTop, dateX - 3, frameTop + 1, color);
+        if (room > 10) {
+            var w = Math.min(room, font.width(status.text()));
+            fitted(graphics, status.text(), locationEnd - w, inner.y() + 7, room, status.color());
+        }
+    }
+
+    private Component location() {
+        if (minecraft == null || minecraft.level == null || minecraft.player == null) {
+            return Component.empty();
+        }
+        return minecraft.level.getBiome(minecraft.player.blockPosition())
+            .unwrapKey()
+            .<Component>map(
+                key -> Component.translatable(
+                    "biome." + key.identifier().getNamespace() + "." + key.identifier().getPath()
+                )
+            )
+            .orElse(Component.empty());
+    }
+
+    private void bracketUp(GuiGraphicsExtractor graphics, int left, int right, int top, int bottom, int color) {
+        graphics.fill(left, top, left + 1, bottom, color);
+        graphics.fill(right, top, right + 1, bottom, color);
+        graphics.fill(left, top, left + 4, top + 1, color);
+        graphics.fill(right - 3, top, right + 1, top + 1, color);
+    }
+
+    private void renderClassicHoused(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        var bright = PipBoyTheme.text();
+        var title = currentTab().label();
+        glowText(graphics, title, inner.x() + 4, inner.y() + 5, bright);
+        for (var hit : subtabHits) {
+            var selected = hit.id().equals(currentSubtab());
+            var hovered = hit.rect().contains(mouseX, mouseY);
+            var available = Math.max(1, hit.rect().width() - 4);
+            var labelWidth = Math.min(available, font.width(hit.label()));
+            var x = hit.labelX() - labelWidth / 2;
+            if (selected) {
+                PipBoyDraw.outline(
+                    graphics,
+                    new Rect(x - 4, hit.rect().y(), labelWidth + 8, hit.rect().height()),
+                    bright
+                );
+            } else if (hovered) {
+                graphics.fill(
+                    x - 3,
+                    hit.rect().y() + 1,
+                    x + labelWidth + 3,
+                    hit.rect().bottom() - 1,
+                    PipBoyTheme.highlight()
+                );
+            }
+            fitted(
+                graphics,
+                hit.label(),
+                x,
+                hit.rect().y() + 2,
+                available,
+                selected || hovered ? bright : PipBoyTheme.disabled()
+            );
+        }
+        var divider = inner.y() + 3 + SUBTAB_H + 2;
+        graphics.fill(inner.x() + 2, divider, inner.right() - 2, divider + 1, PipBoyTheme.border());
+        var frame = content.inset(-4);
+        PipBoyDraw.outline(graphics, frame, PipBoyTheme.border());
+        PipBoyDraw.outline(graphics, frame.inset(2), PipBoyTheme.faint());
+        var status = footerStatus(
+            Component.empty()
+                .append(hpLine())
+                .append("   ")
+                .append(apLine())
+                .append("   ")
+                .append(Component.translatable("pipboy.atomicdawn.footer.level", playerLevel()))
+        );
+        var y = inner.bottom() - CLASSIC_STATUS_H;
+        fitted(graphics, status.text(), inner.x() + 6, y, inner.width() - 12, status.color());
+    }
+
+    private void renderClassic(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        if (!layout.fullscreen()) {
+            renderClassicHoused(graphics, mouseX, mouseY);
+            return;
+        }
+        var bright = PipBoyTheme.text();
+        PipBoyDraw.fill(graphics, sidebar, PipBoyTheme.panel());
+        PipBoyDraw.outline(graphics, sidebar, PipBoyTheme.border());
+
+        var clock = new Rect(sidebar.x() + 3, sidebar.y() + 3, sidebar.width() - 6, CLASSIC_CLOCK_H);
+        PipBoyDraw.fill(graphics, clock, PipBoyTheme.ink());
+        PipBoyDraw.outline(graphics, clock, PipBoyTheme.dim());
+        var dayNumber = minecraft == null || minecraft.level == null
+            ? 1L
+            : minecraft.level.getGameTime() / 24000L + 1L;
+        var day = Component.translatable(
+            "pipboy.atomicdawn.lcd.day",
+            String.format(Locale.ROOT, "%04d", Math.min(9999L, dayNumber))
+        );
+        var now = LocalTime.now();
+        var time = Component.literal(String.format(Locale.ROOT, "%02d:%02d", now.getHour(), now.getMinute()));
+        fitted(graphics, day, clock.x() + 3, clock.y() + 2, clock.width() - 6, bright);
+        fitted(graphics, time, clock.x() + 3, clock.y() + 12, clock.width() - 6, bright);
+
+        for (var i = 0; i < TABS.size(); i++) {
+            var hit = tabHits.get(i);
+            var selected = i == PipBoyClientState.tab;
+            var hovered = hit.contains(mouseX, mouseY);
+            PipBoyDraw.fill(
+                graphics,
+                hit,
+                selected ? PipBoyTheme.selection() : hovered ? PipBoyTheme.highlight() : PipBoyTheme.ink()
+            );
+            PipBoyDraw.outline(graphics, hit, selected ? bright : PipBoyTheme.border());
+            graphics.fill(hit.x() + 1, hit.bottom() - 1, hit.right() - 1, hit.bottom(), PipBoyTheme.faint());
+            var lamp = new Rect(hit.x() + 3, hit.y() + (hit.height() - 5) / 2, 5, 5);
+            if (selected) {
+                PipBoyDraw.fill(graphics, lamp, bright);
+            } else {
+                PipBoyDraw.outline(graphics, lamp, PipBoyTheme.dim());
+            }
+            fitted(
+                graphics,
+                TABS.get(i).label(),
+                hit.x() + 11,
+                hit.y() + (hit.height() - 8) / 2 + 1,
+                hit.width() - 14,
+                selected || hovered ? bright : PipBoyTheme.dim()
+            );
+        }
+
+        for (var hit : subtabHits) {
+            var selected = hit.id().equals(currentSubtab());
+            var hovered = hit.rect().contains(mouseX, mouseY);
+            var c = selected || hovered ? bright : PipBoyTheme.disabled();
+            if (verticalSubtabs) {
+                var y = hit.rect().y() + (hit.rect().height() - 8) / 2 + 1;
+                if (selected) {
+                    text(graphics, Component.literal(">"), hit.rect().x(), y, bright);
+                }
+                fitted(graphics, hit.label(), hit.rect().x() + 8, y, hit.rect().width() - 8, c);
+            } else {
+                var available = Math.max(1, hit.rect().width() - 4);
+                var labelWidth = Math.min(available, font.width(hit.label()));
+                var x = hit.labelX() - labelWidth / 2;
+                if (selected) {
+                    graphics.fill(x - 2, hit.rect().bottom() - 1, x + labelWidth + 2, hit.rect().bottom(), bright);
+                }
+                fitted(graphics, hit.label(), x, hit.rect().y() + 2, available, c);
+            }
+        }
+
+        var statsY = sidebar.bottom() - CLASSIC_STATS_H + 2;
+        graphics.fill(sidebar.x() + 3, statsY - 2, sidebar.right() - 3, statsY - 1, PipBoyTheme.border());
+        var statsW = sidebar.width() - 8;
+        fitted(graphics, hpLine(), sidebar.x() + 4, statsY, statsW, bright);
+        var status = footerStatus(apLine());
+        fitted(graphics, status.text(), sidebar.x() + 4, statsY + 10, statsW, status.color());
+        fitted(
+            graphics,
+            Component.translatable("pipboy.atomicdawn.footer.level", playerLevel()),
+            sidebar.x() + 4,
+            statsY + 20,
+            statsW,
+            bright
+        );
+
+        var frame = content.inset(-4);
+        PipBoyDraw.outline(graphics, frame, PipBoyTheme.border());
+        PipBoyDraw.outline(graphics, frame.inset(2), PipBoyTheme.faint());
     }
 
     private void crtEffects(GuiGraphicsExtractor graphics, long now) {

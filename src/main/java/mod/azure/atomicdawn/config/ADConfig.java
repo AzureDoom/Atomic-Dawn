@@ -798,6 +798,20 @@ public class ADConfig {
         @Configurable(side = Configurable.Side.CLIENT)
         public boolean PIPBOY_FULLSCREEN = false;
 
+        public enum PipBoyLayout {
+            FALLOUT_76,
+            FALLOUT_4,
+            NEW_VEGAS,
+            FALLOUT_3,
+            FALLOUT_1_2
+        }
+
+        @Comment(
+            "Pip-Boy interface layout and device style: FALLOUT_76, FALLOUT_4, NEW_VEGAS, FALLOUT_3 or FALLOUT_1_2."
+        )
+        @Configurable(side = Configurable.Side.CLIENT)
+        public PipBoyLayout PIPBOY_LAYOUT = PipBoyLayout.FALLOUT_76;
+
         @Comment("High-contrast Pip-Boy palette.")
         @Configurable(side = Configurable.Side.CLIENT)
         public boolean PIPBOY_HIGH_CONTRAST = false;
