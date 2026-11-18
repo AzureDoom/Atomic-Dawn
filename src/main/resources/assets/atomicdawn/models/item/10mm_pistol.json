@@ -34,14 +34,14 @@
       "translation": [
         0,
         -3.25,
-        -3.25
+        0.5
       ]
     },
     "firstperson_lefthand": {
       "translation": [
         0,
         -3.25,
-        -3.25
+        0.75
       ]
     },
     "ground": {
