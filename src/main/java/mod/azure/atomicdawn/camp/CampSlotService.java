@@ -48,6 +48,44 @@ public final class CampSlotService {
         int blocked
     ) {}
 
+    public enum Reason {
+
+        TERRAIN,
+        BLOCK,
+        MODULE,
+        OVERLAP,
+        OUTSIDE;
+
+        private static final Reason[] VALUES = values();
+
+        public static Reason byIndex(int index) {
+            return VALUES[Math.floorMod(index, VALUES.length)];
+        }
+    }
+
+    public record Blocker(
+        BlockPos pos,
+        BlockState state,
+        Reason reason
+    ) {}
+
+    public record RestorePlan(
+        int ready,
+        int blocked,
+        List<Blocker> blockers
+    ) {
+
+        public boolean clearable() {
+            return blocked > 0 && !blockers.isEmpty() && blockers.stream().allMatch(b -> b.reason() == Reason.TERRAIN);
+        }
+    }
+
+    private record Planning(
+        List<Planned> ready,
+        int blocked,
+        List<Blocker> blockers
+    ) {}
+
     private CampSlotService() {}
 
     public static Rotation rotation(Direction from, Direction to) {
@@ -156,9 +194,10 @@ public final class CampSlotService {
             level.setBlock(camp.origin(), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
             moduleRecovered = true;
         }
-        if (moduleRecovered && !player.hasInfiniteMaterials()) {
+        if (moduleRecovered) {
             PlayerItems.give(player, new ItemStack(ADItems.CAMP_MODULE.get()));
         }
+        CampRestoreService.clear(player);
         level.playSound(null, camp.origin(), SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 0.6F, 1.2F);
         CampPlacementService.notify(
             player,
@@ -192,23 +231,9 @@ public final class CampSlotService {
             return new RebuildResult(0, 0);
         }
         var fromNorth = rotation(Direction.NORTH, camp.facing());
-        var claimed = new HashSet<BlockPos>();
-        var ready = new ArrayList<Planned>();
-        var blocked = 0;
-        for (var object : camp.objects()) {
-            if (!object.stored()) {
-                continue;
-            }
-            var plan = plan(level, camp, object, fromNorth, claimed);
-            if (plan.isEmpty()) {
-                blocked++;
-                continue;
-            }
-            ready.add(plan.get());
-            for (var part : plan.get().parts()) {
-                claimed.add(part.pos());
-            }
-        }
+        var planning = planAll(level, player, camp);
+        var ready = planning.ready();
+        var blocked = planning.blocked();
         if (blocked > 0 && !partial) {
             if (!quiet) {
                 CampPlacementService.notify(
@@ -254,30 +279,87 @@ public final class CampSlotService {
         return new RebuildResult(ready.size(), blocked);
     }
 
+    public static RestorePlan restorePlan(ServerPlayer player, CampSlot camp) {
+        var level = player.level().getServer().getLevel(camp.dimension());
+        if (level == null) {
+            return new RestorePlan(0, 0, List.of());
+        }
+        var planning = planAll(level, player, camp);
+        return new RestorePlan(planning.ready().size(), planning.blocked(), planning.blockers());
+    }
+
+    private static Planning planAll(ServerLevel level, ServerPlayer player, CampSlot camp) {
+        var fromNorth = rotation(Direction.NORTH, camp.facing());
+        var claimed = new HashSet<BlockPos>();
+        var ready = new ArrayList<Planned>();
+        var blockers = new ArrayList<Blocker>();
+        var seen = new HashSet<BlockPos>();
+        var blocked = 0;
+        for (var object : camp.objects()) {
+            if (!object.stored()) {
+                continue;
+            }
+            var found = new ArrayList<Blocker>();
+            var plan = plan(level, player, camp, object, fromNorth, claimed, found);
+            if (plan.isEmpty()) {
+                blocked++;
+                for (var blocker : found) {
+                    if (seen.add(blocker.pos())) {
+                        blockers.add(blocker);
+                    }
+                }
+                continue;
+            }
+            ready.add(plan.get());
+            for (var part : plan.get().parts()) {
+                claimed.add(part.pos());
+            }
+        }
+        return new Planning(ready, blocked, blockers);
+    }
+
     private static Optional<Planned> plan(
         ServerLevel level,
+        ServerPlayer player,
         CampSlot camp,
         CampObject object,
         Rotation fromNorth,
-        HashSet<BlockPos> claimed
+        HashSet<BlockPos> claimed,
+        List<Blocker> blockers
     ) {
         var parts = new ArrayList<PlannedPart>();
+        var air = Blocks.AIR.defaultBlockState();
         for (var snapshot : object.snapshot()) {
             var rotated = snapshot.rotated(fromNorth);
             var state = rotated.state();
-            if (state.isEmpty()) {
-                return Optional.empty();
-            }
             var pos = camp.origin().offset(rotated.offset());
-            if (!CampClaim.contains(camp.origin(), pos) || !level.isLoaded(pos) || level.isOutsideBuildHeight(pos)) {
-                return Optional.empty();
+            if (state.isEmpty()) {
+                blockers.add(new Blocker(pos, air, Reason.OUTSIDE));
+                continue;
             }
-            if (claimed.contains(pos) || pos.equals(camp.origin()) || !level.getBlockState(pos).canBeReplaced()) {
-                return Optional.empty();
+            if (!CampClaim.contains(camp.origin(), pos) || !level.isLoaded(pos) || level.isOutsideBuildHeight(pos)) {
+                blockers.add(new Blocker(pos, air, Reason.OUTSIDE));
+                continue;
+            }
+            if (pos.equals(camp.origin())) {
+                blockers.add(new Blocker(pos, level.getBlockState(pos), Reason.MODULE));
+                continue;
+            }
+            if (claimed.contains(pos)) {
+                blockers.add(new Blocker(pos, state.get(), Reason.OVERLAP));
+                continue;
+            }
+            var current = level.getBlockState(pos);
+            if (!current.canBeReplaced()) {
+                var reason = CampRestoreService.clearable(level, player, camp, pos, current)
+                    ? Reason.TERRAIN
+                    : Reason.BLOCK;
+                blockers.add(new Blocker(pos, current, reason));
+                continue;
             }
             parts.add(new PlannedPart(pos, state.get(), rotated.data()));
         }
-        if (parts.isEmpty()) {
+        if (parts.isEmpty() || parts.size() != object.snapshot().size()) {
             return Optional.empty();
         }
         var pos = camp.origin().offset(object.pos().rotate(fromNorth));
@@ -289,12 +371,8 @@ public final class CampSlotService {
             return false;
         }
         var server = player.level().getServer();
-        var level = player.level();
         for (var object : camp.objects()) {
-            CampWorkshopService.refund(player, object);
-            for (var stack : CampContents.drops(level, object)) {
-                PlayerItems.give(player, stack);
-            }
+            CampWorkshopService.giveBack(player, object, object.snapshot(), object.pos(), object.entities());
         }
         CampManager.remove(server, camp.campId());
         CampPlacementService.notify(

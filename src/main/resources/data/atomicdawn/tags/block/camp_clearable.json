@@ -1,0 +1,26 @@
+{
+  "values": [
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#minecraft:base_stone_overworld",
+    "#minecraft:leaves",
+    "minecraft:gravel",
+    "minecraft:clay",
+    "minecraft:snow",
+    "minecraft:snow_block",
+    "minecraft:ice",
+    "minecraft:packed_ice",
+    "minecraft:moss_carpet",
+    "minecraft:sandstone",
+    "minecraft:red_sandstone",
+    "minecraft:terracotta",
+    "minecraft:dripstone_block",
+    "minecraft:pointed_dripstone",
+    "minecraft:sweet_berry_bush",
+    "minecraft:cactus",
+    "minecraft:sugar_cane",
+    "minecraft:bamboo",
+    "minecraft:pumpkin",
+    "minecraft:melon"
+  ]
+}

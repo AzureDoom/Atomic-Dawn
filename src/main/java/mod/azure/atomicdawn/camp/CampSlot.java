@@ -169,6 +169,10 @@ public record CampSlot(
         return copy(ownerName, level, pos, direction, true, objects);
     }
 
+    public CampSlot movedTo(BlockPos pos, List<CampObject> value) {
+        return copy(ownerName, dimension, pos, facing, deployed, value);
+    }
+
     public CampSlot asStored(List<CampObject> value) {
         return copy(ownerName, dimension, origin, facing, false, value);
     }

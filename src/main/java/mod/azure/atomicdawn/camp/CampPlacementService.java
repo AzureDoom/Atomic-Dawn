@@ -9,6 +9,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.registry.ADBlocks;
 
 public final class CampPlacementService {
 
@@ -111,17 +115,97 @@ public final class CampPlacementService {
             ChatFormatting.GREEN
         );
         if (camp.storedCount() > 0) {
-            var result = CampSlotService.rebuild(player, camp, false, true);
-            if (result.blocked() > 0) {
-                notify(
-                    player,
-                    Component.translatable("camp.atomicdawn.slot.redeploy_blocked", result.blocked()),
-                    ChatFormatting.YELLOW
-                );
-            }
+            CampRestoreService.offer(player, camp, true);
         }
         CampSync.changed(server);
         return CampManager.get(server, camp.campId());
+    }
+
+    public static void moveModule(ServerPlayer player, BlockPos target, int nonce) {
+        if (CampWorkshopService.throttled(player, nonce)) {
+            return;
+        }
+        var level = player.level();
+        var server = level.getServer();
+        var found = CampManager.claimAt(server, level.dimension(), target);
+        if (found.isEmpty()) {
+            moveFailed(player, CampWorkshopService.Failure.OUTSIDE_CLAIM.message());
+            return;
+        }
+        var camp = found.get();
+        if (!CampPermissionService.canManage(player, camp)) {
+            moveFailed(player, Component.translatable("camp.atomicdawn.error.not_owner"));
+            return;
+        }
+        var origin = camp.origin();
+        if (target.equals(origin)) {
+            CampSync.send(player);
+            return;
+        }
+        var reach = (double) CampWorkshopService.reach();
+        if (player.distanceToSqr(Vec3.atCenterOf(target)) > reach * reach) {
+            moveFailed(player, CampWorkshopService.Failure.TOO_FAR.message());
+            return;
+        }
+        if (!level.getWorldBorder().isWithinBounds(target)) {
+            moveFailed(player, Component.translatable("camp.atomicdawn.error.border"));
+            return;
+        }
+        if (
+            !level.isLoaded(target)
+                || level.isOutsideBuildHeight(target)
+                || camp.objectAt(target).isPresent()
+                || !level.getBlockState(target).canBeReplaced()
+        ) {
+            moveFailed(player, CampWorkshopService.Failure.OCCUPIED.message());
+            return;
+        }
+        for (var other : CampManager.inDimension(server, level.dimension())) {
+            if (!other.campId().equals(camp.campId()) && CampClaim.tooClose(other.origin(), target)) {
+                moveFailed(
+                    player,
+                    Component.translatable(
+                        "camp.atomicdawn.error.too_close",
+                        CampClaim.spacing(),
+                        (int) Math.sqrt(CampClaim.horizontalDistanceSqr(other.origin(), target))
+                    )
+                );
+                return;
+            }
+        }
+        var outside = 0;
+        for (var object : camp.objects()) {
+            if (object.deployed() && object.parts().stream().anyMatch(part -> !CampClaim.contains(target, part))) {
+                outside++;
+            }
+        }
+        if (outside > 0) {
+            moveFailed(player, Component.translatable("camp.atomicdawn.module.move_outside", outside));
+            return;
+        }
+        var toNorth = CampSlotService.rotation(camp.facing(), Direction.NORTH);
+        var delta = origin.subtract(target).rotate(toNorth);
+        var objects = camp.objects()
+            .stream()
+            .map(object -> object.stored() ? object.shifted(delta) : object)
+            .toList();
+        var current = level.getBlockState(origin);
+        var state = current.is(ADBlocks.CAMP_MODULE.get())
+            ? current
+            : ADBlocks.CAMP_MODULE.get().defaultBlockState().setValue(CampModuleBlock.FACING, camp.facing());
+        CampManager.put(server, camp.movedTo(target, objects));
+        level.setBlock(target, state, Block.UPDATE_ALL);
+        if (current.is(ADBlocks.CAMP_MODULE.get())) {
+            level.setBlock(origin, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+        }
+        level.playSound(null, target, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 0.6F, 1.2F);
+        notify(player, Component.translatable("camp.atomicdawn.module.moved"), ChatFormatting.GREEN);
+        CampSync.changed(server);
+    }
+
+    private static void moveFailed(ServerPlayer player, Component message) {
+        notify(player, message, ChatFormatting.RED);
+        CampSync.send(player);
     }
 
     public static void dissolve(ServerLevel level, CampSlot camp) {

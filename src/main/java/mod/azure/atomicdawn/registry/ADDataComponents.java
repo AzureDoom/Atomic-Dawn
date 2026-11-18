@@ -3,6 +3,7 @@ package mod.azure.atomicdawn.registry;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -10,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.upgrade.ArmorUpgrades;
+import mod.azure.atomicdawn.camp.CampNbt;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorUpgrades;
 import mod.azure.atomicdawn.weapon.instance.WeaponCondition;
 import mod.azure.atomicdawn.weapon.instance.WeaponState;
@@ -93,6 +95,12 @@ public final class ADDataComponents {
         REGISTER.registerComponentType(
             "armor_upgrades",
             builder -> builder.persistent(ArmorUpgrades.CODEC).networkSynchronized(ArmorUpgrades.STREAM_CODEC)
+        );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CompoundTag>> CAMP_BLOCK_DATA =
+        REGISTER.registerComponentType(
+            "camp_block_data",
+            builder -> builder.persistent(CampNbt.CODEC).networkSynchronized(ByteBufCodecs.COMPOUND_TAG)
         );
 
     private ADDataComponents() {}

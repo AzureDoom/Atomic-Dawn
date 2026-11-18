@@ -43,8 +43,15 @@ public final class CampService {
                 camp -> CampSlotService.store(player, camp),
                 () -> CampSync.send(player)
             );
-            case REBUILD -> owned(player, campId).ifPresent(
-                camp -> CampSlotService.rebuild(player, camp, value != 0, false)
+            case REBUILD -> owned(player, campId).ifPresent(camp -> {
+                if (value != 0) {
+                    CampRestoreService.partial(player, camp);
+                } else {
+                    CampRestoreService.offer(player, camp, false);
+                }
+            });
+            case CLEAR_REBUILD -> owned(player, campId).ifPresent(
+                camp -> CampRestoreService.clearAndRestore(player, camp)
             );
             case DELETE -> owned(player, campId).ifPresent(camp -> CampSlotService.delete(player, camp));
             case PIN -> owned(player, campId).ifPresent(camp -> pin(player, camp));

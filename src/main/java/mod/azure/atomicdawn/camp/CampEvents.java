@@ -6,7 +6,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -16,11 +19,13 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.command.CampCommands;
+import mod.azure.atomicdawn.registry.ADDataComponents;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
@@ -92,50 +97,61 @@ public final class CampEvents {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onDataBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+        if (CampWorkshopService.workshopPlacing() || !(event.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        var block = event.getPlacedBlock().getBlock();
+        for (var hand : InteractionHand.values()) {
+            var stack = player.getItemInHand(hand);
+            if (
+                stack.getItem() instanceof BlockItem item
+                    && item.getBlock() == block
+                    && stack.has(ADDataComponents.CAMP_BLOCK_DATA.get())
+            ) {
+                CampContents.applyItemData(level, event.getPos(), stack);
+                return;
+            }
+        }
+    }
+
     private static boolean isModule(BlockEvent.EntityPlaceEvent event) {
         return event.getPlacedBlock().getBlock() instanceof CampModuleBlock;
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
+    public static void onBreakProtect(BreakBlockEvent event) {
+        if (!(event.getLevel() instanceof ServerLevel level) || !(event.getPlayer() instanceof ServerPlayer player)) {
             return;
         }
-        var pos = event.getPosition();
-        if (pos.isEmpty()) {
+        if (CampPermissionService.adminBypass(player)) {
             return;
         }
-        var level = player.level();
-        if (!(event.getState().getBlock() instanceof CampModuleBlock)) {
-            protectObject(event, player, pos.get());
-            return;
-        }
-        var camp = CampManager.moduleAt(level.getServer(), level.dimension(), pos.get());
-        if (camp.isEmpty() || CampPermissionService.adminBypass(player)) {
-            return;
+        var server = level.getServer();
+        var pos = event.getPos();
+        String key;
+        if (event.getState().getBlock() instanceof CampModuleBlock) {
+            var camp = CampManager.moduleAt(server, level.dimension(), pos);
+            if (camp.isEmpty()) {
+                return;
+            }
+            key = CampPermissionService.canManage(player, camp.get())
+                    ? "camp.atomicdawn.module.store_hint"
+                    : "camp.atomicdawn.error.protected";
+        } else {
+            var tracked = CampManager.objectAt(server, level.dimension(), pos);
+            if (tracked.isEmpty()) {
+                return;
+            }
+            key = CampPermissionService.canBuild(player, tracked.get().camp())
+                    ? "camp.atomicdawn.workshop.use_scrap"
+                    : "camp.atomicdawn.error.protected_object";
         }
         event.setCanceled(true);
-        if (player.tickCount % 20 == 0) {
-            var key = CampPermissionService.canManage(player, camp.get())
-                ? "camp.atomicdawn.module.store_hint"
-                : "camp.atomicdawn.error.protected";
-            CampPlacementService.notify(player, Component.translatable(key), ChatFormatting.RED);
-        }
-    }
-
-    private static void protectObject(PlayerEvent.BreakSpeed event, ServerPlayer player, BlockPos pos) {
-        var level = player.level();
-        var tracked = CampManager.objectAt(level.getServer(), level.dimension(), pos);
-        if (tracked.isEmpty() || CampPermissionService.adminBypass(player)) {
-            return;
-        }
-        event.setCanceled(true);
-        if (player.tickCount % 20 != 0) {
-            return;
-        }
-        var key = CampPermissionService.canBuild(player, tracked.get().camp())
-            ? "camp.atomicdawn.workshop.use_scrap"
-            : "camp.atomicdawn.error.protected_object";
         CampPlacementService.notify(player, Component.translatable(key), ChatFormatting.RED);
     }
 

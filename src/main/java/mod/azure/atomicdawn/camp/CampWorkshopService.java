@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
@@ -306,20 +307,26 @@ public final class CampWorkshopService {
             fail(player, Failure.TOO_FAR);
             return;
         }
-        remove(level, object);
+        var infinite = player.hasInfiniteMaterials();
+        var keep = !infinite && CampContents.returnsBlock()
+            && !CampContents.blockItem(object.block(), new CompoundTag()).isEmpty();
+        var data = keep ? CampContents.objectData(level, object) : new CompoundTag();
+        remove(level, object, !keep);
         CampManager.update(server, camp.campId(), slot -> slot.withoutObject(object.objectId()));
-        var returned = player.hasInfiniteMaterials() ? List.<ItemStack>of() : refund(player, object);
+        var returned = infinite ? List.<ItemStack>of() : refund(player, object, data);
         level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.35F, 1.6F);
         CampPlacementService.notify(player, scrappedMessage(returned), ChatFormatting.YELLOW);
         CampSync.send(player);
     }
 
-    private static void remove(ServerLevel level, CampObject object) {
+    static void remove(ServerLevel level, CampObject object, boolean dropContents) {
         for (var part : object.parts()) {
             if (!level.isLoaded(part) || !matches(level, part, object)) {
                 continue;
             }
-            if (level.getBlockEntity(part) instanceof Container container) {
+            if (!dropContents) {
+                CampContents.clear(level, part);
+            } else if (level.getBlockEntity(part) instanceof Container container) {
                 Containers.dropContents(level, part, container);
             }
         }
@@ -334,8 +341,15 @@ public final class CampWorkshopService {
         return BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock()).equals(object.block());
     }
 
-    public static List<ItemStack> refundItems(ServerPlayer player, CampObject object) {
+    public static List<ItemStack> refundItems(ServerPlayer player, CampObject object, CompoundTag data) {
         var items = new ArrayList<ItemStack>();
+        if (CampContents.returnsBlock()) {
+            var block = CampContents.blockItem(object.block(), data);
+            if (!block.isEmpty()) {
+                items.add(block);
+                return items;
+            }
+        }
         if (object.manual()) {
             BuiltInRegistries.BLOCK.getOptional(object.block())
                 .map(Block::asItem)
@@ -361,8 +375,33 @@ public final class CampWorkshopService {
         return items;
     }
 
-    public static List<ItemStack> refund(ServerPlayer player, CampObject object) {
-        var items = refundItems(player, object);
+    public static List<ItemStack> refund(ServerPlayer player, CampObject object, CompoundTag data) {
+        var items = refundItems(player, object, data);
+        for (var stack : items) {
+            PlayerItems.give(player, stack.copy());
+        }
+        return items;
+    }
+
+    public static List<ItemStack> giveBack(
+        ServerPlayer player,
+        CampObject object,
+        List<PartSnapshot> parts,
+        BlockPos primary,
+        List<EntitySnapshot> entities
+    ) {
+        var level = player.level();
+        var items = new ArrayList<ItemStack>();
+        var block = CampContents.returnsBlock()
+            ? CampContents.blockItem(object.block(), CampContents.storedData(parts, primary))
+            : ItemStack.EMPTY;
+        if (block.isEmpty()) {
+            items.addAll(refundItems(player, object, new CompoundTag()));
+            items.addAll(CampContents.containerDrops(level, parts));
+        } else {
+            items.add(block);
+        }
+        items.addAll(CampContents.entityDrops(level, entities));
         for (var stack : items) {
             PlayerItems.give(player, stack.copy());
         }

@@ -7,8 +7,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +22,7 @@ import mod.azure.atomicdawn.camp.CampBlueprints;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampPlans;
+import mod.azure.atomicdawn.camp.CampStorage;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.network.CampSyncPayload;
@@ -47,17 +48,23 @@ public final class CampCatalogScreen extends Screen {
     @Nullable
     private static CampBuildable.Category lastCategory;
 
-    private static boolean lastBlueprints;
+    private enum View {
+        BUILD,
+        BLUEPRINTS,
+        STORED
+    }
+
+    private static View lastView = View.BUILD;
 
     private static String lastName = "";
 
-    private boolean blueprints = lastBlueprints;
+    private View view = lastView;
 
     @Nullable
     private EditBox nameBox;
 
     @Nullable
-    private Identifier armedDelete;
+    private Object armedDelete;
 
     @Nullable
     private CampBuildable.Category category = lastCategory;
@@ -113,12 +120,15 @@ public final class CampCatalogScreen extends Screen {
         var actives = new ArrayList<Boolean>();
         var actions = new ArrayList<Runnable>();
         labels.add(Component.translatable("camp.atomicdawn.catalog.tab.build"));
-        actives.add(!blueprints);
-        actions.add(() -> setBlueprints(false));
+        actives.add(view == View.BUILD);
+        actions.add(() -> setView(View.BUILD));
         labels.add(Component.translatable("camp.atomicdawn.catalog.tab.blueprints"));
-        actives.add(blueprints);
-        actions.add(() -> setBlueprints(true));
-        if (!blueprints) {
+        actives.add(view == View.BLUEPRINTS);
+        actions.add(() -> setView(View.BLUEPRINTS));
+        labels.add(Component.translatable("camp.atomicdawn.catalog.tab.stored", storedCount()));
+        actives.add(view == View.STORED);
+        actions.add(() -> setView(View.STORED));
+        if (view == View.BUILD) {
             labels.add(Component.translatable("camp.atomicdawn.category.all"));
             actives.add(category == null);
             actions.add(() -> setCategory(null));
@@ -137,7 +147,7 @@ public final class CampCatalogScreen extends Screen {
                 y += TAB_HEIGHT + TAB_GAP;
             }
             tabs.add(new Tab(x, y, w, labels.get(i), actives.get(i), actions.get(i)));
-            x += w + TAB_GAP + (i == 1 && !blueprints ? 8 : 0);
+            x += w + TAB_GAP + (i == 2 && view == View.BUILD ? 8 : 0);
         }
         return tabs;
     }
@@ -148,15 +158,19 @@ public final class CampCatalogScreen extends Screen {
         scroll = 0;
     }
 
-    private void setBlueprints(boolean value) {
-        blueprints = value;
-        lastBlueprints = value;
+    private void setView(View value) {
+        view = value;
+        lastView = value;
         scroll = 0;
         armedDelete = null;
         if (nameBox != null) {
-            nameBox.visible = value;
+            nameBox.visible = value == View.BLUEPRINTS;
             nameBox.setFocused(false);
         }
+    }
+
+    private int storedCount() {
+        return minecraft == null || minecraft.player == null ? 0 : CampStorage.of(minecraft.player).size();
     }
 
     private int listTop() {
@@ -174,7 +188,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private int listBottom() {
-        return blueprints ? bottom() - FOOTER : bottom();
+        return view == View.BLUEPRINTS ? bottom() - FOOTER : bottom();
     }
 
     private int visibleRows() {
@@ -210,7 +224,7 @@ public final class CampCatalogScreen extends Screen {
         name.setHint(Component.translatable("camp.atomicdawn.catalog.blueprint_name"));
         name.setValue(lastName);
         name.setResponder(value -> lastName = value);
-        name.visible = blueprints;
+        name.visible = view == View.BLUEPRINTS;
         nameBox = addRenderableWidget(name);
     }
 
@@ -271,8 +285,12 @@ public final class CampCatalogScreen extends Screen {
             tab(graphics, tab);
         }
 
-        if (blueprints) {
+        if (view == View.BLUEPRINTS) {
             blueprintList(graphics, x, mouseX, mouseY, camp);
+            return;
+        }
+        if (view == View.STORED) {
+            storedList(graphics, x, mouseX, mouseY, camp);
             return;
         }
 
@@ -418,6 +436,118 @@ public final class CampCatalogScreen extends Screen {
         }
         hits.add(new Hit(x, y, x + w - right, y + ROW - 2, () -> {
             CampWorkshopClient.selectBlueprint(ref.id());
+            onClose();
+        }));
+    }
+
+    private void storedList(
+        GuiGraphicsExtractor graphics,
+        int x,
+        int mouseX,
+        int mouseY,
+        CampSyncPayload.@Nullable CampView camp
+    ) {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return;
+        }
+        var access = player.level().registryAccess();
+        var entries = CampStorage.of(player)
+            .objects()
+            .stream()
+            .filter(
+                stored -> query.isEmpty() || storedName(access, stored)
+                    .getString()
+                    .toLowerCase(Locale.ROOT)
+                    .contains(query)
+            )
+            .toList();
+        var visible = visibleRows();
+        scroll = Math.clamp(scroll, 0, Math.max(0, entries.size() - visible));
+        var rowY = listTop();
+        if (entries.isEmpty()) {
+            var empty = Component.translatable(
+                "camp.atomicdawn.catalog.no_stored",
+                ADKeyMappings.WORKSHOP_MOVE.getTranslatedKeyMessage()
+            );
+            var textY = rowY + 4;
+            for (var line : font.split(empty, panelWidth() - 16)) {
+                graphics.text(font, line, x + 8, textY, PipBoyTheme.dim(), false);
+                textY += 10;
+            }
+            return;
+        }
+        for (var i = scroll; i < Math.min(entries.size(), scroll + visible); i++) {
+            storedRow(graphics, entries.get(i), x + 4, rowY, mouseX, mouseY, camp);
+            rowY += ROW;
+        }
+        if (entries.size() > visible) {
+            var trackTop = listTop();
+            var trackHeight = visible * ROW;
+            var thumb = Math.max(8, trackHeight * visible / entries.size());
+            var thumbY = trackTop + (trackHeight - thumb) * scroll / Math.max(1, entries.size() - visible);
+            var trackX = x + panelWidth() - 3;
+            graphics.fill(trackX, trackTop, trackX + 1, trackTop + trackHeight, PipBoyTheme.faint());
+            graphics.fill(trackX - 1, thumbY, trackX + 2, thumbY + thumb, PipBoyTheme.dim());
+        }
+    }
+
+    private static Component storedName(RegistryAccess access, CampStorage.Stored stored) {
+        return CampBuildable.get(access, stored.entry().definition())
+            .map(CampBuildable::name)
+            .orElse(Component.literal(stored.entry().definition().toString()));
+    }
+
+    private void storedRow(
+        GuiGraphicsExtractor graphics,
+        CampStorage.Stored stored,
+        int x,
+        int y,
+        int mouseX,
+        int mouseY,
+        CampSyncPayload.@Nullable CampView camp
+    ) {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return;
+        }
+        var access = player.level().registryAccess();
+        var definition = CampBuildable.get(access, stored.entry().definition());
+        var w = panelWidth() - 12;
+        var hovered = mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + ROW - 2;
+        var selected = stored.id().equals(CampWorkshopClient.selectedStored());
+        if (selected || hovered) {
+            graphics.fill(x, y, x + w, y + ROW - 2, selected ? PipBoyTheme.highlight() : PipBoyTheme.panel());
+        }
+        definition.ifPresent(found -> graphics.item(found.icon(), x + 2, y + 2));
+        var armed = stored.id().equals(armedDelete);
+        var scrapLabel = Component.translatable(
+            armed ? "camp.atomicdawn.catalog.confirm" : "camp.atomicdawn.catalog.scrap"
+        );
+        var right = font.width(scrapLabel) + 8;
+        var budget = definition.map(CampBuildable::budget).orElse(0);
+        var fits = camp == null || camp.budgetUsed() + budget <= camp.budgetLimit();
+        var detail = Component.translatable(
+            stored.contents() ? "camp.atomicdawn.catalog.stored_row_contents" : "camp.atomicdawn.catalog.stored_row",
+            budget
+        );
+        var textWidth = w - 30 - right - 8;
+        var nameColor = fits ? PipBoyTheme.text() : PipBoyTheme.dim();
+        graphics.text(font, fit(storedName(access, stored), textWidth), x + 22, y + 2, nameColor, false);
+        graphics.text(font, fit(detail, textWidth), x + 22, y + 11, PipBoyTheme.faint(), false);
+        var dx = x + w - right;
+        graphics.fill(dx, y + 2, dx + right - 2, y + ROW - 4, armed ? PipBoyTheme.bad() : PipBoyTheme.panel());
+        graphics.text(font, scrapLabel, dx + 3, y + 6, armed ? PipBoyTheme.text() : PipBoyTheme.dim(), false);
+        hits.add(new Hit(dx, y + 2, dx + right - 2, y + ROW - 4, () -> {
+            if (stored.id().equals(armedDelete)) {
+                armedDelete = null;
+                CampWorkshopClient.scrapStored(stored.id());
+            } else {
+                armedDelete = stored.id();
+            }
+        }));
+        hits.add(new Hit(x, y, x + w - right, y + ROW - 2, () -> {
+            CampWorkshopClient.selectStored(stored.id());
             onClose();
         }));
     }

@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.UUID;
@@ -89,6 +90,24 @@ public record CampObject(
             snapshot,
             true,
             entities
+        );
+    }
+
+    public CampObject shifted(BlockPos delta) {
+        var vector = Vec3.atLowerCornerOf(delta);
+        return new CampObject(
+            objectId,
+            definition,
+            block,
+            pos.offset(delta),
+            facing,
+            mode,
+            budget,
+            List.of(),
+            stored,
+            snapshot.stream().map(part -> part.shifted(delta)).toList(),
+            manual,
+            entities.stream().map(entity -> entity.shifted(vector)).toList()
         );
     }
 

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -244,6 +245,38 @@ public final class CampBlueprintService {
             fail(player, CampWorkshopService.Failure.TOO_FAR);
             return;
         }
+        var placed = placeEntries(
+            player,
+            camp,
+            blueprint.get().entries(),
+            anchor,
+            facing,
+            false,
+            player.hasInfiniteMaterials()
+        );
+        if (placed.isEmpty()) {
+            return;
+        }
+        var objects = placed.get();
+        level.playSound(null, anchor, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.4F, 1.4F);
+        message(
+            player,
+            Component.translatable("camp.atomicdawn.blueprint.placed", blueprint.get().name(), objects.size()),
+            ChatFormatting.GREEN
+        );
+    }
+
+    static Optional<List<CampObject>> placeEntries(
+        ServerPlayer player,
+        CampSlot camp,
+        List<CampBlueprint.Entry> entries,
+        BlockPos anchor,
+        Direction facing,
+        boolean free,
+        boolean contents
+    ) {
+        var level = player.level();
+        var server = level.getServer();
         var horizontal = facing.getAxis().isHorizontal() ? facing : Direction.NORTH;
         var fromNorth = CampSlotService.rotation(Direction.NORTH, horizontal);
         var access = level.registryAccess();
@@ -252,15 +285,15 @@ public final class CampBlueprintService {
         var cost = new ArrayList<SizedIngredient>();
         var counts = new HashMap<Identifier, Integer>();
         var budget = 0;
-        for (var entry : blueprint.get().entries()) {
+        for (var entry : entries) {
             var definition = CampBuildable.get(access, entry.definition());
             if (definition.isEmpty()) {
                 fail(player, CampWorkshopService.Failure.UNKNOWN_DEFINITION);
-                return;
+                return Optional.empty();
             }
-            if (!CampPlans.unlocked(player, definition.get())) {
+            if (!free && !CampPlans.unlocked(player, definition.get())) {
                 fail(player, CampWorkshopService.Failure.PLAN_LOCKED);
-                return;
+                return Optional.empty();
             }
             var parts = new ArrayList<PlannedPart>();
             for (var part : entry.parts()) {
@@ -268,12 +301,12 @@ public final class CampBlueprintService {
                 var state = rotated.state();
                 if (state.isEmpty()) {
                     fail(player, CampWorkshopService.Failure.UNKNOWN_DEFINITION);
-                    return;
+                    return Optional.empty();
                 }
                 var pos = anchor.offset(rotated.offset());
                 if (!CampClaim.contains(camp.origin(), pos)) {
                     fail(player, CampWorkshopService.Failure.OUTSIDE_CLAIM);
-                    return;
+                    return Optional.empty();
                 }
                 if (
                     !level.isLoaded(pos)
@@ -283,7 +316,7 @@ public final class CampBlueprintService {
                         || !level.getBlockState(pos).canBeReplaced()
                 ) {
                     fail(player, CampWorkshopService.Failure.OCCUPIED);
-                    return;
+                    return Optional.empty();
                 }
                 parts.add(new PlannedPart(pos, state.get(), rotated.data()));
             }
@@ -305,23 +338,23 @@ public final class CampBlueprintService {
         }
         if (planned.isEmpty()) {
             message(player, Component.translatable("camp.atomicdawn.blueprint.empty"), ChatFormatting.RED);
-            return;
+            return Optional.empty();
         }
         if (camp.budgetUsed() + budget > camp.budgetLimit()) {
             fail(player, CampWorkshopService.Failure.BUDGET);
-            return;
+            return Optional.empty();
         }
         for (var count : counts.entrySet()) {
             var limit = CampBuildable.get(access, count.getKey()).map(CampBuildable::limit).orElse(0);
             if (limit > 0 && camp.count(count.getKey()) + count.getValue() > limit) {
                 fail(player, CampWorkshopService.Failure.LIMIT);
-                return;
+                return Optional.empty();
             }
         }
-        var materials = CampBlueprint.merge(cost);
+        var materials = free ? List.<SizedIngredient>of() : CampBlueprint.merge(cost);
         if (!CampMaterials.has(player, materials)) {
             fail(player, CampWorkshopService.Failure.MATERIALS);
-            return;
+            return Optional.empty();
         }
         var snapshots = new HashMap<BlockPos, BlockSnapshot>();
         for (var object : planned) {
@@ -344,11 +377,10 @@ public final class CampBlueprintService {
                     snapshot.restore();
                 }
                 fail(player, CampWorkshopService.Failure.PROTECTED);
-                return;
+                return Optional.empty();
             }
         }
         CampMaterials.consume(player, materials);
-        var contents = player.hasInfiniteMaterials();
         var objects = new ArrayList<CampObject>();
         for (var object : planned) {
             var worldParts = object.parts().stream().map(PlannedPart::pos).toList();
@@ -378,12 +410,7 @@ public final class CampBlueprintService {
             list.addAll(objects);
             return slot.withObjects(list);
         });
-        level.playSound(null, anchor, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.4F, 1.4F);
-        message(
-            player,
-            Component.translatable("camp.atomicdawn.blueprint.placed", blueprint.get().name(), objects.size()),
-            ChatFormatting.GREEN
-        );
+        return Optional.of(objects);
     }
 
     public static void delete(ServerPlayer player, Identifier id) {

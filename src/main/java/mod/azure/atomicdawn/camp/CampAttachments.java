@@ -47,5 +47,14 @@ public final class CampAttachments {
                 .build()
         );
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampStorage>> STORAGE = REGISTER.register(
+        "camp_storage",
+        () -> AttachmentType.builder(() -> CampStorage.EMPTY)
+            .serialize(CampStorage.MAP_CODEC)
+            .copyOnDeath()
+            .sync((holder, to) -> holder == to, CampStorage.STREAM_CODEC)
+            .build()
+    );
+
     private CampAttachments() {}
 }

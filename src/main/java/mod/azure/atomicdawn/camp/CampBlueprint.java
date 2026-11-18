@@ -86,7 +86,7 @@ public record CampBlueprint(
 
         private static final Rotation[] ROTATIONS = Rotation.values();
 
-        static final StreamCodec<ByteBuf, Entry> STREAM_CODEC = StreamCodec.of(
+        public static final StreamCodec<ByteBuf, Entry> STREAM_CODEC = StreamCodec.of(
             (buf, entry) -> {
                 Identifier.STREAM_CODEC.encode(buf, entry.definition());
                 BlockPos.STREAM_CODEC.encode(buf, entry.pos());

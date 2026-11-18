@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.command.LockCommands;
 import mod.azure.atomicdawn.item.PadlockItem;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
@@ -66,24 +67,32 @@ public final class LockEvents {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+    public static void onBreakProtect(BreakBlockEvent event) {
         if (!LockService.enabled() || !AtomicDawn.CONFIG.locks.LOCKS_PROTECT_BLOCKS) {
             return;
         }
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
+        if (!(event.getLevel() instanceof Level level) || level.isClientSide()) {
             return;
         }
-        var pos = event.getPosition();
-        if (pos.isEmpty()) {
-            return;
-        }
-        var located = LockService.find(player.level(), pos.get());
-        if (located.isEmpty() || LockService.canRemove(player, located.get().lock())) {
+        var located = LockService.find(level, event.getPos());
+        if (located.isEmpty() || LockService.canRemove(event.getPlayer(), located.get().lock())) {
             return;
         }
         event.setCanceled(true);
-        if (player.tickCount % 20 == 0) {
+        if (event.getPlayer() instanceof ServerPlayer player) {
             LockService.notify(player, "lock.atomicdawn.protected", ChatFormatting.RED);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onBreakCleanup(BreakBlockEvent event) {
+        if (!(event.getLevel() instanceof Level level) || level.isClientSide()) {
+            return;
+        }
+        var pos = event.getPos();
+        var located = LockService.find(level, pos);
+        if (located.isPresent() && located.get().pos().equals(LockService.anchor(event.getState(), pos))) {
+            LockService.onBroken(level, located.get(), event.getPlayer());
         }
     }
 

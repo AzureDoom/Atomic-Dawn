@@ -8,10 +8,12 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.gui.GuiLayer;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampWorkshopService;
@@ -58,9 +60,11 @@ public final class CampWorkshopHud implements GuiLayer {
             return;
         }
         var lines = new ArrayList<Line>();
-        if (CampWorkshopClient.selecting()) {
+        if (CampWorkshopClient.movingModule()) {
+            moduleLines(lines);
+        } else if (CampWorkshopClient.selecting()) {
             selectionLines(lines);
-        } else if (CampWorkshopClient.selectedBlueprint() != null) {
+        } else if (CampWorkshopClient.placingBlueprint()) {
             blueprintLines(lines, player);
         } else {
             buildableLines(lines, player, camp);
@@ -72,6 +76,7 @@ public final class CampWorkshopHud implements GuiLayer {
         lines.add(keyLine("rotate", ADKeyMappings.WORKSHOP_ROTATE.getTranslatedKeyMessage()));
         lines.add(keyLine("mode", ADKeyMappings.WORKSHOP_MODE.getTranslatedKeyMessage()));
         lines.add(keyLine("blueprint", ADKeyMappings.WORKSHOP_BLUEPRINT.getTranslatedKeyMessage()));
+        lines.add(keyLine("move", ADKeyMappings.WORKSHOP_MOVE.getTranslatedKeyMessage()));
         lines.add(keyLine("exit", ADKeyMappings.WORKSHOP.getTranslatedKeyMessage()));
 
         var maxWidth = Math.max(MIN_WIDTH, screenWidth * 2 / 5);
@@ -225,38 +230,72 @@ public final class CampWorkshopHud implements GuiLayer {
         }
     }
 
-    private static void blueprintLines(ArrayList<Line> lines, LocalPlayer player) {
-        var blueprint = CampWorkshopClient.blueprint();
-        var id = CampWorkshopClient.selectedBlueprint();
-        if (blueprint.isEmpty() || id == null) {
-            lines.add(
-                new Line(Component.translatable("camp.atomicdawn.blueprint.unknown"), PipBoyTheme.bad(), null, 0)
-            );
-            return;
-        }
-        var access = player.level().registryAccess();
+    private static void moduleLines(ArrayList<Line> lines) {
+        lines.add(
+            new Line(Component.translatable("camp.atomicdawn.workshop.moving_module"), PipBoyTheme.text(), null, 0)
+        );
+        var target = CampWorkshopClient.target();
+        var valid = target != null && CampWorkshopClient.moduleMoveValid(target);
         lines.add(
             new Line(
-                Component.translatable("camp.atomicdawn.workshop.blueprint", blueprint.get().displayName(id)),
-                PipBoyTheme.text(),
+                Component.translatable(
+                    valid ? "camp.atomicdawn.workshop.ready" : "camp.atomicdawn.module.move_invalid"
+                ),
+                valid ? PipBoyTheme.text() : PipBoyTheme.bad(),
                 null,
                 0
             )
         );
+    }
+
+    private static void blueprintLines(ArrayList<Line> lines, LocalPlayer player) {
+        var blueprint = CampWorkshopClient.blueprint();
+        if (blueprint.isEmpty()) {
+            var key = CampWorkshopClient.selectedStored() != null
+                ? "camp.atomicdawn.storage.waiting"
+                : "camp.atomicdawn.blueprint.unknown";
+            lines.add(new Line(Component.translatable(key), PipBoyTheme.dim(), null, 0));
+            return;
+        }
+        var access = player.level().registryAccess();
+        var stored = CampWorkshopClient.selectedStored() != null;
         lines.add(
             new Line(
                 Component.translatable(
-                    "camp.atomicdawn.workshop.blueprint_info",
-                    blueprint.get().kind().label(),
-                    blueprint.get().entries().size(),
-                    blueprint.get().budget(access)
+                    stored ? "camp.atomicdawn.workshop.stored" : "camp.atomicdawn.workshop.blueprint",
+                    CampWorkshopClient.placementName()
                 ),
                 PipBoyTheme.text(),
                 null,
                 0
             )
         );
-        for (var ingredient : blueprint.get().cost(access)) {
+        if (stored) {
+            lines.add(
+                new Line(
+                    Component.translatable("camp.atomicdawn.workshop.cost", blueprint.get().budget(access)),
+                    PipBoyTheme.text(),
+                    null,
+                    0
+                )
+            );
+        } else {
+            lines.add(
+                new Line(
+                    Component.translatable(
+                        "camp.atomicdawn.workshop.blueprint_info",
+                        blueprint.get().kind().label(),
+                        blueprint.get().entries().size(),
+                        blueprint.get().budget(access)
+                    ),
+                    PipBoyTheme.text(),
+                    null,
+                    0
+                )
+            );
+        }
+        var cost = stored ? List.<SizedIngredient>of() : blueprint.get().cost(access);
+        for (var ingredient : cost) {
             var item = ingredient.ingredient().items().findFirst().orElse(null);
             if (item == null) {
                 continue;

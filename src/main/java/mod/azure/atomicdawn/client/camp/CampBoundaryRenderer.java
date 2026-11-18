@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.block.MultiblockBenchBlock;
 import mod.azure.atomicdawn.camp.CampModuleBlock;
+import mod.azure.atomicdawn.camp.CampSlotService;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
 
 @SuppressWarnings("unused")
@@ -116,7 +117,8 @@ public final class CampBoundaryRenderer {
         }
         var holding = holdingModule(player);
         var workshop = CampWorkshopClient.active();
-        if (!holding && !workshop) {
+        var restore = CampRestoreClient.blockers();
+        if (!holding && !workshop && restore.isEmpty()) {
             return;
         }
         BlockPos modulePreview = null;
@@ -161,9 +163,23 @@ public final class CampBoundaryRenderer {
                     boxes.add(new Box(part, SCRAP, armed ? 0.55F : 0.25F));
                 }
             }
-            if (CampWorkshopClient.selecting()) {
+            if (CampWorkshopClient.movingModule()) {
+                var target = CampWorkshopClient.target();
+                if (target != null && camp != null) {
+                    var valid = CampWorkshopClient.moduleMoveValid(target);
+                    var color = valid ? VALID : INVALID;
+                    walls.add(new Wall(Vec3.atBottomCenterOf(target), radius, down, up, color));
+                    var current = level.getBlockState(camp.origin());
+                    if (current.getBlock() instanceof CampModuleBlock) {
+                        models.add(new CampModulePlacementClient.GhostPart(target, current, valid));
+                        addShapeBoxes(boxes, level, target, current, color);
+                    } else {
+                        boxes.add(new Box(target, color, 0.3F));
+                    }
+                }
+            } else if (CampWorkshopClient.selecting()) {
                 addSelection(boxes);
-            } else if (CampWorkshopClient.selectedBlueprint() != null) {
+            } else if (CampWorkshopClient.placingBlueprint()) {
                 addBlueprint(boxes, models, level);
             } else if (CampWorkshopClient.selected() != null) {
                 var target = CampWorkshopClient.target();
@@ -172,6 +188,11 @@ public final class CampBoundaryRenderer {
                     addGhostBoxes(boxes, level, target, CampWorkshopClient.previewState(target), color);
                 }
             }
+        }
+        var pulse = 0.25F + 0.2F * Mth.sin((level.getGameTime() % 40L) / 40F * Mth.TWO_PI);
+        for (var blocker : restore) {
+            var color = blocker.reason() == CampSlotService.Reason.TERRAIN ? CLAIM : INVALID;
+            boxes.add(new Box(blocker.pos(), color, pulse));
         }
         if (walls.isEmpty() && boxes.isEmpty() && models.isEmpty()) {
             return;

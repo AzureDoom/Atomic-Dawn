@@ -1,5 +1,6 @@
 package mod.azure.atomicdawn.client.camp;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -19,6 +20,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -34,12 +36,15 @@ import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampPlaceContext;
 import mod.azure.atomicdawn.camp.CampPlans;
+import mod.azure.atomicdawn.camp.CampStorage;
 import mod.azure.atomicdawn.camp.CampWorkshopService;
 import mod.azure.atomicdawn.camp.PlacementMode;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
 import mod.azure.atomicdawn.network.CampBlueprintPayload;
+import mod.azure.atomicdawn.network.CampMovePayload;
 import mod.azure.atomicdawn.network.CampSyncPayload;
 import mod.azure.atomicdawn.network.CampWorkshopPayload;
+import mod.azure.atomicdawn.registry.ADDataComponents;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID, value = Dist.CLIENT)
@@ -88,6 +93,25 @@ public final class CampWorkshopClient {
 
     @Nullable
     private static CampBlueprintPreview preview;
+
+    @Nullable
+    private static UUID selectedStored;
+
+    private static boolean storedSeen;
+
+    private static int storedTicks;
+
+    private static boolean movingModule;
+
+    private record StoredView(
+        CampStorage.Stored stored,
+        CampBlueprint blueprint
+    ) {}
+
+    @Nullable
+    private static StoredView storedView;
+
+    private static final int STORED_WAIT_TICKS = 100;
 
     private record GhostCache(
         CampBlueprintPreview preview,
@@ -148,19 +172,133 @@ public final class CampWorkshopClient {
         return cornerA != null && cornerB != null;
     }
 
+    public static @Nullable UUID selectedStored() {
+        return selectedStored;
+    }
+
+    public static boolean movingModule() {
+        return movingModule;
+    }
+
+    public static boolean placingBlueprint() {
+        return selectedBlueprint != null || selectedStored != null;
+    }
+
     public static void selectBlueprint(Identifier id) {
+        clearSelection();
         selectedBlueprint = id;
+    }
+
+    public static void selectStored(UUID id) {
+        clearSelection();
+        selectedStored = id;
+        storedSeen = false;
+        storedTicks = 0;
+    }
+
+    private static void clearSelection() {
         selected = null;
+        selectedBlueprint = null;
+        selectedStored = null;
+        storedView = null;
         selecting = false;
+        movingModule = false;
         preview = null;
+        ghostCache = null;
+    }
+
+    public static Optional<CampStorage.Stored> stored() {
+        var player = Minecraft.getInstance().player;
+        if (player == null || selectedStored == null) {
+            return Optional.empty();
+        }
+        return CampStorage.of(player).get(selectedStored);
     }
 
     public static Optional<CampBlueprint> blueprint() {
         var player = Minecraft.getInstance().player;
-        if (player == null || selectedBlueprint == null) {
+        if (player == null) {
+            return Optional.empty();
+        }
+        if (selectedStored != null) {
+            var stored = stored();
+            if (stored.isEmpty()) {
+                return Optional.empty();
+            }
+            var view = storedView;
+            if (view == null || view.stored() != stored.get()) {
+                var blueprint = new CampBlueprint("", CampBlueprint.Kind.PREFAB, List.of(stored.get().entry()));
+                view = new StoredView(stored.get(), blueprint);
+                storedView = view;
+            }
+            return Optional.of(view.blueprint());
+        }
+        if (selectedBlueprint == null) {
             return Optional.empty();
         }
         return CampBlueprints.get(player, selectedBlueprint);
+    }
+
+    public static Component placementName() {
+        var player = Minecraft.getInstance().player;
+        var level = Minecraft.getInstance().level;
+        if (selectedStored != null && level != null) {
+            return stored().flatMap(stored -> CampBuildable.get(level.registryAccess(), stored.entry().definition()))
+                .map(CampBuildable::name)
+                .orElse(Component.translatable("camp.atomicdawn.storage.unknown"));
+        }
+        if (player != null && selectedBlueprint != null) {
+            return blueprint().map(found -> found.displayName(selectedBlueprint))
+                .orElse(Component.translatable("camp.atomicdawn.blueprint.unknown"));
+        }
+        return Component.empty();
+    }
+
+    public static boolean moduleMoveValid(BlockPos target) {
+        var minecraft = Minecraft.getInstance();
+        var player = minecraft.player;
+        var level = minecraft.level;
+        var state = CampClientState.get();
+        if (player == null || level == null || state == null) {
+            return false;
+        }
+        var camp = workshopCamp(player);
+        if (camp == null || !camp.own() || target.equals(camp.origin()) || !insideClaim(camp, target, 0)) {
+            return false;
+        }
+        var reach = CampWorkshopService.reach();
+        if (player.distanceToSqr(Vec3.atCenterOf(target)) > (double) reach * reach) {
+            return false;
+        }
+        if (level.isOutsideBuildHeight(target) || !level.getBlockState(target).canBeReplaced()) {
+            return false;
+        }
+        if (camp.objectAt(target).isPresent()) {
+            return false;
+        }
+        var spacing = (long) state.spacing();
+        for (var other : state.nearby()) {
+            if (other.campId().equals(camp.campId())) {
+                continue;
+            }
+            long dx = other.origin().getX() - target.getX();
+            long dz = other.origin().getZ() - target.getZ();
+            if (dx * dx + dz * dz < spacing * spacing) {
+                return false;
+            }
+        }
+        long radius = state.radius();
+        for (var object : camp.objects()) {
+            for (var part : object.parts()) {
+                var dy = part.getY() - target.getY();
+                long dx = part.getX() - target.getX();
+                long dz = part.getZ() - target.getZ();
+                if (dy > state.up() || dy < -state.down() || dx * dx + dz * dz > radius * radius) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public static @Nullable CampBlueprintPreview blueprintPreview() {
@@ -277,7 +415,7 @@ public final class CampWorkshopClient {
             if (definition.isEmpty()) {
                 return Optional.of(CampWorkshopService.Failure.UNKNOWN_DEFINITION);
             }
-            if (!CampPlans.unlocked(player, definition.get())) {
+            if (selectedStored == null && !CampPlans.unlocked(player, definition.get())) {
                 return Optional.of(CampWorkshopService.Failure.PLAN_LOCKED);
             }
         }
@@ -299,7 +437,7 @@ public final class CampWorkshopClient {
                 return Optional.of(CampWorkshopService.Failure.LIMIT);
             }
         }
-        if (!CampMaterials.has(player, blueprint.get().cost(access))) {
+        if (selectedStored == null && !CampMaterials.has(player, blueprint.get().cost(access))) {
             return Optional.of(CampWorkshopService.Failure.MATERIALS);
         }
         return Optional.empty();
@@ -331,6 +469,15 @@ public final class CampWorkshopClient {
         );
     }
 
+    public static void scrapStored(UUID id) {
+        if (id.equals(selectedStored)) {
+            selectedStored = null;
+            storedView = null;
+            preview = null;
+        }
+        ClientPacketDistributor.sendToServer(CampMovePayload.scrapStored(id));
+    }
+
     public static void deleteBlueprint(Identifier id) {
         if (id.equals(selectedBlueprint)) {
             selectedBlueprint = null;
@@ -340,8 +487,7 @@ public final class CampWorkshopClient {
     }
 
     public static void select(Identifier id) {
-        selectedBlueprint = null;
-        preview = null;
+        clearSelection();
         selected = id;
         definition().ifPresent(definition -> {
             if (!definition.modes().contains(mode)) {
@@ -419,6 +565,10 @@ public final class CampWorkshopClient {
         while (ADKeyMappings.WORKSHOP_BLUEPRINT.consumeClick()) {
             toggleSelecting();
         }
+        while (ADKeyMappings.WORKSHOP_MOVE.consumeClick()) {
+            move(player, camp);
+        }
+        trackStored(player);
         while (ADKeyMappings.WORKSHOP_MODE.consumeClick()) {
             definition().ifPresent(definition -> {
                 var modes = definition.modes();
@@ -437,9 +587,66 @@ public final class CampWorkshopClient {
         }
         while (ADKeyMappings.WORKSHOP_BLUEPRINT.consumeClick()) {
         }
+        while (ADKeyMappings.WORKSHOP_MOVE.consumeClick()) {
+        }
+    }
+
+    private static void trackStored(LocalPlayer player) {
+        if (selectedStored == null) {
+            return;
+        }
+        if (CampStorage.of(player).has(selectedStored)) {
+            storedSeen = true;
+            return;
+        }
+        if (storedSeen || ++storedTicks > STORED_WAIT_TICKS) {
+            selectedStored = null;
+            storedView = null;
+            preview = null;
+        }
+    }
+
+    private static void move(LocalPlayer player, CampSyncPayload.CampView camp) {
+        if (movingModule) {
+            movingModule = false;
+            toast(Component.translatable("camp.atomicdawn.module.move_cancelled"));
+            return;
+        }
+        var hit = hit();
+        if (hit == null) {
+            return;
+        }
+        if (hit.getBlockPos().equals(camp.origin())) {
+            if (!camp.own()) {
+                toast(Component.translatable("camp.atomicdawn.error.not_owner"));
+                return;
+            }
+            clearSelection();
+            movingModule = true;
+            toast(Component.translatable("camp.atomicdawn.module.move_start"));
+            return;
+        }
+        var object = hoveredObject();
+        if (object.isEmpty()) {
+            toast(Component.translatable("camp.atomicdawn.storage.nothing"));
+            return;
+        }
+        if (!camp.own()) {
+            toast(CampWorkshopService.Failure.NOT_ALLOWED.message());
+            return;
+        }
+        var id = UUID.randomUUID();
+        ClientPacketDistributor.sendToServer(CampMovePayload.store(object.get().pos(), id, ++nonce));
+        if (player.isShiftKeyDown()) {
+            toast(Component.translatable("camp.atomicdawn.storage.storing"));
+            return;
+        }
+        selectStored(id);
+        toast(Component.translatable("camp.atomicdawn.storage.moving"));
     }
 
     private static void toggleSelecting() {
+        movingModule = false;
         selecting = !selecting;
         if (selecting) {
             cornerA = null;
@@ -483,6 +690,7 @@ public final class CampWorkshopClient {
         if (active) {
             active = false;
             selecting = false;
+            movingModule = false;
             toast(Component.translatable("camp.atomicdawn.workshop.exit"));
             return;
         }
@@ -506,17 +714,23 @@ public final class CampWorkshopClient {
     }
 
     @SubscribeEvent
+    public static void onTooltip(ItemTooltipEvent event) {
+        if (event.getItemStack().has(ADDataComponents.CAMP_BLOCK_DATA.get())) {
+            event.getToolTip()
+                .add(Component.translatable("camp.atomicdawn.item.keeps_data").withStyle(ChatFormatting.GRAY));
+        }
+    }
+
+    @SubscribeEvent
     public static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         active = false;
         selected = null;
-        selectedBlueprint = null;
-        selecting = false;
+        clearSelection();
         cornerA = null;
         cornerB = null;
-        preview = null;
-        ghostCache = null;
         scrapArmed = null;
         CampModulePlacementClient.reset();
+        CampRestoreClient.clear();
         CampClientState.clear();
     }
 
@@ -692,10 +906,25 @@ public final class CampWorkshopClient {
             }
             return;
         }
+        if (movingModule && (event.isUseItem() || event.isAttack())) {
+            event.setCanceled(true);
+            event.setSwingHand(false);
+            var target = target();
+            if (event.isAttack()) {
+                movingModule = false;
+                toast(Component.translatable("camp.atomicdawn.module.move_cancelled"));
+            } else if (target != null && moduleMoveValid(target)) {
+                movingModule = false;
+                ClientPacketDistributor.sendToServer(CampMovePayload.moveModule(target, ++nonce));
+            } else {
+                toast(Component.translatable("camp.atomicdawn.module.move_invalid"));
+            }
+            return;
+        }
         if (event.isUseItem()) {
             event.setCanceled(true);
             event.setSwingHand(false);
-            if (selectedBlueprint != null) {
+            if (placingBlueprint()) {
                 placeBlueprint();
             } else {
                 place();
@@ -736,12 +965,16 @@ public final class CampWorkshopClient {
 
     private static void placeBlueprint() {
         var anchor = blueprintAnchor();
-        if (selectedBlueprint == null || anchor == null) {
+        if (!placingBlueprint() || anchor == null) {
             return;
         }
         var failure = blueprintFailure();
         if (failure.isPresent()) {
             toast(failure.get().message());
+            return;
+        }
+        if (selectedStored != null) {
+            ClientPacketDistributor.sendToServer(CampMovePayload.placeStored(selectedStored, anchor, facing, ++nonce));
             return;
         }
         ClientPacketDistributor.sendToServer(

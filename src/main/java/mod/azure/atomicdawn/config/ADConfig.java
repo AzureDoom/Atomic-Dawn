@@ -1362,6 +1362,19 @@ public class ADConfig {
         @Configurable.Synchronized
         public boolean CAMP_PROTECT_EXPLOSIONS = true;
 
+        @Comment(
+            "Scrapping an object gives back the block itself, keeping its contents and data, instead of part of its material cost."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_SCRAP_RETURNS_BLOCK = true;
+
+        @Comment("Objects each player can keep in C.A.M.P. storage.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 1024)
+        public int CAMP_STORAGE_SLOTS = 256;
+
         @Comment("Personal blueprints each player can keep. 0 disables saving blueprints.")
         @Configurable
         @Configurable.Synchronized

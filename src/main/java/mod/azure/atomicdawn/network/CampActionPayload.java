@@ -30,7 +30,8 @@ public record CampActionPayload(
         DELETE,
         TOGGLE_ACCESS,
         UNTRUST,
-        MODULE_FACING;
+        MODULE_FACING,
+        CLEAR_REBUILD;
 
         private static final Action[] VALUES = values();
 

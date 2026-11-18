@@ -27,6 +27,10 @@ public record EntitySnapshot(
         data = data == null ? new CompoundTag() : data.copy();
     }
 
+    public EntitySnapshot shifted(Vec3 delta) {
+        return new EntitySnapshot(type, offset.add(delta), rotation, data);
+    }
+
     public EntitySnapshot withoutData() {
         return data.isEmpty() ? this : new EntitySnapshot(type, offset, rotation, new CompoundTag());
     }

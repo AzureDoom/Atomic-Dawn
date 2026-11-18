@@ -83,6 +83,10 @@ public record PartSnapshot(
         return data.isEmpty() ? this : new PartSnapshot(offset, block, properties);
     }
 
+    public PartSnapshot shifted(BlockPos delta) {
+        return new PartSnapshot(offset.offset(delta), block, properties, data);
+    }
+
     public PartSnapshot rotated(Rotation rotation) {
         return state().map(found -> capture(offset.rotate(rotation), found.rotate(rotation)).withData(data))
             .orElse(new PartSnapshot(offset.rotate(rotation), block, properties, data));

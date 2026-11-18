@@ -5,6 +5,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ProblemReporter;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.storage.TagValueInput;
@@ -37,6 +39,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.powerarmor.PowerArmorChassisItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
+import mod.azure.atomicdawn.registry.ADDataComponents;
 
 public final class CampContents {
 
@@ -237,10 +240,61 @@ public final class CampContents {
         return best;
     }
 
-    public static List<ItemStack> drops(ServerLevel level, CampObject object) {
+    public static boolean returnsBlock() {
+        return AtomicDawn.CONFIG.camp.CAMP_SCRAP_RETURNS_BLOCK;
+    }
+
+    public static CompoundTag objectData(ServerLevel level, CampObject object) {
+        var primary = blockData(level, object.pos());
+        if (!primary.isEmpty()) {
+            return primary;
+        }
+        for (var part : object.parts()) {
+            var data = blockData(level, part);
+            if (!data.isEmpty()) {
+                return data;
+            }
+        }
+        return new CompoundTag();
+    }
+
+    public static CompoundTag storedData(List<PartSnapshot> parts, BlockPos primary) {
+        for (var part : parts) {
+            if (part.offset().equals(primary) && part.hasData()) {
+                return part.data();
+            }
+        }
+        for (var part : parts) {
+            if (part.hasData()) {
+                return part.data();
+            }
+        }
+        return new CompoundTag();
+    }
+
+    public static ItemStack blockItem(Identifier block, CompoundTag data) {
+        var item = BuiltInRegistries.BLOCK.getOptional(block).map(Block::asItem).orElse(Items.AIR);
+        if (item == Items.AIR) {
+            return ItemStack.EMPTY;
+        }
+        var stack = new ItemStack(item);
+        if (!data.isEmpty()) {
+            stack.set(ADDataComponents.CAMP_BLOCK_DATA.get(), data.copy());
+        }
+        return stack;
+    }
+
+    public static void applyItemData(ServerLevel level, BlockPos pos, ItemStack stack) {
+        var data = stack.get(ADDataComponents.CAMP_BLOCK_DATA.get());
+        if (data != null) {
+            applyBlockData(level, pos, data);
+        }
+    }
+
+    public static List<ItemStack> containerDrops(ServerLevel level, List<PartSnapshot> parts) {
         var items = new ArrayList<ItemStack>();
         var ops = level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
-        for (var part : object.snapshot()) {
+        for (var part : parts) {
             for (var tag : part.data().getListOrEmpty("Items")) {
                 if (tag instanceof CompoundTag compound) {
                     ItemStack.CODEC.parse(ops, compound)
@@ -250,7 +304,12 @@ public final class CampContents {
                 }
             }
         }
-        for (var snapshot : object.entities()) {
+        return items;
+    }
+
+    public static List<ItemStack> entityDrops(ServerLevel level, List<EntitySnapshot> entities) {
+        var items = new ArrayList<ItemStack>();
+        for (var snapshot : entities) {
             items.addAll(entityDrops(level, snapshot));
         }
         return items;
