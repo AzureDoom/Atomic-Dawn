@@ -19,6 +19,7 @@ import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
 import mod.azure.atomicdawn.armor.upgrade.ArmorLegendary;
 import mod.azure.atomicdawn.armor.upgrade.ArmorMod;
 import mod.azure.atomicdawn.camp.CampAttachments;
+import mod.azure.atomicdawn.camp.CampBlueprint;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampPlanLootModifier;
 import mod.azure.atomicdawn.config.ADConfig;
@@ -120,6 +121,7 @@ public final class AtomicDawn {
         event.worldRegistry(ADRegistries.ARMOR_MOD, ArmorMod.CODEC, ArmorMod.CODEC);
         event.worldRegistry(ADRegistries.ARMOR_LEGENDARY, ArmorLegendary.CODEC, ArmorLegendary.CODEC);
         event.worldRegistry(ADRegistries.CAMP_BUILDABLE, CampBuildable.CODEC, CampBuildable.CODEC);
+        event.worldRegistry(ADRegistries.CAMP_BLUEPRINT, CampBlueprint.CODEC, CampBlueprint.NETWORK_CODEC);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

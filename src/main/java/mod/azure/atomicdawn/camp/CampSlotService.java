@@ -3,17 +3,19 @@ package mod.azure.atomicdawn.camp;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
 import mod.azure.atomicdawn.registry.ADBlocks;
 import mod.azure.atomicdawn.registry.ADItems;
 import mod.azure.atomicdawn.util.PlayerItems;
@@ -31,7 +32,8 @@ public final class CampSlotService {
 
     private record PlannedPart(
         BlockPos pos,
-        BlockState state
+        BlockState state,
+        CompoundTag data
     ) {}
 
     private record Planned(
@@ -93,27 +95,17 @@ public final class CampSlotService {
         if (level == null) {
             return false;
         }
-        var docked = dockedArmor(level, camp);
-        if (docked > 0) {
-            CampPlacementService.notify(
-                player,
-                Component.translatable("camp.atomicdawn.error.power_armor_docked", docked),
-                ChatFormatting.RED
-            );
-            return false;
-        }
-        var occupied = occupiedContainers(level, camp);
-        if (occupied > 0) {
-            CampPlacementService.notify(
-                player,
-                Component.translatable("camp.atomicdawn.error.containers_not_empty", occupied),
-                ChatFormatting.RED
-            );
-            return false;
-        }
         var toNorth = rotation(camp.facing(), Direction.NORTH);
+        var deployed = camp.objects().stream().filter(CampObject::deployed).toList();
+        var assigned = CampContents.assign(
+            level,
+            deployed,
+            claimArea(camp),
+            pos -> CampClaim.contains(camp.origin(), pos)
+        );
         var objects = new ArrayList<CampObject>();
         var removals = new ArrayList<CampObject>();
+        var leaving = new ArrayList<Entity>();
         for (var object : camp.objects()) {
             if (object.stored()) {
                 objects.add(object);
@@ -126,16 +118,32 @@ public final class CampSlotService {
                     continue;
                 }
                 var offset = part.subtract(camp.origin()).rotate(toNorth);
-                parts.add(PartSnapshot.capture(offset, state.rotate(toNorth)));
+                var snapshot = PartSnapshot.capture(offset, state.rotate(toNorth));
+                parts.add(snapshot.withData(CampContents.blockData(level, part)));
             }
             if (parts.isEmpty()) {
                 continue;
             }
+            var entities = assigned.getOrDefault(object.objectId(), List.of());
+            var captured = entities.stream()
+                .map(entity -> CampContents.capture(level, entity, camp.origin(), toNorth))
+                .toList();
             var relative = object.pos().subtract(camp.origin()).rotate(toNorth);
-            objects.add(object.asStored(relative, rotate(object.facing(), toNorth), parts));
+            objects.add(object.asStored(relative, rotate(object.facing(), toNorth), parts, captured));
             removals.add(object);
+            leaving.addAll(entities);
         }
         CampManager.put(server, camp.asStored(objects));
+        for (var entity : leaving) {
+            entity.discard();
+        }
+        for (var object : removals) {
+            for (var part : object.parts()) {
+                if (CampWorkshopService.matches(level, part, object)) {
+                    CampContents.clear(level, part);
+                }
+            }
+        }
         for (var i = removals.size() - 1; i >= 0; i--) {
             for (var part : removals.get(i).parts()) {
                 if (CampWorkshopService.matches(level, part, removals.get(i))) {
@@ -161,41 +169,17 @@ public final class CampSlotService {
         return true;
     }
 
-    private static int dockedArmor(ServerLevel level, CampSlot camp) {
-        var masters = new HashSet<BlockPos>();
-        for (var object : camp.objects()) {
-            if (object.stored()) {
-                continue;
-            }
-            for (var part : object.parts()) {
-                var state = level.getBlockState(part);
-                if (state.getBlock() instanceof PowerArmorStationBlock) {
-                    masters.add(PowerArmorStationBlock.masterPos(part, state));
-                }
-            }
-        }
-        var count = 0;
-        for (var master : masters) {
-            if (PowerArmorStationBlock.docked(level, master) != null) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private static int occupiedContainers(ServerLevel level, CampSlot camp) {
-        var count = 0;
-        for (var object : camp.objects()) {
-            if (object.stored()) {
-                continue;
-            }
-            for (var part : object.parts()) {
-                if (level.getBlockEntity(part) instanceof Container container && !container.isEmpty()) {
-                    count++;
-                }
-            }
-        }
-        return count;
+    public static AABB claimArea(CampSlot camp) {
+        var origin = camp.origin();
+        var radius = CampClaim.radius();
+        return new AABB(
+            origin.getX() - radius,
+            origin.getY() - CampClaim.down(),
+            origin.getZ() - radius,
+            origin.getX() + radius + 1,
+            origin.getY() + CampClaim.up() + 1,
+            origin.getZ() + radius + 1
+        );
     }
 
     public static RebuildResult rebuild(ServerPlayer player, CampSlot camp, boolean partial, boolean quiet) {
@@ -241,7 +225,13 @@ public final class CampSlotService {
             for (var part : planned.parts()) {
                 level.setBlock(part.pos(), part.state(), CampWorkshopService.RESTORE_FLAGS);
             }
+            for (var part : planned.parts()) {
+                CampContents.applyBlockData(level, part.pos(), part.data());
+            }
             var worldParts = planned.parts().stream().map(PlannedPart::pos).toList();
+            for (var entity : planned.object().entities()) {
+                CampContents.spawn(level, entity, camp.origin(), fromNorth, worldParts);
+            }
             var deployed = planned.object().asDeployed(planned.pos(), planned.facing(), worldParts);
             placed.put(deployed.objectId(), deployed);
         }
@@ -285,7 +275,7 @@ public final class CampSlotService {
             if (claimed.contains(pos) || pos.equals(camp.origin()) || !level.getBlockState(pos).canBeReplaced()) {
                 return Optional.empty();
             }
-            parts.add(new PlannedPart(pos, state.get()));
+            parts.add(new PlannedPart(pos, state.get(), rotated.data()));
         }
         if (parts.isEmpty()) {
             return Optional.empty();
@@ -299,8 +289,12 @@ public final class CampSlotService {
             return false;
         }
         var server = player.level().getServer();
+        var level = player.level();
         for (var object : camp.objects()) {
             CampWorkshopService.refund(player, object);
+            for (var stack : CampContents.drops(level, object)) {
+                PlayerItems.give(player, stack);
+            }
         }
         CampManager.remove(server, camp.campId());
         CampPlacementService.notify(

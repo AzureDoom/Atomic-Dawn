@@ -8,6 +8,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.ArmorRecipe;
 import mod.azure.atomicdawn.armor.upgrade.ArmorLegendary;
 import mod.azure.atomicdawn.armor.upgrade.ArmorMod;
+import mod.azure.atomicdawn.camp.CampBlueprint;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
 import mod.azure.atomicdawn.npc.NpcModelDefinition;
@@ -100,6 +101,10 @@ public final class ADRegistries {
 
     public static final ResourceKey<Registry<CampBuildable>> CAMP_BUILDABLE = ResourceKey.createRegistryKey(
         AtomicDawn.id("camp_buildable")
+    );
+
+    public static final ResourceKey<Registry<CampBlueprint>> CAMP_BLUEPRINT = ResourceKey.createRegistryKey(
+        AtomicDawn.id("camp_blueprint")
     );
 
     private ADRegistries() {}

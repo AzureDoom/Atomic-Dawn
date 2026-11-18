@@ -14,6 +14,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 import mod.azure.atomicdawn.camp.CampAttachments;
+import mod.azure.atomicdawn.camp.CampBlueprintFiles;
+import mod.azure.atomicdawn.camp.CampBlueprintLibrary;
+import mod.azure.atomicdawn.camp.CampBlueprints;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampManager;
 import mod.azure.atomicdawn.camp.CampPlans;
@@ -31,6 +34,28 @@ public final class CampCommands {
                 .then(
                     Commands.literal("camp")
                         .then(Commands.literal("list").executes(CampCommands::list))
+                        .then(
+                            Commands.literal("blueprint")
+                                .then(Commands.literal("list").executes(CampCommands::blueprints))
+                                .then(
+                                    Commands.literal("export")
+                                        .then(
+                                            Commands.argument("owner", EntityArgument.player())
+                                                .then(
+                                                    Commands.argument("name", StringArgumentType.greedyString())
+                                                        .suggests(
+                                                            (context, builder) -> SharedSuggestionProvider.suggest(
+                                                                CampBlueprintLibrary.of(
+                                                                    EntityArgument.getPlayer(context, "owner")
+                                                                ).blueprints().keySet(),
+                                                                builder
+                                                            )
+                                                        )
+                                                        .executes(CampCommands::export)
+                                                )
+                                        )
+                                )
+                        )
                         .then(
                             Commands.literal("plan")
                                 .then(planAction("grant", true))
@@ -92,6 +117,56 @@ public final class CampCommands {
         var key = grant ? "commands.atomicdawn.camp.plan.granted" : "commands.atomicdawn.camp.plan.revoked";
         source.sendSuccess(() -> Component.translatable(key, id.toString(), targets.size()), true);
         return targets.size();
+    }
+
+    private static int blueprints(CommandContext<CommandSourceStack> context) {
+        var source = context.getSource();
+        var blueprints = CampBlueprints.datapack(source.registryAccess());
+        if (blueprints.isEmpty()) {
+            source.sendSuccess(() -> Component.translatable("commands.atomicdawn.camp.blueprint.none"), false);
+            return 0;
+        }
+        for (var holder : blueprints) {
+            var blueprint = holder.value();
+            source.sendSuccess(
+                () -> Component.translatable(
+                    "commands.atomicdawn.camp.blueprint.entry",
+                    holder.key().identifier().toString(),
+                    blueprint.kind().label(),
+                    blueprint.entries().size()
+                ),
+                false
+            );
+        }
+        return blueprints.size();
+    }
+
+    private static int export(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        var source = context.getSource();
+        var owner = EntityArgument.getPlayer(context, "owner");
+        var key = CampBlueprints.slug(StringArgumentType.getString(context, "name"));
+        var blueprint = CampBlueprintLibrary.of(owner).get(key);
+        if (blueprint.isEmpty()) {
+            source.sendFailure(
+                Component.translatable("commands.atomicdawn.camp.blueprint.missing", owner.getScoreboardName(), key)
+            );
+            return 0;
+        }
+        var id = CampBlueprintFiles.exportId(owner.getScoreboardName(), key);
+        var path = CampBlueprintFiles.write(source.getServer(), id, blueprint.get());
+        if (path.isEmpty()) {
+            source.sendFailure(Component.translatable("commands.atomicdawn.camp.blueprint.export_failed"));
+            return 0;
+        }
+        source.sendSuccess(
+            () -> Component.translatable(
+                "commands.atomicdawn.camp.blueprint.exported",
+                id.toString(),
+                path.get().toString()
+            ),
+            true
+        );
+        return 1;
     }
 
     private static int list(CommandContext<CommandSourceStack> context) {

@@ -8,6 +8,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import mod.azure.atomicdawn.camp.CampBlueprint;
+import mod.azure.atomicdawn.camp.CampBlueprints;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampPlans;
@@ -39,8 +42,22 @@ public final class CampCatalogScreen extends Screen {
 
     private static final int TABS_TOP = 36;
 
+    private static final int FOOTER = 20;
+
     @Nullable
     private static CampBuildable.Category lastCategory;
+
+    private static boolean lastBlueprints;
+
+    private static String lastName = "";
+
+    private boolean blueprints = lastBlueprints;
+
+    @Nullable
+    private EditBox nameBox;
+
+    @Nullable
+    private Identifier armedDelete;
 
     @Nullable
     private CampBuildable.Category category = lastCategory;
@@ -76,7 +93,8 @@ public final class CampCatalogScreen extends Screen {
         int y,
         int w,
         Component label,
-        CampBuildable.@Nullable Category value
+        boolean active,
+        Runnable action
     ) {}
 
     private int panelWidth() {
@@ -91,26 +109,54 @@ public final class CampCatalogScreen extends Screen {
         var tabs = new ArrayList<Tab>();
         var startX = left() + 6;
         var maxX = left() + panelWidth() - 6;
+        var labels = new ArrayList<Component>();
+        var actives = new ArrayList<Boolean>();
+        var actions = new ArrayList<Runnable>();
+        labels.add(Component.translatable("camp.atomicdawn.catalog.tab.build"));
+        actives.add(!blueprints);
+        actions.add(() -> setBlueprints(false));
+        labels.add(Component.translatable("camp.atomicdawn.catalog.tab.blueprints"));
+        actives.add(blueprints);
+        actions.add(() -> setBlueprints(true));
+        if (!blueprints) {
+            labels.add(Component.translatable("camp.atomicdawn.category.all"));
+            actives.add(category == null);
+            actions.add(() -> setCategory(null));
+            for (var entry : categories()) {
+                labels.add(entry.label());
+                actives.add(entry == category);
+                actions.add(() -> setCategory(entry));
+            }
+        }
         var x = startX;
         var y = top() + TABS_TOP;
-        var labels = new ArrayList<Component>();
-        var values = new ArrayList<CampBuildable.Category>();
-        labels.add(Component.translatable("camp.atomicdawn.category.all"));
-        values.add(null);
-        for (var entry : categories()) {
-            labels.add(entry.label());
-            values.add(entry);
-        }
         for (var i = 0; i < labels.size(); i++) {
             var w = font.width(labels.get(i)) + 8;
             if (x + w > maxX && x > startX) {
                 x = startX;
                 y += TAB_HEIGHT + TAB_GAP;
             }
-            tabs.add(new Tab(x, y, w, labels.get(i), values.get(i)));
-            x += w + TAB_GAP;
+            tabs.add(new Tab(x, y, w, labels.get(i), actives.get(i), actions.get(i)));
+            x += w + TAB_GAP + (i == 1 && !blueprints ? 8 : 0);
         }
         return tabs;
+    }
+
+    private void setCategory(CampBuildable.@Nullable Category value) {
+        category = value;
+        lastCategory = value;
+        scroll = 0;
+    }
+
+    private void setBlueprints(boolean value) {
+        blueprints = value;
+        lastBlueprints = value;
+        scroll = 0;
+        armedDelete = null;
+        if (nameBox != null) {
+            nameBox.visible = value;
+            nameBox.setFocused(false);
+        }
     }
 
     private int listTop() {
@@ -127,8 +173,12 @@ public final class CampCatalogScreen extends Screen {
         return height - 20;
     }
 
+    private int listBottom() {
+        return blueprints ? bottom() - FOOTER : bottom();
+    }
+
     private int visibleRows() {
-        return Math.max(1, (bottom() - listTop() - 6) / ROW);
+        return Math.max(1, (listBottom() - listTop() - 6) / ROW);
     }
 
     @Override
@@ -148,6 +198,20 @@ public final class CampCatalogScreen extends Screen {
             scroll = 0;
         });
         search = addRenderableWidget(box);
+        var name = new EditBox(
+            font,
+            left() + 6,
+            bottom() - FOOTER + 4,
+            Math.max(60, panelWidth() / 3),
+            12,
+            Component.translatable("camp.atomicdawn.catalog.blueprint_name")
+        );
+        name.setMaxLength(CampBlueprint.MAX_NAME_LENGTH);
+        name.setHint(Component.translatable("camp.atomicdawn.catalog.blueprint_name"));
+        name.setValue(lastName);
+        name.setResponder(value -> lastName = value);
+        name.visible = blueprints;
+        nameBox = addRenderableWidget(name);
     }
 
     private List<Holder.Reference<CampBuildable>> entries() {
@@ -204,7 +268,12 @@ public final class CampCatalogScreen extends Screen {
         }
 
         for (var tab : tabs()) {
-            tab(graphics, tab, tab.value() == category);
+            tab(graphics, tab);
+        }
+
+        if (blueprints) {
+            blueprintList(graphics, x, mouseX, mouseY, camp);
+            return;
         }
 
         var entries = entries();
@@ -231,16 +300,186 @@ public final class CampCatalogScreen extends Screen {
         }
     }
 
-    private void tab(GuiGraphicsExtractor graphics, Tab tab, boolean active) {
+    private void tab(GuiGraphicsExtractor graphics, Tab tab) {
         var x = tab.x();
         var y = tab.y();
+        var active = tab.active();
         graphics.fill(x, y, x + tab.w(), y + TAB_HEIGHT, active ? PipBoyTheme.highlight() : PipBoyTheme.panel());
         graphics.text(font, tab.label(), x + 4, y + 3, active ? PipBoyTheme.text() : PipBoyTheme.dim(), false);
-        hits.add(new Hit(x, y, x + tab.w(), y + TAB_HEIGHT, () -> {
-            category = tab.value();
-            lastCategory = tab.value();
-            scroll = 0;
+        hits.add(new Hit(x, y, x + tab.w(), y + TAB_HEIGHT, tab.action()));
+    }
+
+    private List<CampBlueprints.Ref> blueprintEntries() {
+        if (minecraft == null || minecraft.player == null) {
+            return List.of();
+        }
+        return CampBlueprints.all(minecraft.player)
+            .stream()
+            .filter(
+                ref -> query.isEmpty() || ref.blueprint()
+                    .displayName(ref.id())
+                    .getString()
+                    .toLowerCase(Locale.ROOT)
+                    .contains(query)
+            )
+            .toList();
+    }
+
+    private void blueprintList(
+        GuiGraphicsExtractor graphics,
+        int x,
+        int mouseX,
+        int mouseY,
+        CampSyncPayload.@Nullable CampView camp
+    ) {
+        var entries = blueprintEntries();
+        var visible = visibleRows();
+        scroll = Math.clamp(scroll, 0, Math.max(0, entries.size() - visible));
+        var rowY = listTop();
+        if (entries.isEmpty()) {
+            var empty = Component.translatable(
+                "camp.atomicdawn.catalog.no_blueprints",
+                ADKeyMappings.WORKSHOP_BLUEPRINT.getTranslatedKeyMessage()
+            );
+            var textY = rowY + 4;
+            for (var line : font.split(empty, panelWidth() - 16)) {
+                graphics.text(font, line, x + 8, textY, PipBoyTheme.dim(), false);
+                textY += 10;
+            }
+        }
+        for (var i = scroll; i < Math.min(entries.size(), scroll + visible); i++) {
+            blueprintRow(graphics, entries.get(i), x + 4, rowY, mouseX, mouseY);
+            rowY += ROW;
+        }
+        if (entries.size() > visible) {
+            var trackTop = listTop();
+            var trackHeight = visible * ROW;
+            var thumb = Math.max(8, trackHeight * visible / entries.size());
+            var thumbY = trackTop + (trackHeight - thumb) * scroll / Math.max(1, entries.size() - visible);
+            var trackX = x + panelWidth() - 3;
+            graphics.fill(trackX, trackTop, trackX + 1, trackTop + trackHeight, PipBoyTheme.faint());
+            graphics.fill(trackX - 1, thumbY, trackX + 2, thumbY + thumb, PipBoyTheme.dim());
+        }
+        footer(graphics, x, mouseX, mouseY, camp);
+    }
+
+    private void blueprintRow(
+        GuiGraphicsExtractor graphics,
+        CampBlueprints.Ref ref,
+        int x,
+        int y,
+        int mouseX,
+        int mouseY
+    ) {
+        var player = minecraft == null ? null : minecraft.player;
+        if (player == null) {
+            return;
+        }
+        var blueprint = ref.blueprint();
+        var access = player.level().registryAccess();
+        var w = panelWidth() - 12;
+        var hovered = mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + ROW - 2;
+        var selected = ref.id().equals(CampWorkshopClient.selectedBlueprint());
+        if (selected || hovered) {
+            graphics.fill(x, y, x + w, y + ROW - 2, selected ? PipBoyTheme.highlight() : PipBoyTheme.panel());
+        }
+        var source = Component.translatable(
+            ref.personal() ? "camp.atomicdawn.blueprint.source.personal" : "camp.atomicdawn.blueprint.source.datapack"
+        );
+        var deleteLabel = Component.translatable(
+            ref.id().equals(armedDelete) ? "camp.atomicdawn.catalog.confirm" : "camp.atomicdawn.catalog.delete"
+        );
+        var right = ref.personal() ? font.width(deleteLabel) + 8 : 0;
+        var affordable = CampMaterials.has(player, blueprint.cost(access));
+        var detail = Component.translatable(
+            "camp.atomicdawn.catalog.blueprint_row",
+            blueprint.kind().label(),
+            blueprint.entries().size(),
+            blueprint.budget(access)
+        );
+        var textWidth = w - 8 - right - font.width(source) - 8;
+        var nameColor = affordable ? PipBoyTheme.text() : PipBoyTheme.dim();
+        graphics.text(font, fit(blueprint.displayName(ref.id()), textWidth), x + 4, y + 2, nameColor, false);
+        graphics.text(font, fit(detail, textWidth), x + 4, y + 11, PipBoyTheme.faint(), false);
+        graphics.text(font, source, x + w - right - font.width(source) - 4, y + 2, PipBoyTheme.dim(), false);
+        if (ref.personal()) {
+            var dx = x + w - right;
+            var armed = ref.id().equals(armedDelete);
+            graphics.fill(dx, y + 2, dx + right - 2, y + ROW - 4, armed ? PipBoyTheme.bad() : PipBoyTheme.panel());
+            graphics.text(font, deleteLabel, dx + 3, y + 6, armed ? PipBoyTheme.text() : PipBoyTheme.dim(), false);
+            hits.add(new Hit(dx, y + 2, dx + right - 2, y + ROW - 4, () -> {
+                if (ref.id().equals(armedDelete)) {
+                    armedDelete = null;
+                    CampWorkshopClient.deleteBlueprint(ref.id());
+                } else {
+                    armedDelete = ref.id();
+                }
+            }));
+        }
+        hits.add(new Hit(x, y, x + w - right, y + ROW - 2, () -> {
+            CampWorkshopClient.selectBlueprint(ref.id());
+            onClose();
         }));
+    }
+
+    private void footer(
+        GuiGraphicsExtractor graphics,
+        int x,
+        int mouseX,
+        int mouseY,
+        CampSyncPayload.@Nullable CampView camp
+    ) {
+        var y = bottom() - FOOTER + 2;
+        var buttonX = x + 6 + Math.max(60, panelWidth() / 3) + 6;
+        var selection = CampWorkshopClient.hasSelection();
+        buttonX = button(
+            graphics,
+            buttonX,
+            y,
+            Component.translatable("camp.atomicdawn.catalog.save_selection"),
+            selection && camp != null,
+            mouseX,
+            mouseY,
+            () -> {
+                CampWorkshopClient.saveSelection(lastName);
+                onClose();
+            }
+        );
+        button(
+            graphics,
+            buttonX,
+            y,
+            Component.translatable("camp.atomicdawn.catalog.save_camp"),
+            camp != null,
+            mouseX,
+            mouseY,
+            () -> {
+                CampWorkshopClient.saveCamp(lastName);
+                onClose();
+            }
+        );
+    }
+
+    private int button(
+        GuiGraphicsExtractor graphics,
+        int x,
+        int y,
+        Component label,
+        boolean enabled,
+        int mouseX,
+        int mouseY,
+        Runnable action
+    ) {
+        var w = font.width(label) + 8;
+        var h = 16;
+        var hovered = enabled && mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h;
+        graphics.fill(x, y, x + w, y + h, hovered ? PipBoyTheme.highlight() : PipBoyTheme.panel());
+        var color = enabled ? PipBoyTheme.text() : PipBoyTheme.disabled();
+        graphics.text(font, label, x + 4, y + 4, color, false);
+        if (enabled) {
+            hits.add(new Hit(x, y, x + w, y + h, action));
+        }
+        return x + w + 4;
     }
 
     private void row(
@@ -337,7 +576,7 @@ public final class CampCatalogScreen extends Screen {
 
     @Override
     public boolean keyPressed(@NotNull KeyEvent event) {
-        var typing = search != null && search.isFocused();
+        var typing = (search != null && search.isFocused()) || (nameBox != null && nameBox.isFocused());
         if (!typing && ADKeyMappings.WORKSHOP_CATALOG.matches(event)) {
             onClose();
             return true;

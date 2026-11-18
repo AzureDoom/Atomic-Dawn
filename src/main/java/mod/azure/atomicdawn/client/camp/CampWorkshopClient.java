@@ -22,11 +22,14 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.camp.CampBlueprint;
+import mod.azure.atomicdawn.camp.CampBlueprints;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampPlaceContext;
@@ -34,6 +37,7 @@ import mod.azure.atomicdawn.camp.CampPlans;
 import mod.azure.atomicdawn.camp.CampWorkshopService;
 import mod.azure.atomicdawn.camp.PlacementMode;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
+import mod.azure.atomicdawn.network.CampBlueprintPayload;
 import mod.azure.atomicdawn.network.CampSyncPayload;
 import mod.azure.atomicdawn.network.CampWorkshopPayload;
 
@@ -71,6 +75,31 @@ public final class CampWorkshopClient {
     @Nullable
     private static Component toast;
 
+    @Nullable
+    private static Identifier selectedBlueprint;
+
+    private static boolean selecting;
+
+    @Nullable
+    private static BlockPos cornerA;
+
+    @Nullable
+    private static BlockPos cornerB;
+
+    @Nullable
+    private static CampBlueprintPreview preview;
+
+    private record GhostCache(
+        CampBlueprintPreview preview,
+        BlockPos anchor,
+        long tick,
+        List<CampModulePlacementClient.GhostPart> ghosts,
+        Optional<CampWorkshopService.Failure> failure
+    ) {}
+
+    @Nullable
+    private static GhostCache ghostCache;
+
     private static int toastTicks;
 
     private CampWorkshopClient() {}
@@ -99,7 +128,220 @@ public final class CampWorkshopClient {
         return scrapArmed != null && scrapArmed.equals(pos) && scrapArmedTicks > 0;
     }
 
+    public static @Nullable Identifier selectedBlueprint() {
+        return selectedBlueprint;
+    }
+
+    public static boolean selecting() {
+        return selecting;
+    }
+
+    public static @Nullable BlockPos cornerA() {
+        return cornerA;
+    }
+
+    public static @Nullable BlockPos cornerB() {
+        return cornerB;
+    }
+
+    public static boolean hasSelection() {
+        return cornerA != null && cornerB != null;
+    }
+
+    public static void selectBlueprint(Identifier id) {
+        selectedBlueprint = id;
+        selected = null;
+        selecting = false;
+        preview = null;
+    }
+
+    public static Optional<CampBlueprint> blueprint() {
+        var player = Minecraft.getInstance().player;
+        if (player == null || selectedBlueprint == null) {
+            return Optional.empty();
+        }
+        return CampBlueprints.get(player, selectedBlueprint);
+    }
+
+    public static @Nullable CampBlueprintPreview blueprintPreview() {
+        var blueprint = blueprint();
+        if (blueprint.isEmpty()) {
+            preview = null;
+            return null;
+        }
+        var current = preview;
+        if (current == null || !current.matches(blueprint.get(), facing)) {
+            current = CampBlueprintPreview.of(blueprint.get(), facing);
+            preview = current;
+        }
+        return current;
+    }
+
+    public static @Nullable BlockPos blueprintAnchor() {
+        var player = Minecraft.getInstance().player;
+        var blueprint = blueprint();
+        if (player == null || blueprint.isEmpty()) {
+            return null;
+        }
+        if (blueprint.get().kind() == CampBlueprint.Kind.CAMP) {
+            var camp = workshopCamp(player);
+            return camp == null ? null : camp.origin();
+        }
+        return target();
+    }
+
+    @Nullable
+    private static GhostCache ghostCache() {
+        var minecraft = Minecraft.getInstance();
+        var player = minecraft.player;
+        var level = minecraft.level;
+        var current = blueprintPreview();
+        var anchor = blueprintAnchor();
+        if (player == null || level == null || current == null || anchor == null) {
+            return null;
+        }
+        var tick = level.getGameTime();
+        var cached = ghostCache;
+        if (cached != null && cached.preview() == current && cached.anchor().equals(anchor) && cached.tick() == tick) {
+            return cached;
+        }
+        var ghosts = computeGhosts(current, anchor);
+        var built = new GhostCache(current, anchor, tick, ghosts, computeFailure(anchor, ghosts));
+        ghostCache = built;
+        return built;
+    }
+
+    public static List<CampModulePlacementClient.GhostPart> blueprintGhosts() {
+        var cached = ghostCache();
+        return cached == null ? List.of() : cached.ghosts();
+    }
+
+    private static List<CampModulePlacementClient.GhostPart> computeGhosts(
+        CampBlueprintPreview current,
+        BlockPos anchor
+    ) {
+        var minecraft = Minecraft.getInstance();
+        var player = minecraft.player;
+        var level = minecraft.level;
+        if (player == null || level == null) {
+            return List.of();
+        }
+        var camp = workshopCamp(player);
+        var result = new ArrayList<CampModulePlacementClient.GhostPart>(current.parts().size());
+        var seen = new HashSet<BlockPos>();
+        for (var part : current.parts()) {
+            var pos = anchor.offset(part.offset());
+            var valid = camp != null && insideClaim(camp, pos, 0) && !pos.equals(camp.origin()) && seen.add(pos)
+                && !level.isOutsideBuildHeight(pos) && level.getBlockState(pos).canBeReplaced();
+            result.add(new CampModulePlacementClient.GhostPart(pos, part.state(), valid));
+        }
+        return result;
+    }
+
+    public static Optional<CampWorkshopService.Failure> blueprintFailure() {
+        if (blueprint().isEmpty()) {
+            return Optional.of(CampWorkshopService.Failure.UNKNOWN_DEFINITION);
+        }
+        var cached = ghostCache();
+        return cached == null ? Optional.of(CampWorkshopService.Failure.NO_CAMP) : cached.failure();
+    }
+
+    private static Optional<CampWorkshopService.Failure> computeFailure(
+        BlockPos anchor,
+        List<CampModulePlacementClient.GhostPart> ghosts
+    ) {
+        var minecraft = Minecraft.getInstance();
+        var player = minecraft.player;
+        var level = minecraft.level;
+        if (player == null || level == null) {
+            return Optional.of(CampWorkshopService.Failure.NO_CAMP);
+        }
+        var camp = workshopCamp(player);
+        if (camp == null) {
+            return Optional.of(CampWorkshopService.Failure.NO_CAMP);
+        }
+        var blueprint = blueprint();
+        if (blueprint.isEmpty()) {
+            return Optional.of(CampWorkshopService.Failure.UNKNOWN_DEFINITION);
+        }
+        var reach = CampWorkshopService.reach();
+        if (
+            blueprint.get().kind() == CampBlueprint.Kind.PREFAB
+                && player.distanceToSqr(Vec3.atCenterOf(anchor)) > (double) reach * reach
+        ) {
+            return Optional.of(CampWorkshopService.Failure.TOO_FAR);
+        }
+        var access = level.registryAccess();
+        for (var entry : blueprint.get().entries()) {
+            var definition = CampBuildable.get(access, entry.definition());
+            if (definition.isEmpty()) {
+                return Optional.of(CampWorkshopService.Failure.UNKNOWN_DEFINITION);
+            }
+            if (!CampPlans.unlocked(player, definition.get())) {
+                return Optional.of(CampWorkshopService.Failure.PLAN_LOCKED);
+            }
+        }
+        for (var ghost : ghosts) {
+            if (!ghost.valid()) {
+                return Optional.of(
+                    insideClaim(camp, ghost.pos(), 0)
+                        ? CampWorkshopService.Failure.OCCUPIED
+                        : CampWorkshopService.Failure.OUTSIDE_CLAIM
+                );
+            }
+        }
+        if (camp.budgetUsed() + blueprint.get().budget(access) > camp.budgetLimit()) {
+            return Optional.of(CampWorkshopService.Failure.BUDGET);
+        }
+        for (var count : blueprint.get().counts().entrySet()) {
+            var limit = CampBuildable.get(access, count.getKey()).map(CampBuildable::limit).orElse(0);
+            if (limit > 0 && camp.count(count.getKey()) + count.getValue() > limit) {
+                return Optional.of(CampWorkshopService.Failure.LIMIT);
+            }
+        }
+        if (!CampMaterials.has(player, blueprint.get().cost(access))) {
+            return Optional.of(CampWorkshopService.Failure.MATERIALS);
+        }
+        return Optional.empty();
+    }
+
+    public static void saveSelection(String name) {
+        if (cornerA == null || cornerB == null) {
+            toast(
+                Component.translatable(
+                    "camp.atomicdawn.catalog.needs_selection",
+                    ADKeyMappings.WORKSHOP_BLUEPRINT.getTranslatedKeyMessage()
+                )
+            );
+            return;
+        }
+        selecting = false;
+        ClientPacketDistributor.sendToServer(
+            CampBlueprintPayload.savePrefab(name, cornerA, cornerB, facing, ++nonce)
+        );
+    }
+
+    public static void saveCamp(String name) {
+        var player = Minecraft.getInstance().player;
+        if (player == null) {
+            return;
+        }
+        ClientPacketDistributor.sendToServer(
+            CampBlueprintPayload.saveCamp(name, player.blockPosition(), facing, ++nonce)
+        );
+    }
+
+    public static void deleteBlueprint(Identifier id) {
+        if (id.equals(selectedBlueprint)) {
+            selectedBlueprint = null;
+            preview = null;
+        }
+        ClientPacketDistributor.sendToServer(CampBlueprintPayload.delete(id));
+    }
+
     public static void select(Identifier id) {
+        selectedBlueprint = null;
+        preview = null;
         selected = id;
         definition().ifPresent(definition -> {
             if (!definition.modes().contains(mode)) {
@@ -174,6 +416,9 @@ public final class CampWorkshopClient {
         while (ADKeyMappings.WORKSHOP_ROTATE.consumeClick()) {
             facing = player.isShiftKeyDown() ? facing.getCounterClockWise() : facing.getClockWise();
         }
+        while (ADKeyMappings.WORKSHOP_BLUEPRINT.consumeClick()) {
+            toggleSelecting();
+        }
         while (ADKeyMappings.WORKSHOP_MODE.consumeClick()) {
             definition().ifPresent(definition -> {
                 var modes = definition.modes();
@@ -190,11 +435,54 @@ public final class CampWorkshopClient {
         }
         while (ADKeyMappings.WORKSHOP_MODE.consumeClick()) {
         }
+        while (ADKeyMappings.WORKSHOP_BLUEPRINT.consumeClick()) {
+        }
+    }
+
+    private static void toggleSelecting() {
+        selecting = !selecting;
+        if (selecting) {
+            cornerA = null;
+            cornerB = null;
+            toast(
+                Component.translatable(
+                    "camp.atomicdawn.blueprint.select_on",
+                    ADKeyMappings.WORKSHOP_BLUEPRINT.getTranslatedKeyMessage(),
+                    ADKeyMappings.WORKSHOP_CATALOG.getTranslatedKeyMessage()
+                )
+            );
+        } else {
+            toast(Component.translatable("camp.atomicdawn.blueprint.select_off"));
+        }
+    }
+
+    private static void corner() {
+        var hit = hit();
+        if (hit == null) {
+            return;
+        }
+        var pos = hit.getBlockPos().immutable();
+        if (cornerA == null || cornerB != null) {
+            cornerA = pos;
+            cornerB = null;
+            toast(Component.translatable("camp.atomicdawn.blueprint.corner_a", pos.getX(), pos.getY(), pos.getZ()));
+            return;
+        }
+        cornerB = pos;
+        toast(
+            Component.translatable(
+                "camp.atomicdawn.blueprint.corner_b",
+                Math.abs(cornerA.getX() - pos.getX()) + 1,
+                Math.abs(cornerA.getY() - pos.getY()) + 1,
+                Math.abs(cornerA.getZ() - pos.getZ()) + 1
+            )
+        );
     }
 
     private static void toggle(LocalPlayer player) {
         if (active) {
             active = false;
+            selecting = false;
             toast(Component.translatable("camp.atomicdawn.workshop.exit"));
             return;
         }
@@ -221,6 +509,12 @@ public final class CampWorkshopClient {
     public static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         active = false;
         selected = null;
+        selectedBlueprint = null;
+        selecting = false;
+        cornerA = null;
+        cornerB = null;
+        preview = null;
+        ghostCache = null;
         scrapArmed = null;
         CampModulePlacementClient.reset();
         CampClientState.clear();
@@ -386,10 +680,26 @@ public final class CampWorkshopClient {
         if (!active) {
             return;
         }
+        if (selecting && (event.isUseItem() || event.isAttack())) {
+            event.setCanceled(true);
+            event.setSwingHand(false);
+            if (event.isUseItem()) {
+                corner();
+            } else if (cornerA != null) {
+                cornerA = null;
+                cornerB = null;
+                toast(Component.translatable("camp.atomicdawn.blueprint.cleared"));
+            }
+            return;
+        }
         if (event.isUseItem()) {
             event.setCanceled(true);
             event.setSwingHand(false);
-            place();
+            if (selectedBlueprint != null) {
+                placeBlueprint();
+            } else {
+                place();
+            }
         } else if (event.isAttack()) {
             event.setCanceled(true);
             event.setSwingHand(false);
@@ -422,6 +732,21 @@ public final class CampWorkshopClient {
             return;
         }
         ClientPacketDistributor.sendToServer(CampWorkshopPayload.place(selected, target, facing, mode, ++nonce));
+    }
+
+    private static void placeBlueprint() {
+        var anchor = blueprintAnchor();
+        if (selectedBlueprint == null || anchor == null) {
+            return;
+        }
+        var failure = blueprintFailure();
+        if (failure.isPresent()) {
+            toast(failure.get().message());
+            return;
+        }
+        ClientPacketDistributor.sendToServer(
+            CampBlueprintPayload.place(selectedBlueprint, anchor, facing, ++nonce)
+        );
     }
 
     private static void scrap() {

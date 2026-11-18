@@ -50,6 +50,14 @@ public final class CampBoundaryRenderer {
 
     private static final int SCRAP = 0xFF7A2A;
 
+    private static final int SELECTION = 0x4AC8FF;
+
+    private static final int ENTITY = 0xB07CFF;
+
+    private static final int MODEL_LIMIT = 512;
+
+    private static final int GHOST_LIMIT = 4096;
+
     private static final int SEGMENTS = 128;
 
     private static final float WALL_ALPHA = 0.32F;
@@ -115,6 +123,7 @@ public final class CampBoundaryRenderer {
         BlockState modulePreviewState = null;
         var walls = new ArrayList<Wall>();
         var boxes = new ArrayList<Box>();
+        var models = new ArrayList<CampModulePlacementClient.GhostPart>();
         var radius = (float) state.radius();
         var up = (float) state.up();
         var down = (float) state.down();
@@ -152,7 +161,11 @@ public final class CampBoundaryRenderer {
                     boxes.add(new Box(part, SCRAP, armed ? 0.55F : 0.25F));
                 }
             }
-            if (CampWorkshopClient.selected() != null) {
+            if (CampWorkshopClient.selecting()) {
+                addSelection(boxes);
+            } else if (CampWorkshopClient.selectedBlueprint() != null) {
+                addBlueprint(boxes, models, level);
+            } else if (CampWorkshopClient.selected() != null) {
                 var target = CampWorkshopClient.target();
                 if (target != null) {
                     var color = CampWorkshopClient.failure(target).isEmpty() ? VALID : INVALID;
@@ -160,10 +173,23 @@ public final class CampBoundaryRenderer {
                 }
             }
         }
-        if (walls.isEmpty() && boxes.isEmpty()) {
+        if (walls.isEmpty() && boxes.isEmpty() && models.isEmpty()) {
             return;
         }
         var camera = minecraft.gameRenderer.mainCamera().position();
+        for (var ghost : models) {
+            var ghostPose = event.getPoseStack();
+            ghostPose.pushPose();
+            ghostPose.translate(
+                ghost.pos().getX() - camera.x,
+                ghost.pos().getY() - camera.y,
+                ghost.pos().getZ() - camera.z
+            );
+            var model = new BlockModelRenderState();
+            minecraft.getBlockModelResolver().update(model, ghost.state(), BlockDisplayContext.create());
+            model.submit(ghostPose, event.getSubmitNodeCollector(), 0x00F000F0, OverlayTexture.NO_OVERLAY, 0);
+            ghostPose.popPose();
+        }
         if (modulePreview != null && modulePreviewState != null) {
             var modulePose = event.getPoseStack();
             modulePose.pushPose();
@@ -191,6 +217,73 @@ public final class CampBoundaryRenderer {
                 }
             });
         pose.popPose();
+    }
+
+    private static void addSelection(ArrayList<Box> boxes) {
+        var first = CampWorkshopClient.cornerA();
+        if (first == null) {
+            var hit = CampWorkshopClient.hit();
+            if (hit != null) {
+                boxes.add(new Box(hit.getBlockPos(), SELECTION, 0.3F));
+            }
+            return;
+        }
+        var second = CampWorkshopClient.cornerB();
+        if (second == null) {
+            var hit = CampWorkshopClient.hit();
+            second = hit == null ? first : hit.getBlockPos();
+        }
+        var bounds = new AABB(first).minmax(new AABB(second));
+        boxes.add(new Box(bounds, SELECTION, CampWorkshopClient.hasSelection() ? 0.18F : 0.1F));
+        boxes.add(new Box(first, SELECTION, 0.45F));
+        if (CampWorkshopClient.hasSelection()) {
+            boxes.add(new Box(CampWorkshopClient.cornerB(), SELECTION, 0.45F));
+        }
+    }
+
+    private static void addBlueprint(
+        ArrayList<Box> boxes,
+        ArrayList<CampModulePlacementClient.GhostPart> models,
+        Level level
+    ) {
+        var ghosts = CampWorkshopClient.blueprintGhosts();
+        var anchor = CampWorkshopClient.blueprintAnchor();
+        var preview = CampWorkshopClient.blueprintPreview();
+        if (anchor == null || preview == null) {
+            return;
+        }
+        var ready = CampWorkshopClient.blueprintFailure().isEmpty();
+        var drawModels = ghosts.size() <= MODEL_LIMIT;
+        var count = 0;
+        for (var ghost : ghosts) {
+            if (count++ >= GHOST_LIMIT) {
+                break;
+            }
+            if (drawModels && ghost.valid()) {
+                models.add(ghost);
+            }
+            var color = ghost.valid() ? (ready ? VALID : CLAIM) : INVALID;
+            addShapeBoxes(boxes, level, ghost.pos(), ghost.state(), color);
+        }
+        var base = Vec3.atBottomCenterOf(anchor);
+        for (var marker : preview.markers()) {
+            var center = base.add(marker.offset());
+            var half = marker.width() / 2.0;
+            boxes.add(
+                new Box(
+                    new AABB(
+                        center.x - half,
+                        center.y,
+                        center.z - half,
+                        center.x + half,
+                        center.y + marker.height(),
+                        center.z + half
+                    ),
+                    ENTITY,
+                    0.25F
+                )
+            );
+        }
     }
 
     private static void addGhostBoxes(

@@ -1362,6 +1362,24 @@ public class ADConfig {
         @Configurable.Synchronized
         public boolean CAMP_PROTECT_EXPLOSIONS = true;
 
+        @Comment("Personal blueprints each player can keep. 0 disables saving blueprints.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 100)
+        public int CAMP_BLUEPRINT_SLOTS = 10;
+
+        @Comment("Also write every saved blueprint as a datapack-ready JSON file on the server.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_BLUEPRINT_EXPORT = true;
+
+        @Comment(
+            "Write exported blueprints straight into the world's datapacks folder so they load as global blueprints on the next restart. When off they go to <world>/atomicdawn_blueprints."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        public boolean CAMP_BLUEPRINT_EXPORT_TO_DATAPACKS = false;
+
     }
 
     public static class NukaColas {

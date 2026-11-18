@@ -39,6 +39,8 @@ public final class ADKeyMappings {
 
     public static final KeyMapping WORKSHOP_MODE = key("workshop_mode", InputConstants.KEY_PERIOD);
 
+    public static final KeyMapping WORKSHOP_BLUEPRINT = key("workshop_blueprint", InputConstants.KEY_K);
+
     private ADKeyMappings() {}
 
     public static void register(RegisterKeyMappingsEvent event) {
@@ -57,6 +59,7 @@ public final class ADKeyMappings {
         event.register(WORKSHOP_CATALOG);
         event.register(WORKSHOP_ROTATE);
         event.register(WORKSHOP_MODE);
+        event.register(WORKSHOP_BLUEPRINT);
     }
 
     private static KeyMapping key(String name, int glfwKey) {

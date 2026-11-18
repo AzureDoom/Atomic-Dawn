@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +17,8 @@ import java.util.Optional;
 public record PartSnapshot(
     BlockPos offset,
     Identifier block,
-    Map<String, String> properties
+    Map<String, String> properties,
+    CompoundTag data
 ) {
 
     public static final Codec<PartSnapshot> CODEC = RecordCodecBuilder.create(
@@ -25,13 +27,19 @@ public record PartSnapshot(
             Identifier.CODEC.fieldOf("block").forGetter(PartSnapshot::block),
             Codec.unboundedMap(Codec.STRING, Codec.STRING)
                 .optionalFieldOf("properties", Map.of())
-                .forGetter(PartSnapshot::properties)
+                .forGetter(PartSnapshot::properties),
+            CampNbt.CODEC.optionalFieldOf("nbt", new CompoundTag()).forGetter(PartSnapshot::data)
         ).apply(instance, PartSnapshot::new)
     );
 
     public PartSnapshot {
         offset = offset.immutable();
         properties = Map.copyOf(properties);
+        data = data == null ? new CompoundTag() : data.copy();
+    }
+
+    public PartSnapshot(BlockPos offset, Identifier block, Map<String, String> properties) {
+        this(offset, block, properties, new CompoundTag());
     }
 
     public static PartSnapshot capture(BlockPos offset, BlockState state) {
@@ -63,8 +71,20 @@ public record PartSnapshot(
         return property.getValue(value).map(parsed -> state.setValue(property, parsed)).orElse(state);
     }
 
+    public boolean hasData() {
+        return !data.isEmpty();
+    }
+
+    public PartSnapshot withData(CompoundTag value) {
+        return new PartSnapshot(offset, block, properties, value);
+    }
+
+    public PartSnapshot withoutData() {
+        return data.isEmpty() ? this : new PartSnapshot(offset, block, properties);
+    }
+
     public PartSnapshot rotated(Rotation rotation) {
-        return state().map(found -> capture(offset.rotate(rotation), found.rotate(rotation)))
-            .orElse(new PartSnapshot(offset.rotate(rotation), block, properties));
+        return state().map(found -> capture(offset.rotate(rotation), found.rotate(rotation)).withData(data))
+            .orElse(new PartSnapshot(offset.rotate(rotation), block, properties, data));
     }
 }

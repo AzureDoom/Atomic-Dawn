@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class ADNetwork {
 
-    private static final String PROTOCOL_VERSION = "17";
+    private static final String PROTOCOL_VERSION = "18";
 
     private ADNetwork() {}
 
@@ -104,6 +104,11 @@ public final class ADNetwork {
             CampWorkshopPayload.TYPE,
             CampWorkshopPayload.STREAM_CODEC,
             CampWorkshopPayload::handleOnServer
+        );
+        registrar.playToServer(
+            CampBlueprintPayload.TYPE,
+            CampBlueprintPayload.STREAM_CODEC,
+            CampBlueprintPayload::handleOnServer
         );
     }
 

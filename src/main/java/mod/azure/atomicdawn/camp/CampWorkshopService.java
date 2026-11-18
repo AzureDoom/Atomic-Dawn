@@ -89,7 +89,7 @@ public final class CampWorkshopService {
         return AtomicDawn.CONFIG.camp.CAMP_BUILD_REACH;
     }
 
-    private static boolean throttled(ServerPlayer player, int nonce) {
+    static boolean throttled(ServerPlayer player, int nonce) {
         var now = player.level().getGameTime();
         var last = LAST_REQUEST.get(player.getUUID());
         if (last != null && now - last < PLACE_COOLDOWN) {
@@ -185,7 +185,7 @@ public final class CampWorkshopService {
         CampSync.send(player);
     }
 
-    private static boolean cancelledByOthers(
+    static boolean cancelledByOthers(
         ServerPlayer player,
         ServerLevel level,
         BlockPos pos,
@@ -444,7 +444,7 @@ public final class CampWorkshopService {
         CampSync.send(player);
     }
 
-    private static Optional<CampSlot> refreshed(ServerLevel level, Optional<CampSlot> camp) {
+    static Optional<CampSlot> refreshed(ServerLevel level, Optional<CampSlot> camp) {
         if (camp.isEmpty() || !camp.get().in(level.dimension())) {
             return camp;
         }

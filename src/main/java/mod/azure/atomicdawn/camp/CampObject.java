@@ -21,7 +21,8 @@ public record CampObject(
     List<BlockPos> parts,
     boolean stored,
     List<PartSnapshot> snapshot,
-    boolean manual
+    boolean manual,
+    List<EntitySnapshot> entities
 ) {
 
     public static final Codec<CampObject> CODEC = RecordCodecBuilder.create(
@@ -36,7 +37,8 @@ public record CampObject(
             BlockPos.CODEC.listOf().optionalFieldOf("parts", List.of()).forGetter(CampObject::parts),
             Codec.BOOL.optionalFieldOf("stored", false).forGetter(CampObject::stored),
             PartSnapshot.CODEC.listOf().optionalFieldOf("snapshot", List.of()).forGetter(CampObject::snapshot),
-            Codec.BOOL.optionalFieldOf("manual", false).forGetter(CampObject::manual)
+            Codec.BOOL.optionalFieldOf("manual", false).forGetter(CampObject::manual),
+            EntitySnapshot.CODEC.listOf().optionalFieldOf("entities", List.of()).forGetter(CampObject::entities)
         ).apply(instance, CampObject::new)
     );
 
@@ -44,6 +46,7 @@ public record CampObject(
         pos = pos.immutable();
         parts = parts.isEmpty() ? List.of(pos) : parts.stream().map(BlockPos::immutable).toList();
         snapshot = List.copyOf(snapshot);
+        entities = List.copyOf(entities);
     }
 
     public static CampObject placed(
@@ -56,11 +59,37 @@ public record CampObject(
         int budget,
         List<BlockPos> parts
     ) {
-        return new CampObject(objectId, definition, block, pos, facing, mode, budget, parts, false, List.of(), false);
+        return new CampObject(
+            objectId,
+            definition,
+            block,
+            pos,
+            facing,
+            mode,
+            budget,
+            parts,
+            false,
+            List.of(),
+            false,
+            List.of()
+        );
     }
 
     public CampObject asManual() {
-        return new CampObject(objectId, definition, block, pos, facing, mode, budget, parts, stored, snapshot, true);
+        return new CampObject(
+            objectId,
+            definition,
+            block,
+            pos,
+            facing,
+            mode,
+            budget,
+            parts,
+            stored,
+            snapshot,
+            true,
+            entities
+        );
     }
 
     public boolean deployed() {
@@ -71,7 +100,12 @@ public record CampObject(
         return !stored && parts.contains(target);
     }
 
-    public CampObject asStored(BlockPos relative, Direction relativeFacing, List<PartSnapshot> parts) {
+    public CampObject asStored(
+        BlockPos relative,
+        Direction relativeFacing,
+        List<PartSnapshot> parts,
+        List<EntitySnapshot> captured
+    ) {
         return new CampObject(
             objectId,
             definition,
@@ -83,7 +117,8 @@ public record CampObject(
             List.of(),
             true,
             parts,
-            manual
+            manual,
+            captured
         );
     }
 
@@ -99,7 +134,8 @@ public record CampObject(
             worldParts,
             false,
             List.of(),
-            manual
+            manual,
+            List.of()
         );
     }
 }

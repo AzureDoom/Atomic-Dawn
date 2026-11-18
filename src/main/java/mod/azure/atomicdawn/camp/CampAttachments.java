@@ -37,5 +37,15 @@ public final class CampAttachments {
             .build()
     );
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampBlueprintLibrary>> BLUEPRINTS = REGISTER
+        .register(
+            "camp_blueprints",
+            () -> AttachmentType.builder(() -> CampBlueprintLibrary.EMPTY)
+                .serialize(CampBlueprintLibrary.MAP_CODEC)
+                .copyOnDeath()
+                .sync((holder, to) -> holder == to, CampBlueprintLibrary.STREAM_CODEC)
+                .build()
+        );
+
     private CampAttachments() {}
 }
