@@ -140,16 +140,16 @@ public final class CampEvents {
                 return;
             }
             key = CampPermissionService.canManage(player, camp.get())
-                    ? "camp.atomicdawn.module.store_hint"
-                    : "camp.atomicdawn.error.protected";
+                ? "camp.atomicdawn.module.store_hint"
+                : "camp.atomicdawn.error.protected";
         } else {
             var tracked = CampManager.objectAt(server, level.dimension(), pos);
             if (tracked.isEmpty()) {
                 return;
             }
             key = CampPermissionService.canBuild(player, tracked.get().camp())
-                    ? "camp.atomicdawn.workshop.use_scrap"
-                    : "camp.atomicdawn.error.protected_object";
+                ? "camp.atomicdawn.workshop.use_scrap"
+                : "camp.atomicdawn.error.protected_object";
         }
         event.setCanceled(true);
         CampPlacementService.notify(player, Component.translatable(key), ChatFormatting.RED);

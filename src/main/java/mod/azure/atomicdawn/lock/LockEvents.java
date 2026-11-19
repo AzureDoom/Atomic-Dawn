@@ -12,11 +12,11 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.command.LockCommands;
 import mod.azure.atomicdawn.item.PadlockItem;
-import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
