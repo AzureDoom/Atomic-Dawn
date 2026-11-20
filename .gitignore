@@ -9,3 +9,4 @@ run/
 bin/
 *.zip
 *.patch
+docs/
