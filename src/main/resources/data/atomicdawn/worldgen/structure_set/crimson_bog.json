@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:crimson_bog/abandoned_military_checkpoint",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:crimson_bog/collapsed_field_laboratory",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:crimson_bog/reinforced_supply_cache",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 34,
+    "separation": 8,
+    "salt": 54739201
+  }
+}

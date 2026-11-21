@@ -1,0 +1,30 @@
+{
+  "category": "main",
+  "sort": 4,
+  "objectives": [
+    {
+      "type": "collect",
+      "target": "minecraft:oak_planks",
+      "count": 16
+    },
+    {
+      "type": "collect",
+      "target": "atomicdawn:camp_plan",
+      "count": 1
+    },
+    {
+      "type": "reach_level",
+      "count": 3
+    }
+  ],
+  "rewards": {
+    "xp": 200,
+    "plans": [
+      "atomicdawn:plank_doorway",
+      "atomicdawn:plank_roof"
+    ],
+    "start_quests": [
+      "atomicdawn:an_unhealthy_glow"
+    ]
+  }
+}

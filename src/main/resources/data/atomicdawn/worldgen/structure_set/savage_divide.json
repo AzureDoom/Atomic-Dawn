@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:savage_divide/mountain_ranger_cabin",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:savage_divide/abandoned_lookout_tower",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:savage_divide/collapsed_mountain_camp",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 38,
+    "separation": 10,
+    "salt": 39201847
+  }
+}

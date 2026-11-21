@@ -1,0 +1,40 @@
+{
+  "category": "side",
+  "sort": 13,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:crimson_bog"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:crimson_bog_structures"
+    },
+    {
+      "type": "collect",
+      "target": "atomicdawn:ammo_10mm",
+      "count": 24
+    },
+    {
+      "type": "kill",
+      "target": "#atomicdawn:pipboy/undead_targets",
+      "count": 8
+    }
+  ],
+  "rewards": {
+    "xp": 450,
+    "items": [
+      {
+        "item": "atomicdawn:fusion_core",
+        "count": 1
+      },
+      {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 2
+      }
+    ],
+    "plans": [
+      "atomicdawn:metal_wall"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "category": "side",
+  "sort": 12,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:irradiated_mire"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:irradiated_mire_structures"
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:book",
+      "count": 3
+    },
+    {
+      "type": "reach_level",
+      "count": 6
+    }
+  ],
+  "rewards": {
+    "xp": 400,
+    "items": [
+      {
+        "item": "minecraft:experience_bottle",
+        "count": 5
+      },
+      {
+        "item": "atomicdawn:legendary_module",
+        "count": 1
+      }
+    ]
+  }
+}

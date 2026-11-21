@@ -1,0 +1,20 @@
+{
+  "values": [
+    "#minecraft:planks",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_stairs",
+    "minecraft:glass_pane",
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone",
+    "minecraft:stone_bricks",
+    "minecraft:cracked_stone_bricks",
+    "minecraft:mossy_stone_bricks",
+    "minecraft:white_concrete",
+    "minecraft:gray_concrete",
+    "minecraft:smooth_stone_slab",
+    "minecraft:smooth_sandstone_slab",
+    "minecraft:sandstone",
+    "minecraft:terracotta",
+    "minecraft:tuff_bricks"
+  ]
+}

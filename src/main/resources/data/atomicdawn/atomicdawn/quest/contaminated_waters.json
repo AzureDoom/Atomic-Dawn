@@ -1,0 +1,38 @@
+{
+  "category": "side",
+  "sort": 11,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:toxic_valley"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:toxic_valley_structures"
+    },
+    {
+      "type": "collect",
+      "target": "atomicdawn:radaway",
+      "count": 5
+    },
+    {
+      "type": "kill",
+      "target": "#atomicdawn:pipboy/irradiated_targets",
+      "count": 10
+    }
+  ],
+  "rewards": {
+    "xp": 300,
+    "perk_picks": 1,
+    "items": [
+      {
+        "item": "atomicdawn:rad_x",
+        "count": 4
+      },
+      {
+        "item": "atomicdawn:nuka_cola_quantum",
+        "count": 1
+      }
+    ]
+  }
+}

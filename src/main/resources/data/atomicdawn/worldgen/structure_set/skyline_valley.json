@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:skyline_valley/storm_monitoring_station",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:skyline_valley/damaged_electrical_substation",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:skyline_valley/emergency_storm_shelter",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 40,
+    "separation": 10,
+    "salt": 10294857
+  }
+}

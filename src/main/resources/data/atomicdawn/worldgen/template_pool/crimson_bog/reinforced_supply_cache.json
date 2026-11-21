@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:crimson_bog/reinforced_supply_cache",
+        "processors": "atomicdawn:wasteland_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

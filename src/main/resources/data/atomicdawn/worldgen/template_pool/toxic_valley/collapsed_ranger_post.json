@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:toxic_valley/collapsed_ranger_post",
+        "processors": "atomicdawn:flooded_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "category": "main",
+  "sort": 6,
+  "objectives": [
+    {
+      "type": "collect",
+      "target": "atomicdawn:10mm_pistol",
+      "count": 1
+    },
+    {
+      "type": "collect",
+      "target": "atomicdawn:ammo_10mm",
+      "count": 10
+    },
+    {
+      "type": "kill",
+      "target": "#atomicdawn:pipboy/undead_targets",
+      "count": 5
+    }
+  ],
+  "rewards": {
+    "xp": 250,
+    "perk_picks": 1,
+    "items": [
+      {
+        "item": "atomicdawn:ammo_container",
+        "count": 1
+      }
+    ],
+    "holotapes": [
+      "atomicdawn:echoes_of_the_past"
+    ],
+    "start_quests": [
+      "atomicdawn:echoes_of_the_past"
+    ]
+  }
+}

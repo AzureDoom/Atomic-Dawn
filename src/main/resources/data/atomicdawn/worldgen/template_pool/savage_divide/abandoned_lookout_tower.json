@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:savage_divide/abandoned_lookout_tower",
+        "processors": "atomicdawn:wasteland_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

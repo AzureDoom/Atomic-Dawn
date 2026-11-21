@@ -1,0 +1,40 @@
+{
+  "category": "side",
+  "sort": 15,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:savage_divide"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:savage_divide_structures"
+    },
+    {
+      "type": "reach_level",
+      "count": 7
+    },
+    {
+      "type": "kill",
+      "target": "#atomicdawn:pipboy/predator_targets",
+      "count": 5
+    }
+  ],
+  "rewards": {
+    "xp": 500,
+    "perk_picks": 1,
+    "items": [
+      {
+        "item": "atomicdawn:ammo_308",
+        "count": 12
+      },
+      {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 1
+      }
+    ],
+    "plans": [
+      "atomicdawn:guard_post"
+    ]
+  }
+}

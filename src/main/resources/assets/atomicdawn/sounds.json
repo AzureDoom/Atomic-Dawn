@@ -315,6 +315,15 @@
       }
     ]
   },
+  "holotape.echoes_of_the_past": {
+    "subtitle": "subtitles.atomicdawn.holotape.echoes_of_the_past",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/echoes_of_the_past",
+        "stream": true
+      }
+    ]
+  },
   "power_armor.land": {
     "subtitle": "subtitles.atomicdawn.power_armor.land",
     "sounds": [

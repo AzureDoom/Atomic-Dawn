@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:ash_heap/industrial_supply_depot",
+        "processors": "atomicdawn:wasteland_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

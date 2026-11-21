@@ -1,0 +1,40 @@
+{
+  "category": "side",
+  "sort": 10,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:ash_heap"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:ash_heap_structures"
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:coal",
+      "count": 32
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:raw_iron",
+      "count": 16
+    }
+  ],
+  "rewards": {
+    "xp": 350,
+    "items": [
+      {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 2
+      },
+      {
+        "item": "minecraft:iron_pickaxe",
+        "count": 1
+      }
+    ],
+    "plans": [
+      "atomicdawn:warehouse_wall"
+    ]
+  }
+}

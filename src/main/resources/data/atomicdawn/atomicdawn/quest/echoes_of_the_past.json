@@ -1,0 +1,27 @@
+{
+  "category": "main",
+  "sort": 7,
+  "objectives": [
+    {
+      "type": "discover",
+      "target": "#minecraft:village"
+    },
+    {
+      "type": "holotape",
+      "target": "atomicdawn:echoes_of_the_past"
+    },
+    {
+      "type": "reach_level",
+      "count": 4
+    }
+  ],
+  "rewards": {
+    "xp": 300,
+    "plans": [
+      "atomicdawn:barn_wall"
+    ],
+    "start_quests": [
+      "atomicdawn:the_world_beyond"
+    ]
+  }
+}

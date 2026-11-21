@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:irradiated_mire/flooded_research_hut",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:irradiated_mire/sunken_survivor_cabin",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:irradiated_mire/abandoned_fishing_dock",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 30,
+    "separation": 7,
+    "salt": 29183746
+  }
+}

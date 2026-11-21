@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:toxic_valley/abandoned_survivor_shack",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:toxic_valley/contaminated_pump_station",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:toxic_valley/collapsed_ranger_post",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 36,
+    "separation": 8,
+    "salt": 71823941
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:burning_springs/desert_raider_camp",
+        "processors": "atomicdawn:wasteland_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

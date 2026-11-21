@@ -1,0 +1,33 @@
+{
+  "category": "main",
+  "sort": 3,
+  "objectives": [
+    {
+      "type": "collect",
+      "target": "minecraft:iron_ingot",
+      "count": 8
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:leather",
+      "count": 4
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:coal",
+      "count": 8
+    }
+  ],
+  "rewards": {
+    "xp": 150,
+    "items": [
+      {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 1
+      }
+    ],
+    "start_quests": [
+      "atomicdawn:a_place_to_call_home"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:savage_divide/mountain_ranger_cabin",
+        "processors": "atomicdawn:wasteland_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

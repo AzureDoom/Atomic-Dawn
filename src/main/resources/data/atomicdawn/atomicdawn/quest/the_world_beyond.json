@@ -1,0 +1,32 @@
+{
+  "category": "main",
+  "sequential": false,
+  "sort": 8,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:toxic_valley"
+    },
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:ash_heap"
+    },
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:savage_divide"
+    }
+  ],
+  "rewards": {
+    "xp": 400,
+    "perk_picks": 1,
+    "items": [
+      {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 1
+      }
+    ],
+    "start_quests": [
+      "atomicdawn:rebuilding_tomorrow"
+    ]
+  }
+}

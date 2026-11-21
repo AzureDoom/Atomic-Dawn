@@ -1,0 +1,41 @@
+{
+  "category": "side",
+  "sort": 16,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:skyline_valley"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:skyline_valley_structures"
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:redstone",
+      "count": 16
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:iron_ingot",
+      "count": 8
+    }
+  ],
+  "rewards": {
+    "xp": 500,
+    "perk_picks": 1,
+    "items": [
+      {
+        "item": "atomicdawn:legendary_module",
+        "count": 1
+      },
+      {
+        "item": "atomicdawn:fusion_core",
+        "count": 1
+      }
+    ],
+    "plans": [
+      "atomicdawn:watchtower"
+    ]
+  }
+}

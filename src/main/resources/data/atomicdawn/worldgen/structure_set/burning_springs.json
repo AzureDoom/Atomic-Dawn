@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:burning_springs/abandoned_roadside_store",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:burning_springs/desert_raider_camp",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:burning_springs/ruined_highway_checkpoint",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 8,
+    "salt": 67481029
+  }
+}

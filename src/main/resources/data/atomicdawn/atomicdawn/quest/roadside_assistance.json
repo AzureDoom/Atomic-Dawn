@@ -1,0 +1,37 @@
+{
+  "category": "side",
+  "sort": 14,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "atomicdawn:burning_springs"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:burning_springs_structures"
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:iron_ingot",
+      "count": 12
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:coal",
+      "count": 16
+    }
+  ],
+  "rewards": {
+    "xp": 300,
+    "items": [
+      {
+        "item": "atomicdawn:nuka_cola",
+        "count": 4
+      },
+      {
+        "item": "atomicdawn:ammo_container",
+        "count": 1
+      }
+    ]
+  }
+}

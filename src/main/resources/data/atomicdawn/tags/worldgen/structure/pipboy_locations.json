@@ -108,6 +108,34 @@
     {
       "id": "minecraft:ocean_ruin_warm",
       "required": false
+    },
+    {
+      "id": "#atomicdawn:toxic_valley_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:ash_heap_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:irradiated_mire_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:crimson_bog_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:burning_springs_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:savage_divide_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:skyline_valley_structures",
+      "required": false
     }
   ]
 }

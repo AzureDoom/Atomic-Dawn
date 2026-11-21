@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:skyline_valley/storm_monitoring_station",
+        "processors": "atomicdawn:storm_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

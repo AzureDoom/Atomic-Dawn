@@ -1,0 +1,36 @@
+{
+  "category": "main",
+  "sort": 5,
+  "objectives": [
+    {
+      "type": "visit_biome",
+      "target": "#atomicdawn:wasteland_biomes"
+    },
+    {
+      "type": "collect",
+      "target": "atomicdawn:radaway",
+      "count": 1
+    },
+    {
+      "type": "collect",
+      "target": "atomicdawn:rad_x",
+      "count": 1
+    }
+  ],
+  "rewards": {
+    "xp": 200,
+    "items": [
+      {
+        "item": "atomicdawn:radaway",
+        "count": 2
+      },
+      {
+        "item": "atomicdawn:rad_x",
+        "count": 2
+      }
+    ],
+    "start_quests": [
+      "atomicdawn:armed_and_dangerous"
+    ]
+  }
+}

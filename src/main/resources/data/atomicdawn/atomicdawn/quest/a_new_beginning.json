@@ -1,0 +1,37 @@
+{
+  "category": "main",
+  "auto_start": true,
+  "sort": 2,
+  "objectives": [
+    {
+      "type": "reach_level",
+      "count": 2
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:cobblestone",
+      "count": 8
+    }
+  ],
+  "rewards": {
+    "xp": 100,
+    "items": [
+      {
+        "item": "atomicdawn:nuka_cola",
+        "count": 2
+      },
+      {
+        "item": "atomicdawn:radaway",
+        "count": 1
+      }
+    ],
+    "start_quests": [
+      "atomicdawn:scrap_for_survival"
+    ]
+  }
+}
