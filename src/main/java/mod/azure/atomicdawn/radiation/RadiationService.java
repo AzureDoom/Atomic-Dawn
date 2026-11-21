@@ -1,8 +1,10 @@
 package mod.azure.atomicdawn.radiation;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -26,6 +28,15 @@ import mod.azure.atomicdawn.util.HealthClamp;
 public final class RadiationService {
 
     private static final net.minecraft.resources.Identifier HEALTH_MODIFIER = AtomicDawn.id("radiation");
+
+    public static final TagKey<EntityType<?>> RADIATION_IMMUNE = TagKey.create(
+        Registries.ENTITY_TYPE,
+        AtomicDawn.id("radiation_immune")
+    );
+
+    public static boolean immune(LivingEntity entity) {
+        return entity instanceof PowerArmorEntity || entity.getType().builtInRegistryHolder().is(RADIATION_IMMUNE);
+    }
 
     private RadiationService() {}
 
@@ -68,7 +79,7 @@ public final class RadiationService {
             }
             return;
         }
-        if (entity instanceof PowerArmorEntity || entity.getType().builtInRegistryHolder().is(EntityTypeTags.UNDEAD)) {
+        if (immune(entity)) {
             return;
         }
         var damage = amount * (float) AtomicDawn.CONFIG.radiation.MOB_RADIATION_DAMAGE;

@@ -1,6 +1,7 @@
 {
   "name": "Generator Shed",
   "kind": "prefab",
+  "plan": "atomicdawn:generator_shed",
   "objects": [
     {
       "definition": "atomicdawn:oak_planks",

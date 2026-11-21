@@ -13,7 +13,7 @@ public final class ADWorldgen {
 
     public static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            Regions.register(new ADOverworldRegion(AtomicDawn.id("wasteland_overworld"), 3));
+            Regions.register(new ADOverworldRegion(AtomicDawn.id("wasteland_overworld"), 1));
             MaterialRuleManager.addRules(
                 MaterialRuleManager.RuleCategory.OVERWORLD,
                 AtomicDawn.MOD_ID,

@@ -1,0 +1,42 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:savage_divide",
+  "spawners": [
+    {
+      "type": "minecraft:stray",
+      "weight": 60,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:wolf",
+      "weight": 8,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "minecraft:goat",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:fox",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    }
+  ]
+}

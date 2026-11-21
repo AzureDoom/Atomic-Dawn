@@ -1,6 +1,7 @@
 {
   "name": "Guard Post",
   "kind": "prefab",
+  "plan": "atomicdawn:guard_post",
   "objects": [
     {
       "definition": "atomicdawn:oak_log",

@@ -62,7 +62,20 @@ public class CampPlanItem extends Item {
         var stack = player.getItemInHand(hand);
         var plan = stack.get(ADDataComponents.CAMP_PLAN.get());
         if (plan == null) {
-            return InteractionResult.PASS;
+            if (player instanceof ServerPlayer serverPlayer) {
+                var unknown = CampPlans.randomUnknown(serverPlayer, serverPlayer.getRandom());
+                if (unknown.isEmpty()) {
+                    serverPlayer.sendSystemMessage(
+                        Component.translatable("camp.atomicdawn.plan.none_left").withStyle(ChatFormatting.GRAY),
+                        true
+                    );
+                    return InteractionResult.FAIL;
+                }
+                if (CampPlans.learn(serverPlayer, unknown.get())) {
+                    stack.consume(1, player);
+                }
+            }
+            return InteractionResult.SUCCESS;
         }
         if (player instanceof ServerPlayer serverPlayer) {
             if (CampPlans.learn(serverPlayer, plan)) {

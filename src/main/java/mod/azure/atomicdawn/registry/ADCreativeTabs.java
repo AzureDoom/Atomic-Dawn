@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.camp.CampPlans;
 import mod.azure.atomicdawn.item.CampPlanItem;
 import mod.azure.atomicdawn.pipboy.holotape.HolotapeService;
 
@@ -57,14 +58,7 @@ public final class ADCreativeTabs {
                         registry -> registry.listElements()
                             .forEach(holder -> output.accept(HolotapeService.stack(holder.key().identifier())))
                     );
-                parameters.holders()
-                    .lookup(ADRegistries.CAMP_BUILDABLE)
-                    .ifPresent(
-                        registry -> registry.listElements()
-                            .flatMap(holder -> holder.value().plan().stream())
-                            .distinct()
-                            .forEach(plan -> output.accept(CampPlanItem.stack(plan)))
-                    );
+                CampPlans.all(parameters.holders()).forEach(plan -> output.accept(CampPlanItem.stack(plan)));
                 ADItems.powerArmorPieces().forEach(output::accept);
                 ADItems.armorPieces().forEach(output::accept);
             })

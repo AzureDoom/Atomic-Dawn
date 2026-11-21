@@ -34,6 +34,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -441,6 +442,22 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
     ) {
         var index = index(state.getValue(COLUMN), state.getValue(ROW), state.getValue(LAYER));
         return SHAPES.get(state.getValue(FACING))[index];
+    }
+
+    @Override
+    protected @NotNull VoxelShape getCollisionShape(
+        @NotNull BlockState state,
+        @NotNull BlockGetter level,
+        @NotNull BlockPos pos,
+        @NotNull CollisionContext context
+    ) {
+        if (
+            context instanceof EntityCollisionContext entityContext
+                && entityContext.getEntity() instanceof PowerArmorEntity
+        ) {
+            return Shapes.empty();
+        }
+        return getShape(state, level, pos, context);
     }
 
     private static int index(int column, int row, int layer) {

@@ -409,6 +409,9 @@ public final class CampWorkshopClient {
         ) {
             return Optional.of(CampWorkshopService.Failure.TOO_FAR);
         }
+        if (selectedStored == null && !CampPlans.unlocked(player, blueprint.get())) {
+            return Optional.of(CampWorkshopService.Failure.PLAN_LOCKED);
+        }
         var access = level.registryAccess();
         for (var entry : blueprint.get().entries()) {
             var definition = CampBuildable.get(access, entry.definition());

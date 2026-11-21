@@ -1,0 +1,15 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#atomicdawn:wasteland_biomes",
+  "spawners": [
+    {
+      "type": "minecraft:bat",
+      "weight": 10,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    }
+  ]
+}

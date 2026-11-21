@@ -1,6 +1,7 @@
 {
   "name": "Metal Security Door",
   "kind": "prefab",
+  "plan": "atomicdawn:metal_security_door",
   "objects": [
     {
       "definition": "atomicdawn:stone_bricks",

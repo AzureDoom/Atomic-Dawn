@@ -1,6 +1,7 @@
 {
   "name": "Garage Door",
   "kind": "prefab",
+  "plan": "atomicdawn:garage_door",
   "objects": [
     {
       "definition": "atomicdawn:iron_door",

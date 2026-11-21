@@ -1,6 +1,7 @@
 {
   "name": "Brick Wall",
   "kind": "prefab",
+  "plan": "atomicdawn:brick_wall",
   "objects": [
     {
       "definition": "atomicdawn:stone_bricks",

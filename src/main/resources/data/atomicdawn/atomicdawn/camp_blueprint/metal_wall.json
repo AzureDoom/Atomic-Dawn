@@ -1,6 +1,7 @@
 {
   "name": "Metal Wall",
   "kind": "prefab",
+  "plan": "atomicdawn:metal_wall",
   "objects": [
     {
       "definition": "atomicdawn:iron_block",

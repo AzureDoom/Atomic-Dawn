@@ -1,0 +1,38 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:burning_springs",
+  "spawners": [
+    {
+      "type": "minecraft:husk",
+      "weight": 80,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "minecraft:cave_spider",
+      "weight": 10,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    },
+    {
+      "type": "minecraft:rabbit",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:camel",
+      "weight": 1,
+      "count": 1
+    }
+  ]
+}

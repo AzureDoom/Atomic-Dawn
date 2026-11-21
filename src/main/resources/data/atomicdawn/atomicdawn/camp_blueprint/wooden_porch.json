@@ -1,6 +1,7 @@
 {
   "name": "Wooden Porch",
   "kind": "prefab",
+  "plan": "atomicdawn:wooden_porch",
   "objects": [
     {
       "definition": "atomicdawn:oak_planks",

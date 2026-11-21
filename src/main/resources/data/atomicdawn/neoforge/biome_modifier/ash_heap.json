@@ -1,0 +1,24 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:ash_heap",
+  "spawners": [
+    {
+      "type": "minecraft:husk",
+      "weight": 30,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:silverfish",
+      "weight": 10,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    }
+  ]
+}

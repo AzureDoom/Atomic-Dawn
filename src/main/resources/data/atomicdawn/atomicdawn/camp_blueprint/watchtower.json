@@ -1,6 +1,7 @@
 {
   "name": "Watchtower",
   "kind": "prefab",
+  "plan": "atomicdawn:watchtower",
   "objects": [
     {
       "definition": "atomicdawn:oak_log",

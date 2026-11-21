@@ -1,6 +1,7 @@
 {
   "name": "Barn Wall",
   "kind": "prefab",
+  "plan": "atomicdawn:barn_wall",
   "objects": [
     {
       "definition": "atomicdawn:stripped_spruce_log",

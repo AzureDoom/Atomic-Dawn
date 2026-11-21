@@ -1,6 +1,7 @@
 {
   "name": "Survival Shack",
   "kind": "prefab",
+  "plan": "atomicdawn:survival_shack",
   "objects": [
     {
       "definition": "atomicdawn:oak_planks",

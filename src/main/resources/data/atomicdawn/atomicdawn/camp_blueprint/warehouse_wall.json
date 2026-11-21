@@ -1,6 +1,7 @@
 {
   "name": "Warehouse Wall",
   "kind": "prefab",
+  "plan": "atomicdawn:warehouse_wall",
   "objects": [
     {
       "definition": "atomicdawn:smooth_stone",

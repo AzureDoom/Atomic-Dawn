@@ -1,6 +1,7 @@
 {
   "name": "Sandbag Barricade",
   "kind": "prefab",
+  "plan": "atomicdawn:sandbag_barricade",
   "objects": [
     {
       "definition": "atomicdawn:smooth_sandstone",

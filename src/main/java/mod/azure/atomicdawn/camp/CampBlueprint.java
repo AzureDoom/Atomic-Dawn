@@ -24,11 +24,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 public record CampBlueprint(
     String name,
     Kind kind,
-    List<Entry> entries
+    List<Entry> entries,
+    Optional<Identifier> plan
 ) {
 
     public static final int MAX_ENTRIES = 2048;
@@ -167,7 +169,8 @@ public record CampBlueprint(
         instance -> instance.group(
             Codec.STRING.optionalFieldOf("name", "").forGetter(CampBlueprint::name),
             Kind.CODEC.optionalFieldOf("kind", Kind.PREFAB).forGetter(CampBlueprint::kind),
-            Entry.CODEC.listOf().fieldOf("objects").forGetter(CampBlueprint::entries)
+            Entry.CODEC.listOf().fieldOf("objects").forGetter(CampBlueprint::entries),
+            Identifier.CODEC.optionalFieldOf("plan").forGetter(CampBlueprint::plan)
         ).apply(instance, CampBlueprint::new)
     );
 
@@ -185,6 +188,7 @@ public record CampBlueprint(
             for (var entry : entries) {
                 Entry.STREAM_CODEC.encode(buf, entry);
             }
+            ByteBufCodecs.optional(Identifier.STREAM_CODEC).encode(buf, blueprint.plan());
         },
         buf -> {
             var name = ByteBufCodecs.STRING_UTF8.decode(buf);
@@ -194,13 +198,18 @@ public record CampBlueprint(
             for (var i = 0; i < count; i++) {
                 entries.add(Entry.STREAM_CODEC.decode(buf));
             }
-            return new CampBlueprint(name, kind, entries);
+            var plan = ByteBufCodecs.optional(Identifier.STREAM_CODEC).decode(buf);
+            return new CampBlueprint(name, kind, entries, plan);
         }
     );
 
     public CampBlueprint {
         name = name.length() > MAX_NAME_LENGTH ? name.substring(0, MAX_NAME_LENGTH) : name;
         entries = List.copyOf(entries);
+    }
+
+    public CampBlueprint(String name, Kind kind, List<Entry> entries) {
+        this(name, kind, entries, Optional.empty());
     }
 
     private static int count(ByteBuf buf, int max) {
@@ -215,7 +224,7 @@ public record CampBlueprint(
         if (!hasContents()) {
             return this;
         }
-        return new CampBlueprint(name, kind, entries.stream().map(Entry::withoutContents).toList());
+        return new CampBlueprint(name, kind, entries.stream().map(Entry::withoutContents).toList(), plan);
     }
 
     public boolean hasContents() {

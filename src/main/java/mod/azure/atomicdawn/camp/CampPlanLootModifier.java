@@ -19,6 +19,8 @@ import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.item.CampPlanItem;
+import mod.azure.atomicdawn.registry.ADDataComponents;
+import mod.azure.atomicdawn.registry.ADItems;
 
 public class CampPlanLootModifier extends LootModifier {
 
@@ -57,21 +59,27 @@ public class CampPlanLootModifier extends LootModifier {
         @NotNull ObjectArrayList<ItemStack> generatedLoot,
         @NotNull LootContext context
     ) {
+        var random = context.getRandom();
+        var registries = context.getLevel().registryAccess();
+        for (var i = 0; i < generatedLoot.size(); i++) {
+            var stack = generatedLoot.get(i);
+            if (stack.is(ADItems.CAMP_PLAN.get()) && stack.get(ADDataComponents.CAMP_PLAN.get()) == null) {
+                var plan = CampPlans.random(registries, random);
+                if (plan.isPresent()) {
+                    stack.set(ADDataComponents.CAMP_PLAN.get(), plan.get());
+                } else {
+                    generatedLoot.set(i, ItemStack.EMPTY);
+                }
+            }
+        }
+        generatedLoot.removeIf(ItemStack::isEmpty);
         if (!context.getQueriedLootTableId().getPath().startsWith("chests/")) {
             return generatedLoot;
         }
-        var random = context.getRandom();
         if (random.nextFloat() >= chance) {
             return generatedLoot;
         }
-        var plans = CampBuildable.all(context.getLevel().registryAccess())
-            .stream()
-            .flatMap(holder -> holder.value().plan().stream())
-            .distinct()
-            .toList();
-        if (!plans.isEmpty()) {
-            generatedLoot.add(CampPlanItem.stack(plans.get(random.nextInt(plans.size()))));
-        }
+        CampPlans.random(registries, random).ifPresent(plan -> generatedLoot.add(CampPlanItem.stack(plan)));
         return generatedLoot;
     }
 

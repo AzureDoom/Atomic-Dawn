@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:undead",
+    "atomicdawn:power_armor",
+    {
+      "id": "minecraft:iron_golem",
+      "required": false
+    },
+    {
+      "id": "minecraft:snow_golem",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_golem",
+      "required": false
+    },
+    {
+      "id": "minecraft:shulker",
+      "required": false
+    }
+  ]
+}

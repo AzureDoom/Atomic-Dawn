@@ -223,6 +223,10 @@ public final class CampBlueprintService {
             message(player, Component.translatable("camp.atomicdawn.blueprint.unknown"), ChatFormatting.RED);
             return;
         }
+        if (!CampPlans.unlocked(player, blueprint.get())) {
+            fail(player, CampWorkshopService.Failure.PLAN_LOCKED);
+            return;
+        }
         var found = CampWorkshopService.refreshed(level, CampManager.claimAt(server, level.dimension(), target));
         if (found.isEmpty()) {
             fail(

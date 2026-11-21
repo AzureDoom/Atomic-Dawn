@@ -3,17 +3,23 @@ package mod.azure.atomicdawn.camp;
 import com.mojang.serialization.MapCodec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.TreeSet;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record CampPlans(List<Identifier> known) {
 
@@ -40,6 +46,39 @@ public record CampPlans(List<Identifier> known) {
             return true;
         }
         return of(player).known().contains(definition.plan().get());
+    }
+
+    public static boolean unlocked(Player player, CampBlueprint blueprint) {
+        if (!AtomicDawn.CONFIG.camp.CAMP_REQUIRE_PLANS || blueprint.plan().isEmpty()) {
+            return true;
+        }
+        return of(player).known().contains(blueprint.plan().get());
+    }
+
+    public static List<Identifier> all(HolderLookup.Provider registries) {
+        var plans = new TreeSet<Identifier>(Comparator.comparing(Identifier::toString));
+        registries.lookup(ADRegistries.CAMP_BUILDABLE)
+            .ifPresent(
+                registry -> registry.listElements()
+                    .filter(holder -> holder.value().placeable())
+                    .forEach(holder -> holder.value().plan().ifPresent(plans::add))
+            );
+        registries.lookup(ADRegistries.CAMP_BLUEPRINT)
+            .ifPresent(
+                registry -> registry.listElements().forEach(holder -> holder.value().plan().ifPresent(plans::add))
+            );
+        return List.copyOf(plans);
+    }
+
+    public static Optional<Identifier> random(HolderLookup.Provider registries, RandomSource random) {
+        var plans = all(registries);
+        return plans.isEmpty() ? Optional.empty() : Optional.of(plans.get(random.nextInt(plans.size())));
+    }
+
+    public static Optional<Identifier> randomUnknown(Player player, RandomSource random) {
+        var known = of(player);
+        var plans = all(player.level().registryAccess()).stream().filter(plan -> !known.has(plan)).toList();
+        return plans.isEmpty() ? Optional.empty() : Optional.of(plans.get(random.nextInt(plans.size())));
     }
 
     public static boolean learn(ServerPlayer player, Identifier plan) {

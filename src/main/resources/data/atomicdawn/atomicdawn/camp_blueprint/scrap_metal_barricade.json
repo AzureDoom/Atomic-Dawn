@@ -1,6 +1,7 @@
 {
   "name": "Scrap Metal Barricade",
   "kind": "prefab",
+  "plan": "atomicdawn:scrap_metal_barricade",
   "objects": [
     {
       "definition": "atomicdawn:cobblestone_wall",

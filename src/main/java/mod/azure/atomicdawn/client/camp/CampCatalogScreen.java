@@ -408,17 +408,21 @@ public final class CampCatalogScreen extends Screen {
             ref.id().equals(armedDelete) ? "camp.atomicdawn.catalog.confirm" : "camp.atomicdawn.catalog.delete"
         );
         var right = ref.personal() ? font.width(deleteLabel) + 8 : 0;
+        var unlocked = CampPlans.unlocked(player, blueprint);
         var affordable = CampMaterials.has(player, blueprint.cost(access));
-        var detail = Component.translatable(
-            "camp.atomicdawn.catalog.blueprint_row",
-            blueprint.kind().label(),
-            blueprint.entries().size(),
-            blueprint.budget(access)
-        );
+        var detail = unlocked
+            ? Component.translatable(
+                "camp.atomicdawn.catalog.blueprint_row",
+                blueprint.kind().label(),
+                blueprint.entries().size(),
+                blueprint.budget(access)
+            )
+            : Component.translatable("camp.atomicdawn.catalog.locked");
         var textWidth = w - 8 - right - font.width(source) - 8;
-        var nameColor = affordable ? PipBoyTheme.text() : PipBoyTheme.dim();
+        var nameColor = !unlocked ? PipBoyTheme.disabled() : affordable ? PipBoyTheme.text() : PipBoyTheme.dim();
         graphics.text(font, fit(blueprint.displayName(ref.id()), textWidth), x + 4, y + 2, nameColor, false);
-        graphics.text(font, fit(detail, textWidth), x + 4, y + 11, PipBoyTheme.faint(), false);
+        var detailColor = unlocked ? PipBoyTheme.faint() : PipBoyTheme.bad();
+        graphics.text(font, fit(detail, textWidth), x + 4, y + 11, detailColor, false);
         graphics.text(font, source, x + w - right - font.width(source) - 4, y + 2, PipBoyTheme.dim(), false);
         if (ref.personal()) {
             var dx = x + w - right;
