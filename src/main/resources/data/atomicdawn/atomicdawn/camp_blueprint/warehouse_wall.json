@@ -1,0 +1,105 @@
+{
+  "name": "Warehouse Wall",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [-1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [0, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [-1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:iron_bars",
+      "pos": [0, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 1, 0],
+          "block": "minecraft:iron_bars"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [-1, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 2, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [0, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 2, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_stone",
+      "pos": [1, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 2, 0],
+          "block": "minecraft:smooth_stone"
+        }
+      ]
+    }
+  ]
+}

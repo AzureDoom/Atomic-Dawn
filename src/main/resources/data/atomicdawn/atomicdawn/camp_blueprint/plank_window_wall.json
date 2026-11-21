@@ -1,0 +1,105 @@
+{
+  "name": "Wooden Window Wall",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [-1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [0, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [-1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:glass",
+      "pos": [0, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 1, 0],
+          "block": "minecraft:glass"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [-1, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 2, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [0, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 2, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [1, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 2, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    }
+  ]
+}

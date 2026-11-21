@@ -1,0 +1,126 @@
+{
+  "name": "Garage Door",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:iron_door",
+      "pos": [-1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 0],
+          "block": "minecraft:iron_door",
+          "properties": {
+            "facing": "north",
+            "half": "lower",
+            "hinge": "left",
+            "open": "false",
+            "powered": "false"
+          }
+        },
+        {
+          "offset": [-1, 1, 0],
+          "block": "minecraft:iron_door",
+          "properties": {
+            "facing": "north",
+            "half": "upper",
+            "hinge": "left",
+            "open": "false",
+            "powered": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:iron_door",
+      "pos": [0, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 0],
+          "block": "minecraft:iron_door",
+          "properties": {
+            "facing": "north",
+            "half": "lower",
+            "hinge": "left",
+            "open": "false",
+            "powered": "false"
+          }
+        },
+        {
+          "offset": [0, 1, 0],
+          "block": "minecraft:iron_door",
+          "properties": {
+            "facing": "north",
+            "half": "upper",
+            "hinge": "left",
+            "open": "false",
+            "powered": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:iron_door",
+      "pos": [1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 0],
+          "block": "minecraft:iron_door",
+          "properties": {
+            "facing": "north",
+            "half": "lower",
+            "hinge": "right",
+            "open": "false",
+            "powered": "false"
+          }
+        },
+        {
+          "offset": [1, 1, 0],
+          "block": "minecraft:iron_door",
+          "properties": {
+            "facing": "north",
+            "half": "upper",
+            "hinge": "right",
+            "open": "false",
+            "powered": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:iron_block",
+      "pos": [-1, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 2, 0],
+          "block": "minecraft:iron_block"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:iron_block",
+      "pos": [0, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 2, 0],
+          "block": "minecraft:iron_block"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:iron_block",
+      "pos": [1, 2, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 2, 0],
+          "block": "minecraft:iron_block"
+        }
+      ]
+    }
+  ]
+}

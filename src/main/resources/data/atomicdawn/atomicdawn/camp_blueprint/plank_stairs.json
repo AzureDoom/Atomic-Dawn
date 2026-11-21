@@ -1,0 +1,159 @@
+{
+  "name": "Wooden Stairs",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [-1, 0, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 1],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [0, 0, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 1],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [1, 0, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 1],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [-1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, 0],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [0, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 1, 0],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, 0],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [-1, 2, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 2, -1],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [0, 2, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 2, -1],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_stairs",
+      "pos": [1, 2, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 2, -1],
+          "block": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ]
+    }
+  ]
+}

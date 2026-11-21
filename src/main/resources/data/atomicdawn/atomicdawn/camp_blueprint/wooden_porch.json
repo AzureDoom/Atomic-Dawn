@@ -1,0 +1,182 @@
+{
+  "name": "Wooden Porch",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [-1, 0, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, -1],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [0, 0, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, -1],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [1, 0, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, -1],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [-1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [0, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 0],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [-1, 0, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 1],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [0, 0, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 1],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_planks",
+      "pos": [1, 0, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 1],
+          "block": "minecraft:oak_planks"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [-1, 1, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, -1],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [0, 1, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 1, -1],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [1, 1, -1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, -1],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [-1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, 0],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, 0],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [-1, 1, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, 1],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [1, 1, 1],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, 1],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    }
+  ]
+}

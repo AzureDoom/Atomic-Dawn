@@ -1,0 +1,17 @@
+{
+  "block": "minecraft:iron_block",
+  "category": "structure",
+  "cost": [
+    {
+      "ingredient": "minecraft:iron_ingot",
+      "count": 9
+    }
+  ],
+  "budget": 3,
+  "modes": [
+    "snap",
+    "collision",
+    "free"
+  ],
+  "order": 30
+}

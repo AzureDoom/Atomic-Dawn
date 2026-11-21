@@ -1,0 +1,72 @@
+{
+  "name": "Sandbag Barricade",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:smooth_sandstone",
+      "pos": [-1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 0],
+          "block": "minecraft:smooth_sandstone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_sandstone",
+      "pos": [0, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 0],
+          "block": "minecraft:smooth_sandstone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_sandstone",
+      "pos": [1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 0],
+          "block": "minecraft:smooth_sandstone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_sandstone",
+      "pos": [-1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 1, 0],
+          "block": "minecraft:smooth_sandstone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_sandstone",
+      "pos": [0, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 1, 0],
+          "block": "minecraft:smooth_sandstone"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:smooth_sandstone",
+      "pos": [1, 1, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 1, 0],
+          "block": "minecraft:smooth_sandstone"
+        }
+      ]
+    }
+  ]
+}

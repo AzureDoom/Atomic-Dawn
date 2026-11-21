@@ -1,0 +1,39 @@
+{
+  "name": "Wooden Fence",
+  "kind": "prefab",
+  "objects": [
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [-1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [-1, 0, 0],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [0, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [0, 0, 0],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    },
+    {
+      "definition": "atomicdawn:oak_fence",
+      "pos": [1, 0, 0],
+      "mode": "snap",
+      "parts": [
+        {
+          "offset": [1, 0, 0],
+          "block": "minecraft:oak_fence"
+        }
+      ]
+    }
+  ]
+}
