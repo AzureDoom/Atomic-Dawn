@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public record QuestLog(
     Map<Identifier, QuestProgress> quests,
     Optional<Identifier> tracked

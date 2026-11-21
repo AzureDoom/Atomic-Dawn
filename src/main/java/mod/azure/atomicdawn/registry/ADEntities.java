@@ -13,6 +13,7 @@ import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.FalloutCloudEntity;
 
+@SuppressWarnings("NullableProblems")
 public final class ADEntities {
 
     public static final DeferredRegister<EntityType<?>> REGISTER = DeferredRegister.create(

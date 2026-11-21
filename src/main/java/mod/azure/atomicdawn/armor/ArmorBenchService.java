@@ -220,7 +220,7 @@ public final class ArmorBenchService {
         );
         var result = new ArrayList<ItemStack>();
         for (var ingredient : recipe.cost()) {
-            var item = ingredient.ingredient().items().findFirst().orElse(null);
+            var item = ingredient.ingredient().getValues().stream().findFirst().orElse(null);
             var count = (int) Math.floor(ingredient.count() * fraction / recipe.count());
             if (item != null && count > 0) {
                 result.add(new ItemStack(item, count));

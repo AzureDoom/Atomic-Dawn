@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public record NpcAppearance(
     Kind kind,
     Identifier model,

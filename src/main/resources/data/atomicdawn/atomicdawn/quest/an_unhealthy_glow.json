@@ -1,36 +1,35 @@
 {
   "category": "main",
-  "sort": 5,
+  "sort": 1,
   "objectives": [
     {
       "type": "visit_biome",
       "target": "#atomicdawn:wasteland_biomes"
     },
     {
-      "type": "collect",
-      "target": "atomicdawn:radaway",
-      "count": 1
+      "type": "action",
+      "target": "atomicdawn:absorb_rads",
+      "count": 25
     },
     {
-      "type": "collect",
-      "target": "atomicdawn:rad_x",
-      "count": 1
+      "type": "action",
+      "target": "atomicdawn:use_radaway"
     }
   ],
   "rewards": {
     "xp": 200,
     "items": [
       {
-        "item": "atomicdawn:radaway",
+        "item": "atomicdawn:rad_x",
         "count": 2
       },
       {
-        "item": "atomicdawn:rad_x",
+        "item": "atomicdawn:nuka_cola",
         "count": 2
       }
     ],
     "start_quests": [
-      "atomicdawn:armed_and_dangerous"
+      "atomicdawn:scrap_for_survival"
     ]
   }
 }

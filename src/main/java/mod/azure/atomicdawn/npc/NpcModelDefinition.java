@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public record NpcModelDefinition(
     Identifier geo,
     Identifier texture,

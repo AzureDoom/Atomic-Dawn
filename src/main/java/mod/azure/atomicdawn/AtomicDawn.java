@@ -48,6 +48,7 @@ import mod.azure.atomicdawn.weapon.legendary.LegendaryEffect;
 import mod.azure.atomicdawn.weapon.modification.WeaponModification;
 import mod.azure.atomicdawn.worldgen.ADWorldgen;
 
+@SuppressWarnings("unused")
 @Mod(AtomicDawn.MOD_ID)
 public final class AtomicDawn {
 

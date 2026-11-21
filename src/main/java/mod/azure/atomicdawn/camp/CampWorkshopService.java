@@ -37,8 +37,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.util.PlayerItems;
 
+@SuppressWarnings({ "MagicConstant", "OptionalUsedAsFieldOrParameterType" })
 public final class CampWorkshopService {
 
     public enum Failure {
@@ -184,6 +186,7 @@ public final class CampWorkshopService {
         );
         CampManager.update(server, camp.get().campId(), slot -> slot.withObject(object));
         CampSync.send(player);
+        QuestActions.trigger(player, QuestActions.BUILD_CAMP);
     }
 
     static boolean cancelledByOthers(
@@ -366,7 +369,7 @@ public final class CampWorkshopService {
             return items;
         }
         for (var ingredient : definition.get().cost()) {
-            var item = ingredient.ingredient().items().findFirst().orElse(null);
+            var item = ingredient.ingredient().getValues().stream().findFirst().orElse(null);
             var count = Math.max(1, (int) Math.round(ingredient.count() * fraction));
             if (item != null) {
                 items.add(new ItemStack(item, Math.min(count, ingredient.count())));
@@ -481,6 +484,7 @@ public final class CampWorkshopService {
         ).asManual();
         CampManager.update(server, camp.get().campId(), slot -> slot.withObject(object));
         CampSync.send(player);
+        QuestActions.trigger(player, QuestActions.BUILD_CAMP);
     }
 
     static Optional<CampSlot> refreshed(ServerLevel level, Optional<CampSlot> camp) {

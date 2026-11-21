@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.special.SpecialAttribute;
 
+@SuppressWarnings("unused")
 public enum PerkEffectType implements StringRepresentable {
 
     DAMAGE("damage", true),

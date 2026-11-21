@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import org.jspecify.annotations.NonNull;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({ "unused", "NullableProblems" })
 public record TargetSpec(
     boolean tag,
     Identifier id
@@ -41,7 +41,7 @@ public record TargetSpec(
 
     public boolean matchesEntity(EntityType<?> type) {
         if (tag) {
-            return type.builtInRegistryHolder().is(TagKey.create(Registries.ENTITY_TYPE, id));
+            return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(type).is(TagKey.create(Registries.ENTITY_TYPE, id));
         }
         return BuiltInRegistries.ENTITY_TYPE.getKey(type).equals(id);
     }

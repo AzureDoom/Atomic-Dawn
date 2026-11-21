@@ -17,6 +17,7 @@ import mod.azure.atomicdawn.special.SpecialStats;
 import mod.azure.atomicdawn.util.PlayerItems;
 import mod.azure.atomicdawn.weapon.definition.WeaponCategory;
 
+@SuppressWarnings("unused")
 public final class PerkHooks {
 
     private PerkHooks() {}

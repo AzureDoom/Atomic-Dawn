@@ -79,11 +79,11 @@ public final class CampPlacementService {
         return Math.clamp(CampManager.selectedSlot(server, owner), 0, maxSlots() - 1);
     }
 
-    public static Optional<CampSlot> deploy(ServerPlayer player, ServerLevel level, BlockPos pos, Direction facing) {
+    public static void deploy(ServerPlayer player, ServerLevel level, BlockPos pos, Direction facing) {
         var failure = validateDeploy(player, level, pos);
         if (failure.isPresent()) {
             notify(player, failure.get(), ChatFormatting.RED);
-            return Optional.empty();
+            return;
         }
         var server = level.getServer();
         var slotIndex = selectedSlot(server, player.getUUID());
@@ -118,7 +118,7 @@ public final class CampPlacementService {
             CampRestoreService.offer(player, camp, true);
         }
         CampSync.changed(server);
-        return CampManager.get(server, camp.campId());
+        CampManager.get(server, camp.campId());
     }
 
     public static void moveModule(ServerPlayer player, BlockPos target, int nonce) {

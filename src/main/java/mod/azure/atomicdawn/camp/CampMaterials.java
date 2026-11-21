@@ -16,6 +16,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.util.PlayerItems;
 import mod.azure.atomicdawn.weapon.modification.WeaponModding;
 
+@SuppressWarnings("unused")
 public final class CampMaterials {
 
     public static final TagKey<Item> SCRAP = TagKey.create(Registries.ITEM, AtomicDawn.id("camp_scrap"));

@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
 
+@SuppressWarnings("unused")
 public record LegendaryProgress(
     int coins,
     Map<Identifier, Integer> owned,

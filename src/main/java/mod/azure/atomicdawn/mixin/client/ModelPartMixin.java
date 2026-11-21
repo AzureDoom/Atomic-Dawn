@@ -23,8 +23,8 @@ public abstract class ModelPartMixin {
     private void atomicdawn$hidePowerArmorPilotArms(
         PoseStack poseStack,
         VertexConsumer buffer,
-        int light,
-        int overlay,
+        int lightCoords,
+        int overlayCoords,
         int color,
         CallbackInfo ci
     ) {

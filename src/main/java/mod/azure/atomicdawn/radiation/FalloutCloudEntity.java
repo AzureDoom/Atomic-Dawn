@@ -105,11 +105,6 @@ public class FalloutCloudEntity extends Entity {
     }
 
     @Override
-    public boolean isPickable() {
-        return false;
-    }
-
-    @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         setRadius(input.getFloatOr("Radius", 8F));
         remainingTicks = input.getIntOr("Remaining", 0);

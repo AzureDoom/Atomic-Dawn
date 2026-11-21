@@ -4,32 +4,42 @@
   "sort": 0,
   "objectives": [
     {
-      "type": "discover",
-      "target": "#minecraft:village"
+      "type": "action",
+      "target": "atomicdawn:open_pipboy"
+    },
+    {
+      "type": "collect",
+      "target": "#minecraft:logs",
+      "count": 8
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:cobblestone",
+      "count": 8
     },
     {
       "type": "kill",
       "target": "#atomicdawn:pipboy/undead_targets",
-      "count": 5
-    },
-    {
-      "type": "reach_level",
       "count": 3
     }
   ],
   "rewards": {
-    "xp": 250,
-    "perk_picks": 1,
+    "xp": 150,
     "items": [
       {
         "item": "atomicdawn:radaway",
         "count": 2
+      },
+      {
+        "item": "atomicdawn:rad_x",
+        "count": 1
       }
     ],
     "holotapes": [
       "atomicdawn:test"
     ],
     "start_quests": [
+      "atomicdawn:an_unhealthy_glow",
       "atomicdawn:lost_signal"
     ]
   }

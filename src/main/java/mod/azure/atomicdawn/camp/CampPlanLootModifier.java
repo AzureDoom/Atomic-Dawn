@@ -45,6 +45,7 @@ public class CampPlanLootModifier extends LootModifier {
 
     private final float chance;
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public CampPlanLootModifier(
         Optional<Holder<LootItemCondition>> condition,
         int priority,

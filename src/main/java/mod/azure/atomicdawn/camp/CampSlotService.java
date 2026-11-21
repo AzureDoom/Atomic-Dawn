@@ -28,6 +28,7 @@ import mod.azure.atomicdawn.registry.ADBlocks;
 import mod.azure.atomicdawn.registry.ADItems;
 import mod.azure.atomicdawn.util.PlayerItems;
 
+@SuppressWarnings("MagicConstant")
 public final class CampSlotService {
 
     private record PlannedPart(
@@ -156,7 +157,7 @@ public final class CampSlotService {
                     continue;
                 }
                 var offset = part.subtract(camp.origin()).rotate(toNorth);
-                var snapshot = PartSnapshot.capture(offset, state.rotate(toNorth));
+                var snapshot = PartSnapshot.capture(offset, state.rotate(level, part, toNorth));
                 parts.add(snapshot.withData(CampContents.blockData(level, part)));
             }
             if (parts.isEmpty()) {
@@ -330,7 +331,9 @@ public final class CampSlotService {
         var parts = new ArrayList<PlannedPart>();
         var air = Blocks.AIR.defaultBlockState();
         for (var snapshot : object.snapshot()) {
-            var rotated = snapshot.rotated(fromNorth);
+            var rotatedOffset = snapshot.offset().rotate(fromNorth);
+            var worldPos = object.pos().offset(rotatedOffset);
+            var rotated = snapshot.rotated(fromNorth, level, worldPos);
             var state = rotated.state();
             var pos = camp.origin().offset(rotated.offset());
             if (state.isEmpty()) {

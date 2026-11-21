@@ -42,6 +42,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
@@ -178,9 +179,6 @@ public class NpcEntity extends PathfinderMob {
         builder.define(DATA_EMOTE_ID, 0);
         builder.define(DATA_DOWNED, false);
     }
-
-    @Override
-    protected void registerGoals() {}
 
     private void rebuildGoals() {
         goalSelector.removeAllGoals(_ -> true);
@@ -434,7 +432,7 @@ public class NpcEntity extends PathfinderMob {
     @Override
     public @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
         var level = level();
-        return NpcModels.dimensions(level == null ? null : level.registryAccess(), appearance());
+        return NpcModels.dimensions(level.registryAccess(), appearance());
     }
 
     @Nullable
@@ -761,8 +759,8 @@ public class NpcEntity extends PathfinderMob {
     }
 
     @Override
-    public boolean isPushedByFluid() {
-        return !config().behavior().immovable() && super.isPushedByFluid();
+    public boolean isPushedByFluid(@NonNull FluidType type) {
+        return !config().behavior().immovable() && super.isPushedByFluid(type);
     }
 
     @Override

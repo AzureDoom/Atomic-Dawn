@@ -14,6 +14,7 @@ import java.util.Optional;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.pipboy.PipBoyService;
 import mod.azure.atomicdawn.pipboy.light.PipBoyLightService;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.quest.QuestService;
 
 public record PipBoyActionPayload(
@@ -26,7 +27,8 @@ public record PipBoyActionPayload(
         TOGGLE_FAVORITE,
         REQUEST_STATS,
         TRACK_QUEST,
-        TOGGLE_LIGHT;
+        TOGGLE_LIGHT,
+        OPENED;
 
         private static final Action[] VALUES = values();
 
@@ -62,6 +64,7 @@ public record PipBoyActionPayload(
                         : Optional.of(payload.target())
                 );
                 case TOGGLE_LIGHT -> PipBoyLightService.toggle(player);
+                case OPENED -> QuestActions.trigger(player, QuestActions.OPEN_PIPBOY);
             }
         }
     }

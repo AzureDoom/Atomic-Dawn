@@ -19,6 +19,7 @@ import mod.azure.atomicdawn.pipboy.holotape.HolotapeService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.special.SpecialService;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class QuestService {
 
     private QuestService() {}
@@ -157,6 +158,41 @@ public final class QuestService {
         }
     }
 
+    public static void onAction(ServerPlayer player, Identifier action, int amount) {
+        var log = log(player);
+        var access = player.level().registryAccess();
+        var changed = false;
+        for (var entry : log.quests().entrySet()) {
+            var progress = entry.getValue();
+            if (progress.completed()) {
+                continue;
+            }
+            var definition = QuestDefinition.get(access, entry.getKey()).orElse(null);
+            if (definition == null) {
+                continue;
+            }
+            var objectives = definition.objectives();
+            for (var i = 0; i < objectives.size(); i++) {
+                var objective = objectives.get(i);
+                if (!active(definition, progress, i) || objective.type() != ObjectiveType.ACTION) {
+                    continue;
+                }
+                var matches = objective.target()
+                    .map(target -> !target.tag() && target.id().equals(action))
+                    .orElse(false);
+                if (matches && progress.count(i) < objective.count()) {
+                    progress = progress.withCount(i, Math.min(objective.count(), progress.count(i) + amount));
+                    changed = true;
+                }
+            }
+            log = log.with(entry.getKey(), progress);
+        }
+        if (changed) {
+            set(player, log);
+            evaluate(player);
+        }
+    }
+
     private static boolean active(QuestDefinition definition, QuestProgress progress, int index) {
         return !definition.sequential() || progress.stage() == index;
     }
@@ -237,6 +273,7 @@ public final class QuestService {
         var target = objective.target().orElse(null);
         return switch (objective.type()) {
             case KILL, TALK -> -1;
+            case ACTION -> target != null ? QuestActions.poll(player, target.id()) : -1;
             case COLLECT -> {
                 var total = 0;
                 var inventory = player.getInventory();

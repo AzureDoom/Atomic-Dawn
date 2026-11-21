@@ -136,6 +136,7 @@
     {
       "id": "#atomicdawn:skyline_valley_structures",
       "required": false
-    }
+    },
+    "atomicdawn:highway"
   ]
 }

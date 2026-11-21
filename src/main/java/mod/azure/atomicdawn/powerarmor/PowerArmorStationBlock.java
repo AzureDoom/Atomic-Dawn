@@ -333,7 +333,7 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
                     && !player.preventsBlockDrops()
                     && masterState.is(this)
                     && isMaster(masterState)
-                    && player.hasCorrectToolForDrops(masterState)
+                    && player.hasCorrectToolForDrops(masterState, level, master)
             ) {
                 Block.dropResources(
                     masterState,
@@ -482,16 +482,14 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
 
     private static VoxelShape cellShape(Direction facing, int column, int row, int layer) {
         var cellX = -column;
-        var cellY = row;
-        var cellZ = layer;
         var shape = Shapes.empty();
         for (var box : MODEL_BOXES) {
             var minX = Math.max(box[0], cellX) - cellX;
-            var minY = Math.max(box[1], cellY) - cellY;
-            var minZ = Math.max(box[2], cellZ) - cellZ;
+            var minY = Math.max(box[1], row) - row;
+            var minZ = Math.max(box[2], layer) - layer;
             var maxX = Math.min(box[3], cellX + 1) - cellX;
-            var maxY = Math.min(box[4], cellY + 1) - cellY;
-            var maxZ = Math.min(box[5], cellZ + 1) - cellZ;
+            var maxY = Math.min(box[4], row + 1) - row;
+            var maxZ = Math.min(box[5], layer + 1) - layer;
             if (maxX - minX < 0.001 || maxY - minY < 0.001 || maxZ - minZ < 0.001) {
                 continue;
             }

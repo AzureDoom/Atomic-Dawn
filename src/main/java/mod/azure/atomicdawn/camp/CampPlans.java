@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.TreeSet;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record CampPlans(List<Identifier> known) {
@@ -56,7 +57,7 @@ public record CampPlans(List<Identifier> known) {
     }
 
     public static List<Identifier> all(HolderLookup.Provider registries) {
-        var plans = new TreeSet<Identifier>(Comparator.comparing(Identifier::toString));
+        var plans = new TreeSet<>(Comparator.comparing(Identifier::toString));
         registries.lookup(ADRegistries.CAMP_BUILDABLE)
             .ifPresent(
                 registry -> registry.listElements()
@@ -91,6 +92,7 @@ public record CampPlans(List<Identifier> known) {
             return false;
         }
         player.setData(CampAttachments.CAMP_PLANS.get(), plans.with(plan));
+        QuestActions.trigger(player, QuestActions.LEARN_PLAN);
         player.sendSystemMessage(
             Component.translatable("camp.atomicdawn.plan.learned", displayName(plan)).withStyle(ChatFormatting.GREEN),
             true

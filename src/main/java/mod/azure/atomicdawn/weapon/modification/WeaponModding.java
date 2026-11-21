@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.progression.ModUnlocks;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.registry.ADDataComponents;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
@@ -105,6 +106,7 @@ public final class WeaponModding {
                 }
             }
         }
+        QuestActions.trigger(player, QuestActions.INSTALL_MOD);
         return Result.INSTALLED;
     }
 

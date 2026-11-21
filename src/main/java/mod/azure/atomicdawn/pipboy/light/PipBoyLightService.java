@@ -52,7 +52,8 @@ public final class PipBoyLightService {
         if (lit == null) {
             return;
         }
-        if (lit.pos() != null && player.level().getServer() != null) {
+        if (lit.pos() != null) {
+            player.level();
             var level = player.level().getServer().getLevel(lit.dimension());
             if (level != null) {
                 remove(level, lit.pos());
@@ -63,7 +64,8 @@ public final class PipBoyLightService {
 
     public static void drop(ServerPlayer player) {
         var lit = LIT.remove(player.getUUID());
-        if (lit != null && lit.pos() != null && player.level().getServer() != null) {
+        if (lit != null && lit.pos() != null) {
+            player.level();
             var level = player.level().getServer().getLevel(lit.dimension());
             if (level != null) {
                 remove(level, lit.pos());
@@ -102,13 +104,14 @@ public final class PipBoyLightService {
             turnOff(player);
             return;
         }
-        var level = (ServerLevel) player.level();
+        var level = player.level();
         var target = target(level, player);
         if (lit.dimension().equals(level.dimension()) && target != null && target.equals(lit.pos())) {
             return;
         }
         LIT.put(player.getUUID(), new Lit(level.dimension(), target));
-        if (lit.pos() != null && player.level().getServer() != null) {
+        if (lit.pos() != null) {
+            player.level();
             var old = player.level().getServer().getLevel(lit.dimension());
             if (old != null) {
                 remove(old, lit.pos());

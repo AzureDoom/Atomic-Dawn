@@ -1,33 +1,43 @@
 {
   "category": "main",
-  "sort": 3,
+  "sort": 2,
+  "sequential": false,
   "objectives": [
     {
       "type": "collect",
       "target": "minecraft:iron_ingot",
-      "count": 8
+      "count": 12
     },
     {
       "type": "collect",
-      "target": "minecraft:leather",
-      "count": 4
+      "target": "minecraft:copper_ingot",
+      "count": 3
     },
     {
       "type": "collect",
-      "target": "minecraft:coal",
-      "count": 8
+      "target": "minecraft:redstone",
+      "count": 2
+    },
+    {
+      "type": "collect",
+      "target": "minecraft:gunpowder",
+      "count": 2
     }
   ],
   "rewards": {
     "xp": 150,
     "items": [
       {
-        "item": "atomicdawn:weapon_repair_kit",
+        "item": "atomicdawn:weapons_workbench",
+        "count": 1
+      },
+      {
+        "item": "atomicdawn:tinkers_bench",
         "count": 1
       }
     ],
     "start_quests": [
-      "atomicdawn:a_place_to_call_home"
+      "atomicdawn:armed_and_dangerous"
     ]
   }
 }

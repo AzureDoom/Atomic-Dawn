@@ -114,7 +114,8 @@ public final class CampContents {
         var loose = level.getEntities(
             (Entity) null,
             area,
-            entity -> entity.getType().builtInRegistryHolder().is(STORABLE) && !(entity instanceof PowerArmorEntity)
+            entity -> BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).is(STORABLE)
+                && !(entity instanceof PowerArmorEntity)
         );
         for (var entity : loose) {
             if (!eligible(entity) || taken.contains(entity.getUUID()) || !inside.test(entity.blockPosition())) {
@@ -168,7 +169,7 @@ public final class CampContents {
     @Nullable
     private static Entity create(ServerLevel level, EntitySnapshot snapshot) {
         var type = BuiltInRegistries.ENTITY_TYPE.getOptional(snapshot.type());
-        if (type.isEmpty() || !type.get().builtInRegistryHolder().is(STORABLE)) {
+        if (type.isEmpty() || !BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(type.get()).is(STORABLE)) {
             return null;
         }
         try {

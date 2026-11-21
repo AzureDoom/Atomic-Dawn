@@ -32,6 +32,7 @@ import mod.azure.atomicdawn.perks.LegendaryPerkCatalog;
 import mod.azure.atomicdawn.perks.PerkCatalog;
 import mod.azure.atomicdawn.perks.PerkDefinition;
 import mod.azure.atomicdawn.pipboy.PipBoyNotifications;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.util.HealthClamp;
@@ -514,7 +515,7 @@ public final class SpecialService {
         if (payload.revision() != progress.revision()) {
             return SpecialResult.STALE;
         }
-        return switch (payload.action()) {
+        var result = switch (payload.action()) {
             case ALLOCATE -> allocate(player, progress, payload.special());
             case LEARN_PERK -> learn(player, progress, payload.perk());
             case EQUIP_PERK -> equip(player, progress, payload.perk(), payload.rank());
@@ -526,6 +527,15 @@ public final class SpecialService {
             case LEGENDARY_UNEQUIP -> legendaryUnequip(player, progress, payload.perk());
             case LEGENDARY_UPGRADE -> legendaryUpgrade(player, progress, payload.perk(), payload.rank());
         };
+        if (result == SpecialResult.OK) {
+            switch (payload.action()) {
+                case ALLOCATE -> QuestActions.trigger(player, QuestActions.ALLOCATE_SPECIAL);
+                case LEARN_PERK -> QuestActions.trigger(player, QuestActions.LEARN_PERK);
+                case EQUIP_PERK -> QuestActions.trigger(player, QuestActions.EQUIP_PERK);
+                default -> {}
+            }
+        }
+        return result;
     }
 
     private static SpecialResult allocate(ServerPlayer player, SpecialProgress progress, List<Integer> requested) {

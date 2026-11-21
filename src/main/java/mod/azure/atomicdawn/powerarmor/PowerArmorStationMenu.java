@@ -53,7 +53,7 @@ public class PowerArmorStationMenu extends AbstractContainerMenu {
         this(
             id,
             inventory,
-            inventory.player.level().getEntity(data.readVarInt()) instanceof PowerArmorEntity armor ? armor : null
+            inventory.player.level().getEntity(data.readVarInt()) instanceof PowerArmorEntity armor3 ? armor3 : null
         );
     }
 

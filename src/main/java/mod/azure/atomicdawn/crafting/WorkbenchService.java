@@ -16,6 +16,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.progression.LegendaryRolls;
 import mod.azure.atomicdawn.progression.ModUnlocks;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.registry.ADDataComponents;
 import mod.azure.atomicdawn.registry.ADItems;
 import mod.azure.atomicdawn.registry.ADRegistries;
@@ -73,6 +74,7 @@ public final class WorkbenchService {
         }
         Weapons.setCondition(weapon, condition.withCurrent(condition.max()));
         player.playSound(ADSounds.REPAIR_WEAPON.get());
+        QuestActions.trigger(player, QuestActions.REPAIR_WEAPON);
         return Result.REPAIRED;
     }
 
@@ -126,6 +128,7 @@ public final class WorkbenchService {
                 Component.translatable("message.atomicdawn.learned_mod", name).withStyle(ChatFormatting.GREEN)
             );
         }
+        QuestActions.trigger(player, QuestActions.SCRAP_WEAPON);
         return Result.SCRAPPED;
     }
 
@@ -153,6 +156,7 @@ public final class WorkbenchService {
         } else {
             PlayerItems.give(player, crafted);
         }
+        QuestActions.trigger(player, QuestActions.CRAFT_WEAPON);
         return Result.CRAFTED;
     }
 

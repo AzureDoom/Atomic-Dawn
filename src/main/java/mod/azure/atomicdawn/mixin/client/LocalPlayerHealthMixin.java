@@ -14,10 +14,10 @@ import mod.azure.atomicdawn.util.MixinUtil;
 public abstract class LocalPlayerHealthMixin {
 
     @Inject(method = "hurtTo(F)V", at = @At("HEAD"), cancellable = true)
-    private void atomicdawn$skipClampFlash(float health, CallbackInfo ci) {
+    private void atomicdawn$skipClampFlash(float newHealth, CallbackInfo ci) {
         var self = MixinUtil.<LocalPlayer>self(this);
-        if (health < self.getHealth() && HealthClampClient.consume(health)) {
-            self.setHealth(health);
+        if (newHealth < self.getHealth() && HealthClampClient.consume(newHealth)) {
+            self.setHealth(newHealth);
             ci.cancel();
         }
     }

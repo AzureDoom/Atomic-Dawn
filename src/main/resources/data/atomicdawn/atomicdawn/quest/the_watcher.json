@@ -1,5 +1,9 @@
 {
   "category": "side",
+  "auto_start": true,
+  "prerequisites": [
+    "atomicdawn:echoes_of_the_past"
+  ],
   "sort": 15,
   "objectives": [
     {

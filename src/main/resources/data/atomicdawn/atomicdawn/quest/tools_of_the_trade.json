@@ -1,0 +1,31 @@
+{
+  "category": "main",
+  "sort": 4,
+  "objectives": [
+    {
+      "type": "action",
+      "target": "atomicdawn:repair_weapon"
+    },
+    {
+      "type": "action",
+      "target": "atomicdawn:learn_perk"
+    },
+    {
+      "type": "action",
+      "target": "atomicdawn:equip_perk"
+    },
+    {
+      "type": "reach_level",
+      "count": 3
+    }
+  ],
+  "rewards": {
+    "xp": 250,
+    "holotapes": [
+      "atomicdawn:echoes_of_the_past"
+    ],
+    "start_quests": [
+      "atomicdawn:echoes_of_the_past"
+    ]
+  }
+}

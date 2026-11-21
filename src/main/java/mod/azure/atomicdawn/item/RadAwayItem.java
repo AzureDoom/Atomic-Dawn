@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.mutation.MutationService;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.radiation.RadiationService;
 
 public class RadAwayItem extends Item {
@@ -34,6 +35,7 @@ public class RadAwayItem extends Item {
             RadiationService.remove(player, (float) AtomicDawn.CONFIG.radiation.RADAWAY_RADS);
             if (player instanceof ServerPlayer serverPlayer) {
                 MutationService.onRadAway(serverPlayer);
+                QuestActions.trigger(serverPlayer, QuestActions.USE_RADAWAY);
             }
         }
         return super.finishUsingItem(stack, level, entity);

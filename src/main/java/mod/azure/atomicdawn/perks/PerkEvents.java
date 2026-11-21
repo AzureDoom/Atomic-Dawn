@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
@@ -58,6 +59,7 @@ import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
+import mod.azure.atomicdawn.special.SpecialStats;
 import mod.azure.atomicdawn.util.PlayerItems;
 import mod.azure.atomicdawn.weapon.action.VatsActions;
 import mod.azure.atomicdawn.weapon.definition.WeaponCategory;
@@ -775,7 +777,7 @@ public final class PerkEvents {
         }
     }
 
-    private static int countItem(ServerPlayer player, net.minecraft.world.item.Item item) {
+    private static int countItem(ServerPlayer player, Item item) {
         var total = 0;
         var inventory = player.getInventory();
         for (var i = 0; i < inventory.getContainerSize(); i++) {
@@ -787,7 +789,7 @@ public final class PerkEvents {
         return total;
     }
 
-    private static void regenerate(ServerPlayer player, mod.azure.atomicdawn.special.SpecialStats stats) {
+    private static void regenerate(ServerPlayer player, SpecialStats stats) {
         if (player.getHealth() >= player.getMaxHealth()) {
             return;
         }
@@ -819,7 +821,7 @@ public final class PerkEvents {
     }
 
     private static void painTrain(ServerPlayer player, float damage) {
-        var level = (ServerLevel) player.level();
+        var level = player.level();
         var look = player.getLookAngle();
         var center = player.position().add(look.x * 1.5, 0.5, look.z * 1.5);
         var area = new net.minecraft.world.phys.AABB(center, center).inflate(1.5);

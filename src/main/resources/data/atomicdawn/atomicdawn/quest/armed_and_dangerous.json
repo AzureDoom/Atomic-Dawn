@@ -1,16 +1,19 @@
 {
   "category": "main",
-  "sort": 6,
+  "sort": 3,
   "objectives": [
     {
-      "type": "collect",
-      "target": "atomicdawn:10mm_pistol",
-      "count": 1
+      "type": "action",
+      "target": "atomicdawn:craft_weapon"
     },
     {
-      "type": "collect",
-      "target": "atomicdawn:ammo_10mm",
-      "count": 10
+      "type": "action",
+      "target": "atomicdawn:craft_tinker"
+    },
+    {
+      "type": "action",
+      "target": "atomicdawn:fire_weapon",
+      "count": 25
     },
     {
       "type": "kill",
@@ -23,15 +26,16 @@
     "perk_picks": 1,
     "items": [
       {
+        "item": "atomicdawn:weapon_repair_kit",
+        "count": 1
+      },
+      {
         "item": "atomicdawn:ammo_container",
         "count": 1
       }
     ],
-    "holotapes": [
-      "atomicdawn:echoes_of_the_past"
-    ],
     "start_quests": [
-      "atomicdawn:echoes_of_the_past"
+      "atomicdawn:tools_of_the_trade"
     ]
   }
 }

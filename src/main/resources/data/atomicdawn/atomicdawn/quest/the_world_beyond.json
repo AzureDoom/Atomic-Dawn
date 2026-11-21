@@ -1,7 +1,7 @@
 {
   "category": "main",
-  "sequential": false,
   "sort": 8,
+  "sequential": false,
   "objectives": [
     {
       "type": "visit_biome",
@@ -14,6 +14,11 @@
     {
       "type": "visit_biome",
       "target": "atomicdawn:savage_divide"
+    },
+    {
+      "type": "discover",
+      "target": "#atomicdawn:wasteland_locations",
+      "count": 3
     }
   ],
   "rewards": {
@@ -22,11 +27,8 @@
     "items": [
       {
         "item": "atomicdawn:weapon_repair_kit",
-        "count": 1
+        "count": 2
       }
-    ],
-    "start_quests": [
-      "atomicdawn:rebuilding_tomorrow"
     ]
   }
 }

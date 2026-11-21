@@ -1,6 +1,7 @@
 package mod.azure.atomicdawn.perks;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -168,7 +169,8 @@ public final class PerkCombat {
         if (attacker.distanceToSqr(target) >= LONG_RANGE * LONG_RANGE) {
             bonus += stats.value(PerkEffectType.LONG_RANGE_DAMAGE, category, automatic);
         }
-        if (target.getType().builtInRegistryHolder().is(EntityTypeTags.ARTHROPOD)) {
+
+        if (BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(target.getType()).is(EntityTypeTags.ARTHROPOD)) {
             bonus += stats.value(PerkEffectType.BUG_DAMAGE, category, automatic);
         }
         if (target.isCurrentlyGlowing()) {

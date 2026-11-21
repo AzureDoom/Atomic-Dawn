@@ -208,7 +208,7 @@ public abstract class MultiblockBenchBlock extends BaseEntityBlock {
                     && !player.preventsBlockDrops()
                     && masterState.is(this)
                     && isMaster(masterState)
-                    && player.hasCorrectToolForDrops(masterState)
+                    && player.hasCorrectToolForDrops(masterState, level, master)
             ) {
                 Block.dropResources(
                     masterState,

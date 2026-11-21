@@ -1,5 +1,6 @@
 package mod.azure.atomicdawn.radiation;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,7 +36,8 @@ public final class RadiationService {
     );
 
     public static boolean immune(LivingEntity entity) {
-        return entity instanceof PowerArmorEntity || entity.getType().builtInRegistryHolder().is(RADIATION_IMMUNE);
+        return entity instanceof PowerArmorEntity || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType())
+            .is(RADIATION_IMMUNE);
     }
 
     private RadiationService() {}

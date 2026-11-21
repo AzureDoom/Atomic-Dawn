@@ -57,7 +57,6 @@ public final class CampService {
             case PIN -> owned(player, campId).ifPresent(camp -> pin(player, camp));
             case TOGGLE_ACCESS -> updateAccess(player, access -> access.toggled(CampAccess.Flag.byIndex(value)));
             case UNTRUST -> updateAccess(player, access -> access.withoutTrusted(campId));
-            case MODULE_FACING -> {}
         }
     }
 

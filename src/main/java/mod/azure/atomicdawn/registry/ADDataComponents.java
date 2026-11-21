@@ -18,6 +18,7 @@ import mod.azure.atomicdawn.weapon.instance.WeaponState;
 import mod.azure.atomicdawn.weapon.legendary.WeaponLegendary;
 import mod.azure.atomicdawn.weapon.modification.WeaponMods;
 
+@SuppressWarnings("NullableProblems")
 public final class ADDataComponents {
 
     public static final DeferredRegister.DataComponents REGISTER = DeferredRegister.createDataComponents(

@@ -22,6 +22,7 @@ import java.util.UUID;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 
+@SuppressWarnings("MagicConstant")
 public final class CampStorageService {
 
     private CampStorageService() {}
@@ -82,7 +83,7 @@ public final class CampStorageService {
             }
             var snapshot = PartSnapshot.capture(
                 part.subtract(anchor).rotate(toNorth),
-                level.getBlockState(part).rotate(toNorth)
+                level.getBlockState(part).rotate(level, part, toNorth)
             );
             parts.add(snapshot.withData(CampContents.blockData(level, part)));
             live.add(part);

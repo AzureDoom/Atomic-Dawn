@@ -49,7 +49,7 @@ public final class PipBoyService {
         player.setData(ADAttachments.PIPBOY.get(), data.withFavorites(favorites));
     }
 
-    private static PipBoyStats stats(ServerPlayer player) {
+    public static PipBoyStats stats(ServerPlayer player) {
         return player.getData(ADAttachments.PIPBOY_STATS.get());
     }
 

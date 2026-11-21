@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -87,8 +88,16 @@ public record PartSnapshot(
         return new PartSnapshot(offset.offset(delta), block, properties, data);
     }
 
-    public PartSnapshot rotated(Rotation rotation) {
-        return state().map(found -> capture(offset.rotate(rotation), found.rotate(rotation)).withData(data))
-            .orElse(new PartSnapshot(offset.rotate(rotation), block, properties, data));
+    public PartSnapshot rotated(Rotation rotation, LevelAccessor level, BlockPos pos) {
+        var rotatedOffset = offset.rotate(rotation);
+
+        return state()
+            .map(
+                found -> capture(
+                    rotatedOffset,
+                    found.rotate(level, pos, rotation)
+                ).withData(data)
+            )
+            .orElse(new PartSnapshot(rotatedOffset, block, properties, data));
     }
 }

@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import mod.azure.atomicdawn.perks.PerkHooks;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.registry.ADRegistries;
 import mod.azure.atomicdawn.util.PlayerItems;
 import mod.azure.atomicdawn.weapon.modification.WeaponModding;
@@ -50,6 +51,10 @@ public final class TinkerService {
             PlayerItems.give(player, result);
             crafted++;
         }
-        return crafted > 0 ? Result.CRAFTED : Result.MISSING_MATERIALS;
+        if (crafted > 0) {
+            QuestActions.trigger(player, QuestActions.CRAFT_TINKER, crafted);
+            return Result.CRAFTED;
+        }
+        return Result.MISSING_MATERIALS;
     }
 }

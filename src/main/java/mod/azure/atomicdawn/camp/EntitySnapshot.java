@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 
+@SuppressWarnings("unused")
 public record EntitySnapshot(
     Identifier type,
     Vec3 offset,

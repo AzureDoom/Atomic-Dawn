@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 
 import mod.azure.atomicdawn.AtomicDawn;
 
+@SuppressWarnings("MagicConstant")
 public final class CampBlueprintService {
 
     private record PlannedPart(
@@ -171,7 +172,7 @@ public final class CampBlueprintService {
                 }
                 var snapshot = PartSnapshot.capture(
                     part.subtract(anchor).rotate(toNorth),
-                    level.getBlockState(part).rotate(toNorth)
+                    level.getBlockState(part).rotate(level, part, toNorth)
                 );
                 parts.add(contents ? snapshot.withData(CampContents.blockData(level, part)) : snapshot);
             }
@@ -301,7 +302,9 @@ public final class CampBlueprintService {
             }
             var parts = new ArrayList<PlannedPart>();
             for (var part : entry.parts()) {
-                var rotated = part.rotated(fromNorth);
+                var rotatedOffset = part.offset().rotate(fromNorth);
+                var worldPos = anchor.offset(rotatedOffset);
+                var rotated = part.rotated(fromNorth, level, worldPos);
                 var state = rotated.state();
                 if (state.isEmpty()) {
                     fail(player, CampWorkshopService.Failure.UNKNOWN_DEFINITION);
@@ -349,7 +352,7 @@ public final class CampBlueprintService {
             return Optional.empty();
         }
         for (var count : counts.entrySet()) {
-            var limit = CampBuildable.get(access, count.getKey()).map(CampBuildable::limit).orElse(0);
+            int limit = CampBuildable.get(access, count.getKey()).map(CampBuildable::limit).orElse(0);
             if (limit > 0 && camp.count(count.getKey()) + count.getValue() > limit) {
                 fail(player, CampWorkshopService.Failure.LIMIT);
                 return Optional.empty();

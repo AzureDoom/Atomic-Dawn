@@ -45,7 +45,7 @@ public final class LocationService {
                 continue;
             }
             var start = manager.getStructureAt(pos, structure);
-            if (start == null || !start.isValid()) {
+            if (!start.isValid()) {
                 continue;
             }
             var key = structures.getKey(structure);

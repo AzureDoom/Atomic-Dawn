@@ -65,8 +65,10 @@ public final class PartyService {
     public static List<ServerPlayer> onlineMates(ServerPlayer player) {
         var party = BY_PLAYER.get(player.getUUID());
         var result = new ArrayList<ServerPlayer>();
-        if (party == null || player.level().getServer() == null) {
+        if (party == null) {
             return result;
+        } else {
+            player.level();
         }
         for (var id : party.members()) {
             var other = player.level().getServer().getPlayerList().getPlayer(id);
@@ -186,7 +188,7 @@ public final class PartyService {
         }
         var server = leader.level().getServer();
         remove(party, target, server);
-        var kicked = server == null ? null : server.getPlayerList().getPlayer(target);
+        var kicked = server.getPlayerList().getPlayer(target);
         if (kicked != null) {
             kicked.sendSystemMessage(Component.translatable("party.atomicdawn.kicked"));
         }

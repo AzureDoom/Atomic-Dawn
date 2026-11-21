@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "#atomicdawn:toxic_valley_structures",
+    "#atomicdawn:ash_heap_structures",
+    "#atomicdawn:irradiated_mire_structures",
+    "#atomicdawn:crimson_bog_structures",
+    "#atomicdawn:burning_springs_structures",
+    "#atomicdawn:savage_divide_structures",
+    "#atomicdawn:skyline_valley_structures",
+    "atomicdawn:highway"
+  ]
+}

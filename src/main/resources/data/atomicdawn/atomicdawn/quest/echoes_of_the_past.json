@@ -1,27 +1,29 @@
 {
   "category": "main",
-  "sort": 7,
+  "sort": 5,
   "objectives": [
-    {
-      "type": "discover",
-      "target": "#minecraft:village"
-    },
     {
       "type": "holotape",
       "target": "atomicdawn:echoes_of_the_past"
     },
     {
-      "type": "reach_level",
-      "count": 4
+      "type": "discover",
+      "target": "#atomicdawn:wasteland_locations"
     }
   ],
   "rewards": {
     "xp": 300,
+    "items": [
+      {
+        "item": "atomicdawn:camp_module",
+        "count": 1
+      }
+    ],
     "plans": [
-      "atomicdawn:barn_wall"
+      "atomicdawn:wooden_porch"
     ],
     "start_quests": [
-      "atomicdawn:the_world_beyond"
+      "atomicdawn:a_place_to_call_home"
     ]
   }
 }

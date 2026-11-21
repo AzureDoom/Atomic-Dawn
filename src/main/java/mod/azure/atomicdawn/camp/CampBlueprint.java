@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public record CampBlueprint(
     String name,
     Kind kind,
@@ -213,7 +214,7 @@ public record CampBlueprint(
     }
 
     private static int count(ByteBuf buf, int max) {
-        var count = ByteBufCodecs.VAR_INT.decode(buf);
+        int count = ByteBufCodecs.VAR_INT.decode(buf);
         if (count < 0 || count > max) {
             throw new IllegalArgumentException("C.A.M.P. blueprint list too large: " + count);
         }
@@ -271,7 +272,7 @@ public record CampBlueprint(
         var totals = new LinkedHashMap<List<?>, Integer>();
         var ingredients = new HashMap<List<?>, Ingredient>();
         for (var entry : cost) {
-            List<?> key = entry.ingredient().items().toList();
+            List<?> key = entry.ingredient().getValues().stream().toList();
             totals.merge(key, entry.count(), Integer::sum);
             ingredients.putIfAbsent(key, entry.ingredient());
         }

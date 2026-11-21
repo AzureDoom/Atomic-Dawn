@@ -14,7 +14,8 @@ public enum ObjectiveType implements StringRepresentable {
     HOLOTAPE("holotape", true),
     STUDY("study", true),
     TALK("talk", true),
-    ESCORT("escort", true);
+    ESCORT("escort", true),
+    ACTION("action", true);
 
     public static final Codec<ObjectiveType> CODEC = StringRepresentable.fromEnum(ObjectiveType::values);
 

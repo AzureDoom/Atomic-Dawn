@@ -55,6 +55,9 @@ public final class PipBoyClient {
             minecraft.player.playSound(ADSounds.PIPBOY_OPEN.get(), 1F, 1F);
         }
         minecraft.gui.setScreen(new PipBoyScreen());
+        ClientPacketDistributor.sendToServer(
+            new PipBoyActionPayload(PipBoyActionPayload.Action.OPENED, SpecialActionPayload.NONE)
+        );
     }
 
     @SubscribeEvent

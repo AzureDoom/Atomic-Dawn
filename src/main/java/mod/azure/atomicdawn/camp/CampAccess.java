@@ -71,11 +71,11 @@ public record CampAccess(
     public CampAccess toggled(Flag flag) {
         return new CampAccess(
             trusted,
-            flag == Flag.TRUSTED_BUILD ? !trustedBuild : trustedBuild,
-            flag == Flag.TRUSTED_STORAGE ? !trustedStorage : trustedStorage,
-            flag == Flag.PARTY_BUILD ? !partyBuild : partyBuild,
-            flag == Flag.PUBLIC_STATIONS ? !publicStations : publicStations,
-            flag == Flag.MAP_ICON ? !mapIcon : mapIcon
+            (flag == Flag.TRUSTED_BUILD) != trustedBuild,
+            (flag == Flag.TRUSTED_STORAGE) != trustedStorage,
+            (flag == Flag.PARTY_BUILD) != partyBuild,
+            (flag == Flag.PUBLIC_STATIONS) != publicStations,
+            (flag == Flag.MAP_ICON) != mapIcon
         );
     }
 

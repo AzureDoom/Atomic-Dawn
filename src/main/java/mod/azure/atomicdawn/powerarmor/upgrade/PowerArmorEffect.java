@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("NullableProblems")
 public record PowerArmorEffect(
     PowerArmorEffectType type,
     float amount,
@@ -44,8 +45,7 @@ public record PowerArmorEffect(
         var value = target.get();
         if (value.startsWith("#")) {
             var id = Identifier.tryParse(value.substring(1));
-            return id != null && attacker.getType()
-                .builtInRegistryHolder()
+            return id != null && BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(attacker.getType())
                 .is(TagKey.create(Registries.ENTITY_TYPE, id));
         }
         return switch (value) {

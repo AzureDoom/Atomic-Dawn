@@ -19,6 +19,7 @@ import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.network.LockpickOpenPayload;
 import mod.azure.atomicdawn.network.LockpickStatePayload;
 import mod.azure.atomicdawn.perks.PerkHooks;
+import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.special.SpecialService;
 
 public final class LockpickService {
@@ -127,7 +128,7 @@ public final class LockpickService {
         var random = player.getRandom();
         var scale = (float) config.LOCKPICK_SWEET_SPOT_SCALE * (1F + 0.25F * extra);
         var full = Math.min(60F, lock.level().fullWidth() * scale);
-        var partial = Math.min(120F, Math.max(full + 4F, lock.level().partialWidth() * scale));
+        var partial = Math.clamp(lock.level().partialWidth() * scale, full + 4F, 120F);
         var strain = lock.level().strainDamage() / (float) Math.max(0.05, config.LOCKPICK_PIN_DURABILITY_SCALE);
         var session = new Session(
             level.dimension(),
@@ -219,6 +220,7 @@ public final class LockpickService {
         level.playSound(null, session.pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.8F, 1.3F);
         LockService.notify(player, "lock.atomicdawn.picked", ChatFormatting.GREEN, session.level.component());
         reply(player, session, LockpickStatePayload.Status.SUCCESS, 1F);
+        QuestActions.trigger(player, QuestActions.PICK_LOCK);
     }
 
     public static void cancel(ServerPlayer player) {

@@ -59,14 +59,25 @@ public record QuestObjective(
         if (description.isPresent()) {
             return PipBoyNames.fromKey(description.get());
         }
+        if (type == ObjectiveType.ACTION && target.isPresent()) {
+            var id = target.get().id();
+            return Component.translatableWithFallback(
+                "quest_action." + id.getNamespace() + "." + id.getPath(),
+                id.getPath().replace('_', ' '),
+                Component.keybind("key.atomicdawn.pipboy"),
+                Component.keybind("key.atomicdawn.workshop"),
+                Component.keybind("key.atomicdawn.workshop_catalog"),
+                count
+            );
+        }
         var targetName = target.map(spec -> switch (type) {
             case KILL, STUDY -> spec.entityName();
             case COLLECT -> spec.itemName();
             case DISCOVER -> spec.structureName();
             case VISIT_BIOME -> spec.biomeName();
             case HOLOTAPE -> PipBoyNames.holotape(spec.id());
-            case REACH_LEVEL -> Component.empty();
             case TALK, ESCORT -> PipBoyNames.fromKey("npc." + spec.id().getNamespace() + "." + spec.id().getPath());
+            default -> Component.empty();
         }).orElse(Component.empty());
         return Component.translatable(type.translationKey(), targetName, count);
     }
