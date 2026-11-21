@@ -74,7 +74,7 @@ sourceSets.main.resources {
 dependencies {
     implementation "mod.azure.azurelib:azurelib-neo-${minecraft_version}:${azurelib_version}"
     compileOnly 'org.jetbrains:annotations:24.1.0'
-    implementation "curse.maven:terrablender-neoforge-940057:9033892"
+    implementation "curse.maven:lithostitched-936015:9154967"
 }
 
 def expandProps = [
@@ -87,8 +87,7 @@ def expandProps = [
         'minecraft_version_range': minecraft_version_range,
         'neo_version_range'      : neo_version_range,
         'loader_version_range'   : loader_version_range,
-        'azurelib_version'       : azurelib_version,
-        'terrablender_version'   : terrablender_version
+        'azurelib_version'       : azurelib_version
 ]
 
 tasks.named('processResources', ProcessResources) {
@@ -162,7 +161,7 @@ if (keyPropsFile.exists()) {
                 slug = "azurelib"
             }
             requires {
-                slug = "terrablender-neoforge"
+                slug = "lithostitched"
             }
             client = true
             server = true
@@ -176,7 +175,7 @@ if (keyPropsFile.exists()) {
                 slug = "azurelib"
             }
             requires {
-                slug = "terrablender"
+                slug = "lithostitched"
             }
             environment = CLIENT_AND_SERVER
         }

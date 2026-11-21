@@ -32,5 +32,9 @@
       "count": 1
     }
   ],
-  "requires_unlock": true
+  "requires_unlock": true,
+  "scope": {
+    "zoom": 0.25,
+    "sensitivity": 0.35
+  }
 }

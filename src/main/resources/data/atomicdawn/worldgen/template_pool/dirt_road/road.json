@@ -1,0 +1,41 @@
+{
+  "fallback": "atomicdawn:dirt_road/end",
+  "elements": [
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:dirt_road/straight",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:dirt_road/straight_fence",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:dirt_road/straight_wagon",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:dirt_road/crossing",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    }
+  ]
+}

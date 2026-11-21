@@ -1,0 +1,16 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 130,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:crimson_bog",
+  "parameters": {
+    "temperature": {
+      "min_inclusive": 0.2
+    },
+    "humidity": {
+      "min_inclusive": 0.3
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

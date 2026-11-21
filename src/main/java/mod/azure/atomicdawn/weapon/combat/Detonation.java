@@ -126,7 +126,10 @@ public final class Detonation {
                     amount
                 );
             } else {
-                var type = definition != null ? definition.damage().type() : ADDamageTypes.NUCLEAR;
+                var type = ADDamageTypes.forTarget(
+                    definition != null ? definition.damage().type() : ADDamageTypes.NUCLEAR,
+                    target
+                );
                 var holder = level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(type);
                 target.hurtServer(level, new DamageSource(holder, projectile, owner), amount);
             }

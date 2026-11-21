@@ -1,0 +1,9 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 160,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:toxic_valley",
+  "parameters": {},
+  "region": "atomicdawn:wasteland"
+}

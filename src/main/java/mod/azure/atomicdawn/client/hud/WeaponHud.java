@@ -11,6 +11,7 @@ import mod.azure.atomicdawn.ammunition.AmmoInventory;
 import mod.azure.atomicdawn.client.ClientWeaponState;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
+import mod.azure.atomicdawn.client.weapon.ScopeClient;
 import mod.azure.atomicdawn.weapon.action.WeaponActions;
 import mod.azure.atomicdawn.weapon.combat.SpreadModel;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
@@ -131,7 +132,7 @@ public final class WeaponHud implements GuiLayer {
             );
         }
 
-        if (definition.isMelee()) {
+        if (definition.isMelee() || ScopeClient.scoped()) {
             return;
         }
 

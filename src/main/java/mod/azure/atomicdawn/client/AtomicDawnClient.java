@@ -52,6 +52,7 @@ import mod.azure.atomicdawn.client.screen.PowerArmorStationScreen;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
 import mod.azure.atomicdawn.client.vats.VatsHud;
+import mod.azure.atomicdawn.client.weapon.ScopeClient;
 import mod.azure.atomicdawn.registry.ADBlockEntities;
 import mod.azure.atomicdawn.registry.ADEntities;
 import mod.azure.atomicdawn.registry.ADFluids;
@@ -160,6 +161,7 @@ public final class AtomicDawnClient {
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("waypoint_hud"), new WaypointHud());
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("party_hud"), new PartyHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("camp_workshop_hud"), new CampWorkshopHud());
+        event.registerBelowAll(AtomicDawn.id("weapon_scope"), new ScopeClient.Overlay());
         event.registerAboveAll(AtomicDawn.id("nuke_flash"), new NukeEffects.FlashLayer());
     }
 

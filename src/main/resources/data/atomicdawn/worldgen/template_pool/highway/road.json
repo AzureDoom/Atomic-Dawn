@@ -1,0 +1,59 @@
+{
+  "fallback": "atomicdawn:highway/end",
+  "elements": [
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:highway/straight",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:highway/straight_cracked",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:highway/straight_wreck",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:highway/straight_barricade",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:highway/straight_bus",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:highway/intersection",
+        "processors": "atomicdawn:road_decay",
+        "projection": "terrain_matching"
+      }
+    }
+  ]
+}

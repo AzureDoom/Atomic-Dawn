@@ -1,0 +1,13 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 140,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:irradiated_mire",
+  "parameters": {
+    "humidity": {
+      "min_inclusive": 0.1
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

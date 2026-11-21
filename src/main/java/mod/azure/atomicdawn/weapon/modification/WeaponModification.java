@@ -22,7 +22,8 @@ public record WeaponModification(
     List<String> showBones,
     Optional<Identifier> texture,
     List<SizedIngredient> cost,
-    boolean requiresUnlock
+    boolean requiresUnlock,
+    Optional<WeaponScope> scope
 ) {
 
     public static final Codec<WeaponModification> CODEC = RecordCodecBuilder.create(
@@ -40,7 +41,8 @@ public record WeaponModification(
             SizedIngredient.NESTED_CODEC.listOf()
                 .optionalFieldOf("cost", List.of())
                 .forGetter(WeaponModification::cost),
-            Codec.BOOL.optionalFieldOf("requires_unlock", false).forGetter(WeaponModification::requiresUnlock)
+            Codec.BOOL.optionalFieldOf("requires_unlock", false).forGetter(WeaponModification::requiresUnlock),
+            WeaponScope.CODEC.optionalFieldOf("scope").forGetter(WeaponModification::scope)
         ).apply(instance, WeaponModification::new)
     );
 }

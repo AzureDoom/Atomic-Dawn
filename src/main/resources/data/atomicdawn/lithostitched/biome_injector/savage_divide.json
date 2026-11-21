@@ -1,0 +1,13 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 100,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:savage_divide",
+  "parameters": {
+    "erosion": {
+      "max_inclusive": -0.375
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

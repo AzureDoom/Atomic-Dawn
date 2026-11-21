@@ -101,6 +101,16 @@ public final class ModificationResolver {
         return bones;
     }
 
+    public static Optional<WeaponScope> scope(List<WeaponModification> mods) {
+        Optional<WeaponScope> scope = Optional.empty();
+        for (var mod : mods) {
+            if (mod.scope().isPresent()) {
+                scope = mod.scope();
+            }
+        }
+        return scope;
+    }
+
     public static Optional<Identifier> textureOverride(List<WeaponModification> mods) {
         Optional<Identifier> texture = Optional.empty();
         for (var mod : mods) {

@@ -1,0 +1,13 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 150,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:skyline_valley",
+  "parameters": {
+    "temperature": {
+      "max_inclusive": -0.15
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

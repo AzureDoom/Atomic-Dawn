@@ -81,17 +81,18 @@ public final class DamageApplier {
         float total,
         float penetration
     ) {
+        var type = ADDamageTypes.forTarget(definition.damage().type(), target);
         if (penetration > 0F) {
             var piercing = total * penetration;
             target.hurtServer(
                 level,
-                ADDamageTypes.source(level, definition.damage().type(), attacker),
+                ADDamageTypes.source(level, type, attacker),
                 total - piercing
             );
             resetInvulnerability(target);
             target.hurtServer(level, ADDamageTypes.source(level, ADDamageTypes.ARMOR_PIERCING, attacker), piercing);
         } else {
-            target.hurtServer(level, ADDamageTypes.source(level, definition.damage().type(), attacker), total);
+            target.hurtServer(level, ADDamageTypes.source(level, type, attacker), total);
         }
     }
 
