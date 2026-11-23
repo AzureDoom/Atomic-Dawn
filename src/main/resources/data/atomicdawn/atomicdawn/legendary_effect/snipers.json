@@ -1,0 +1,18 @@
+{
+  "star": 1,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:conditional_bonus",
+    "condition": "long_range",
+    "bonus": 0.5,
+    "threshold": 24
+  }
+}

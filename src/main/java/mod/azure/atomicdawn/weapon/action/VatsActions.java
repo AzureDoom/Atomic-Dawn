@@ -34,6 +34,7 @@ import mod.azure.atomicdawn.vats.VatsTargeting;
 import mod.azure.atomicdawn.weapon.combat.DamageApplier;
 import mod.azure.atomicdawn.weapon.combat.Muzzle;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
+import mod.azure.atomicdawn.weapon.legendary.LegendaryHooks;
 
 public final class VatsActions {
 
@@ -210,7 +211,8 @@ public final class VatsActions {
                     : 1F);
             DamageApplier.apply(level, player, weapon, definition, shooter, target, part.position(), amount);
             if (!critical) {
-                var gain = (float) AtomicDawn.CONFIG.vats.CRITICAL_GAIN_PER_HIT * stats.criticalGainMultiplier;
+                var gain = (float) AtomicDawn.CONFIG.vats.CRITICAL_GAIN_PER_HIT * stats.criticalGainMultiplier
+                    * LegendaryHooks.criticalGainMultiplier(level, weapon);
                 ap = ap.withCritical(ap.critical() + gain);
                 if (stats.criticalProcChance > 0F && player.getRandom().nextFloat() < stats.criticalProcChance) {
                     ap = ap.withCritical(ActionPoints.CRITICAL_FULL);

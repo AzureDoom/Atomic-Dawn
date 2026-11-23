@@ -1,0 +1,9 @@
+{
+  "star": 3,
+  "behavior": {
+    "type": "atomicdawn:kill_effect",
+    "effect": "glowing",
+    "amount": 15,
+    "radius": 4
+  }
+}

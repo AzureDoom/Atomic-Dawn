@@ -129,6 +129,7 @@ public final class WeaponActions {
         var level = player.level();
         var shooter = shooter(player);
         var now = level.getGameTime();
+        shooter.lastChargeMultiplier = multiplier;
         if (
             now < shooter.drawReadyTick || now + AtomicDawn.CONFIG.weapons.FIRE_TIMING_TOLERANCE < shooter.nextShotTick
         ) {

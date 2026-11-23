@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:scaling_bonus",
+    "source": "night",
+    "max_bonus": 0.5
+  }
+}

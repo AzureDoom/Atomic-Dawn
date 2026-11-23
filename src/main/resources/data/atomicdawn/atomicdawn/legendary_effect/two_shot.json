@@ -1,0 +1,17 @@
+{
+  "star": 1,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:hit_effect",
+    "effect": "two_shot",
+    "amount": 0.25
+  }
+}

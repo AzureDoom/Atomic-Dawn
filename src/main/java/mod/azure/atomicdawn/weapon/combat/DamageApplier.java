@@ -57,7 +57,13 @@ public final class DamageApplier {
         if (total <= 0F) {
             return 0F;
         }
+        for (var behavior : behaviors) {
+            if (behavior.redirect(context, total)) {
+                return 0F;
+            }
+        }
 
+        var wasAlive = target instanceof LivingEntity living && living.isAlive();
         resetInvulnerability(target);
         PerkCombat.beginWeaponHit();
         try {
@@ -68,6 +74,12 @@ public final class DamageApplier {
 
         for (var behavior : behaviors) {
             behavior.onHit(context, total);
+        }
+        if (wasAlive && target instanceof LivingEntity living && living.isDeadOrDying()) {
+            shooter.recordKill(level.getGameTime());
+            for (var behavior : behaviors) {
+                behavior.onKill(context, total);
+            }
         }
         PerkCombat.onHit(level, attacker, target, category, automatic, vats, total, hitPosition);
         return total;

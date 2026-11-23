@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:hit_effect",
+    "effect": "vampire",
+    "amount": 0.02
+  }
+}

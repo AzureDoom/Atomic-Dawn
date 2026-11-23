@@ -45,6 +45,7 @@ import mod.azure.atomicdawn.special.SpecialStatResolver;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryBehaviors;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryEffect;
+import mod.azure.atomicdawn.weapon.legendary.LegendaryHooks;
 import mod.azure.atomicdawn.weapon.modification.WeaponModification;
 import mod.azure.atomicdawn.worldgen.ADWorldgen;
 
@@ -88,6 +89,7 @@ public final class AtomicDawn {
         SpecialStatResolver.registerTemporarySource(ArmorEvents::specialBonus);
         SpecialStatResolver.registerTemporarySource(PerkHooks::specialBonus);
         SpecialStatResolver.registerTemporarySource(NukaColaEffects::specialBonus);
+        SpecialStatResolver.registerTemporarySource(LegendaryHooks::specialBonus);
         modBus.addListener((ModConfigEvent.Loading _) -> SpecialStatResolver.invalidateAll());
         modBus.addListener((ModConfigEvent.Reloading _) -> SpecialStatResolver.invalidateAll());
 

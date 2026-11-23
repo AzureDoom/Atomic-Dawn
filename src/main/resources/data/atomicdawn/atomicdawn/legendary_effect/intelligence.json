@@ -1,0 +1,8 @@
+{
+  "star": 3,
+  "behavior": {
+    "type": "atomicdawn:special_bonus",
+    "attribute": "intelligence",
+    "amount": 3
+  }
+}

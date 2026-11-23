@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:scaling_bonus",
+    "source": "mutations",
+    "max_bonus": 0.3,
+    "units": 3
+  }
+}

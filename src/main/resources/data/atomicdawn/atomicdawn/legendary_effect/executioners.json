@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:conditional_bonus",
+    "condition": "low_health_target",
+    "bonus": 0.5,
+    "threshold": 0.4
+  }
+}

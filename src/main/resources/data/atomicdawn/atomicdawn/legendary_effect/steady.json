@@ -1,0 +1,12 @@
+{
+  "star": 2,
+  "categories": [
+    "melee",
+    "unarmed"
+  ],
+  "behavior": {
+    "type": "atomicdawn:conditional_bonus",
+    "condition": "stationary",
+    "bonus": 0.25
+  }
+}

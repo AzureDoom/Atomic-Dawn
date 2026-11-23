@@ -1,0 +1,12 @@
+{
+  "star": 1,
+  "categories": [
+    "melee",
+    "unarmed"
+  ],
+  "behavior": {
+    "type": "atomicdawn:scaling_bonus",
+    "source": "feral",
+    "max_bonus": 0.5
+  }
+}

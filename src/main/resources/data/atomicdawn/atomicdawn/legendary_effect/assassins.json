@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:target_bonus",
+    "target": "human",
+    "bonus": 0.1
+  }
+}

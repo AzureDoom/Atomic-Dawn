@@ -1,0 +1,19 @@
+{
+  "star": 3,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "modifiers": [
+    {
+      "stat": "reload_ticks",
+      "operation": "add_percent",
+      "amount": -0.15
+    }
+  ]
+}

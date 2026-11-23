@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:scaling_bonus",
+    "source": "health",
+    "max_bonus": 0.25
+  }
+}

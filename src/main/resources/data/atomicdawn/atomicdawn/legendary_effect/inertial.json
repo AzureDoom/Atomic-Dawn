@@ -1,0 +1,8 @@
+{
+  "star": 2,
+  "behavior": {
+    "type": "atomicdawn:kill_effect",
+    "effect": "action_points",
+    "amount": 15
+  }
+}

@@ -54,6 +54,14 @@ public final class ShooterState {
 
     long lastApSpendTick = Long.MIN_VALUE / 2;
 
+    float lastChargeMultiplier = 1F;
+
+    private int killStreak;
+
+    private long lastKillTick = Long.MIN_VALUE / 2;
+
+    public static final long KILL_STREAK_WINDOW = 200L;
+
     @Nullable
     private UUID furiousTarget;
 
@@ -88,6 +96,30 @@ public final class ShooterState {
 
     public float bloom() {
         return bloom;
+    }
+
+    public boolean aimingDownSights() {
+        return aiming;
+    }
+
+    public BodyPart vatsPart() {
+        return vatsPart;
+    }
+
+    public float chargeMultiplier() {
+        return lastChargeMultiplier;
+    }
+
+    public void recordKill(long now) {
+        if (now - lastKillTick > KILL_STREAK_WINDOW) {
+            killStreak = 0;
+        }
+        killStreak++;
+        lastKillTick = now;
+    }
+
+    public int killStreak(long now) {
+        return now - lastKillTick > KILL_STREAK_WINDOW ? 0 : killStreak;
     }
 
     public boolean vatsActive() {

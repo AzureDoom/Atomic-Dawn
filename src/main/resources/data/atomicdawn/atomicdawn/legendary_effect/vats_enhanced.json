@@ -1,0 +1,19 @@
+{
+  "star": 2,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "modifiers": [
+    {
+      "stat": "vats_hit_chance",
+      "operation": "add_percent",
+      "amount": 0.5
+    }
+  ]
+}

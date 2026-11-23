@@ -1,0 +1,8 @@
+{
+  "star": 2,
+  "behavior": {
+    "type": "atomicdawn:conditional_bonus",
+    "condition": "limb",
+    "bonus": 0.5
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "star": 2,
+  "modifiers": [
+    {
+      "stat": "crit_damage",
+      "operation": "add_percent",
+      "amount": 0.5
+    }
+  ]
+}

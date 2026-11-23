@@ -1,0 +1,16 @@
+{
+  "star": 3,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:aiming_speed",
+    "bonus": 0.25
+  }
+}

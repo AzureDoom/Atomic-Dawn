@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:hit_effect",
+    "effect": "suppress",
+    "duration": 100
+  }
+}

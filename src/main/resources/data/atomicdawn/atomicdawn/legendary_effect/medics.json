@@ -1,0 +1,7 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:medic",
+    "heal_fraction": 0.5
+  }
+}

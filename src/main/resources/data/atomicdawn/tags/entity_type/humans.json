@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "atomicdawn:npc",
+    "minecraft:villager",
+    "minecraft:wandering_trader",
+    "minecraft:witch",
+    {
+      "id": "#minecraft:illager",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:target_bonus",
+    "target": "ghoul",
+    "bonus": 0.3
+  }
+}

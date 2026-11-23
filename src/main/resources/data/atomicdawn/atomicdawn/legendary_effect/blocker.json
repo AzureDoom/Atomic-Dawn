@@ -1,0 +1,12 @@
+{
+  "star": 3,
+  "categories": [
+    "melee",
+    "unarmed"
+  ],
+  "behavior": {
+    "type": "atomicdawn:defense",
+    "stance": "guarding",
+    "reduction": 0.4
+  }
+}

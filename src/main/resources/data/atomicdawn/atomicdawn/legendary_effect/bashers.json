@@ -1,0 +1,16 @@
+{
+  "star": 2,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:bash",
+    "multiplier": 1.5
+  }
+}

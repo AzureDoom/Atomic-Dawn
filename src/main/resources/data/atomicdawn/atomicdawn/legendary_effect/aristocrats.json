@@ -1,0 +1,9 @@
+{
+  "star": 1,
+  "behavior": {
+    "type": "atomicdawn:scaling_bonus",
+    "source": "currency",
+    "max_bonus": 0.5,
+    "units": 128
+  }
+}

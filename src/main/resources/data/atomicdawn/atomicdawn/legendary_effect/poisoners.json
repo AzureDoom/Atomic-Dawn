@@ -1,0 +1,9 @@
+{
+  "star": 2,
+  "behavior": {
+    "type": "atomicdawn:hit_effect",
+    "effect": "poison",
+    "amount": 0.3,
+    "duration": 60
+  }
+}

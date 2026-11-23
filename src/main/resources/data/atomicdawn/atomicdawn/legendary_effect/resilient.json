@@ -1,0 +1,17 @@
+{
+  "star": 3,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:defense",
+    "stance": "reloading",
+    "reduction": 0.25
+  }
+}

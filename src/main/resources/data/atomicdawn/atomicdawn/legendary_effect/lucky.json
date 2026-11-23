@@ -1,0 +1,7 @@
+{
+  "star": 3,
+  "behavior": {
+    "type": "atomicdawn:critical_charge",
+    "multiplier": 1.5
+  }
+}

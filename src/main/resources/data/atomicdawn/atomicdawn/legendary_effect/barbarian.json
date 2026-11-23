@@ -1,0 +1,14 @@
+{
+  "star": 3,
+  "categories": [
+    "melee",
+    "unarmed"
+  ],
+  "behavior": {
+    "type": "atomicdawn:special_bonus",
+    "attribute": "strength",
+    "amount": 1,
+    "per_kill": true,
+    "max": 3
+  }
+}

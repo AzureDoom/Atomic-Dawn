@@ -1,0 +1,17 @@
+{
+  "star": 2,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:conditional_bonus",
+    "condition": "aiming",
+    "bonus": 0.25
+  }
+}

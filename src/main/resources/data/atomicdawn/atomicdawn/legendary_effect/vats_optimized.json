@@ -1,0 +1,10 @@
+{
+  "star": 3,
+  "modifiers": [
+    {
+      "stat": "vats_ap_cost",
+      "operation": "add_percent",
+      "amount": -0.35
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "star": 3,
+  "categories": [
+    "pistol",
+    "rifle",
+    "shotgun",
+    "heavy",
+    "energy",
+    "explosive",
+    "bow"
+  ],
+  "behavior": {
+    "type": "atomicdawn:hit_effect",
+    "effect": "ghost",
+    "chance": 0.1,
+    "duration": 60
+  }
+}
