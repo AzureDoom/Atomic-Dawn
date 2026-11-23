@@ -2,7 +2,7 @@
   "type": "minecraft:jigsaw",
   "biomes": "atomicdawn:skyline_valley",
   "step": "surface_structures",
-  "terrain_adaptation": "none",
+  "terrain_adaptation": "bury",
   "start_pool": "atomicdawn:skyline_valley/emergency_storm_shelter",
   "size": 1,
   "start_height": {

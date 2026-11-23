@@ -2,7 +2,7 @@
   "type": "atomicdawn:mountain_vault",
   "biomes": "#atomicdawn:vault_biomes",
   "step": "underground_structures",
-  "terrain_adaptation": "none",
+  "terrain_adaptation": "bury",
   "spawn_overrides": {},
   "start_pool": "atomicdawn:vault/entrance",
   "size": 12,
