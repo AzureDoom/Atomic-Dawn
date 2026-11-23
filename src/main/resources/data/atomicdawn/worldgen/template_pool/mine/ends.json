@@ -1,0 +1,32 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/dead_end_collapse",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/dead_end_cart",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/dead_end_camp",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

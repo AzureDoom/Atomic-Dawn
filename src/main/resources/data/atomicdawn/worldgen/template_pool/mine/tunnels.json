@@ -1,0 +1,158 @@
+{
+  "fallback": "atomicdawn:mine/ends",
+  "elements": [
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/straight_supports",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/straight_rails",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/straight_ore",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/straight_cavein",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/straight_long",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/flooded_passage",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/turn_left",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/turn_right",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/t_junction",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/crossroads",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/branch_left",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/branch_right",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/stairs_down",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/ladder_shaft",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/storage_room",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/ore_cavern",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:mine/collapsed_cavern",
+        "processors": "atomicdawn:mine_decay",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

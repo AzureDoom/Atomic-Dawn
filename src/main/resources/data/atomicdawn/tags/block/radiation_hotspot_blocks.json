@@ -1,7 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:magma_block",
-    "minecraft:crying_obsidian"
+    "atomicdawn:waste_barrel",
+    "atomicdawn:leaking_waste_barrel",
+    "atomicdawn:toxic_sludge",
+    "atomicdawn:fissure_scar",
+    "atomicdawn:fissure_vent"
   ]
 }

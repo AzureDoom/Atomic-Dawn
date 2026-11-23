@@ -9,6 +9,15 @@
         "processors": "atomicdawn:wasteland_decay",
         "projection": "rigid"
       }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:ash_heap/abandoned_mine_entrance_open",
+        "processors": "atomicdawn:wasteland_decay",
+        "projection": "rigid"
+      }
     }
   ]
 }

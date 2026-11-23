@@ -4,6 +4,11 @@
     "atomicdawn:tinkers_bench",
     "atomicdawn:power_armor_station",
     "atomicdawn:armor_bench",
-    "atomicdawn:camp_module"
+    "atomicdawn:camp_module",
+    "atomicdawn:waste_barrel",
+    "atomicdawn:leaking_waste_barrel",
+    "atomicdawn:fissure_rock",
+    "atomicdawn:fissure_scar",
+    "atomicdawn:fissure_vent"
   ]
 }

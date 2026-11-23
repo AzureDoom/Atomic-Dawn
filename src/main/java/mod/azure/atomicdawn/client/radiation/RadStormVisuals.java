@@ -25,7 +25,9 @@ public final class RadStormVisuals {
 
     private static final DustParticleOptions FALLOUT_BRIGHT = new DustParticleOptions(0xC4FF6A, 0.8F);
 
-    private static final int DEFAULT_TINT = 0x504CC22A;
+    private static final int DEFAULT_TINT = 0x384CC22A;
+
+    private static final int VIGNETTE_BANDS = 12;
 
     private static float tint;
 
@@ -50,7 +52,7 @@ public final class RadStormVisuals {
         var active = player.getData(ADAttachments.RAD_STORM.get()) && level.getBiome(player.blockPosition())
             .is(ADBiomes.WASTELAND);
         var exposed = active && level.canSeeSky(BlockPos.containing(player.getEyePosition()));
-        var target = exposed ? 1F : active ? 0.35F : 0F;
+        var target = exposed ? 1F : active ? 0.2F : 0F;
         tint += Math.clamp(target - tint, -0.02F, 0.02F);
         if (!active || !AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_PARTICLES) {
             return;
@@ -82,18 +84,46 @@ public final class RadStormVisuals {
                 return;
             }
             var color = ADColors.argb(AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY_COLOR, DEFAULT_TINT);
-            var alpha = Math.round(Math.clamp(current, 0F, 1F) * ((color >>> 24) & 0xFF));
-            if (alpha <= 0) {
+            var strength = Math.clamp(current, 0F, 1F) * (float) Math.clamp(
+                AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY_INTENSITY,
+                0.0,
+                1.0
+            );
+            var peak = strength * ((color >>> 24) & 0xFF);
+            if (peak < 1F) {
                 return;
             }
+            var rgb = color & 0xFFFFFF;
             var window = Minecraft.getInstance().getWindow();
-            graphics.fill(
-                0,
-                0,
-                window.getGuiScaledWidth(),
-                window.getGuiScaledHeight(),
-                (alpha << 24) | (color & 0xFFFFFF)
-            );
+            var width = window.getGuiScaledWidth();
+            var height = window.getGuiScaledHeight();
+            if (!AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY_VIGNETTE) {
+                graphics.fill(0, 0, width, height, (Math.round(peak) << 24) | rgb);
+                return;
+            }
+            var base = Math.round(peak * 0.2F);
+            if (base > 0) {
+                graphics.fill(0, 0, width, height, (base << 24) | rgb);
+            }
+            var depth = Math.max(VIGNETTE_BANDS, Math.round(Math.min(width, height) * 0.28F));
+            var band = Math.max(1, depth / VIGNETTE_BANDS);
+            for (var i = 0; i < VIGNETTE_BANDS; i++) {
+                var falloff = 1F - (float) i / VIGNETTE_BANDS;
+                var alpha = Math.round(peak * falloff * falloff);
+                if (alpha <= 0) {
+                    continue;
+                }
+                var argb = (alpha << 24) | rgb;
+                var outer = i * band;
+                var inner = outer + band;
+                if (inner * 2 >= width || inner * 2 >= height) {
+                    break;
+                }
+                graphics.fill(outer, outer, width - outer, inner, argb);
+                graphics.fill(outer, height - inner, width - outer, height - outer, argb);
+                graphics.fill(outer, inner, inner, height - inner, argb);
+                graphics.fill(width - inner, inner, width - outer, height - inner, argb);
+            }
         }
     }
 }

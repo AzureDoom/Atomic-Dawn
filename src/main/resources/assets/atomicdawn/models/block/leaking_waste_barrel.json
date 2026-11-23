@@ -1,0 +1,216 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "front": "atomicdawn:block/leaking_waste_barrel_side",
+    "side": "atomicdawn:block/waste_barrel_side",
+    "top": "atomicdawn:block/leaking_waste_barrel_top",
+    "bottom": "atomicdawn:block/waste_barrel_top",
+    "particle": "atomicdawn:block/waste_barrel_side"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        16,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            0,
+            14,
+            16
+          ],
+          "texture": "#front"
+        },
+        "east": {
+          "uv": [
+            2,
+            0,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "south": {
+          "uv": [
+            2,
+            0,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "west": {
+          "uv": [
+            2,
+            0,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#top"
+        },
+        "down": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#bottom"
+        }
+      }
+    },
+    {
+      "from": [
+        1.5,
+        2,
+        1.5
+      ],
+      "to": [
+        14.5,
+        3.5,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.5,
+            2,
+            14.5,
+            3.5
+          ],
+          "texture": "#front"
+        },
+        "east": {
+          "uv": [
+            1.5,
+            2,
+            14.5,
+            3.5
+          ],
+          "texture": "#side"
+        },
+        "south": {
+          "uv": [
+            1.5,
+            2,
+            14.5,
+            3.5
+          ],
+          "texture": "#side"
+        },
+        "west": {
+          "uv": [
+            1.5,
+            2,
+            14.5,
+            3.5
+          ],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            1.5,
+            14.5,
+            14.5
+          ],
+          "texture": "#top"
+        },
+        "down": {
+          "uv": [
+            1.5,
+            1.5,
+            14.5,
+            14.5
+          ],
+          "texture": "#bottom"
+        }
+      }
+    },
+    {
+      "from": [
+        1.5,
+        12.5,
+        1.5
+      ],
+      "to": [
+        14.5,
+        14,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.5,
+            12,
+            14.5,
+            13.5
+          ],
+          "texture": "#front"
+        },
+        "east": {
+          "uv": [
+            1.5,
+            12,
+            14.5,
+            13.5
+          ],
+          "texture": "#side"
+        },
+        "south": {
+          "uv": [
+            1.5,
+            12,
+            14.5,
+            13.5
+          ],
+          "texture": "#side"
+        },
+        "west": {
+          "uv": [
+            1.5,
+            12,
+            14.5,
+            13.5
+          ],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            1.5,
+            14.5,
+            14.5
+          ],
+          "texture": "#top"
+        },
+        "down": {
+          "uv": [
+            1.5,
+            1.5,
+            14.5,
+            14.5
+          ],
+          "texture": "#bottom"
+        }
+      }
+    }
+  ]
+}

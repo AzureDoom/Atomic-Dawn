@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool": "atomicdawn:block/toxic_sludge",
+    "particle": "atomicdawn:block/toxic_sludge"
+  }
+}

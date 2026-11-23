@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "atomicdawn:block/fissure_vent_top",
+    "side": "atomicdawn:block/fissure_vent_side",
+    "bottom": "atomicdawn:block/fissure_rock"
+  }
+}

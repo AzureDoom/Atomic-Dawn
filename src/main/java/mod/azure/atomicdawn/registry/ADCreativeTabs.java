@@ -53,6 +53,12 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.CAMP_STASH.get());
                 output.accept(ADItems.POWER_ARMOR_STATION.get());
                 output.accept(ADItems.VAULT_DOOR.get());
+                output.accept(ADItems.WASTE_BARREL.get());
+                output.accept(ADItems.LEAKING_WASTE_BARREL.get());
+                output.accept(ADItems.TOXIC_SLUDGE.get());
+                output.accept(ADItems.FISSURE_ROCK.get());
+                output.accept(ADItems.FISSURE_SCAR.get());
+                output.accept(ADItems.FISSURE_VENT.get());
                 output.accept(ADItems.POWER_ARMOR_CHASSIS.get());
                 output.accept(ADItems.FUSION_CORE.get());
                 parameters.holders()

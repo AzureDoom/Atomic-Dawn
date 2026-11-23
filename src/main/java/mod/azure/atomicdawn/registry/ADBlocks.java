@@ -1,5 +1,6 @@
 package mod.azure.atomicdawn.registry;
 
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -11,7 +12,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.block.ArmorBenchBlock;
+import mod.azure.atomicdawn.block.FissureVentBlock;
 import mod.azure.atomicdawn.block.TinkersBenchBlock;
+import mod.azure.atomicdawn.block.ToxicSludgeBlock;
+import mod.azure.atomicdawn.block.WasteBarrelBlock;
 import mod.azure.atomicdawn.block.WeaponsWorkbenchBlock;
 import mod.azure.atomicdawn.camp.CampModuleBlock;
 import mod.azure.atomicdawn.camp.CampStashBlock;
@@ -129,6 +133,70 @@ public final class ADBlocks {
             .sound(SoundType.WOOD)
             .noOcclusion()
             .pushReaction(PushReaction.IMMOVEABLE)
+    );
+
+    public static final DeferredBlock<WasteBarrelBlock> WASTE_BARREL = REGISTER.registerBlock(
+        "waste_barrel",
+        properties -> new WasteBarrelBlock(properties, false),
+        properties -> properties.mapColor(MapColor.COLOR_YELLOW)
+            .strength(2.0F, 4.0F)
+            .sound(SoundType.METAL)
+            .noOcclusion()
+            .lightLevel(_ -> 3)
+    );
+
+    public static final DeferredBlock<WasteBarrelBlock> LEAKING_WASTE_BARREL = REGISTER.registerBlock(
+        "leaking_waste_barrel",
+        properties -> new WasteBarrelBlock(properties, true),
+        properties -> properties.mapColor(MapColor.COLOR_YELLOW)
+            .strength(2.0F, 4.0F)
+            .sound(SoundType.METAL)
+            .noOcclusion()
+            .lightLevel(_ -> 7)
+    );
+
+    public static final DeferredBlock<ToxicSludgeBlock> TOXIC_SLUDGE = REGISTER.registerBlock(
+        "toxic_sludge",
+        ToxicSludgeBlock::new,
+        properties -> properties.mapColor(MapColor.COLOR_LIGHT_GREEN)
+            .strength(0.3F)
+            .sound(SoundType.SLIME_BLOCK)
+            .noOcclusion()
+            .speedFactor(0.6F)
+            .lightLevel(_ -> 9)
+            .emissiveRendering((_) -> true)
+            .pushReaction(PushReaction.POPPED)
+    );
+
+    public static final DeferredBlock<Block> FISSURE_ROCK = REGISTER.registerBlock(
+        "fissure_rock",
+        Block::new,
+        properties -> properties.mapColor(MapColor.COLOR_BLACK)
+            .strength(2.5F, 6.0F)
+            .sound(SoundType.BASALT)
+            .requiresCorrectToolForDrops()
+    );
+
+    public static final DeferredBlock<Block> FISSURE_SCAR = REGISTER.registerBlock(
+        "fissure_scar",
+        Block::new,
+        properties -> properties.mapColor(MapColor.COLOR_LIGHT_GREEN)
+            .strength(2.5F, 6.0F)
+            .sound(SoundType.BASALT)
+            .requiresCorrectToolForDrops()
+            .lightLevel(_ -> 13)
+            .emissiveRendering((_) -> true)
+    );
+
+    public static final DeferredBlock<FissureVentBlock> FISSURE_VENT = REGISTER.registerBlock(
+        "fissure_vent",
+        FissureVentBlock::new,
+        properties -> properties.mapColor(MapColor.COLOR_LIGHT_GREEN)
+            .strength(3.0F, 6.0F)
+            .sound(SoundType.BASALT)
+            .requiresCorrectToolForDrops()
+            .lightLevel(_ -> 15)
+            .emissiveRendering((_) -> true)
     );
 
     private ADBlocks() {}

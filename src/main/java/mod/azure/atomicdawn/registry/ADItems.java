@@ -204,6 +204,36 @@ public final class ADItems {
         ADBlocks.CAMP_STASH
     );
 
+    public static final DeferredItem<BlockItem> WASTE_BARREL = REGISTER.registerSimpleBlockItem(
+        "waste_barrel",
+        ADBlocks.WASTE_BARREL
+    );
+
+    public static final DeferredItem<BlockItem> LEAKING_WASTE_BARREL = REGISTER.registerSimpleBlockItem(
+        "leaking_waste_barrel",
+        ADBlocks.LEAKING_WASTE_BARREL
+    );
+
+    public static final DeferredItem<BlockItem> TOXIC_SLUDGE = REGISTER.registerSimpleBlockItem(
+        "toxic_sludge",
+        ADBlocks.TOXIC_SLUDGE
+    );
+
+    public static final DeferredItem<BlockItem> FISSURE_ROCK = REGISTER.registerSimpleBlockItem(
+        "fissure_rock",
+        ADBlocks.FISSURE_ROCK
+    );
+
+    public static final DeferredItem<BlockItem> FISSURE_SCAR = REGISTER.registerSimpleBlockItem(
+        "fissure_scar",
+        ADBlocks.FISSURE_SCAR
+    );
+
+    public static final DeferredItem<BlockItem> FISSURE_VENT = REGISTER.registerSimpleBlockItem(
+        "fissure_vent",
+        ADBlocks.FISSURE_VENT
+    );
+
     public static final DeferredItem<CampPlanItem> CAMP_PLAN = REGISTER.registerItem(
         "camp_plan",
         CampPlanItem::new,

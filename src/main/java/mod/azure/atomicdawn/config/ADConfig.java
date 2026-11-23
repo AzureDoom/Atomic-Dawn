@@ -26,6 +26,9 @@ public class ADConfig {
     public EnvironmentalRadiation environmentalRadiation = new EnvironmentalRadiation();
 
     @Configurable
+    public Worldgen worldgen = new Worldgen();
+
+    @Configurable
     public Thirst thirst = new Thirst();
 
     @Configurable
@@ -384,6 +387,19 @@ public class ADConfig {
         @Configurable.Synchronized
         @Range(min = 0, max = 12)
         public int RADIATION_HOTSPOT_RADIUS = 6;
+
+    }
+
+    public static class Worldgen {
+
+        @Comment("Highways and dirt roads skip the pieces that would run through other surface structures.")
+        @Configurable
+        public boolean ROADS_AVOID_STRUCTURES = true;
+
+        @Comment("Blocks of clearance kept between roads and the start chunk of other structures.")
+        @Configurable
+        @Range(min = 0, max = 128)
+        public int ROAD_STRUCTURE_CLEARANCE = 16;
 
     }
 
@@ -1344,7 +1360,16 @@ public class ADConfig {
         @Comment("Rad storm screen tint colour. The alpha channel sets the tint strength at full exposure.")
         @Configurable(side = Configurable.Side.CLIENT)
         @Gui.ColorValue(isARGB = true)
-        public String RAD_STORM_OVERLAY_COLOR = "#504CC22A";
+        public String RAD_STORM_OVERLAY_COLOR = "#384CC22A";
+
+        @Comment("Multiplier applied to the rad storm tint strength. 0 hides it, 1 uses the colour's full alpha.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double RAD_STORM_OVERLAY_INTENSITY = 0.5;
+
+        @Comment("Draw the rad storm tint as an edge vignette that keeps the centre of the screen clear.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        public boolean RAD_STORM_OVERLAY_VIGNETTE = true;
 
         @Comment("Show falling green fallout particles during a rad storm.")
         @Configurable(side = Configurable.Side.CLIENT)
