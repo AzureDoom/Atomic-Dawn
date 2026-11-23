@@ -25,7 +25,11 @@ public final class CampAttachments {
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampStash>> STASH = REGISTER.register(
         "camp_stash",
-        () -> AttachmentType.builder(() -> CampStash.EMPTY).serialize(CampStash.MAP_CODEC).copyOnDeath().build()
+        () -> AttachmentType.builder(() -> CampStash.EMPTY)
+            .serialize(CampStash.MAP_CODEC)
+            .copyOnDeath()
+            .sync((holder, to) -> holder == to, CampStash.STREAM_CODEC)
+            .build()
     );
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampScrapbox>> SCRAPBOX = REGISTER.register(

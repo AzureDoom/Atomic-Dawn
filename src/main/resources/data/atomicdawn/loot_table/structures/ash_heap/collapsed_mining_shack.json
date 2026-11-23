@@ -26,6 +26,95 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:tin_can",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:alarm_clock",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:desk_fan",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:toaster",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:telephone",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:hot_plate",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:typewriter",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:coffee_mug",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:wonderglue",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:duct_tape",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:teddy_bear",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:pre_war_money",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:circuit_board",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:vacuum_tube",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:light_bulb",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:baseball",
+          "weight": 3
+        }
+      ]
     }
   ]
 }

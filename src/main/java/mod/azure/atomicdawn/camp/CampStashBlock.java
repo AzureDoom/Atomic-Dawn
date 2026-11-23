@@ -6,9 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,6 +16,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+
+import mod.azure.atomicdawn.network.ADNetwork;
+import mod.azure.atomicdawn.network.StorageOpenPayload;
 
 public class CampStashBlock extends Block {
 
@@ -47,8 +48,7 @@ public class CampStashBlock extends Block {
     }
 
     private static void open(ServerLevel level, BlockPos pos, ServerPlayer player) {
-        var tracked = CampManager.objectAt(level.getServer(), level.dimension(), pos);
-        if (tracked.isEmpty() || !tracked.get().camp().ownedBy(player.getUUID())) {
+        if (!CampStashService.canUse(player, pos)) {
             CampPlacementService.notify(
                 player,
                 Component.translatable("camp.atomicdawn.stash.not_yours"),
@@ -65,12 +65,7 @@ public class CampStashBlock extends Block {
             );
             return;
         }
-        player.openMenu(
-            new SimpleMenuProvider(
-                (id, inventory, _) -> ChestMenu.sixRows(id, inventory, CampStash.open(player)),
-                Component.translatable("container.atomicdawn.camp_stash")
-            )
-        );
+        ADNetwork.sendTo(player, new StorageOpenPayload(StorageOpenPayload.Mode.STASH, pos));
     }
 
     @Override

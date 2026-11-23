@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:spyglass",
+  "results": [
+    {
+      "item": "minecraft:copper_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glass_pane",
+      "count": 1
+    }
+  ]
+}

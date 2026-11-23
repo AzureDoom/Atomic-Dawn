@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:saddle",
+  "results": [
+    {
+      "item": "minecraft:leather",
+      "count": 3
+    },
+    {
+      "item": "minecraft:iron_nugget",
+      "count": 4
+    }
+  ]
+}

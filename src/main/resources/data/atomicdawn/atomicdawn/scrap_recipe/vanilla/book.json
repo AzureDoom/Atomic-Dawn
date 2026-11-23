@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:book",
+  "results": [
+    {
+      "item": "minecraft:paper",
+      "count": 2
+    },
+    {
+      "item": "minecraft:leather",
+      "count": 1
+    }
+  ]
+}

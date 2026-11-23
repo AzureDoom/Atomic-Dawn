@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:compass",
+  "results": [
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 1
+    }
+  ]
+}

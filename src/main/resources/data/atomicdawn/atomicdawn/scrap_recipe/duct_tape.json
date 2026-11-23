@@ -1,0 +1,13 @@
+{
+  "items": "atomicdawn:duct_tape",
+  "results": [
+    {
+      "item": "minecraft:string",
+      "count": 2
+    },
+    {
+      "item": "minecraft:slime_ball",
+      "count": 1
+    }
+  ]
+}

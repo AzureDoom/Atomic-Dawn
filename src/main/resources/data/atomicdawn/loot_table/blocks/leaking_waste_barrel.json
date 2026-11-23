@@ -9,11 +9,9 @@
           "name": "atomicdawn:leaking_waste_barrel"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
   ],
   "random_sequence": "atomicdawn:blocks/leaking_waste_barrel"

@@ -1,5 +1,6 @@
 package mod.azure.atomicdawn.client.network;
 
+import mod.azure.atomicdawn.client.storage.StorageClient;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
@@ -17,6 +18,7 @@ import mod.azure.atomicdawn.client.powerarmor.PowerArmorClient;
 import mod.azure.atomicdawn.client.radiation.HealthClampClient;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
+import mod.azure.atomicdawn.client.storage.StorageScreen;
 import mod.azure.atomicdawn.client.vats.VatsClient;
 import mod.azure.atomicdawn.network.CampRestorePayload;
 import mod.azure.atomicdawn.network.CampSyncPayload;
@@ -35,6 +37,7 @@ import mod.azure.atomicdawn.network.PipBoyStatsPayload;
 import mod.azure.atomicdawn.network.PowerArmorLandingPayload;
 import mod.azure.atomicdawn.network.ReloadStatusPayload;
 import mod.azure.atomicdawn.network.SpecialResultPayload;
+import mod.azure.atomicdawn.network.StorageOpenPayload;
 import mod.azure.atomicdawn.network.VatsShotPayload;
 import mod.azure.atomicdawn.network.WorkbenchResultPayload;
 
@@ -75,5 +78,6 @@ public final class ClientPayloadHandlers {
                 }
             }
         );
+        event.register(StorageOpenPayload.TYPE, (payload, _) -> StorageClient.onOpen(payload));
     }
 }

@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:clock",
+  "results": [
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 1
+    }
+  ]
+}

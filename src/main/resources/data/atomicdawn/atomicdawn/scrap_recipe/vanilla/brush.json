@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:brush",
+  "results": [
+    {
+      "item": "minecraft:copper_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:feather",
+      "count": 1
+    }
+  ]
+}

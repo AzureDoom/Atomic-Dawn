@@ -1,0 +1,17 @@
+{
+  "items": "atomicdawn:circuit_board",
+  "results": [
+    {
+      "item": "minecraft:redstone",
+      "count": 2
+    },
+    {
+      "item": "minecraft:gold_nugget",
+      "count": 2
+    },
+    {
+      "item": "minecraft:copper_ingot",
+      "count": 1
+    }
+  ]
+}

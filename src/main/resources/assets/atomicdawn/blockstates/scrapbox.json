@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "atomicdawn:block/scrapbox"
+    },
+    "facing=east": {
+      "model": "atomicdawn:block/scrapbox",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "atomicdawn:block/scrapbox",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "atomicdawn:block/scrapbox",
+      "y": 270
+    }
+  }
+}

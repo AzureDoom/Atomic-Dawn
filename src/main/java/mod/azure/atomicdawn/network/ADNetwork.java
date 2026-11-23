@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class ADNetwork {
 
-    private static final String PROTOCOL_VERSION = "20";
+    private static final String PROTOCOL_VERSION = "21";
 
     private ADNetwork() {}
 
@@ -92,6 +92,12 @@ public final class ADNetwork {
             LockpickActionPayload::handleOnServer
         );
         registrar.playToClient(LockpickOpenPayload.TYPE, LockpickOpenPayload.STREAM_CODEC);
+        registrar.playToClient(StorageOpenPayload.TYPE, StorageOpenPayload.STREAM_CODEC);
+        registrar.playToServer(
+            StorageActionPayload.TYPE,
+            StorageActionPayload.STREAM_CODEC,
+            StorageActionPayload::handleOnServer
+        );
         registrar.playToClient(LockpickStatePayload.TYPE, LockpickStatePayload.STREAM_CODEC);
         registrar.playToServer(
             CampActionPayload.TYPE,

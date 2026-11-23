@@ -1,0 +1,17 @@
+{
+  "items": "atomicdawn:vacuum_tube",
+  "results": [
+    {
+      "item": "minecraft:glass_pane",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glowstone_dust",
+      "count": 1
+    },
+    {
+      "item": "minecraft:copper_ingot",
+      "count": 1
+    }
+  ]
+}

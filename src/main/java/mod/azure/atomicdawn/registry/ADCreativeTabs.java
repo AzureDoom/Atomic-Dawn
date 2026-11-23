@@ -53,6 +53,8 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.ARMOR_BENCH.get());
                 output.accept(ADItems.CAMP_MODULE.get());
                 output.accept(ADItems.CAMP_STASH.get());
+                output.accept(ADItems.SCRAPBOX.get());
+                ADItems.JUNK.values().forEach(junk -> output.accept(junk.get()));
                 output.accept(ADItems.POWER_ARMOR_STATION.get());
                 output.accept(ADItems.VAULT_DOOR.get());
                 output.accept(ADItems.WASTE_BARREL.get());

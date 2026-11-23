@@ -13,6 +13,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -38,6 +39,7 @@ import mod.azure.atomicdawn.item.RadXItem;
 import mod.azure.atomicdawn.item.StimpakItem;
 import mod.azure.atomicdawn.item.WaterItem;
 import mod.azure.atomicdawn.item.WeaponItem;
+import mod.azure.atomicdawn.junk.ScrapboxItem;
 import mod.azure.atomicdawn.lock.LockLevel;
 import mod.azure.atomicdawn.mutation.Mutation;
 import mod.azure.atomicdawn.npc.NpcWandItem;
@@ -187,6 +189,27 @@ public final class ADItems {
 
     public static final Map<LockLevel, DeferredItem<PadlockItem>> PADLOCKS = padlocks();
 
+    public static final List<String> JUNK_NAMES = List.of(
+        "tin_can",
+        "alarm_clock",
+        "desk_fan",
+        "toaster",
+        "telephone",
+        "hot_plate",
+        "typewriter",
+        "coffee_mug",
+        "wonderglue",
+        "duct_tape",
+        "teddy_bear",
+        "pre_war_money",
+        "circuit_board",
+        "vacuum_tube",
+        "light_bulb",
+        "baseball"
+    );
+
+    public static final Map<String, DeferredItem<Item>> JUNK = junk();
+
     public static final DeferredItem<Item> LEGENDARY_MODULE = REGISTER.registerSimpleItem(
         "legendary_module",
         properties -> properties.stacksTo(64).rarity(Rarity.RARE)
@@ -245,6 +268,12 @@ public final class ADItems {
     public static final DeferredItem<BlockItem> FISSURE_VENT = REGISTER.registerSimpleBlockItem(
         "fissure_vent",
         ADBlocks.FISSURE_VENT
+    );
+
+    public static final DeferredItem<ScrapboxItem> SCRAPBOX = REGISTER.registerItem(
+        "scrapbox",
+        properties -> new ScrapboxItem(ADBlocks.SCRAPBOX.get(), properties),
+        properties -> properties.useBlockDescriptionPrefix()
     );
 
     public static final DeferredItem<CampPlanItem> CAMP_PLAN = REGISTER.registerItem(
@@ -360,6 +389,14 @@ public final class ADItems {
             );
         }
         return Collections.unmodifiableMap(serums);
+    }
+
+    private static Map<String, DeferredItem<Item>> junk() {
+        var junk = new LinkedHashMap<String, DeferredItem<Item>>();
+        for (var name : JUNK_NAMES) {
+            junk.put(name, REGISTER.registerSimpleItem(name));
+        }
+        return Collections.unmodifiableMap(junk);
     }
 
     private static Map<LockLevel, DeferredItem<PadlockItem>> padlocks() {

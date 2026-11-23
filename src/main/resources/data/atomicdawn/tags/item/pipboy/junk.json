@@ -7,6 +7,22 @@
     "minecraft:gold_nugget",
     "minecraft:leather",
     "minecraft:feather",
-    "minecraft:flint"
+    "minecraft:flint",
+    "atomicdawn:tin_can",
+    "atomicdawn:alarm_clock",
+    "atomicdawn:desk_fan",
+    "atomicdawn:toaster",
+    "atomicdawn:telephone",
+    "atomicdawn:hot_plate",
+    "atomicdawn:typewriter",
+    "atomicdawn:coffee_mug",
+    "atomicdawn:wonderglue",
+    "atomicdawn:duct_tape",
+    "atomicdawn:teddy_bear",
+    "atomicdawn:pre_war_money",
+    "atomicdawn:circuit_board",
+    "atomicdawn:vacuum_tube",
+    "atomicdawn:light_bulb",
+    "atomicdawn:baseball"
   ]
 }

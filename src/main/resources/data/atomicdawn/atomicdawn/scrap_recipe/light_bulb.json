@@ -1,0 +1,17 @@
+{
+  "items": "atomicdawn:light_bulb",
+  "results": [
+    {
+      "item": "minecraft:glass_pane",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glowstone_dust",
+      "count": 1
+    },
+    {
+      "item": "minecraft:iron_nugget",
+      "count": 1
+    }
+  ]
+}

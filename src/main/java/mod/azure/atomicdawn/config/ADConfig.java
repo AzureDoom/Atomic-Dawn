@@ -32,6 +32,9 @@ public class ADConfig {
     public Limbs limbs = new Limbs();
 
     @Configurable
+    public Junk junk = new Junk();
+
+    @Configurable
     public ClientLimbs clientLimbs = new ClientLimbs();
 
     @Configurable
@@ -406,6 +409,25 @@ public class ADConfig {
         @Configurable
         @Range(min = 0, max = 128)
         public int ROAD_STRUCTURE_CLEARANCE = 16;
+
+    }
+
+    public static class Junk {
+
+        @Comment("Workbenches, C.A.M.P. building and armor benches can use materials stored in your Scrapbox.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean JUNK_STORAGE_CRAFTING = true;
+
+        @Comment("Junk is broken down automatically when crafting needs a component it contains.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean AUTO_SCRAP_JUNK = true;
+
+        @Comment("Deposit All also stores crafting components such as ingots and leather, not only junk.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean JUNK_DEPOSIT_COMPONENTS = true;
 
     }
 
@@ -1617,6 +1639,19 @@ public class ADConfig {
         @Configurable
         @Configurable.Synchronized
         public boolean CAMP_ENABLED = true;
+
+        @Comment("Maximum number of items a player's Stash Box can hold, shared across every Stash Box.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 1000000)
+        public int STASH_LIMIT = 1200;
+
+        @Comment(
+            "Players can only open Stash Boxes inside their own C.A.M.P. When false any Stash Box opens your own stash."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        public boolean STASH_REQUIRES_OWN_CAMP = false;
 
         @Comment("Horizontal radius of a C.A.M.P. claim, in blocks.")
         @Configurable

@@ -1,0 +1,13 @@
+{
+  "items": "minecraft:item_frame",
+  "results": [
+    {
+      "item": "minecraft:leather",
+      "count": 1
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    }
+  ]
+}

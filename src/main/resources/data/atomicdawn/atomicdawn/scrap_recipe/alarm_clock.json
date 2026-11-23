@@ -1,0 +1,21 @@
+{
+  "items": "atomicdawn:alarm_clock",
+  "results": [
+    {
+      "item": "minecraft:iron_nugget",
+      "count": 3
+    },
+    {
+      "item": "minecraft:copper_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glass_pane",
+      "count": 1
+    }
+  ]
+}

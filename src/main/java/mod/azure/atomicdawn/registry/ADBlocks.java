@@ -19,6 +19,7 @@ import mod.azure.atomicdawn.block.WasteBarrelBlock;
 import mod.azure.atomicdawn.block.WeaponsWorkbenchBlock;
 import mod.azure.atomicdawn.camp.CampModuleBlock;
 import mod.azure.atomicdawn.camp.CampStashBlock;
+import mod.azure.atomicdawn.junk.ScrapboxBlock;
 import mod.azure.atomicdawn.pipboy.light.PipBoyLightBlock;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
 import mod.azure.atomicdawn.vault.VaultDoorBlock;
@@ -197,6 +198,16 @@ public final class ADBlocks {
             .requiresCorrectToolForDrops()
             .lightLevel(_ -> 15)
             .emissiveRendering((_) -> true)
+    );
+
+    public static final DeferredBlock<ScrapboxBlock> SCRAPBOX = REGISTER.registerBlock(
+        "scrapbox",
+        ScrapboxBlock::new,
+        properties -> properties.mapColor(MapColor.METAL)
+            .strength(3.0F, 6.0F)
+            .sound(SoundType.METAL)
+            .requiresCorrectToolForDrops()
+            .pushReaction(PushReaction.IMMOVEABLE)
     );
 
     private ADBlocks() {}

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.item.WeaponItem;
+import mod.azure.atomicdawn.junk.JunkMaterials;
 import mod.azure.atomicdawn.progression.ModUnlocks;
 import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.registry.ADDataComponents;
@@ -131,7 +132,7 @@ public final class WeaponModding {
                 total += stack.getCount();
             }
         }
-        return total;
+        return (int) Math.min(Integer.MAX_VALUE, (long) total + JunkMaterials.extra(player, entry));
     }
 
     public static void consumeMaterials(Player player, List<SizedIngredient> cost) {
@@ -146,6 +147,7 @@ public final class WeaponModding {
                     remaining -= taken;
                 }
             }
+            JunkMaterials.consume(player, entry, remaining);
         }
         inventory.setChanged();
     }

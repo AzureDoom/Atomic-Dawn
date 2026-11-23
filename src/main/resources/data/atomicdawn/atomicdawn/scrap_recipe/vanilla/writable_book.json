@@ -1,0 +1,17 @@
+{
+  "items": "minecraft:writable_book",
+  "results": [
+    {
+      "item": "minecraft:paper",
+      "count": 2
+    },
+    {
+      "item": "minecraft:leather",
+      "count": 1
+    },
+    {
+      "item": "minecraft:feather",
+      "count": 1
+    }
+  ]
+}
