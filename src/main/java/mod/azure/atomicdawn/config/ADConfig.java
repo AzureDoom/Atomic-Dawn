@@ -29,6 +29,12 @@ public class ADConfig {
     public Worldgen worldgen = new Worldgen();
 
     @Configurable
+    public Limbs limbs = new Limbs();
+
+    @Configurable
+    public ClientLimbs clientLimbs = new ClientLimbs();
+
+    @Configurable
     public Thirst thirst = new Thirst();
 
     @Configurable
@@ -400,6 +406,183 @@ public class ADConfig {
         @Configurable
         @Range(min = 0, max = 128)
         public int ROAD_STRUCTURE_CLEARANCE = 16;
+
+    }
+
+    public static class Limbs {
+
+        @Comment("Enable the crippled limb system.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean LIMBS_ENABLED = true;
+
+        @Comment("Players can have their limbs crippled.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean PLAYER_LIMBS = true;
+
+        @Comment("Mobs, including AzureLib geo mobs, can have their limbs crippled.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean MOB_LIMBS = true;
+
+        @Comment("Health of each limb as a fraction of the entity's max health.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.05, max = 10.0)
+        public double LIMB_HEALTH_FRACTION = 0.5;
+
+        @Comment("Multiplier applied to damage dealt to limbs.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double LIMB_DAMAGE_MULTIPLIER = 1.0;
+
+        @Comment("Extra limb damage multiplier for limbs targeted in V.A.T.S.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double VATS_LIMB_DAMAGE_MULTIPLIER = 1.5;
+
+        @Comment("Multiplier for fall damage dealt to both legs.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double FALL_LIMB_DAMAGE_MULTIPLIER = 1.0;
+
+        @Comment("Multiplier for explosion damage dealt to every limb.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double EXPLOSION_LIMB_DAMAGE_MULTIPLIER = 0.5;
+
+        @Comment("Players inside power armor cannot have their limbs damaged.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean POWER_ARMOR_PROTECTS_LIMBS = true;
+
+        @Comment("Seconds after a limb hit before limbs start to recover.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 3600)
+        public int LIMB_REGEN_DELAY_SECONDS = 10;
+
+        @Comment("Limb condition a player recovers per second (1.0 = full limb).")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double PLAYER_LIMB_REGEN_PER_SECOND = 0.005;
+
+        @Comment("Limb condition a mob recovers per second (1.0 = full limb).")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double MOB_LIMB_REGEN_PER_SECOND = 0.01;
+
+        @Comment(
+            "Crippled player limbs recover on their own. When false they need a stimpak, doctor's bag, regeneration or sleep."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        public boolean PLAYER_CRIPPLED_SELF_HEAL = false;
+
+        @Comment("Crippled mob limbs recover on their own over time.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean MOB_CRIPPLED_SELF_HEAL = true;
+
+        @Comment("Sleeping in a bed restores every limb.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean SLEEP_HEALS_LIMBS = true;
+
+        @Comment("Movement speed lost with one crippled leg.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double LEG_SPEED_PENALTY = 0.2;
+
+        @Comment("Movement speed lost with both legs crippled.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double BOTH_LEGS_SPEED_PENALTY = 0.5;
+
+        @Comment("Jump strength lost per crippled leg.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double LEG_JUMP_PENALTY = 0.25;
+
+        @Comment("Players cannot sprint with both legs crippled.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean BOTH_LEGS_BLOCK_SPRINT = true;
+
+        @Comment("Attack damage lost per crippled arm.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double ARM_DAMAGE_PENALTY = 0.2;
+
+        @Comment("Extra weapon spread per crippled arm.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 10.0)
+        public double ARM_SPREAD_PENALTY = 0.5;
+
+        @Comment("V.A.T.S. hit chance multiplier with a crippled head.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double HEAD_VATS_HIT_MULTIPLIER = 0.75;
+
+        @Comment("Follow range a mob loses with a crippled head.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double HEAD_FOLLOW_RANGE_PENALTY = 0.5;
+
+        @Comment("A crippled head makes the player's vision sway.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean HEAD_CRIPPLED_NAUSEA = false;
+
+        @Comment("Action Point regeneration multiplier with a crippled torso.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double TORSO_AP_REGEN_MULTIPLIER = 0.5;
+
+        @Comment("Damage taken multiplier with a crippled torso.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 1.0, max = 10.0)
+        public double TORSO_DAMAGE_TAKEN_MULTIPLIER = 1.1;
+
+        @Comment("Health restored by a stimpak.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double STIMPAK_HEALTH = 8.0;
+
+        @Comment("Limb condition a stimpak restores to every limb, including crippled ones.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double STIMPAK_LIMB_RESTORE = 0.5;
+
+    }
+
+    public static class ClientLimbs {
+
+        @Comment("Show the limb condition figure on the HUD while a limb is damaged.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        public boolean LIMB_HUD = true;
+
+        @Comment("Keep the limb condition figure on the HUD even when every limb is healthy.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        public boolean LIMB_HUD_ALWAYS = false;
 
     }
 

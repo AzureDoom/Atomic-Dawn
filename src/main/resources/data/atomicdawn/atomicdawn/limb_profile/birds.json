@@ -1,0 +1,23 @@
+{
+  "entities": [
+    "minecraft:chicken",
+    "minecraft:parrot",
+    "minecraft:bee"
+  ],
+  "parts": [
+    "head",
+    "torso",
+    "left_leg",
+    "right_leg"
+  ],
+  "bones": {
+    "left_leg": [
+      "left_wing",
+      "wing_left"
+    ],
+    "right_leg": [
+      "right_wing",
+      "wing_right"
+    ]
+  }
+}

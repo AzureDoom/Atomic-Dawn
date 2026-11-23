@@ -7,6 +7,7 @@ import net.minecraft.world.phys.Vec3;
 
 import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.mutation.MutationService;
 import mod.azure.atomicdawn.perks.PerkHooks;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
@@ -34,7 +35,8 @@ public final class SpreadModel {
         if (player.isCrouching()) {
             spread *= accuracy.crouchMultiplier();
         }
-        spread *= MutationService.spreadMultiplier(player) * GhoulService.spreadMultiplier(player);
+        spread *= MutationService.spreadMultiplier(player) * GhoulService.spreadMultiplier(player)
+            * LimbService.spreadMultiplier(player);
         return Math.max(0F, spread);
     }
 

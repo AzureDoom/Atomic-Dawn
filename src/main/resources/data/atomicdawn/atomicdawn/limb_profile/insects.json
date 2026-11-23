@@ -1,0 +1,10 @@
+{
+  "entities": "#atomicdawn:insects",
+  "parts": [
+    "head",
+    "torso",
+    "left_leg",
+    "right_leg"
+  ],
+  "health": 0.75
+}

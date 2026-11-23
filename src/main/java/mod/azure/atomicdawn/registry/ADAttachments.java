@@ -11,6 +11,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.camp.CampRegistry;
 import mod.azure.atomicdawn.ghoul.GhoulAppearance;
 import mod.azure.atomicdawn.ghoul.GhoulState;
+import mod.azure.atomicdawn.limb.LimbState;
 import mod.azure.atomicdawn.lock.LockMap;
 import mod.azure.atomicdawn.mutation.Mutations;
 import mod.azure.atomicdawn.pipboy.PipBoyData;
@@ -171,6 +172,14 @@ public final class ADAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampRegistry>> CAMPS = REGISTER.register(
         "camps",
         () -> AttachmentType.builder(() -> CampRegistry.EMPTY).serialize(CampRegistry.MAP_CODEC).build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<LimbState>> LIMBS = REGISTER.register(
+        "limbs",
+        () -> AttachmentType.builder(() -> LimbState.HEALTHY)
+            .serialize(LimbState.MAP_CODEC)
+            .sync((holder, to) -> true, LimbState.STREAM_CODEC)
+            .build()
     );
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Thirst>> THIRST = REGISTER.register(

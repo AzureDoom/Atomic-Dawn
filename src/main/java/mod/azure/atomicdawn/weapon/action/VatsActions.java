@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.mutation.MutationService;
 import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.network.VatsShotPayload;
@@ -113,7 +114,8 @@ public final class VatsActions {
                 * SpecialStatResolver.resolve(player).apRegenMultiplier
                 * GhoulService.apRegenMultiplier(player)
                 * (1F + PowerArmorBonuses.of(player).get(PowerArmorEffectType.AP_REGEN)
-                    + ArmorEvents.apRegenBonus(player));
+                    + ArmorEvents.apRegenBonus(player))
+                * LimbService.apRegenMultiplier(player);
             player.setData(ADAttachments.ACTION_POINTS.get(), ap.withPoints(ap.points() + gain, max));
         }
     }
@@ -249,7 +251,7 @@ public final class VatsActions {
     }
 
     private static void applyLimbEffect(LivingEntity target, BodyPart part) {
-        if (!AtomicDawn.CONFIG.vats.VATS_LIMB_EFFECTS || !target.isAlive()) {
+        if (!AtomicDawn.CONFIG.vats.VATS_LIMB_EFFECTS || !target.isAlive() || LimbService.enabled(target)) {
             return;
         }
         if (part.isLeg()) {

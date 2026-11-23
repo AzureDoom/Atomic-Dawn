@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LSL",
+    "PBP",
+    "LLL"
+  ],
+  "key": {
+    "L": "minecraft:leather",
+    "S": "minecraft:string",
+    "P": "minecraft:paper",
+    "B": "atomicdawn:stimpak"
+  },
+  "result": {
+    "id": "atomicdawn:doctors_bag",
+    "count": 1
+  }
+}

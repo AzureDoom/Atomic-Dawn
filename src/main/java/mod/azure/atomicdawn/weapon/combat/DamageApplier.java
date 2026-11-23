@@ -10,6 +10,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.limb.LimbHits;
 import mod.azure.atomicdawn.perks.PerkCombat;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.special.SpecialStatResolver;
@@ -66,9 +67,11 @@ public final class DamageApplier {
         var wasAlive = target instanceof LivingEntity living && living.isAlive();
         resetInvulnerability(target);
         PerkCombat.beginWeaponHit();
+        LimbHits.begin(target, vats ? shooter.vatsPart() : null, hitPosition);
         try {
             hurt(level, attacker, definition, target, total, penetration);
         } finally {
+            LimbHits.end();
             PerkCombat.endWeaponHit();
         }
 

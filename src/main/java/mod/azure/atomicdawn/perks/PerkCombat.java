@@ -24,8 +24,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
+import mod.azure.atomicdawn.vats.BodyPart;
 import mod.azure.atomicdawn.weapon.definition.WeaponCategory;
 
 public final class PerkCombat {
@@ -216,7 +218,15 @@ public final class PerkCombat {
         var melee = category.melee();
 
         if (roll(random, stats.value(PerkEffectType.CRIPPLE_CHANCE, category, automatic))) {
-            living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1), attacker);
+            if (LimbService.enabled(living)) {
+                LimbService.cripple(
+                    living,
+                    random.nextBoolean() ? BodyPart.LEFT_LEG : BodyPart.RIGHT_LEG,
+                    attacker
+                );
+            } else {
+                living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1), attacker);
+            }
         }
         if (melee && roll(random, stats.value(PerkEffectType.STAGGER_CHANCE, category, automatic))) {
             var away = living.position().subtract(attacker.position());

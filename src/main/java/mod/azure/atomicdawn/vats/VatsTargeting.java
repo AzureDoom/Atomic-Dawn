@@ -18,6 +18,8 @@ import java.util.Map;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.limb.LimbProfiles;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.special.SpecialStatResolver;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 
@@ -31,7 +33,7 @@ public final class VatsTargeting {
 
         for (var hit : AzHitboxes.getActiveHitboxes(target)) {
             var hitbox = hit.hitbox();
-            var part = BodyPart.classify(hitbox.name(), hitbox.bone(), hitbox::hasTag);
+            var part = LimbProfiles.classify(target, hitbox.name(), hitbox.bone(), hitbox::hasTag);
             if (part != null && !parts.containsKey(part)) {
                 parts.put(
                     part,
@@ -189,6 +191,10 @@ public final class VatsTargeting {
         var boosted = chance >= cap
             ? chance
             : Math.min(cap, chance + SpecialStatResolver.resolve(shooter).vatsHitBonus);
-        return Math.clamp(boosted * GhoulService.vatsHitMultiplier(shooter), 0F, cap);
+        return Math.clamp(
+            boosted * GhoulService.vatsHitMultiplier(shooter) * LimbService.vatsHitMultiplier(shooter),
+            0F,
+            cap
+        );
     }
 }

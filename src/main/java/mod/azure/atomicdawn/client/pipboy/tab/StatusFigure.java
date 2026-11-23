@@ -13,10 +13,12 @@ import mod.azure.atomicdawn.client.pipboy.PipBoyDraw;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorPieceItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorSlot;
 import mod.azure.atomicdawn.powerarmor.PowerCoreItem;
+import mod.azure.atomicdawn.vats.BodyPart;
 
 final class StatusFigure {
 
@@ -54,12 +56,12 @@ final class StatusFigure {
         var feet = player.getItemBySlot(EquipmentSlot.FEET);
 
         var skin = PipBoyTheme.phosphor(0.5F, 0xFF);
-        body(graphics, grid.r(4, 0, 8, 8), skin);
-        body(graphics, grid.r(4, 8, 8, 12), skin);
-        body(graphics, grid.r(0, 8, 4, 12), skin);
-        body(graphics, grid.r(12, 8, 4, 12), skin);
-        body(graphics, grid.r(4, 20, 4, 12), skin);
-        body(graphics, grid.r(8, 20, 4, 12), skin);
+        limb(graphics, grid.r(4, 0, 8, 8), player, BodyPart.HEAD, skin);
+        limb(graphics, grid.r(4, 8, 8, 12), player, BodyPart.TORSO, skin);
+        limb(graphics, grid.r(0, 8, 4, 12), player, BodyPart.RIGHT_ARM, skin);
+        limb(graphics, grid.r(12, 8, 4, 12), player, BodyPart.LEFT_ARM, skin);
+        limb(graphics, grid.r(4, 20, 4, 12), player, BodyPart.RIGHT_LEG, skin);
+        limb(graphics, grid.r(8, 20, 4, 12), player, BodyPart.LEFT_LEG, skin);
         if (head.isEmpty()) {
             PipBoyDraw.fill(graphics, grid.r(5, 4, 2, 1), PipBoyTheme.text());
             PipBoyDraw.fill(graphics, grid.r(9, 4, 2, 1), PipBoyTheme.text());
@@ -307,6 +309,20 @@ final class StatusFigure {
         screen.text(graphics, value, 0, 0, PipBoyTheme.text());
         graphics.pose().popMatrix();
         screen.text(graphics, caption, cx - font.width(caption) / 2, y + 14, PipBoyTheme.dim());
+    }
+
+    private static void limb(GuiGraphicsExtractor graphics, Rect r, Player player, BodyPart part, int skin) {
+        var condition = LimbService.state(player).get(part);
+        if (condition >= 1F) {
+            body(graphics, r, skin);
+            return;
+        }
+        var rim = condition <= 0F ? PipBoyTheme.bad() : condition < 0.5F ? PipBoyTheme.warn() : skin;
+        body(graphics, r, rim);
+        if (condition <= 0F) {
+            var pulse = 0.25F + 0.15F * (float) Math.sin(System.currentTimeMillis() / 220.0);
+            PipBoyDraw.fill(graphics, r.inset(1), PipBoyTheme.scaled(PipBoyTheme.bad() & 0xFFFFFF, pulse, 0xFF));
+        }
     }
 
     private static void body(GuiGraphicsExtractor graphics, Rect r, int rim) {

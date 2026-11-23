@@ -35,6 +35,8 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.LEGENDARY_MODULE.get());
                 output.accept(ADItems.RADAWAY.get());
                 output.accept(ADItems.RAD_X.get());
+                output.accept(ADItems.STIMPAK.get());
+                output.accept(ADItems.DOCTORS_BAG.get());
                 ADItems.NUKA_COLAS.values().forEach(cola -> output.accept(cola.get()));
                 output.accept(ADItems.NUKA_GRAPE.get());
                 output.accept(ADItems.BRAHMIN_MILK.get());

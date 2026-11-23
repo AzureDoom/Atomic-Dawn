@@ -14,6 +14,7 @@ public enum HudElement {
     VATS_METERS((w, h) -> new Rect(w - 88, h - 69, 80, 26)),
     RADIATION((w, h) -> new Rect(w / 2 - 131, h - 19, 36, 17)),
     THIRST((w, h) -> new Rect(w / 2 + 95, h - 19, 36, 17)),
+    LIMBS((w, h) -> new Rect(w / 2 - 197, h - 38, 20, 36)),
     GHOUL((w, h) -> new Rect(w / 2 - 173, h - 47, 78, 24)),
     POWER_ARMOR((w, h) -> new Rect(6, h - 92, 150, 86)),
     POWER_ARMOR_AP((w, h) -> new Rect(6, h - 110, 150, 15)),

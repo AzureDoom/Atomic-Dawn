@@ -25,6 +25,7 @@ import mod.azure.atomicdawn.camp.CampPlanLootModifier;
 import mod.azure.atomicdawn.config.ADConfig;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
 import mod.azure.atomicdawn.item.NukaColaEffects;
+import mod.azure.atomicdawn.limb.LimbProfile;
 import mod.azure.atomicdawn.mutation.MutationService;
 import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.npc.NpcModelDefinition;
@@ -127,6 +128,7 @@ public final class AtomicDawn {
         event.worldRegistry(ADRegistries.ARMOR_LEGENDARY, ArmorLegendary.CODEC, ArmorLegendary.CODEC);
         event.worldRegistry(ADRegistries.CAMP_BUILDABLE, CampBuildable.CODEC, CampBuildable.CODEC);
         event.worldRegistry(ADRegistries.CAMP_BLUEPRINT, CampBlueprint.CODEC, CampBlueprint.NETWORK_CODEC);
+        event.worldRegistry(ADRegistries.LIMB_PROFILE, LimbProfile.CODEC, LimbProfile.CODEC);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

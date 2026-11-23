@@ -11,11 +11,13 @@ import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.special.SpecialStatResolver;
 import mod.azure.atomicdawn.special.SpecialXp;
 import mod.azure.atomicdawn.vats.ActionPoints;
+import mod.azure.atomicdawn.vats.BodyPart;
 import mod.azure.atomicdawn.weapon.action.VatsActions;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
@@ -186,6 +188,48 @@ final class StatusPage {
             bottom,
             PipBoyTheme.dim()
         );
+
+        if (AtomicDawn.CONFIG.limbs.LIMBS_ENABLED && LimbService.enabled(player)) {
+            y += 4;
+            y = line(
+                graphics,
+                screen,
+                Component.translatable("pipboy.atomicdawn.status.limbs"),
+                x,
+                y,
+                maxW,
+                bottom,
+                PipBoyTheme.text()
+            );
+            var limbs = LimbService.state(player);
+            var crippled = Component.empty();
+            var any = false;
+            for (var part : BodyPart.values()) {
+                if (limbs.crippled(part)) {
+                    if (any) {
+                        crippled.append(", ");
+                    }
+                    crippled.append(Component.translatable(part.translationKey()));
+                    any = true;
+                }
+            }
+            y = line(
+                graphics,
+                screen,
+                any
+                    ? Component.translatable("pipboy.atomicdawn.status.limbs.crippled", crippled)
+                    : Component.translatable(
+                        limbs.healthy()
+                            ? "pipboy.atomicdawn.status.limbs.healthy"
+                            : "pipboy.atomicdawn.status.limbs.injured"
+                    ),
+                x,
+                y,
+                maxW,
+                bottom,
+                any ? PipBoyTheme.bad() : limbs.healthy() ? PipBoyTheme.dim() : PipBoyTheme.warn()
+            );
+        }
 
         var held = player.getMainHandItem();
         var definition = Weapons.definition(minecraft.level, held);

@@ -11,6 +11,7 @@ import mod.azure.atomicdawn.armor.upgrade.ArmorMod;
 import mod.azure.atomicdawn.camp.CampBlueprint;
 import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
+import mod.azure.atomicdawn.limb.LimbProfile;
 import mod.azure.atomicdawn.npc.NpcModelDefinition;
 import mod.azure.atomicdawn.npc.dialogue.NpcDialogue;
 import mod.azure.atomicdawn.perks.LegendaryPerkDefinition;
@@ -105,6 +106,10 @@ public final class ADRegistries {
 
     public static final ResourceKey<Registry<CampBlueprint>> CAMP_BLUEPRINT = ResourceKey.createRegistryKey(
         AtomicDawn.id("camp_blueprint")
+    );
+
+    public static final ResourceKey<Registry<LimbProfile>> LIMB_PROFILE = ResourceKey.createRegistryKey(
+        AtomicDawn.id("limb_profile")
     );
 
     private ADRegistries() {}

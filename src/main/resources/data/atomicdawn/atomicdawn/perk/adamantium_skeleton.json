@@ -13,6 +13,10 @@
         {
           "type": "knockback_resistance",
           "value": 0.05
+        },
+        {
+          "type": "limb_damage_reduction",
+          "value": 0.3
         }
       ]
     },
@@ -27,6 +31,10 @@
         {
           "type": "knockback_resistance",
           "value": 0.1
+        },
+        {
+          "type": "limb_damage_reduction",
+          "value": 0.6
         }
       ]
     },
@@ -41,6 +49,10 @@
         {
           "type": "knockback_resistance",
           "value": 0.15
+        },
+        {
+          "type": "limb_damage_reduction",
+          "value": 1.0
         }
       ]
     }

@@ -27,6 +27,7 @@ import mod.azure.atomicdawn.client.hud.PartyHud;
 import mod.azure.atomicdawn.client.hud.WaypointHud;
 import mod.azure.atomicdawn.client.hud.WeaponHud;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
+import mod.azure.atomicdawn.client.limb.LimbHud;
 import mod.azure.atomicdawn.client.network.ClientPayloadHandlers;
 import mod.azure.atomicdawn.client.npc.NpcRenderer;
 import mod.azure.atomicdawn.client.pipboy.PipBoyArmLayer;
@@ -34,6 +35,7 @@ import mod.azure.atomicdawn.client.pipboy.PipBoyNotificationHud;
 import mod.azure.atomicdawn.client.powerarmor.PowerArmorHud;
 import mod.azure.atomicdawn.client.radiation.RadStormVisuals;
 import mod.azure.atomicdawn.client.radiation.RadiationHud;
+import mod.azure.atomicdawn.client.render.MedicalClientExtensions;
 import mod.azure.atomicdawn.client.render.WeaponClientExtensions;
 import mod.azure.atomicdawn.client.render.WeaponItemRenderer;
 import mod.azure.atomicdawn.client.render.ammo.AmmoRenderer;
@@ -156,6 +158,7 @@ public final class AtomicDawnClient {
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("vats_hud"), new VatsHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("radiation_hud"), new RadiationHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("thirst_hud"), new ThirstHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("limb_hud"), new LimbHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("ghoul_hud"), new GhoulHud());
         event.registerAbove(
             VanillaGuiLayers.HOTBAR,
@@ -179,6 +182,8 @@ public final class AtomicDawnClient {
     @SubscribeEvent
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerItem(WeaponClientExtensions.INSTANCE, ADItems.weapons().toArray(Item[]::new));
+        event.registerItem(MedicalClientExtensions.STIMPAK, ADItems.STIMPAK.get());
+        event.registerItem(MedicalClientExtensions.DOCTORS_BAG, ADItems.DOCTORS_BAG.get());
         event.registerFluidType(IrradiatedWaterClient.EXTENSIONS, ADFluids.IRRADIATED_WATER_TYPE.get());
     }
 

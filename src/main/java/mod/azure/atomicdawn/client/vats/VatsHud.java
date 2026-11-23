@@ -18,7 +18,9 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.camera.KillCam;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
+import mod.azure.atomicdawn.client.limb.LimbHud;
 import mod.azure.atomicdawn.config.ADColors;
+import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.vats.ActionPoints;
 import mod.azure.atomicdawn.vats.BodyPart;
 import mod.azure.atomicdawn.vats.PartPoint;
@@ -206,6 +208,21 @@ public final class VatsHud implements GuiLayer {
                     : selected ? (VatsClient.isCriticalArmed() ? critical() : primary()) : dim();
                 var size = selected ? 5 : 3;
                 outline(graphics, sx - size, sy - size, sx + size, sy + size, color);
+                var condition = LimbService.state(target).get(entry.getKey());
+                if (condition < 1F && AtomicDawn.CONFIG.limbs.LIMBS_ENABLED) {
+                    var barY = sy + size + 2;
+                    graphics.fill(sx - 6, barY, sx + 6, barY + 2, barBackground());
+                    graphics.fill(
+                        sx - 6,
+                        barY,
+                        sx - 6 + Math.round(12 * condition),
+                        barY + 2,
+                        LimbHud.color(condition)
+                    );
+                    if (condition <= 0F) {
+                        graphics.fill(sx - 6, barY, sx + 6, barY + 2, LimbHud.color(0F));
+                    }
+                }
                 if (selected) {
                     var label = Component.translatable(point.part().translationKey())
                         .append(Component.literal(" " + Math.round(chance * 100F) + "%"));

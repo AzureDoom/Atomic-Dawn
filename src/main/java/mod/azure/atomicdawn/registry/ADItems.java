@@ -35,6 +35,7 @@ import mod.azure.atomicdawn.item.PadlockItem;
 import mod.azure.atomicdawn.item.RadAwayItem;
 import mod.azure.atomicdawn.item.RadRemoverItem;
 import mod.azure.atomicdawn.item.RadXItem;
+import mod.azure.atomicdawn.item.StimpakItem;
 import mod.azure.atomicdawn.item.WaterItem;
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.lock.LockLevel;
@@ -98,6 +99,18 @@ public final class ADItems {
         "radaway",
         RadAwayItem::new,
         RadAwayItem::properties
+    );
+
+    public static final DeferredItem<StimpakItem> STIMPAK = REGISTER.registerItem(
+        "stimpak",
+        properties -> new StimpakItem(properties, false),
+        properties -> StimpakItem.properties(properties, 0.8F)
+    );
+
+    public static final DeferredItem<StimpakItem> DOCTORS_BAG = REGISTER.registerItem(
+        "doctors_bag",
+        properties -> new StimpakItem(properties, true),
+        properties -> StimpakItem.properties(properties, 2.5F).stacksTo(4)
     );
 
     public static final DeferredItem<RadXItem> RAD_X = REGISTER.registerItem(

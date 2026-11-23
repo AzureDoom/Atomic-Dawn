@@ -132,6 +132,8 @@ public enum PerkEffectType implements StringRepresentable {
 
     REDUCE_FALL("reduce_fall", true),
 
+    LIMB_DAMAGE_REDUCTION("limb_damage_reduction", true, true),
+
     LOW_HEALTH_REDUCTION("low_health_reduction", true),
 
     NIGHT_REDUCTION("night_reduction", true),

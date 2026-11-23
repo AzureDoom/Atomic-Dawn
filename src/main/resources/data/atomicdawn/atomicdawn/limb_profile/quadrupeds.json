@@ -1,0 +1,32 @@
+{
+  "entities": "#atomicdawn:quadrupeds",
+  "parts": [
+    "head",
+    "torso",
+    "left_leg",
+    "right_leg"
+  ],
+  "bones": {
+    "head": [
+      "head",
+      "jaw",
+      "snout"
+    ],
+    "left_leg": [
+      "leg0",
+      "leg2",
+      "front_left_leg",
+      "back_left_leg",
+      "left_front_leg",
+      "left_hind_leg"
+    ],
+    "right_leg": [
+      "leg1",
+      "leg3",
+      "front_right_leg",
+      "back_right_leg",
+      "right_front_leg",
+      "right_hind_leg"
+    ]
+  }
+}

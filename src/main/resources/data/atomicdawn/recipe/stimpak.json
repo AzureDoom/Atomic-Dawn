@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "minecraft:iron_nugget",
+    "minecraft:glistering_melon_slice",
+    "minecraft:red_mushroom"
+  ],
+  "result": {
+    "id": "atomicdawn:stimpak",
+    "count": 1
+  }
+}
