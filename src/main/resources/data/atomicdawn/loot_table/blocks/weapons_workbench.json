@@ -9,19 +9,9 @@
           "name": "atomicdawn:weapons_workbench"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "atomicdawn:weapons_workbench",
-          "properties": {
-            "column": "0",
-            "row": "0"
-          }
-        },
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
   ],
   "random_sequence": "atomicdawn:blocks/weapons_workbench"

@@ -38,6 +38,8 @@ public final class ADCreativeTabs {
                 ADItems.NUKA_COLAS.values().forEach(cola -> output.accept(cola.get()));
                 output.accept(ADItems.NUKA_GRAPE.get());
                 output.accept(ADItems.BRAHMIN_MILK.get());
+                output.accept(ADItems.DIRTY_WATER.get());
+                output.accept(ADItems.BOILED_WATER.get());
                 output.accept(ADItems.GHOULIFICATION_TREATMENT.get());
                 output.accept(ADItems.HUMAN_RESTORATION_TREATMENT.get());
                 output.accept(ADItems.FERAL_STABILIZER.get());
@@ -50,6 +52,7 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.CAMP_MODULE.get());
                 output.accept(ADItems.CAMP_STASH.get());
                 output.accept(ADItems.POWER_ARMOR_STATION.get());
+                output.accept(ADItems.VAULT_DOOR.get());
                 output.accept(ADItems.POWER_ARMOR_CHASSIS.get());
                 output.accept(ADItems.FUSION_CORE.get());
                 parameters.holders()

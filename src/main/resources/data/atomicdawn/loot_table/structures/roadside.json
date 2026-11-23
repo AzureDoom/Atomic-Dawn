@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "atomicdawn:structures/survivor"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.1
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "atomicdawn:holotape",
+          "modifier": [
+            {
+              "type": "minecraft:set_components",
+              "components": {
+                "atomicdawn:holotape": "atomicdawn:the_last_broadcast"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

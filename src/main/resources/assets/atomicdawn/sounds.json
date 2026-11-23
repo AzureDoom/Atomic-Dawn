@@ -403,5 +403,95 @@
         "volume": 0.8
       }
     ]
+  },
+  "holotape.checkpoint_charlie": {
+    "subtitle": "subtitles.atomicdawn.holotape.checkpoint_charlie",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/checkpoint_charlie",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.everything_must_go": {
+    "subtitle": "subtitles.atomicdawn.holotape.everything_must_go",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/everything_must_go",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.gone_fishing": {
+    "subtitle": "subtitles.atomicdawn.holotape.gone_fishing",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/gone_fishing",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.last_shift": {
+    "subtitle": "subtitles.atomicdawn.holotape.last_shift",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/last_shift",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.little_things": {
+    "subtitle": "subtitles.atomicdawn.holotape.little_things",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/little_things",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.property_of_the_company": {
+    "subtitle": "subtitles.atomicdawn.holotape.property_of_the_company",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/property_of_the_company",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.rangers_warning": {
+    "subtitle": "subtitles.atomicdawn.holotape.rangers_warning",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/rangers_warning",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.stormwatch_final_report": {
+    "subtitle": "subtitles.atomicdawn.holotape.stormwatch_final_report",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/stormwatch_final_report",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.the_last_broadcast": {
+    "subtitle": "subtitles.atomicdawn.holotape.the_last_broadcast",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/the_last_broadcast",
+        "stream": true
+      }
+    ]
+  },
+  "holotape.the_waters_fine": {
+    "subtitle": "subtitles.atomicdawn.holotape.the_waters_fine",
+    "sounds": [
+      {
+        "name": "atomicdawn:holotape/the_waters_fine",
+        "stream": true
+      }
+    ]
   }
 }

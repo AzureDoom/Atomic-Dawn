@@ -69,6 +69,7 @@ public final class AtomicDawn {
         ADMobEffects.REGISTER.register(modBus);
         ADItems.REGISTER.register(modBus);
         ADBlockEntities.REGISTER.register(modBus);
+        ADStructureTypes.REGISTER.register(modBus);
         ADMenus.REGISTER.register(modBus);
         ADSounds.REGISTER.register(modBus);
         ADAttachments.REGISTER.register(modBus);

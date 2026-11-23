@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.network.NukeExplosionPayload;
+import mod.azure.atomicdawn.radiation.BlastZoneService;
 import mod.azure.atomicdawn.radiation.FalloutCloudEntity;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADBlocks;
@@ -86,6 +87,7 @@ public final class Detonation {
             new NukeExplosionPayload(at, radius)
         );
         radiationBurst(level, radius * 2F, at);
+        BlastZoneService.add(level, at, radius);
         irradiateWater(level, BlockPos.containing(at), AtomicDawn.CONFIG.radiation.NUKE_WATER_RADIUS);
         int duration = AtomicDawn.CONFIG.radiation.FALLOUT_DURATION_TICKS;
         if (duration > 0) {

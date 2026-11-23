@@ -26,6 +26,7 @@ import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorEffectType;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorUpgradeEvents;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.special.SpecialStatResolver;
+import mod.azure.atomicdawn.thirst.ThirstService;
 import mod.azure.atomicdawn.vats.ActionPoints;
 import mod.azure.atomicdawn.vats.BodyPart;
 import mod.azure.atomicdawn.vats.PartPoint;
@@ -45,7 +46,7 @@ public final class VatsActions {
     public static float maxActionPoints(Player player) {
         return (float) (AtomicDawn.CONFIG.vats.MAX_ACTION_POINTS + SpecialStatResolver.resolve(player).maxApBonus
             + PowerArmorBonuses.of(player).get(PowerArmorEffectType.MAX_AP) + MutationService.maxApBonus(player)
-            + ArmorEvents.maxApBonus(player));
+            + ArmorEvents.maxApBonus(player)) * ThirstService.apMultiplier(player);
     }
 
     public static float apCost(Player player, WeaponDefinition definition) {

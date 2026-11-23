@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:radiation_sites/fissure_site",
+      "weight": 1
+    },
+    {
+      "structure": "atomicdawn:radiation_sites/waste_disposal",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 20,
+    "separation": 7,
+    "salt": 58201377
+  }
+}

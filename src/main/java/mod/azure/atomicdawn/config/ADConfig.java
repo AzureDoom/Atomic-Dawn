@@ -26,6 +26,9 @@ public class ADConfig {
     public EnvironmentalRadiation environmentalRadiation = new EnvironmentalRadiation();
 
     @Configurable
+    public Thirst thirst = new Thirst();
+
+    @Configurable
     public PowerArmor powerArmor = new PowerArmor();
 
     @Configurable
@@ -60,6 +63,9 @@ public class ADConfig {
 
     @Configurable
     public SkylineVisuals skylineVisuals = new SkylineVisuals();
+
+    @Configurable
+    public ClientRadStorm clientRadStorm = new ClientRadStorm();
 
     @Configurable
     public Ghoul ghoul = new Ghoul();
@@ -174,6 +180,12 @@ public class ADConfig {
         @DecimalRange(min = 1.0, max = 90.0)
         public double VATS_TARGET_CONE = 25.0;
 
+        @Comment("Max V.A.T.S. targeting distance for ranged weapons; a shorter weapon range still applies.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 4.0, max = 256.0)
+        public double VATS_MAX_RANGE = 48.0;
+
         @Comment("Upper limit for any V.A.T.S. hit chance (criticals always hit).")
         @Configurable
         @Configurable.Synchronized
@@ -246,6 +258,24 @@ public class ADConfig {
         @DecimalRange(min = 0.0, max = 1000.0)
         public double FALLOUT_RADS_PER_SECOND = 10.0;
 
+        @Comment("Rads received for each bottle of Dirty Water collected.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double DIRTY_WATER_COLLECT_RADS = 5.0;
+
+        @Comment("Rads received from drinking Dirty Water.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double DIRTY_WATER_DRINK_RADS = 15.0;
+
+        @Comment("Rads received from drinking Boiled Water.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double BOILED_WATER_DRINK_RADS = 5.0;
+
         @Comment("Rads removed by one RadAway.")
         @Configurable
         @Configurable.Synchronized
@@ -280,39 +310,66 @@ public class ADConfig {
 
     public static class EnvironmentalRadiation {
 
+        @Comment("Nuclear detonations leave an irradiated blast zone behind.")
         @Configurable
         @Configurable.Synchronized
-        public boolean BIOME_RADIATION_ENABLED = true;
+        public boolean BLAST_ZONES_ENABLED = true;
 
+        @Comment(
+            "Rads per second at the centre of a fresh blast zone (falls off to a quarter at its edge and fades as it decays)."
+        )
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 1000.0)
-        public double TOXIC_VALLEY_RADS_PER_SECOND = 0.6;
+        public double BLAST_ZONE_RADS_PER_SECOND = 3.0;
 
+        @Comment("Blast zone radius as a multiple of the detonation's blast radius.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double BLAST_ZONE_RADIUS_MULTIPLIER = 3.0;
+
+        @Comment("Ticks a blast zone stays irradiated (24000 = one Minecraft day).")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 10000000)
+        public int BLAST_ZONE_DURATION_TICKS = 72000;
+
+        @Comment("Rain over the wasteland can turn into a green rad storm.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean RAD_STORMS_ENABLED = true;
+
+        @Comment("Chance that a new spell of rain is a rad storm.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double RAD_STORM_CHANCE = 0.35;
+
+        @Comment("Rads per second while exposed to the open sky in a wasteland biome during a rad storm.")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 1000.0)
-        public double ASH_HEAP_RADS_PER_SECOND = 0.4;
+        public double RAD_STORM_RADS_PER_SECOND = 1.5;
 
+        @Comment("Fissure sites and waste disposal spots give off radiation.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean RADIATION_SITES_ENABLED = true;
+
+        @Comment(
+            "Rads per second at the centre of a fissure site or waste disposal spot (falls off to a quarter at its edge)."
+        )
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 1000.0)
-        public double IRRADIATED_MIRE_RADS_PER_SECOND = 1.3;
+        public double RADIATION_SITE_RADS_PER_SECOND = 2.5;
 
+        @Comment("Rads per second while standing in ordinary water in a wasteland biome (doubled when submerged).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 1000.0)
-        public double CRIMSON_BOG_RADS_PER_SECOND = 1.0;
-
-        @Configurable
-        @Configurable.Synchronized
-        @DecimalRange(min = 0.0, max = 1000.0)
-        public double BURNING_SPRINGS_RADS_PER_SECOND = 1.1;
-
-        @Configurable
-        @Configurable.Synchronized
-        @DecimalRange(min = 0.0, max = 1000.0)
-        public double SKYLINE_VALLEY_RADS_PER_SECOND = 0.3;
+        public double WASTELAND_WATER_RADS_PER_SECOND = 1.0;
 
         @Configurable
         @Configurable.Synchronized
@@ -327,6 +384,53 @@ public class ADConfig {
         @Configurable.Synchronized
         @Range(min = 0, max = 12)
         public int RADIATION_HOTSPOT_RADIUS = 6;
+
+    }
+
+    public static class Thirst {
+
+        @Comment("Enable the thirst system. Players dehydrate over time and must drink water.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean THIRST_ENABLED = false;
+
+        @Comment("Thirst lost per second (out of 20).")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double THIRST_DRAIN_PER_SECOND = 0.025;
+
+        @Comment("Multiplier applied to thirst loss while sprinting.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double THIRST_SPRINT_MULTIPLIER = 2.0;
+
+        @Comment(
+            "Fraction of maximum Action Points kept while fully dehydrated. Dehydrated players also cannot sprint."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double DEHYDRATED_AP_MULTIPLIER = 0.5;
+
+        @Comment("Thirst restored by a vanilla water bottle.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double WATER_BOTTLE_THIRST = 6.0;
+
+        @Comment("Thirst restored by Boiled Water.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double BOILED_WATER_THIRST = 6.0;
+
+        @Comment("Thirst restored by Dirty Water.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double DIRTY_WATER_THIRST = 5.0;
 
     }
 
@@ -1228,6 +1332,23 @@ public class ADConfig {
         @Configurable(side = Configurable.Side.CLIENT)
         @DecimalRange(min = 0.0, max = 10.0)
         public double SKYLINE_SKY_SPIN = 1.0;
+
+    }
+
+    public static class ClientRadStorm {
+
+        @Comment("Tint the screen while exposed to a rad storm.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        public boolean RAD_STORM_OVERLAY = true;
+
+        @Comment("Rad storm screen tint colour. The alpha channel sets the tint strength at full exposure.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        @Gui.ColorValue(isARGB = true)
+        public String RAD_STORM_OVERLAY_COLOR = "#504CC22A";
+
+        @Comment("Show falling green fallout particles during a rad storm.")
+        @Configurable(side = Configurable.Side.CLIENT)
+        public boolean RAD_STORM_PARTICLES = true;
 
     }
 

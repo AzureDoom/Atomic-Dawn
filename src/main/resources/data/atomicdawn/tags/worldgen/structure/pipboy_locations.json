@@ -1,5 +1,6 @@
 {
   "values": [
+    "atomicdawn:mountain_vault",
     "#minecraft:village",
     {
       "id": "minecraft:pillager_outpost",
@@ -135,6 +136,10 @@
     },
     {
       "id": "#atomicdawn:skyline_valley_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:radiation_sites",
       "required": false
     },
     "atomicdawn:highway"

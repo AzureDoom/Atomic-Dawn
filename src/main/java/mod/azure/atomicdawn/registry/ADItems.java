@@ -35,6 +35,7 @@ import mod.azure.atomicdawn.item.PadlockItem;
 import mod.azure.atomicdawn.item.RadAwayItem;
 import mod.azure.atomicdawn.item.RadRemoverItem;
 import mod.azure.atomicdawn.item.RadXItem;
+import mod.azure.atomicdawn.item.WaterItem;
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.lock.LockLevel;
 import mod.azure.atomicdawn.mutation.Mutation;
@@ -135,6 +136,26 @@ public final class ADItems {
         properties -> properties.craftRemainder(Items.BUCKET).stacksTo(1)
     );
 
+    public static final DeferredItem<WaterItem> DIRTY_WATER = REGISTER.registerItem(
+        "dirty_water",
+        properties -> new WaterItem(
+            properties,
+            () -> AtomicDawn.CONFIG.thirst.DIRTY_WATER_THIRST,
+            () -> AtomicDawn.CONFIG.radiation.DIRTY_WATER_DRINK_RADS
+        ),
+        WaterItem::properties
+    );
+
+    public static final DeferredItem<WaterItem> BOILED_WATER = REGISTER.registerItem(
+        "boiled_water",
+        properties -> new WaterItem(
+            properties,
+            () -> AtomicDawn.CONFIG.thirst.BOILED_WATER_THIRST,
+            () -> AtomicDawn.CONFIG.radiation.BOILED_WATER_DRINK_RADS
+        ),
+        WaterItem::properties
+    );
+
     public static final DeferredItem<Item> REPAIR_KIT = REGISTER.registerSimpleItem(
         "weapon_repair_kit",
         properties -> properties.stacksTo(16)
@@ -194,6 +215,11 @@ public final class ADItems {
     public static final DeferredItem<BlockItem> POWER_ARMOR_STATION = REGISTER.registerSimpleBlockItem(
         "power_armor_station",
         ADBlocks.POWER_ARMOR_STATION
+    );
+
+    public static final DeferredItem<BlockItem> VAULT_DOOR = REGISTER.registerSimpleBlockItem(
+        "vault_door",
+        ADBlocks.VAULT_DOOR
     );
 
     public static final DeferredItem<PowerArmorChassisItem> POWER_ARMOR_CHASSIS = REGISTER.registerItem(

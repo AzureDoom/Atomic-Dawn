@@ -17,6 +17,7 @@ import mod.azure.atomicdawn.camp.CampModuleBlock;
 import mod.azure.atomicdawn.camp.CampStashBlock;
 import mod.azure.atomicdawn.pipboy.light.PipBoyLightBlock;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
+import mod.azure.atomicdawn.vault.VaultDoorBlock;
 
 public final class ADBlocks {
 
@@ -69,6 +70,19 @@ public final class ADBlocks {
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
+            .isViewBlocking((_, _, _, _) -> false)
+            .isSuffocating((_, _, _) -> false)
+            .pushReaction(PushReaction.IMMOVEABLE)
+    );
+
+    public static final DeferredBlock<VaultDoorBlock> VAULT_DOOR = REGISTER.registerBlock(
+        "vault_door",
+        VaultDoorBlock::new,
+        properties -> properties.mapColor(MapColor.METAL)
+            .strength(-1.0F, 3600000.0F)
+            .sound(SoundType.METAL)
+            .noOcclusion()
+            .noLootTable()
             .isViewBlocking((_, _, _, _) -> false)
             .isSuffocating((_, _, _) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)

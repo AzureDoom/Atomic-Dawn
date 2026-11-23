@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_mountain",
+    "#minecraft:is_badlands",
+    "#minecraft:is_hill",
+    "atomicdawn:savage_divide",
+    {
+      "id": "minecraft:windswept_hills",
+      "required": false
+    },
+    {
+      "id": "minecraft:windswept_gravelly_hills",
+      "required": false
+    },
+    {
+      "id": "minecraft:windswept_forest",
+      "required": false
+    }
+  ]
+}

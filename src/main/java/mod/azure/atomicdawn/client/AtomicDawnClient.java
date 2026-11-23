@@ -32,6 +32,7 @@ import mod.azure.atomicdawn.client.npc.NpcRenderer;
 import mod.azure.atomicdawn.client.pipboy.PipBoyArmLayer;
 import mod.azure.atomicdawn.client.pipboy.PipBoyNotificationHud;
 import mod.azure.atomicdawn.client.powerarmor.PowerArmorHud;
+import mod.azure.atomicdawn.client.radiation.RadStormVisuals;
 import mod.azure.atomicdawn.client.radiation.RadiationHud;
 import mod.azure.atomicdawn.client.render.WeaponClientExtensions;
 import mod.azure.atomicdawn.client.render.WeaponItemRenderer;
@@ -40,6 +41,7 @@ import mod.azure.atomicdawn.client.render.entity.MiniNukeRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorItemRenderers;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorStationRenderer;
+import mod.azure.atomicdawn.client.render.vault.VaultDoorRenderer;
 import mod.azure.atomicdawn.client.render.workbench.ArmorBenchItemRenderer;
 import mod.azure.atomicdawn.client.render.workbench.ArmorBenchRenderer;
 import mod.azure.atomicdawn.client.render.workbench.TinkersBenchItemRenderer;
@@ -51,6 +53,7 @@ import mod.azure.atomicdawn.client.screen.ArmorBenchScreen;
 import mod.azure.atomicdawn.client.screen.PowerArmorStationScreen;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
+import mod.azure.atomicdawn.client.thirst.ThirstHud;
 import mod.azure.atomicdawn.client.vats.VatsHud;
 import mod.azure.atomicdawn.client.weapon.ScopeClient;
 import mod.azure.atomicdawn.registry.ADBlockEntities;
@@ -116,6 +119,7 @@ public final class AtomicDawnClient {
         event.registerBlockEntityRenderer(ADBlockEntities.WEAPONS_WORKBENCH.get(), _ -> new WorkbenchRenderer());
         event.registerBlockEntityRenderer(ADBlockEntities.TINKERS_BENCH.get(), _ -> new TinkersBenchRenderer());
         event.registerBlockEntityRenderer(ADBlockEntities.ARMOR_BENCH.get(), _ -> new ArmorBenchRenderer());
+        event.registerBlockEntityRenderer(ADBlockEntities.VAULT_DOOR.get(), _ -> new VaultDoorRenderer());
         event.registerEntityRenderer(ADEntities.MINI_NUKE.get(), MiniNukeRenderer::new);
         event.registerEntityRenderer(ADEntities.FALLOUT_CLOUD.get(), NoopRenderer::new);
         event.registerEntityRenderer(ADEntities.POWER_ARMOR.get(), PowerArmorRenderer::new);
@@ -151,6 +155,7 @@ public final class AtomicDawnClient {
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("weapon_hud"), new WeaponHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("vats_hud"), new VatsHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("radiation_hud"), new RadiationHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("thirst_hud"), new ThirstHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("ghoul_hud"), new GhoulHud());
         event.registerAbove(
             VanillaGuiLayers.HOTBAR,
@@ -161,6 +166,7 @@ public final class AtomicDawnClient {
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("waypoint_hud"), new WaypointHud());
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("party_hud"), new PartyHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("camp_workshop_hud"), new CampWorkshopHud());
+        event.registerBelowAll(AtomicDawn.id("rad_storm_tint"), new RadStormVisuals.Overlay());
         event.registerBelowAll(AtomicDawn.id("weapon_scope"), new ScopeClient.Overlay());
         event.registerAboveAll(AtomicDawn.id("nuke_flash"), new NukeEffects.FlashLayer());
     }

@@ -1,0 +1,13 @@
+{
+  "type": "atomicdawn:mountain_vault",
+  "biomes": "#atomicdawn:vault_biomes",
+  "step": "underground_structures",
+  "terrain_adaptation": "none",
+  "spawn_overrides": {},
+  "start_pool": "atomicdawn:vault/entrance",
+  "size": 12,
+  "max_distance_from_center": 96,
+  "floor_offset": 3,
+  "min_rise": 8,
+  "attempts": 12
+}

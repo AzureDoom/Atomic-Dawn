@@ -20,8 +20,11 @@ import mod.azure.atomicdawn.pipboy.holotape.HolotapeLog;
 import mod.azure.atomicdawn.pipboy.location.LocationLog;
 import mod.azure.atomicdawn.progression.KnownMods;
 import mod.azure.atomicdawn.quest.QuestLog;
+import mod.azure.atomicdawn.radiation.BlastZones;
+import mod.azure.atomicdawn.radiation.RadStorm;
 import mod.azure.atomicdawn.radiation.Radiation;
 import mod.azure.atomicdawn.special.SpecialProgress;
+import mod.azure.atomicdawn.thirst.Thirst;
 import mod.azure.atomicdawn.vats.ActionPoints;
 import mod.azure.atomicdawn.weapon.action.ShooterState;
 
@@ -168,6 +171,30 @@ public final class ADAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampRegistry>> CAMPS = REGISTER.register(
         "camps",
         () -> AttachmentType.builder(() -> CampRegistry.EMPTY).serialize(CampRegistry.MAP_CODEC).build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Thirst>> THIRST = REGISTER.register(
+        "thirst",
+        () -> AttachmentType.builder(() -> Thirst.FULL)
+            .serialize(Thirst.MAP_CODEC)
+            .sync((holder, to) -> holder == to, Thirst.STREAM_CODEC)
+            .build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> RAD_STORM = REGISTER.register(
+        "rad_storm",
+        () -> AttachmentType.builder(() -> false).sync((holder, to) -> holder == to, ByteBufCodecs.BOOL).build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<RadStorm>> LEVEL_RAD_STORM = REGISTER
+        .register(
+            "level_rad_storm",
+            () -> AttachmentType.builder(() -> RadStorm.NONE).serialize(RadStorm.MAP_CODEC).build()
+        );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<BlastZones>> BLAST_ZONES = REGISTER.register(
+        "blast_zones",
+        () -> AttachmentType.builder(() -> BlastZones.EMPTY).serialize(BlastZones.MAP_CODEC).build()
     );
 
     private ADAttachments() {}

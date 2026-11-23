@@ -103,7 +103,7 @@ public final class VatsTargeting {
     public static double maxRange(WeaponDefinition definition) {
         return definition.melee()
             .map(melee -> (double) melee.reach() + 1.5)
-            .orElse((double) definition.damage().range());
+            .orElse(Math.min(definition.damage().range(), AtomicDawn.CONFIG.vats.VATS_MAX_RANGE));
     }
 
     public static double angleTo(Player shooter, Vec3 point) {
