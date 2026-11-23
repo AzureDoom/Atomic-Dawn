@@ -173,7 +173,7 @@ public final class NpcPuppets {
                 living.setItemSlot(slot, wanted.copy());
             }
         }
-        var pose = npc.npcPose();
+        var pose = NpcClient.pose(npc);
         var crouching = pose == NpcBehavior.NpcPose.CROUCHING;
         living.setShiftKeyDown(crouching);
         living.setPose(crouching ? Pose.CROUCHING : Pose.STANDING);

@@ -52,6 +52,7 @@ import mod.azure.atomicdawn.client.render.workbench.WorkbenchItemRenderer;
 import mod.azure.atomicdawn.client.render.workbench.WorkbenchRenderer;
 import mod.azure.atomicdawn.client.screen.AmmoContainerScreen;
 import mod.azure.atomicdawn.client.screen.ArmorBenchScreen;
+import mod.azure.atomicdawn.client.screen.NpcGearScreen;
 import mod.azure.atomicdawn.client.screen.PowerArmorStationScreen;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
@@ -145,6 +146,7 @@ public final class AtomicDawnClient {
         event.register(ADMenus.AMMO_CONTAINER.get(), AmmoContainerScreen::new);
         event.register(ADMenus.POWER_ARMOR_STATION.get(), PowerArmorStationScreen::new);
         event.register(ADMenus.ARMOR_BENCH.get(), ArmorBenchScreen::new);
+        event.register(ADMenus.NPC_GEAR.get(), NpcGearScreen::new);
     }
 
     @SubscribeEvent

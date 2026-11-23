@@ -5,16 +5,21 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.npc.NpcAppearance;
+import mod.azure.atomicdawn.npc.NpcBehavior;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.npc.NpcModels;
 
 public class NpcRenderer extends EntityRenderer<NpcEntity, NpcRenderState> {
+
+    private static final double SIT_OFFSET = -0.5;
 
     private final NpcAzRenderer azure;
 
@@ -35,6 +40,7 @@ public class NpcRenderer extends EntityRenderer<NpcEntity, NpcRenderState> {
         state.delegate = null;
         state.delegateState = null;
         state.azure = false;
+        state.sitting = false;
         if (npc.isInvisible() || npc.isDowned()) {
             return;
         }
@@ -57,11 +63,25 @@ public class NpcRenderer extends EntityRenderer<NpcEntity, NpcRenderState> {
             var renderer = entityRenderDispatcher.getRenderer(puppet);
             state.delegate = renderer;
             state.delegateState = capture(renderer, puppet, partialTick);
+            applyPose(npc, state);
         } catch (RuntimeException exception) {
             NpcPuppets.markBroken(npc, appearance);
             state.delegate = null;
             state.delegateState = null;
             AtomicDawn.LOGGER.warn("Could not prepare NPC appearance {}", appearance.model(), exception);
+        }
+    }
+
+    private static void applyPose(NpcEntity npc, NpcRenderState state) {
+        var pose = NpcClient.pose(npc);
+        var sitting = pose == NpcBehavior.NpcPose.SITTING;
+        if (state.delegateState instanceof HumanoidRenderState humanoid) {
+            humanoid.isCrouching = pose == NpcBehavior.NpcPose.CROUCHING;
+            humanoid.isPassenger = sitting;
+            state.sitting = sitting;
+        } else if (state.delegateState instanceof IllagerRenderState illager) {
+            illager.isRiding = sitting;
+            state.sitting = sitting;
         }
     }
 
@@ -82,6 +102,9 @@ public class NpcRenderer extends EntityRenderer<NpcEntity, NpcRenderState> {
     ) {
         if (state.delegate != null && state.delegateState != null) {
             poseStack.pushPose();
+            if (state.sitting) {
+                poseStack.translate(0.0, SIT_OFFSET * state.modelScale, 0.0);
+            }
             if (state.modelScale != 1F) {
                 poseStack.scale(state.modelScale, state.modelScale, state.modelScale);
             }

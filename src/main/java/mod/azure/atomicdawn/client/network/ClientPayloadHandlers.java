@@ -1,6 +1,5 @@
 package mod.azure.atomicdawn.client.network;
 
-import mod.azure.atomicdawn.client.storage.StorageClient;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
@@ -18,7 +17,7 @@ import mod.azure.atomicdawn.client.powerarmor.PowerArmorClient;
 import mod.azure.atomicdawn.client.radiation.HealthClampClient;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
-import mod.azure.atomicdawn.client.storage.StorageScreen;
+import mod.azure.atomicdawn.client.storage.StorageClient;
 import mod.azure.atomicdawn.client.vats.VatsClient;
 import mod.azure.atomicdawn.network.CampRestorePayload;
 import mod.azure.atomicdawn.network.CampSyncPayload;

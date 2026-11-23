@@ -35,6 +35,9 @@ public class ADConfig {
     public Junk junk = new Junk();
 
     @Configurable
+    public Story story = new Story();
+
+    @Configurable
     public ClientLimbs clientLimbs = new ClientLimbs();
 
     @Configurable
@@ -409,6 +412,67 @@ public class ADConfig {
         @Configurable
         @Range(min = 0, max = 128)
         public int ROAD_STRUCTURE_CLEARANCE = 16;
+
+    }
+
+    public static class Story {
+
+        @Comment("Experience awarded the first time a dialogue skill check succeeds (checks can override this).")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 0, max = 100000)
+        public int DIALOGUE_CHECK_XP = 25;
+
+        @Comment("Success chance of a chance-based dialogue check when the player's stat exactly matches the target.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double DIALOGUE_CHANCE_AT_TARGET = 0.5;
+
+        @Comment("Extra success chance per point of Luck on chance-based dialogue checks.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 0.1)
+        public double DIALOGUE_LUCK_BONUS = 0.01;
+
+        @Comment("Lowest possible success chance of a chance-based dialogue check.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double DIALOGUE_CHANCE_MIN = 0.05;
+
+        @Comment("Highest possible success chance of a chance-based dialogue check.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double DIALOGUE_CHANCE_MAX = 0.95;
+
+        @Comment("Multiplier applied to every faction reputation change.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100.0)
+        public double REPUTATION_MULTIPLIER = 1.0;
+
+        @Comment("Show a message whenever faction reputation changes.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean REPUTATION_NOTIFICATIONS = true;
+
+        @Comment("Factions whose rank is marked hostile attack the player and refuse to talk.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean FACTION_HOSTILITY = true;
+
+        @Comment("Show companion reactions such as 'Piper liked that.'")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean COMPANION_REACTIONS = true;
+
+        @Comment("Blocks within which companions notice and react to what the player does.")
+        @Configurable
+        @Configurable.Synchronized
+        @Range(min = 1, max = 256)
+        public int COMPANION_REACTION_RANGE = 32;
 
     }
 

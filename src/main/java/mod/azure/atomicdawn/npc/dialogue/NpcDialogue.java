@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.registry.ADRegistries;
+import mod.azure.atomicdawn.story.SkillCheck;
 
 public record NpcDialogue(
     List<Entry> start,
@@ -38,7 +39,8 @@ public record NpcDialogue(
         String text,
         Optional<String> next,
         List<NpcCondition> conditions,
-        List<NpcAction> actions
+        List<NpcAction> actions,
+        Optional<SkillCheck> check
     ) {
 
         public static final Codec<Option> CODEC = RecordCodecBuilder.create(
@@ -46,7 +48,8 @@ public record NpcDialogue(
                 Codec.STRING.fieldOf("text").forGetter(Option::text),
                 Codec.STRING.optionalFieldOf("next").forGetter(Option::next),
                 NpcCondition.CODEC.listOf().optionalFieldOf("conditions", List.of()).forGetter(Option::conditions),
-                NpcAction.CODEC.listOf().optionalFieldOf("actions", List.of()).forGetter(Option::actions)
+                NpcAction.CODEC.listOf().optionalFieldOf("actions", List.of()).forGetter(Option::actions),
+                SkillCheck.CODEC.optionalFieldOf("check").forGetter(Option::check)
             ).apply(instance, Option::new)
         );
     }

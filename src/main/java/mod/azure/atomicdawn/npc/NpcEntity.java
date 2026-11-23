@@ -53,6 +53,7 @@ import java.util.UUID;
 
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.registry.ADDataSerializers;
+import mod.azure.atomicdawn.story.StoryService;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
 @SuppressWarnings("unused")
@@ -212,6 +213,19 @@ public class NpcEntity extends PathfinderMob {
         targetSelector.addGoal(1, new NpcCombatGoals.DefendOwnerGoal(this));
         targetSelector.addGoal(2, new NpcCombatGoals.AssistOwnerGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        if (hostility != NpcCombat.Hostility.HOSTILE) {
+            targetSelector.addGoal(
+                4,
+                new NearestAttackableTargetGoal<>(
+                    this,
+                    Player.class,
+                    10,
+                    true,
+                    false,
+                    (target, _) -> target instanceof Player player && StoryService.hostile(this, player)
+                )
+            );
+        }
         if (hostility == NpcCombat.Hostility.GUARD) {
             targetSelector.addGoal(
                 4,
@@ -381,7 +395,7 @@ public class NpcEntity extends PathfinderMob {
         if (isAlly(entity)) {
             return false;
         }
-        return !(entity instanceof Player) || isHostile();
+        return !(entity instanceof Player player) || isHostile() || StoryService.hostile(this, player);
     }
 
     public void applyConfig(NpcConfig value) {

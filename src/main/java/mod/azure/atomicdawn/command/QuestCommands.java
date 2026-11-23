@@ -7,6 +7,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -15,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.function.BiPredicate;
 
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
+import mod.azure.atomicdawn.quest.QuestDefinition;
 import mod.azure.atomicdawn.quest.QuestService;
 
 public final class QuestCommands {
@@ -44,6 +46,14 @@ public final class QuestCommands {
         return Commands.literal(name)
             .then(
                 Commands.argument("quest", StringArgumentType.greedyString())
+                    .suggests(
+                        (context, builder) -> SharedSuggestionProvider.suggest(
+                            QuestDefinition.all(context.getSource().registryAccess())
+                                .stream()
+                                .map(holder -> holder.key().identifier().toString()),
+                            builder
+                        )
+                    )
                     .executes(context -> run(context, name, handler))
             );
     }

@@ -10,6 +10,7 @@ import net.minecraft.util.ExtraCodecs;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.registry.ADRegistries;
@@ -22,7 +23,9 @@ public record QuestDefinition(
     List<QuestObjective> objectives,
     QuestReward rewards,
     boolean enabled,
-    int sortOrder
+    int sortOrder,
+    Map<String, QuestOutcome> outcomes,
+    Optional<String> defaultOutcome
 ) {
 
     public static final Codec<QuestDefinition> CODEC = RecordCodecBuilder.create(
@@ -38,7 +41,11 @@ public record QuestDefinition(
                 .forGetter(QuestDefinition::objectives),
             QuestReward.CODEC.optionalFieldOf("rewards", QuestReward.NONE).forGetter(QuestDefinition::rewards),
             Codec.BOOL.optionalFieldOf("enabled", true).forGetter(QuestDefinition::enabled),
-            Codec.INT.optionalFieldOf("sort", 0).forGetter(QuestDefinition::sortOrder)
+            Codec.INT.optionalFieldOf("sort", 0).forGetter(QuestDefinition::sortOrder),
+            Codec.unboundedMap(Codec.STRING, QuestOutcome.CODEC)
+                .optionalFieldOf("outcomes", Map.of())
+                .forGetter(QuestDefinition::outcomes),
+            Codec.STRING.optionalFieldOf("default_outcome").forGetter(QuestDefinition::defaultOutcome)
         ).apply(instance, QuestDefinition::new)
     );
 

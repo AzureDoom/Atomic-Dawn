@@ -1,0 +1,13 @@
+{
+  "name": "faction.atomicdawn.responders",
+  "description": "faction.atomicdawn.responders.desc",
+  "color": "#E8B23A",
+  "allies": [
+    "atomicdawn:free_states",
+    "atomicdawn:settlers"
+  ],
+  "enemies": [
+    "atomicdawn:raiders"
+  ],
+  "npcs": []
+}

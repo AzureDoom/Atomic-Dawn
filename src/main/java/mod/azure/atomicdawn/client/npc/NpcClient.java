@@ -25,6 +25,7 @@ import mod.azure.atomicdawn.network.NpcDialoguePayload;
 import mod.azure.atomicdawn.network.NpcEditorPayload;
 import mod.azure.atomicdawn.network.NpcPickerPayload;
 import mod.azure.atomicdawn.npc.NpcAppearance;
+import mod.azure.atomicdawn.npc.NpcBehavior;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.npc.NpcIds;
 
@@ -33,6 +34,8 @@ import mod.azure.atomicdawn.npc.NpcIds;
 public final class NpcClient {
 
     private static final Map<Integer, NpcAppearance> PREVIEW = new HashMap<>();
+
+    private static final Map<Integer, NpcBehavior.NpcPose> POSE_PREVIEW = new HashMap<>();
 
     private static List<Identifier> livingTypes;
 
@@ -43,12 +46,22 @@ public final class NpcClient {
         return preview != null ? preview : npc.appearance();
     }
 
+    public static NpcBehavior.NpcPose pose(NpcEntity npc) {
+        var preview = POSE_PREVIEW.get(npc.getId());
+        return preview != null ? preview : npc.npcPose();
+    }
+
+    public static void previewPose(int entityId, NpcBehavior.NpcPose pose) {
+        POSE_PREVIEW.put(entityId, pose);
+    }
+
     public static void preview(int entityId, NpcAppearance appearance) {
         PREVIEW.put(entityId, appearance);
     }
 
     public static void clearPreview(int entityId) {
         PREVIEW.remove(entityId);
+        POSE_PREVIEW.remove(entityId);
     }
 
     public static void onDialogue(NpcDialoguePayload payload) {

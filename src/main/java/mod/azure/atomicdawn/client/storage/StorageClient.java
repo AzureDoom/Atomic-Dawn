@@ -1,7 +1,8 @@
 package mod.azure.atomicdawn.client.storage;
 
-import mod.azure.atomicdawn.network.StorageOpenPayload;
 import net.minecraft.client.Minecraft;
+
+import mod.azure.atomicdawn.network.StorageOpenPayload;
 
 public final class StorageClient {
 

@@ -24,6 +24,8 @@ import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorLegendary;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorMod;
 import mod.azure.atomicdawn.quest.QuestDefinition;
 import mod.azure.atomicdawn.radio.RadioStation;
+import mod.azure.atomicdawn.story.CompanionProfile;
+import mod.azure.atomicdawn.story.Faction;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryEffect;
 import mod.azure.atomicdawn.weapon.modification.WeaponModification;
@@ -115,6 +117,14 @@ public final class ADRegistries {
 
     public static final ResourceKey<Registry<ScrapRecipe>> SCRAP_RECIPE = ResourceKey.createRegistryKey(
         AtomicDawn.id("scrap_recipe")
+    );
+
+    public static final ResourceKey<Registry<Faction>> FACTION = ResourceKey.createRegistryKey(
+        AtomicDawn.id("faction")
+    );
+
+    public static final ResourceKey<Registry<CompanionProfile>> COMPANION = ResourceKey.createRegistryKey(
+        AtomicDawn.id("companion")
     );
 
     private ADRegistries() {}

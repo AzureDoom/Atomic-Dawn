@@ -25,6 +25,7 @@ import mod.azure.atomicdawn.radiation.BlastZones;
 import mod.azure.atomicdawn.radiation.RadStorm;
 import mod.azure.atomicdawn.radiation.Radiation;
 import mod.azure.atomicdawn.special.SpecialProgress;
+import mod.azure.atomicdawn.story.StoryState;
 import mod.azure.atomicdawn.thirst.Thirst;
 import mod.azure.atomicdawn.vats.ActionPoints;
 import mod.azure.atomicdawn.weapon.action.ShooterState;
@@ -172,6 +173,15 @@ public final class ADAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<CampRegistry>> CAMPS = REGISTER.register(
         "camps",
         () -> AttachmentType.builder(() -> CampRegistry.EMPTY).serialize(CampRegistry.MAP_CODEC).build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<StoryState>> STORY = REGISTER.register(
+        "story",
+        () -> AttachmentType.builder(() -> StoryState.EMPTY)
+            .serialize(StoryState.MAP_CODEC)
+            .copyOnDeath()
+            .sync((holder, to) -> holder == to, StoryState.STREAM_CODEC)
+            .build()
     );
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<LimbState>> LIMBS = REGISTER.register(

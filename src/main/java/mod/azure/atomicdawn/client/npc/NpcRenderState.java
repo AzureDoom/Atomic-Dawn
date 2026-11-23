@@ -15,4 +15,6 @@ public class NpcRenderState extends EntityRenderState {
     public float modelScale = 1F;
 
     public boolean azure;
+
+    public boolean sitting;
 }

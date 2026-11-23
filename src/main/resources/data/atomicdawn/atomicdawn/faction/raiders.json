@@ -1,0 +1,37 @@
+{
+  "name": "faction.atomicdawn.raiders",
+  "description": "faction.atomicdawn.raiders.desc",
+  "color": "#D8513A",
+  "start": -100,
+  "enemies": [
+    "atomicdawn:settlers",
+    "atomicdawn:responders"
+  ],
+  "npcs": [
+    "atomicdawn:example_raider"
+  ],
+  "ranks": [
+    {
+      "min": -1000,
+      "name": "faction.atomicdawn.rank.marked",
+      "hostile": true
+    },
+    {
+      "min": -400,
+      "name": "faction.atomicdawn.rank.mark",
+      "hostile": true
+    },
+    {
+      "min": 0,
+      "name": "faction.atomicdawn.rank.tolerated"
+    },
+    {
+      "min": 300,
+      "name": "faction.atomicdawn.rank.crew"
+    },
+    {
+      "min": 700,
+      "name": "faction.atomicdawn.rank.boss"
+    }
+  ]
+}

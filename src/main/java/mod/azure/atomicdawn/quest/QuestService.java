@@ -18,6 +18,7 @@ import mod.azure.atomicdawn.pipboy.PipBoyNotifications;
 import mod.azure.atomicdawn.pipboy.holotape.HolotapeService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.special.SpecialService;
+import mod.azure.atomicdawn.story.StoryService;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class QuestService {
@@ -348,7 +349,16 @@ public final class QuestService {
         }
         set(player, log);
         PipBoyNotifications.send(player, PipBoyNotifications.Kind.QUEST_COMPLETED, 0, PipBoyNames.key("quest", id));
-        grant(player, definition.rewards());
+        var outcomeName = StoryService.outcome(player, id).or(definition::defaultOutcome);
+        outcomeName.ifPresent(name -> StoryService.setOutcome(player, id, name));
+        var outcome = outcomeName.map(definition.outcomes()::get).orElse(null);
+        if (outcome == null || !outcome.replaceRewards()) {
+            grant(player, definition.rewards());
+        }
+        if (outcome != null) {
+            grant(player, outcome.rewards());
+            outcome.apply(player);
+        }
         autoStart(player);
     }
 

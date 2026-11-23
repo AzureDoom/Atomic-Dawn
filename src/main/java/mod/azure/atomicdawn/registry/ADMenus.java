@@ -11,6 +11,7 @@ import mod.azure.atomicdawn.crafting.AmmoContainerMenu;
 import mod.azure.atomicdawn.crafting.ArmorBenchMenu;
 import mod.azure.atomicdawn.crafting.TinkersBenchMenu;
 import mod.azure.atomicdawn.crafting.WorkbenchMenu;
+import mod.azure.atomicdawn.npc.NpcGearMenu;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationMenu;
 
 public final class ADMenus {
@@ -41,6 +42,11 @@ public final class ADMenus {
     public static final DeferredHolder<MenuType<?>, MenuType<ArmorBenchMenu>> ARMOR_BENCH = REGISTER.register(
         "armor_bench",
         () -> IMenuTypeExtension.create(ArmorBenchMenu::new)
+    );
+
+    public static final DeferredHolder<MenuType<?>, MenuType<NpcGearMenu>> NPC_GEAR = REGISTER.register(
+        "npc_gear",
+        () -> IMenuTypeExtension.create(NpcGearMenu::new)
     );
 
     private ADMenus() {}

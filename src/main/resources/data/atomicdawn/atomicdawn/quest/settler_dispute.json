@@ -1,0 +1,76 @@
+{
+  "category": "side",
+  "sort": 50,
+  "objectives": [
+    {
+      "type": "action",
+      "target": "atomicdawn:settle_dispute"
+    }
+  ],
+  "rewards": {
+    "xp": 150
+  },
+  "default_outcome": "walked_away",
+  "outcomes": {
+    "peaceful": {
+      "description": "quest.atomicdawn.settler_dispute.outcome.peaceful",
+      "rewards": {
+        "xp": 300,
+        "items": [
+          {
+            "item": "atomicdawn:stimpak",
+            "count": 2
+          }
+        ]
+      },
+      "reputation": {
+        "atomicdawn:settlers": 100,
+        "atomicdawn:raiders": 50
+      },
+      "flags": {
+        "settler_dispute": "peaceful"
+      }
+    },
+    "settlers": {
+      "description": "quest.atomicdawn.settler_dispute.outcome.settlers",
+      "rewards": {
+        "items": [
+          {
+            "item": "atomicdawn:doctors_bag",
+            "count": 1
+          }
+        ]
+      },
+      "reputation": {
+        "atomicdawn:settlers": 200,
+        "atomicdawn:raiders": -200
+      },
+      "flags": {
+        "settler_dispute": "settlers"
+      }
+    },
+    "raiders": {
+      "description": "quest.atomicdawn.settler_dispute.outcome.raiders",
+      "replace_rewards": true,
+      "rewards": {
+        "xp": 100,
+        "items": [
+          {
+            "item": "minecraft:emerald",
+            "count": 8
+          }
+        ]
+      },
+      "reputation": {
+        "atomicdawn:raiders": 250,
+        "atomicdawn:settlers": -300
+      },
+      "flags": {
+        "settler_dispute": "raiders"
+      }
+    },
+    "walked_away": {
+      "description": "quest.atomicdawn.settler_dispute.outcome.walked_away"
+    }
+  }
+}

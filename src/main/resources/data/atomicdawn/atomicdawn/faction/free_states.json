@@ -1,0 +1,9 @@
+{
+  "name": "faction.atomicdawn.free_states",
+  "description": "faction.atomicdawn.free_states.desc",
+  "color": "#7FB86A",
+  "allies": [
+    "atomicdawn:responders"
+  ],
+  "npcs": []
+}

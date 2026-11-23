@@ -1,0 +1,263 @@
+{
+  "start": [
+    {
+      "node": "after",
+      "conditions": [
+        {
+          "type": "quest_completed",
+          "id": "atomicdawn:settler_dispute"
+        }
+      ]
+    },
+    {
+      "node": "greeting"
+    }
+  ],
+  "nodes": {
+    "greeting": {
+      "text": "npc.atomicdawn.example_settler.greeting",
+      "actions": [
+        {
+          "type": "start_quest",
+          "id": "atomicdawn:settler_dispute"
+        }
+      ],
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.ask",
+          "next": "dispute"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    },
+    "dispute": {
+      "text": "npc.atomicdawn.example_settler.dispute",
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.persuade",
+          "check": {
+            "type": "special",
+            "stat": "charisma",
+            "value": 6,
+            "success": "peace",
+            "failure": "persuade_failed"
+          }
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.bluff",
+          "check": {
+            "type": "special",
+            "stat": "luck",
+            "value": 7,
+            "mode": "chance",
+            "success": "peace",
+            "failure": "bluff_failed"
+          }
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.smart",
+          "check": {
+            "type": "special",
+            "stat": "intelligence",
+            "value": 8,
+            "hide_failed": true,
+            "success": "peace"
+          }
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.vouch",
+          "conditions": [
+            {
+              "type": "reputation",
+              "id": "atomicdawn:responders",
+              "amount": 150
+            }
+          ],
+          "next": "peace",
+          "actions": [
+            {
+              "type": "reputation",
+              "id": "atomicdawn:responders",
+              "amount": 10
+            }
+          ]
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.side_settlers",
+          "next": "settlers"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.side_raiders",
+          "next": "raiders"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.leave",
+          "actions": [
+            {
+              "type": "set_outcome",
+              "id": "atomicdawn:settler_dispute",
+              "value": "walked_away"
+            },
+            {
+              "type": "trigger",
+              "id": "atomicdawn:settle_dispute"
+            }
+          ]
+        }
+      ]
+    },
+    "persuade_failed": {
+      "text": "npc.atomicdawn.example_settler.persuade_failed",
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.side_settlers",
+          "next": "settlers"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.side_raiders",
+          "next": "raiders"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.leave"
+        }
+      ]
+    },
+    "bluff_failed": {
+      "text": "npc.atomicdawn.example_settler.bluff_failed",
+      "actions": [
+        {
+          "type": "reputation",
+          "id": "atomicdawn:settlers",
+          "amount": -25
+        }
+      ],
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.side_settlers",
+          "next": "settlers"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.side_raiders",
+          "next": "raiders"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.leave"
+        }
+      ]
+    },
+    "peace": {
+      "text": "npc.atomicdawn.example_settler.peace",
+      "actions": [
+        {
+          "type": "set_outcome",
+          "id": "atomicdawn:settler_dispute",
+          "value": "peaceful"
+        },
+        {
+          "type": "affinity",
+          "id": "atomicdawn:example_companion",
+          "amount": 25
+        },
+        {
+          "type": "trigger",
+          "id": "atomicdawn:settle_dispute"
+        }
+      ],
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    },
+    "settlers": {
+      "text": "npc.atomicdawn.example_settler.settlers",
+      "actions": [
+        {
+          "type": "set_outcome",
+          "id": "atomicdawn:settler_dispute",
+          "value": "settlers"
+        },
+        {
+          "type": "trigger",
+          "id": "atomicdawn:settle_dispute"
+        }
+      ],
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    },
+    "raiders": {
+      "text": "npc.atomicdawn.example_settler.raiders",
+      "actions": [
+        {
+          "type": "set_outcome",
+          "id": "atomicdawn:settler_dispute",
+          "value": "raiders"
+        },
+        {
+          "type": "affinity",
+          "id": "atomicdawn:example_companion",
+          "amount": -50
+        },
+        {
+          "type": "trigger",
+          "id": "atomicdawn:settle_dispute"
+        }
+      ],
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    },
+    "after": {
+      "text": "npc.atomicdawn.example_settler.after",
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.after_peace",
+          "conditions": [
+            {
+              "type": "quest_outcome",
+              "id": "atomicdawn:settler_dispute",
+              "value": "peaceful"
+            }
+          ],
+          "next": "thanks"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.after_raiders",
+          "conditions": [
+            {
+              "type": "flag",
+              "value": "settler_dispute=raiders"
+            }
+          ],
+          "next": "scorn"
+        },
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    },
+    "thanks": {
+      "text": "npc.atomicdawn.example_settler.thanks",
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    },
+    "scorn": {
+      "text": "npc.atomicdawn.example_settler.scorn",
+      "options": [
+        {
+          "text": "npc.atomicdawn.example_settler.bye"
+        }
+      ]
+    }
+  }
+}

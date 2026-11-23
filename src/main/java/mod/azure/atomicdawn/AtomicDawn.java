@@ -44,6 +44,8 @@ import mod.azure.atomicdawn.quest.QuestDefinition;
 import mod.azure.atomicdawn.radio.RadioStation;
 import mod.azure.atomicdawn.registry.*;
 import mod.azure.atomicdawn.special.SpecialStatResolver;
+import mod.azure.atomicdawn.story.CompanionProfile;
+import mod.azure.atomicdawn.story.Faction;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryBehaviors;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryEffect;
@@ -131,6 +133,8 @@ public final class AtomicDawn {
         event.worldRegistry(ADRegistries.CAMP_BLUEPRINT, CampBlueprint.CODEC, CampBlueprint.NETWORK_CODEC);
         event.worldRegistry(ADRegistries.LIMB_PROFILE, LimbProfile.CODEC, LimbProfile.CODEC);
         event.worldRegistry(ADRegistries.SCRAP_RECIPE, ScrapRecipe.CODEC, ScrapRecipe.CODEC);
+        event.worldRegistry(ADRegistries.FACTION, Faction.CODEC, Faction.CODEC);
+        event.worldRegistry(ADRegistries.COMPANION, CompanionProfile.CODEC, CompanionProfile.CODEC);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

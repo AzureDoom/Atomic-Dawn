@@ -23,8 +23,11 @@ public final class DataTab implements PipBoyTab {
 
     public static final String CAMP_ACCESS = "camp_access";
 
+    public static final String FACTIONS = "factions";
+
     private static final List<String> SUBTABS = List.of(
         QUESTS,
+        FACTIONS,
         LOCATIONS,
         CAMP,
         CAMP_ACCESS,
@@ -46,6 +49,7 @@ public final class DataTab implements PipBoyTab {
     @Override
     public void init(PipBoyScreen screen, Rect area, String subtab) {
         switch (subtab) {
+            case FACTIONS -> FactionsPage.init(screen, area);
             case LOCATIONS -> LocationsPage.init(screen, area);
             case BESTIARY -> BestiaryPage.init(screen, area);
             case HOLOTAPES -> HolotapesPage.init(screen, area);
@@ -66,6 +70,7 @@ public final class DataTab implements PipBoyTab {
         int mouseY
     ) {
         switch (subtab) {
+            case FACTIONS -> FactionsPage.render(graphics, screen, area);
             case LOCATIONS -> LocationsPage.render(graphics, screen, area);
             case BESTIARY -> BestiaryPage.render(graphics, screen, area);
             case HOLOTAPES -> HolotapesPage.render(graphics, screen, area);
@@ -80,6 +85,7 @@ public final class DataTab implements PipBoyTab {
     public boolean scroll(PipBoyScreen screen, String subtab, int direction) {
         var area = screen.contentArea();
         return switch (subtab) {
+            case FACTIONS -> FactionsPage.scroll(direction, area);
             case LOCATIONS -> LocationsPage.scroll(direction, area);
             case BESTIARY -> BestiaryPage.scroll(direction, area);
             case HOLOTAPES -> HolotapesPage.scroll(direction, area);

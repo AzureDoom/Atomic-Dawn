@@ -9,6 +9,7 @@ import mod.azure.atomicdawn.camp.CampManager;
 import mod.azure.atomicdawn.camp.CampPlans;
 import mod.azure.atomicdawn.pipboy.PipBoyService;
 import mod.azure.atomicdawn.progression.ModUnlocks;
+import mod.azure.atomicdawn.story.StoryService;
 
 public final class QuestActions {
 
@@ -59,6 +60,7 @@ public final class QuestActions {
     public static void trigger(Player player, Identifier action, int amount) {
         if (player instanceof ServerPlayer serverPlayer && amount > 0) {
             QuestService.onAction(serverPlayer, action, amount);
+            StoryService.onAction(serverPlayer, action);
         }
     }
 

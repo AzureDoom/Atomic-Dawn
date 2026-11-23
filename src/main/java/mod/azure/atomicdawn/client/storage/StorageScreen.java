@@ -93,7 +93,8 @@ public final class StorageScreen extends Screen {
     }
 
     private boolean inRange() {
-        return minecraft.player != null && minecraft.level != null && Vec3.atCenterOf(pos).distanceToSqr(minecraft.player.position()) <= MAX_DISTANCE_SQR;
+        return minecraft.player != null && minecraft.level != null && Vec3.atCenterOf(pos)
+            .distanceToSqr(minecraft.player.position()) <= MAX_DISTANCE_SQR;
     }
 
     @Override

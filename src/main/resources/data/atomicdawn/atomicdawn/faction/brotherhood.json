@@ -1,0 +1,13 @@
+{
+  "name": "faction.atomicdawn.brotherhood",
+  "description": "faction.atomicdawn.brotherhood.desc",
+  "color": "#9AA7B8",
+  "allies": [
+    "atomicdawn:responders"
+  ],
+  "enemies": [
+    "atomicdawn:raiders"
+  ],
+  "spillover": 0.25,
+  "npcs": []
+}

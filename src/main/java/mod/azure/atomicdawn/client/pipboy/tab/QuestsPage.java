@@ -25,6 +25,7 @@ import mod.azure.atomicdawn.quest.QuestLog;
 import mod.azure.atomicdawn.quest.QuestProgress;
 import mod.azure.atomicdawn.quest.QuestReward;
 import mod.azure.atomicdawn.registry.ADAttachments;
+import mod.azure.atomicdawn.story.StoryService;
 
 final class QuestsPage {
 
@@ -186,6 +187,22 @@ final class QuestsPage {
             PipBoyTheme.dim()
         ) + 3;
         y = objectives(graphics, screen, definition, progress, x, y, detail.width(), bottom) + 3;
+        var outcomeName = player == null ? null : StoryService.outcome(player, selected).orElse(null);
+        var outcome = outcomeName == null ? null : definition.outcomes().get(outcomeName);
+        if (progress.completed() && outcome != null && !outcome.description().isEmpty()) {
+            y = screen.wrapped(
+                graphics,
+                Component.translatable(
+                    "pipboy.atomicdawn.quest.outcome",
+                    Component.translatableWithFallback(outcome.description(), outcome.description())
+                ),
+                x,
+                y,
+                detail.width(),
+                bottom,
+                PipBoyTheme.text()
+            ) + 3;
+        }
         rewards(graphics, screen, definition.rewards(), x, y, detail.width(), bottom);
     }
 

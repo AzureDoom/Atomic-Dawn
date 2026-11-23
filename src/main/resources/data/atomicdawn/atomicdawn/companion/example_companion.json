@@ -1,0 +1,33 @@
+{
+  "npc": "atomicdawn:example_companion",
+  "name": "npc.atomicdawn.example_companion.name",
+  "reactions": [
+    {
+      "action": "atomicdawn:pick_lock",
+      "amount": -5
+    },
+    {
+      "action": "atomicdawn:use_radaway",
+      "amount": 2
+    },
+    {
+      "action": "atomicdawn:repair_weapon",
+      "amount": 3
+    },
+    {
+      "action": "atomicdawn:build_camp",
+      "amount": 10
+    }
+  ],
+  "factions": [
+    {
+      "faction": "atomicdawn:settlers",
+      "per_point": 0.5
+    },
+    {
+      "faction": "atomicdawn:raiders",
+      "per_point": -0.5
+    }
+  ],
+  "leave_below": -750
+}

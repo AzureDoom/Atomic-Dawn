@@ -822,6 +822,7 @@ public final class NpcEditorScreen extends Screen {
 
     private void setBehavior(NpcBehavior behavior) {
         config = config.withBehavior(behavior);
+        NpcClient.previewPose(entityId, behavior.pose());
     }
 
     private List<Identifier> azureModels() {

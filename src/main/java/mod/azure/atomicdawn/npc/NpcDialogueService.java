@@ -1,8 +1,10 @@
 package mod.azure.atomicdawn.npc;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ import mod.azure.atomicdawn.npc.dialogue.NpcAction;
 import mod.azure.atomicdawn.npc.dialogue.NpcCondition;
 import mod.azure.atomicdawn.npc.dialogue.NpcDialogue;
 import mod.azure.atomicdawn.quest.QuestService;
+import mod.azure.atomicdawn.special.SpecialService;
+import mod.azure.atomicdawn.story.StoryService;
 
 @SuppressWarnings("unused")
 public final class NpcDialogueService {
@@ -76,6 +80,14 @@ public final class NpcDialogueService {
         if (npc.isDowned() || npc.isHostile()) {
             return;
         }
+        if (!npc.isOwnedBy(player) && StoryService.hostile(npc, player)) {
+            player.sendSystemMessage(
+                Component.translatable("faction.atomicdawn.refuses", npc.getDisplayName())
+                    .withStyle(ChatFormatting.RED),
+                true
+            );
+            return;
+        }
         var previous = SESSIONS.remove(player.getUUID());
         if (previous != null && previous.entityId() != npc.getId()) {
             stopTalking(player, previous.entityId());
@@ -99,7 +111,7 @@ public final class NpcDialogueService {
             var start = dialogue.startNode(player).orElse(null);
             if (start != null) {
                 npc.startTalking(player);
-                show(player, npc, dialogueId, dialogue, start, true);
+                show(player, npc, dialogueId, dialogue, start, true, null);
                 return;
             }
         }
@@ -158,7 +170,8 @@ public final class NpcDialogueService {
         Identifier dialogueId,
         NpcDialogue dialogue,
         String nodeId,
-        boolean root
+        boolean root,
+        @Nullable Component prefix
     ) {
         var node = dialogue.nodes().get(nodeId);
         if (node == null) {
@@ -173,9 +186,23 @@ public final class NpcDialogueService {
         var menu = new Menu();
         for (var i = 0; i < node.options().size(); i++) {
             var option = node.options().get(i);
-            if (NpcCondition.all(option.conditions(), player)) {
-                menu.add(i, text(option.text(), player, npc));
+            if (!NpcCondition.all(option.conditions(), player, npc)) {
+                continue;
             }
+            var check = option.check().orElse(null);
+            if (check == null) {
+                menu.add(i, text(option.text(), player, npc));
+                continue;
+            }
+            if (
+                !check.visible(player, npc) || (check.oneShot() && StoryService.attempted(
+                    player,
+                    attemptKey(dialogueId, nodeId, i)
+                ))
+            ) {
+                continue;
+            }
+            menu.add(i, check.label(player, npc).append(text(option.text(), player, npc)));
         }
         if (root) {
             services(player, npc, menu);
@@ -184,7 +211,12 @@ public final class NpcDialogueService {
             menu.add(GOODBYE, goodbye());
         }
         SESSIONS.put(player.getUUID(), new Session(npc.getId(), dialogueId, nodeId, menu.codes()));
-        send(player, npc, text(node.text(), player, npc), menu.labels);
+        var body = text(node.text(), player, npc);
+        send(player, npc, prefix == null ? body : prefix.copy().append(body), menu.labels);
+    }
+
+    private static String attemptKey(Identifier dialogue, String node, int index) {
+        return dialogue + "#" + node + "#" + index;
     }
 
     private static boolean handle(ServerPlayer player, NpcEntity npc, NpcAction.Outcome outcome) {
@@ -263,8 +295,14 @@ public final class NpcDialogueService {
             return;
         }
         var option = node.options().get(index);
-        if (!NpcCondition.all(option.conditions(), player)) {
-            show(player, npc, session.dialogue(), dialogue, session.node(), false);
+        if (!NpcCondition.all(option.conditions(), player, npc)) {
+            show(player, npc, session.dialogue(), dialogue, session.node(), false, null);
+            return;
+        }
+        var check = option.check().orElse(null);
+        var key = attemptKey(session.dialogue(), session.node(), index);
+        if (check != null && check.oneShot() && StoryService.attempted(player, key)) {
+            show(player, npc, session.dialogue(), dialogue, session.node(), false, null);
             return;
         }
         for (var action : option.actions()) {
@@ -272,8 +310,32 @@ public final class NpcDialogueService {
                 return;
             }
         }
-        if (option.next().isPresent()) {
-            show(player, npc, session.dialogue(), dialogue, option.next().get(), false);
+        var next = option.next();
+        Component prefix = null;
+        if (check != null) {
+            var passed = check.roll(player, npc);
+            if (check.oneShot()) {
+                StoryService.markAttempted(player, key);
+            }
+            if (passed && check.experience() > 0 && !StoryService.attempted(player, "xp#" + key)) {
+                StoryService.markAttempted(player, "xp#" + key);
+                SpecialService.awardXp(player, check.experience());
+            }
+            prefix = Component.translatable(
+                passed ? "dialogue.atomicdawn.check.succeeded" : "dialogue.atomicdawn.check.failed"
+            ).withStyle(passed ? ChatFormatting.GREEN : ChatFormatting.RED).append(" ");
+            for (var action : passed ? check.successActions() : check.failureActions()) {
+                if (!handle(player, npc, action.run(player, npc))) {
+                    return;
+                }
+            }
+            var branch = passed ? check.success() : check.failure();
+            if (branch.isPresent()) {
+                next = branch;
+            }
+        }
+        if (next.isPresent()) {
+            show(player, npc, session.dialogue(), dialogue, next.get(), false, prefix);
         } else {
             close(player);
         }

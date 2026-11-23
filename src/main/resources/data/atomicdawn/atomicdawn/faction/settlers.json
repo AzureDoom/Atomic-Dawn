@@ -1,0 +1,14 @@
+{
+  "name": "faction.atomicdawn.settlers",
+  "description": "faction.atomicdawn.settlers.desc",
+  "color": "#4FA3FF",
+  "allies": [
+    "atomicdawn:responders"
+  ],
+  "enemies": [
+    "atomicdawn:raiders"
+  ],
+  "npcs": [
+    "atomicdawn:example_settler"
+  ]
+}
