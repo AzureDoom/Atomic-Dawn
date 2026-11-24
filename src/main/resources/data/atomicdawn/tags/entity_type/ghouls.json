@@ -4,6 +4,7 @@
     {
       "id": "#minecraft:zombies",
       "required": false
-    }
+    },
+    "atomicdawn:feral_ghoul"
   ]
 }

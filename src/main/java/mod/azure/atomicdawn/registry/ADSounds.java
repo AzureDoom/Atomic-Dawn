@@ -131,6 +131,18 @@ public final class ADSounds {
 
     public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_CORE = register("power_armor.core_insert");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_ATTACK = register("feral_ghoul.attack");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_DEATH = register("feral_ghoul.death");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_HURT = register("feral_ghoul.hurt");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_WALK = register("feral_ghoul.walk");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_YELL = register("feral_ghoul.yell");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_AMBIENT = register("feral_ghoul.ambient");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return REGISTER.register(name, SoundEvent::createVariableRangeEvent);
     }

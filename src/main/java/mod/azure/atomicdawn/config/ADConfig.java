@@ -44,6 +44,9 @@ public class ADConfig {
     public Thirst thirst = new Thirst();
 
     @Configurable
+    public FeralGhouls feralGhouls = new FeralGhouls();
+
+    @Configurable
     public PowerArmor powerArmor = new PowerArmor();
 
     @Configurable
@@ -669,6 +672,57 @@ public class ADConfig {
         @Comment("Keep the limb condition figure on the HUD even when every limb is healthy.")
         @Configurable(side = Configurable.Side.CLIENT)
         public boolean LIMB_HUD_ALWAYS = false;
+
+    }
+
+    public static class FeralGhouls {
+
+        @Comment("Max health of a feral ghoul.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 1024.0)
+        public double MAX_HEALTH = 30.0;
+
+        @Comment("Claw damage of a feral ghoul.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double ATTACK_DAMAGE = 4.0;
+
+        @Comment("Radiation applied to whatever a feral ghoul hits.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double RADS_PER_HIT = 4.0;
+
+        @Comment("How far a feral ghoul can see a target.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 128.0)
+        public double DETECTION_RANGE = 24.0;
+
+        @Comment("Blocks a target must come within to wake a dormant feral ghoul.")
+        @Configurable
+        @Range(min = 1, max = 64)
+        public int WAKE_RANGE = 6;
+
+        @Comment("Blocks within which a screaming feral ghoul alerts the rest of its pack.")
+        @Configurable
+        @Range(min = 0, max = 128)
+        public int ALERT_RANGE = 16;
+
+        @Comment("Chance a naturally spawned feral ghoul lies dormant until something comes close.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double DORMANT_CHANCE = 0.3;
+
+        @Comment("Feral ghouls can leap at targets from mid range.")
+        @Configurable
+        public boolean LEAP_ENABLED = true;
+
+        @Comment("Feral ghouls ignore players who have turned into ghouls.")
+        @Configurable
+        public boolean IGNORE_GHOUL_PLAYERS = true;
+
+        @Comment("Feral ghouls hunt villagers and wandering traders.")
+        @Configurable
+        public boolean ATTACK_VILLAGERS = true;
 
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -76,6 +77,12 @@ public final class ADItems {
     public static final DeferredItem<WeaponItem> SUPER_SLEDGE = weapon("super_sledge", WeaponDefinitions.SUPER_SLEDGE);
 
     public static final DeferredItem<WeaponItem> FAT_MAN = weapon("fat_man", WeaponDefinitions.FAT_MAN);
+
+    public static final DeferredItem<SpawnEggItem> FERAL_GHOUL_SPAWN_EGG = REGISTER.registerItem(
+        "feral_ghoul_spawn_egg",
+        SpawnEggItem::new,
+        properties -> properties.spawnEgg(ADEntities.FERAL_GHOUL.get())
+    );
 
     public static final DeferredItem<AmmoContainerItem> AMMO_CONTAINER = REGISTER.registerItem(
         "ammo_container",

@@ -75,6 +75,12 @@ dependencies {
     implementation "mod.azure.azurelib:azurelib-neo-${minecraft_version}:${azurelib_version}"
     compileOnly 'org.jetbrains:annotations:24.1.0'
     implementation "curse.maven:lithostitched-936015:9154967"
+    jarJar(implementation("com.azure.azurecortex:azurecortex-neoforge-${minecraft_version}:${azurecortex_version}")) {
+        version {
+            strictly "[${azurecortex_version}]"
+            prefer azurecortex_version
+        }
+    }
 }
 
 def expandProps = [

@@ -493,5 +493,55 @@
         "stream": true
       }
     ]
+  },
+  "feral_ghoul.attack": {
+    "subtitle": "subtitles.atomicdawn.feral_ghoul.attack",
+    "sounds": [
+      "atomicdawn:feral_ghoul/feral_ghoul_attack_1",
+      "atomicdawn:feral_ghoul/feral_ghoul_attack_2",
+      "atomicdawn:feral_ghoul/feral_ghoul_attack_3",
+      "atomicdawn:feral_ghoul/feral_ghoul_attack_4"
+    ]
+  },
+  "feral_ghoul.death": {
+    "subtitle": "subtitles.atomicdawn.feral_ghoul.death",
+    "sounds": [
+      "atomicdawn:feral_ghoul/feral_ghoul_death_1",
+      "atomicdawn:feral_ghoul/feral_ghoul_death_2",
+      "atomicdawn:feral_ghoul/feral_ghoul_death_3",
+      "atomicdawn:feral_ghoul/feral_ghoul_death_4"
+    ]
+  },
+  "feral_ghoul.hurt": {
+    "subtitle": "subtitles.atomicdawn.feral_ghoul.hurt",
+    "sounds": [
+      "atomicdawn:feral_ghoul/feral_ghoul_hurt_1",
+      "atomicdawn:feral_ghoul/feral_ghoul_hurt_2",
+      "atomicdawn:feral_ghoul/feral_ghoul_hurt_3",
+      "atomicdawn:feral_ghoul/feral_ghoul_hurt_4"
+    ]
+  },
+  "feral_ghoul.walk": {
+    "subtitle": "subtitles.atomicdawn.feral_ghoul.walk",
+    "sounds": [
+      "atomicdawn:feral_ghoul/feral_ghoul_walk_1",
+      "atomicdawn:feral_ghoul/feral_ghoul_walk_2",
+      "atomicdawn:feral_ghoul/feral_ghoul_walk_3",
+      "atomicdawn:feral_ghoul/feral_ghoul_walk_4"
+    ]
+  },
+  "feral_ghoul.yell": {
+    "subtitle": "subtitles.atomicdawn.feral_ghoul.yell",
+    "sounds": [
+      "atomicdawn:feral_ghoul/feral_ghoul_yell"
+    ]
+  },
+  "feral_ghoul.ambient": {
+    "subtitle": "subtitles.atomicdawn.feral_ghoul.ambient",
+    "sounds": [
+      "atomicdawn:feral_ghoul/feral_ghoul_ambient_1",
+      "atomicdawn:feral_ghoul/feral_ghoul_ambient_2",
+      "atomicdawn:feral_ghoul/feral_ghoul_ambient_3"
+    ]
   }
 }

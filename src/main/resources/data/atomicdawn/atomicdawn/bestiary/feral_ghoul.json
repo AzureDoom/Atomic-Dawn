@@ -1,0 +1,15 @@
+{
+  "entity": "atomicdawn:feral_ghoul",
+  "category": "undead",
+  "threat": 2,
+  "weaknesses": [
+    "headshots",
+    "fire",
+    "knockback"
+  ],
+  "resistances": [
+    "radiation"
+  ],
+  "study_kills": 5,
+  "sort": 1
+}

@@ -40,6 +40,7 @@ import mod.azure.atomicdawn.client.render.WeaponClientExtensions;
 import mod.azure.atomicdawn.client.render.WeaponItemRenderer;
 import mod.azure.atomicdawn.client.render.ammo.AmmoRenderer;
 import mod.azure.atomicdawn.client.render.entity.MiniNukeRenderer;
+import mod.azure.atomicdawn.client.render.ghoul.FeralGhoulRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorItemRenderers;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorStationRenderer;
@@ -127,6 +128,7 @@ public final class AtomicDawnClient {
         event.registerEntityRenderer(ADEntities.FALLOUT_CLOUD.get(), NoopRenderer::new);
         event.registerEntityRenderer(ADEntities.POWER_ARMOR.get(), PowerArmorRenderer::new);
         event.registerEntityRenderer(ADEntities.NPC.get(), NpcRenderer::new);
+        event.registerEntityRenderer(ADEntities.FERAL_GHOUL.get(), FeralGhoulRenderer::new);
         event.registerBlockEntityRenderer(
             ADBlockEntities.POWER_ARMOR_STATION.get(),
             _ -> new PowerArmorStationRenderer()
