@@ -47,6 +47,9 @@ public class ADConfig {
     public FeralGhouls feralGhouls = new FeralGhouls();
 
     @Configurable
+    public Scorched scorched = new Scorched();
+
+    @Configurable
     public PowerArmor powerArmor = new PowerArmor();
 
     @Configurable
@@ -311,6 +314,12 @@ public class ADConfig {
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 100000.0)
         public double BRAHMIN_MILK_RADS = 75.0;
+
+        @Comment("Rads received from eating raw beef butchered from a brahmin. Cooking removes them.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 100000.0)
+        public double RAW_BRAHMIN_BEEF_RADS = 15.0;
 
         @Comment("Fraction of rads removed when you die (1 clears them all).")
         @Configurable
@@ -721,6 +730,123 @@ public class ADConfig {
         public boolean IGNORE_GHOUL_PLAYERS = true;
 
         @Comment("Feral ghouls hunt villagers and wandering traders.")
+        @Configurable
+        public boolean ATTACK_VILLAGERS = true;
+
+    }
+
+    public static class Scorched {
+
+        @Comment("Max health of a Scorched.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 1024.0)
+        public double MAX_HEALTH = 40.0;
+
+        @Comment("Unarmed melee damage of a Scorched. Held vanilla weapons add their own damage.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double ATTACK_DAMAGE = 3.0;
+
+        @Comment("Multiplier applied to Atomic Dawn gun damage dealt by Scorched.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 10.0)
+        public double GUN_DAMAGE_MULTIPLIER = 0.6;
+
+        @Comment("Extra spread in degrees added to Scorched gunfire.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 45.0)
+        public double AIM_SPREAD = 3.0;
+
+        @Comment("How far an active Scorched can see a target.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 128.0)
+        public double DETECTION_RANGE = 32.0;
+
+        @Comment("How far a dormant Scorched can see a target.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 64.0)
+        public double DORMANT_DETECTION_RANGE = 12.0;
+
+        @Comment("Blocks within which Scorched share targets through the hive mind.")
+        @Configurable
+        @Range(min = 0, max = 128)
+        public int HIVE_RANGE = 32;
+
+        @Comment("Minimum ticks between hive-mind broadcasts from a single Scorched.")
+        @Configurable
+        @Range(min = 5, max = 1200)
+        public int HIVE_ALERT_INTERVAL = 40;
+
+        @Comment("Closest distance a ranged Scorched tries to keep from its target.")
+        @Configurable
+        @Range(min = 2, max = 64)
+        public int MIN_ENGAGE_RANGE = 8;
+
+        @Comment("Furthest distance a ranged Scorched fires from.")
+        @Configurable
+        @Range(min = 4, max = 96)
+        public int MAX_ENGAGE_RANGE = 24;
+
+        @Comment("Seconds a Scorched searches a lost target's last known position.")
+        @Configurable
+        @Range(min = 1, max = 120)
+        public int INVESTIGATE_SECONDS = 15;
+
+        @Comment("Smallest patrol radius around a Scorched's fissure site.")
+        @Configurable
+        @Range(min = 4, max = 128)
+        public int PATROL_RADIUS_MIN = 24;
+
+        @Comment("Largest patrol radius around a Scorched's fissure site.")
+        @Configurable
+        @Range(min = 4, max = 128)
+        public int PATROL_RADIUS_MAX = 48;
+
+        @Comment("Blocks from its fissure site after which a Scorched gives up a chase and returns home.")
+        @Configurable
+        @Range(min = 16, max = 256)
+        public int LEASH_RANGE = 96;
+
+        @Comment("Fewest seconds of inactivity before a Scorched goes dormant.")
+        @Configurable
+        @Range(min = 1, max = 3600)
+        public int DORMANCY_MIN_SECONDS = 30;
+
+        @Comment("Most seconds of inactivity before a Scorched goes dormant.")
+        @Configurable
+        @Range(min = 1, max = 3600)
+        public int DORMANCY_MAX_SECONDS = 90;
+
+        @Comment("Chance a naturally spawned Scorched starts dormant.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double DORMANT_SPAWN_CHANCE = 0.6;
+
+        @Comment("Chance a standard Scorched or officer spawns with a gun.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double GUN_CHANCE = 0.55;
+
+        @Comment("Chance a Scorched without a gun spawns with a vanilla melee weapon instead of fists.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double MELEE_WEAPON_CHANCE = 0.6;
+
+        @Comment("Chance a Scorched spawns as an officer.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double OFFICER_CHANCE = 0.12;
+
+        @Comment("Holiday Scorched appear in late December and Spooky Scorched around Halloween.")
+        @Configurable
+        public boolean SEASONAL_VARIANTS = true;
+
+        @Comment("Chance a Scorched spawns as the seasonal variant while its season is active.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double SEASONAL_CHANCE = 0.35;
+
+        @Comment("Scorched hunt villagers and wandering traders.")
         @Configurable
         public boolean ATTACK_VILLAGERS = true;
 

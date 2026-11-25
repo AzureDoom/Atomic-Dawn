@@ -19,6 +19,7 @@
       "id": "minecraft:shulker",
       "required": false
     },
-    "atomicdawn:feral_ghoul"
+    "atomicdawn:feral_ghoul",
+    "atomicdawn:scorched",
   ]
 }

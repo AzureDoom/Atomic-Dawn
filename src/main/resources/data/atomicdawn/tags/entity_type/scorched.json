@@ -20,6 +20,7 @@
     {
       "id": "minecraft:piglin_brute",
       "required": false
-    }
+    },
+    "atomicdawn:scorched"
   ]
 }

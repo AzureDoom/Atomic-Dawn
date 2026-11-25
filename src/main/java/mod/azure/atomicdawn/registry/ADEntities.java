@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.ExplosiveProjectileEntity;
 import mod.azure.atomicdawn.entity.ghoul.FeralGhoulEntity;
+import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.FalloutCloudEntity;
@@ -64,6 +65,15 @@ public final class ADEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<FeralGhoulEntity>> FERAL_GHOUL = REGISTER.register(
         "feral_ghoul",
         id -> EntityType.Builder.of(FeralGhoulEntity::new, MobCategory.MONSTER)
+            .sized(0.6F, 1.95F)
+            .eyeHeight(1.74F)
+            .clientTrackingRange(8)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<ScorchedEntity>> SCORCHED = REGISTER.register(
+        "scorched",
+        id -> EntityType.Builder.of(ScorchedEntity::new, MobCategory.MONSTER)
             .sized(0.6F, 1.95F)
             .eyeHeight(1.74F)
             .clientTrackingRange(8)

@@ -93,6 +93,10 @@ public class FissurePiece extends StructurePiece {
         this.seed = tag.getLongOr("Seed", 0L);
     }
 
+    public BlockPos center() {
+        return new BlockPos(centerX, centerY, centerZ);
+    }
+
     private static BoundingBox bounds(BlockPos center, int length, int halfWidth, int depth, int minY) {
         var reach = length / 2 + halfWidth + CRACK_REACH;
         return new BoundingBox(

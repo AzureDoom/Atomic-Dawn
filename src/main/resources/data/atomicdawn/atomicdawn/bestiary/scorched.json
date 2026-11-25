@@ -1,0 +1,15 @@
+{
+  "entity": "atomicdawn:scorched",
+  "category": "monster",
+  "threat": 3,
+  "weaknesses": [
+    "headshots",
+    "fire",
+    "melee"
+  ],
+  "resistances": [
+    "radiation"
+  ],
+  "study_kills": 5,
+  "sort": 2
+}

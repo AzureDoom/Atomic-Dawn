@@ -143,6 +143,22 @@ public final class ADSounds {
 
     public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_AMBIENT = register("feral_ghoul.ambient");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_AMBIENT = register("scorched.ambient");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_ALERT = register("scorched.alert");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_ATTACK = register("scorched.attack");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_HURT = register("scorched.hurt");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_DEATH = register("scorched.death");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_RADIO = register("scorched.radio");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_JINGLE = register("scorched.jingle");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHED_EERIE = register("scorched.eerie");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return REGISTER.register(name, SoundEvent::createVariableRangeEvent);
     }

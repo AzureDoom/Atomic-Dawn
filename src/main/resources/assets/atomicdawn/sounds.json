@@ -543,5 +543,111 @@
       "atomicdawn:feral_ghoul/feral_ghoul_ambient_2",
       "atomicdawn:feral_ghoul/feral_ghoul_ambient_3"
     ]
+  },
+  "scorched.ambient": {
+    "subtitle": "subtitles.atomicdawn.scorched.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.zombie_villager.ambient",
+        "type": "event",
+        "pitch": 0.85,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.villager.ambient",
+        "type": "event",
+        "pitch": 0.7,
+        "volume": 1.0
+      }
+    ]
+  },
+  "scorched.alert": {
+    "subtitle": "subtitles.atomicdawn.scorched.alert",
+    "sounds": [
+      {
+        "name": "minecraft:entity.vindicator.celebrate",
+        "type": "event",
+        "pitch": 0.8,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.pillager.celebrate",
+        "type": "event",
+        "pitch": 0.75,
+        "volume": 1.0
+      }
+    ]
+  },
+  "scorched.attack": {
+    "subtitle": "subtitles.atomicdawn.scorched.attack",
+    "sounds": [
+      {
+        "name": "minecraft:entity.vindicator.ambient",
+        "type": "event",
+        "pitch": 0.8,
+        "volume": 1.0
+      }
+    ]
+  },
+  "scorched.hurt": {
+    "subtitle": "subtitles.atomicdawn.scorched.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.zombie_villager.hurt",
+        "type": "event",
+        "pitch": 0.85,
+        "volume": 1.0
+      }
+    ]
+  },
+  "scorched.death": {
+    "subtitle": "subtitles.atomicdawn.scorched.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.zombie_villager.death",
+        "type": "event",
+        "pitch": 0.85,
+        "volume": 1.0
+      }
+    ]
+  },
+  "scorched.radio": {
+    "subtitle": "subtitles.atomicdawn.scorched.radio",
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.bit",
+        "type": "event",
+        "pitch": 1.6,
+        "volume": 0.6
+      }
+    ]
+  },
+  "scorched.jingle": {
+    "subtitle": "subtitles.atomicdawn.scorched.jingle",
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.chime",
+        "type": "event",
+        "pitch": 1.4,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:block.note_block.bell",
+        "type": "event",
+        "pitch": 1.8,
+        "volume": 0.4
+      }
+    ]
+  },
+  "scorched.eerie": {
+    "subtitle": "subtitles.atomicdawn.scorched.eerie",
+    "sounds": [
+      {
+        "name": "minecraft:ambient.cave",
+        "type": "event",
+        "pitch": 1.0,
+        "volume": 0.6
+      }
+    ]
   }
 }

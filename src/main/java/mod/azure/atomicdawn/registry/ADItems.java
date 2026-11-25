@@ -84,6 +84,12 @@ public final class ADItems {
         properties -> properties.spawnEgg(ADEntities.FERAL_GHOUL.get())
     );
 
+    public static final DeferredItem<SpawnEggItem> SCORCHED_SPAWN_EGG = REGISTER.registerItem(
+        "scorched_spawn_egg",
+        SpawnEggItem::new,
+        properties -> properties.spawnEgg(ADEntities.SCORCHED.get())
+    );
+
     public static final DeferredItem<AmmoContainerItem> AMMO_CONTAINER = REGISTER.registerItem(
         "ammo_container",
         AmmoContainerItem::new,
