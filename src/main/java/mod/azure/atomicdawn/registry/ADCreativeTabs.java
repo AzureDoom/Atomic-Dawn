@@ -36,6 +36,7 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.RADAWAY.get());
                 output.accept(ADItems.FERAL_GHOUL_SPAWN_EGG.get());
                 output.accept(ADItems.SCORCHED_SPAWN_EGG.get());
+                output.accept(ADItems.BRAHMIN_SPAWN_EGG.get());
                 output.accept(ADItems.RAD_X.get());
                 output.accept(ADItems.STIMPAK.get());
                 output.accept(ADItems.DOCTORS_BAG.get());

@@ -9,6 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.ExplosiveProjectileEntity;
+import mod.azure.atomicdawn.entity.brahmin.BrahminEntity;
 import mod.azure.atomicdawn.entity.ghoul.FeralGhoulEntity;
 import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
 import mod.azure.atomicdawn.npc.NpcEntity;
@@ -77,6 +78,15 @@ public final class ADEntities {
             .sized(0.6F, 1.95F)
             .eyeHeight(1.74F)
             .clientTrackingRange(8)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<BrahminEntity>> BRAHMIN = REGISTER.register(
+        "brahmin",
+        id -> EntityType.Builder.of(BrahminEntity::new, MobCategory.CREATURE)
+            .sized(1.2F, 1.75F)
+            .eyeHeight(1.35F)
+            .clientTrackingRange(10)
             .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
     );
 

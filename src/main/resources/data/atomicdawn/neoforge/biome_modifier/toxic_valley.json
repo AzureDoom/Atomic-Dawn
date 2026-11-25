@@ -12,7 +12,7 @@
       }
     },
     {
-      "type": "minecraft:cow",
+      "type": "atomicdawn:brahmin",
       "weight": 8,
       "count": {
         "type": "minecraft:uniform",

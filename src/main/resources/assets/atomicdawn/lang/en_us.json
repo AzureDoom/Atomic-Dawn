@@ -3847,4 +3847,9 @@
   "config.atomicdawn.option.scorched.SEASONAL_CHANCE": "Seasonal Chance",
   "config.atomicdawn.option.SEASONAL_CHANCE": "Seasonal Chance",
   "config.atomicdawn.option.scorched.ATTACK_VILLAGERS": "Attack Villagers",
+  "entity.atomicdawn.brahmin": "Brahmin",
+  "item.atomicdawn.brahmin_spawn_egg": "Brahmin Spawn Egg",
+  "tooltip.atomicdawn.irradiated": "Irradiated - cook before eating",
+  "config.atomicdawn.option.radiation.RAW_BRAHMIN_BEEF_RADS": "Raw Brahmin Beef Rads",
+  "config.atomicdawn.option.RAW_BRAHMIN_BEEF_RADS": "Raw Brahmin Beef Rads"
 }

@@ -120,6 +120,7 @@
     {
       "id": "minecraft:creeper",
       "required": false
-    }
+    },
+    "atomicdawn:brahmin"
   ]
 }

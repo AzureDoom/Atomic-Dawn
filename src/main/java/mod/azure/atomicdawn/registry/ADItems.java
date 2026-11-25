@@ -90,6 +90,12 @@ public final class ADItems {
         properties -> properties.spawnEgg(ADEntities.SCORCHED.get())
     );
 
+    public static final DeferredItem<SpawnEggItem> BRAHMIN_SPAWN_EGG = REGISTER.registerItem(
+        "brahmin_spawn_egg",
+        SpawnEggItem::new,
+        properties -> properties.spawnEgg(ADEntities.BRAHMIN.get())
+    );
+
     public static final DeferredItem<AmmoContainerItem> AMMO_CONTAINER = REGISTER.registerItem(
         "ammo_container",
         AmmoContainerItem::new,
