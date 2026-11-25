@@ -19,10 +19,11 @@ public class FeralGhoulRenderer extends AzEntityRenderer<FeralGhoulEntity> {
         super(
             AzEntityRendererConfig.builder(FeralGhoulRenderer::model, FeralGhoulRenderer::texture)
                 .setAnimatorProvider(FeralGhoulAnimator::new)
+                .setDeathMaxRotation(0F)
+                .setShadowRadius(0.5F)
                 .build(),
             context
         );
-        this.shadowRadius = 0.5F;
     }
 
     private static Identifier model(FeralGhoulEntity ghoul) {

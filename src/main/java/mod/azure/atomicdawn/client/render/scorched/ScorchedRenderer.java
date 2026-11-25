@@ -36,10 +36,11 @@ public class ScorchedRenderer extends AzEntityRenderer<ScorchedEntity> {
                     applyVariant(render.animatable(), render.bakedModel());
                     return render;
                 })
+                .setDeathMaxRotation(0F)
+                .setShadowRadius(0.5F)
                 .build(),
             context
         );
-        this.shadowRadius = 0.5F;
     }
 
     private static Identifier model(ScorchedEntity scorched) {
