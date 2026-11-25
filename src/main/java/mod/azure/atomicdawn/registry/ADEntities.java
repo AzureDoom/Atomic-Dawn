@@ -12,6 +12,7 @@ import mod.azure.atomicdawn.entity.ExplosiveProjectileEntity;
 import mod.azure.atomicdawn.entity.brahmin.BrahminEntity;
 import mod.azure.atomicdawn.entity.ghoul.FeralGhoulEntity;
 import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
+import mod.azure.atomicdawn.entity.supermutant.SuperMutantEntity;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.radiation.FalloutCloudEntity;
@@ -86,6 +87,15 @@ public final class ADEntities {
         id -> EntityType.Builder.of(BrahminEntity::new, MobCategory.CREATURE)
             .sized(1.2F, 1.75F)
             .eyeHeight(1.35F)
+            .clientTrackingRange(10)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<SuperMutantEntity>> SUPER_MUTANT = REGISTER.register(
+        "super_mutant",
+        id -> EntityType.Builder.of(SuperMutantEntity::new, MobCategory.MONSTER)
+            .sized(1.2F, 3.0F)
+            .eyeHeight(2.7F)
             .clientTrackingRange(10)
             .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
     );

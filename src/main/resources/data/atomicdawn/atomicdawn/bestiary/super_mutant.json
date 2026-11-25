@@ -1,0 +1,15 @@
+{
+  "entity": "atomicdawn:super_mutant",
+  "category": "monster",
+  "threat": 4,
+  "weaknesses": [
+    "headshots",
+    "explosions"
+  ],
+  "resistances": [
+    "radiation",
+    "knockback"
+  ],
+  "study_kills": 5,
+  "sort": 3
+}

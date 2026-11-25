@@ -14,6 +14,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ammunition.AmmoInventory;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEffectType;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
+import mod.azure.atomicdawn.entity.supermutant.SuperMutantDisturbances;
 import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.network.ReloadStatusPayload;
 import mod.azure.atomicdawn.perks.PerkHooks;
@@ -217,6 +218,9 @@ public final class WeaponActions {
             used = true;
         }
         if (used) {
+            if (!definition.isMelee()) {
+                SuperMutantDisturbances.gunfire(level, player);
+            }
             Weapons.wear(
                 stack,
                 definition,

@@ -50,6 +50,9 @@ public class ADConfig {
     public Scorched scorched = new Scorched();
 
     @Configurable
+    public SuperMutants superMutants = new SuperMutants();
+
+    @Configurable
     public PowerArmor powerArmor = new PowerArmor();
 
     @Configurable
@@ -890,6 +893,126 @@ public class ADConfig {
         public double SEASONAL_CHANCE = 0.35;
 
         @Comment("Scorched hunt villagers and wandering traders.")
+        @Configurable
+        public boolean ATTACK_VILLAGERS = true;
+
+    }
+
+    public static class SuperMutants {
+
+        @Comment("Max health of a Super Mutant.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 2048.0)
+        public double MAX_HEALTH = 90.0;
+
+        @Comment("Unarmed punch damage of a Super Mutant. Held vanilla weapons add their own damage.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double ATTACK_DAMAGE = 8.0;
+
+        @Comment("Armor points of a Super Mutant.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 30.0)
+        public double ARMOR = 8.0;
+
+        @Comment("Knockback resistance of a Super Mutant (1.0 = immune).")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double KNOCKBACK_RESISTANCE = 0.8;
+
+        @Comment("Multiplier applied to Atomic Dawn melee weapon damage dealt by Super Mutants.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 10.0)
+        public double MELEE_WEAPON_DAMAGE_MULTIPLIER = 0.8;
+
+        @Comment("Chance an unarmed or melee Super Mutant uses its overhead slam when the slam is off cooldown.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double SLAM_CHANCE = 0.3;
+
+        @Comment("Damage multiplier of the overhead slam compared to a normal hit.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 10.0)
+        public double SLAM_DAMAGE_MULTIPLIER = 1.6;
+
+        @Comment("Radius in blocks of the overhead slam's area of effect.")
+        @Configurable
+        @DecimalRange(min = 0.5, max = 8.0)
+        public double SLAM_RADIUS = 2.5;
+
+        @Comment("Multiplier applied to Atomic Dawn gun damage dealt by Super Mutants.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 10.0)
+        public double GUN_DAMAGE_MULTIPLIER = 0.7;
+
+        @Comment("Extra spread in degrees added to Super Mutant gunfire.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 45.0)
+        public double AIM_SPREAD = 4.0;
+
+        @Comment("How far a Super Mutant can see a target.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 128.0)
+        public double DETECTION_RANGE = 32.0;
+
+        @Comment(
+            "Blocks within which a Super Mutant hears gunshots and investigates them. Explosions carry 1.5 times further."
+        )
+        @Configurable
+        @DecimalRange(min = 0.0, max = 128.0)
+        public double HEARING_RANGE = 40.0;
+
+        @Comment("Blocks within which a roaring or wounded Super Mutant calls nearby mutants to join the fight.")
+        @Configurable
+        @Range(min = 0, max = 128)
+        public int PACK_RANGE = 32;
+
+        @Comment("Closest distance a ranged Super Mutant tries to keep from its target before backing off.")
+        @Configurable
+        @Range(min = 2, max = 64)
+        public int MIN_ENGAGE_RANGE = 6;
+
+        @Comment("Furthest distance a ranged Super Mutant fires from.")
+        @Configurable
+        @Range(min = 4, max = 96)
+        public int MAX_ENGAGE_RANGE = 28;
+
+        @Comment("Seconds a Super Mutant searches a lost target's predicted position or a disturbance.")
+        @Configurable
+        @Range(min = 1, max = 120)
+        public int INVESTIGATE_SECONDS = 20;
+
+        @Comment("Patrol radius around a Super Mutant's camp or spawn point.")
+        @Configurable
+        @Range(min = 4, max = 128)
+        public int PATROL_RADIUS = 20;
+
+        @Comment("Blocks from its camp after which a Super Mutant gives up a chase and returns.")
+        @Configurable
+        @Range(min = 16, max = 256)
+        public int LEASH_RANGE = 80;
+
+        @Comment("Fewest seconds between combat roars and taunts.")
+        @Configurable
+        @Range(min = 1, max = 600)
+        public int TAUNT_MIN_SECONDS = 12;
+
+        @Comment("Most seconds between combat roars and taunts.")
+        @Configurable
+        @Range(min = 1, max = 600)
+        public int TAUNT_MAX_SECONDS = 30;
+
+        @Comment("Chance a Super Mutant spawns with a gun.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double RANGED_CHANCE = 0.45;
+
+        @Comment("Chance a Super Mutant without a gun spawns with a melee weapon instead of fists.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double MELEE_WEAPON_CHANCE = 0.65;
+
+        @Comment("Super Mutants hunt villagers and wandering traders.")
         @Configurable
         public boolean ATTACK_VILLAGERS = true;
 

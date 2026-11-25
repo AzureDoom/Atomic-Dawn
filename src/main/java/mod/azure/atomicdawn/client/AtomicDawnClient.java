@@ -46,6 +46,7 @@ import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorItemRenderers;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorStationRenderer;
 import mod.azure.atomicdawn.client.render.scorched.ScorchedRenderer;
+import mod.azure.atomicdawn.client.render.supermutant.SuperMutantRenderer;
 import mod.azure.atomicdawn.client.render.vault.VaultDoorRenderer;
 import mod.azure.atomicdawn.client.render.workbench.ArmorBenchItemRenderer;
 import mod.azure.atomicdawn.client.render.workbench.ArmorBenchRenderer;
@@ -132,6 +133,7 @@ public final class AtomicDawnClient {
         event.registerEntityRenderer(ADEntities.NPC.get(), NpcRenderer::new);
         event.registerEntityRenderer(ADEntities.FERAL_GHOUL.get(), FeralGhoulRenderer::new);
         event.registerEntityRenderer(ADEntities.SCORCHED.get(), ScorchedRenderer::new);
+        event.registerEntityRenderer(ADEntities.SUPER_MUTANT.get(), SuperMutantRenderer::new);
         event.registerEntityRenderer(ADEntities.BRAHMIN.get(), BrahminRenderer::new);
         event.registerBlockEntityRenderer(
             ADBlockEntities.POWER_ARMOR_STATION.get(),

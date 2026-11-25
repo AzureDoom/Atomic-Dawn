@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.entity.supermutant.SuperMutantDisturbances;
 import mod.azure.atomicdawn.limb.LimbHits;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.weapon.action.WeaponAnimations;
@@ -28,6 +29,8 @@ import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
 public final class MobGunfire {
+
+    private static final float FIRE_VOLUME = 4F;
 
     private static final int FALLBACK_TRACER_COLOR = 0xFFE08A;
 
@@ -169,11 +172,12 @@ public final class MobGunfire {
             shooter.getZ(),
             definition.sounds().fire().value(),
             SoundSource.HOSTILE,
-            1F,
+            FIRE_VOLUME,
             1F + (random.nextFloat() - 0.5F) * 0.08F
         );
         level.sendParticles(ParticleTypes.SMOKE, muzzle.x, muzzle.y, muzzle.z, 2, 0.02, 0.02, 0.02, 0.0);
         WeaponAnimations.fire(shooter, stack, false);
+        SuperMutantDisturbances.gunfire(level, shooter);
         return true;
     }
 

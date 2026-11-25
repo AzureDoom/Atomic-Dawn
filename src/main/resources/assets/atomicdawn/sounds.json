@@ -628,5 +628,123 @@
         "volume": 0.6
       }
     ]
+  },
+  "super_mutant.ambient": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.zombie.ambient",
+        "type": "event",
+        "pitch": 0.5,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.ravager.ambient",
+        "type": "event",
+        "pitch": 0.9,
+        "volume": 0.8
+      }
+    ]
+  },
+  "super_mutant.roar": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.roar",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.roar",
+        "type": "event",
+        "pitch": 0.9,
+        "volume": 1.2
+      }
+    ]
+  },
+  "super_mutant.taunt": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.taunt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.piglin_brute.angry",
+        "type": "event",
+        "pitch": 0.55,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.ravager.celebrate",
+        "type": "event",
+        "pitch": 0.8,
+        "volume": 1.0
+      }
+    ]
+  },
+  "super_mutant.attack": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.attack",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.attack",
+        "type": "event",
+        "pitch": 1.0,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.zombie.attack_iron_door",
+        "type": "event",
+        "pitch": 0.7,
+        "volume": 0.4
+      }
+    ]
+  },
+  "super_mutant.slam": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.slam",
+    "sounds": [
+      {
+        "name": "minecraft:entity.iron_golem.attack",
+        "type": "event",
+        "pitch": 0.6,
+        "volume": 1.2
+      },
+      {
+        "name": "minecraft:entity.ravager.stunned",
+        "type": "event",
+        "pitch": 0.7,
+        "volume": 1.0
+      }
+    ]
+  },
+  "super_mutant.hurt": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.hurt",
+        "type": "event",
+        "pitch": 0.9,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.zombie.hurt",
+        "type": "event",
+        "pitch": 0.55,
+        "volume": 1.0
+      }
+    ]
+  },
+  "super_mutant.death": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.ravager.death",
+        "type": "event",
+        "pitch": 0.85,
+        "volume": 1.0
+      }
+    ]
+  },
+  "super_mutant.step": {
+    "subtitle": "subtitles.atomicdawn.super_mutant.step",
+    "sounds": [
+      {
+        "name": "minecraft:entity.iron_golem.step",
+        "type": "event",
+        "pitch": 0.8,
+        "volume": 0.7
+      }
+    ]
   }
 }
