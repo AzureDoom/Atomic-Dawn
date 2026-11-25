@@ -897,6 +897,31 @@ public class ADConfig {
         @DecimalRange(min = 0.0, max = 20.0)
         public double DIRTY_WATER_THIRST = 5.0;
 
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double POTION_THIRST = 4.0;
+
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double MILK_THIRST = 6.0;
+
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double HONEY_THIRST = 3.0;
+
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double STEW_THIRST = 4.0;
+
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 20.0)
+        public double SOFT_DRINK_THIRST = 5.0;
+
     }
 
     public static class PowerArmor {

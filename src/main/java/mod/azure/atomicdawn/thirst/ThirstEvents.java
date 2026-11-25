@@ -1,10 +1,13 @@
 package mod.azure.atomicdawn.thirst;
 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
@@ -25,7 +28,21 @@ import mod.azure.atomicdawn.registry.ADItems;
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
 public final class ThirstEvents {
 
+    public static final TagKey<Item> POTIONS = tag("thirst/potions");
+
+    public static final TagKey<Item> MILK = tag("thirst/milk");
+
+    public static final TagKey<Item> HONEY = tag("thirst/honey");
+
+    public static final TagKey<Item> STEWS = tag("thirst/stews");
+
+    public static final TagKey<Item> SOFT_DRINKS = tag("thirst/soft_drinks");
+
     private ThirstEvents() {}
+
+    private static TagKey<Item> tag(String name) {
+        return TagKey.create(Registries.ITEM, AtomicDawn.id(name));
+    }
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -45,14 +62,33 @@ public final class ThirstEvents {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
-        var stack = event.getItem();
-        if (!stack.is(Items.POTION)) {
-            return;
+        ThirstService.drink(player, restored(event.getItem()));
+    }
+
+    private static double restored(ItemStack stack) {
+        var config = AtomicDawn.CONFIG.thirst;
+        if (stack.is(Items.POTION)) {
+            var contents = stack.get(DataComponents.POTION_CONTENTS);
+            if (contents != null && contents.is(Potions.WATER)) {
+                return config.WATER_BOTTLE_THIRST;
+            }
         }
-        var contents = stack.get(DataComponents.POTION_CONTENTS);
-        if (contents != null && contents.is(Potions.WATER)) {
-            ThirstService.drink(player, AtomicDawn.CONFIG.thirst.WATER_BOTTLE_THIRST);
+        if (stack.is(POTIONS)) {
+            return config.POTION_THIRST;
         }
+        if (stack.is(MILK)) {
+            return config.MILK_THIRST;
+        }
+        if (stack.is(HONEY)) {
+            return config.HONEY_THIRST;
+        }
+        if (stack.is(STEWS)) {
+            return config.STEW_THIRST;
+        }
+        if (stack.is(SOFT_DRINKS)) {
+            return config.SOFT_DRINK_THIRST;
+        }
+        return 0.0;
     }
 
     @SubscribeEvent
