@@ -1,0 +1,14 @@
+{
+  "fallback": "atomicdawn:big_mt/caps",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:big_mt/corridor",
+        "processors": "minecraft:empty",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

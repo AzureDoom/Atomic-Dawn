@@ -1,0 +1,42 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:far_harbor_coast",
+  "spawners": [
+    {
+      "type": "minecraft:drowned",
+      "weight": 30,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:stray",
+      "weight": 20,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:fox",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    },
+    {
+      "type": "minecraft:wolf",
+      "weight": 4,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    }
+  ]
+}

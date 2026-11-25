@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:new_california_badlands/ruined_ranch",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:new_california_badlands/trader_stop",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:new_california_badlands/old_world_station",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:new_california_badlands/scavenger_camp",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 60571284
+  }
+}

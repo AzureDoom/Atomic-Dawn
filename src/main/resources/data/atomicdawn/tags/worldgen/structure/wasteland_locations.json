@@ -8,6 +8,17 @@
     "#atomicdawn:burning_springs_structures",
     "#atomicdawn:savage_divide_structures",
     "#atomicdawn:skyline_valley_structures",
+    "#atomicdawn:mojave_wasteland_structures",
+    "#atomicdawn:glowing_sea_structures",
+    "#atomicdawn:zion_canyon_structures",
+    "#atomicdawn:far_harbor_coast_structures",
+    "#atomicdawn:point_lookout_swamp_structures",
+    "#atomicdawn:new_california_badlands_structures",
+    "#atomicdawn:capital_wasteland_structures",
+    "#atomicdawn:the_divide_structures",
+    "#atomicdawn:commonwealth_wasteland_structures",
+    "#atomicdawn:the_pitt_structures",
+    "#atomicdawn:special_locations",
     "atomicdawn:highway"
   ]
 }

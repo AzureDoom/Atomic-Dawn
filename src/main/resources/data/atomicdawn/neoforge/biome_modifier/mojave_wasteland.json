@@ -1,0 +1,38 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:mojave_wasteland",
+  "spawners": [
+    {
+      "type": "minecraft:husk",
+      "weight": 60,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "atomicdawn:brahmin",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:rabbit",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:camel",
+      "weight": 1,
+      "count": 1
+    }
+  ]
+}

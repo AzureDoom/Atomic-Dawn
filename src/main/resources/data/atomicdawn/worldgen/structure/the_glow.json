@@ -1,0 +1,38 @@
+{
+  "type": "atomicdawn:crater",
+  "biomes": "atomicdawn:new_california_badlands",
+  "step": "surface_structures",
+  "terrain_adaptation": "none",
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "atomicdawn:feral_ghoul",
+          "weight": 40,
+          "count": {
+            "type": "minecraft:uniform",
+            "min_inclusive": 2,
+            "max_inclusive": 4
+          }
+        }
+      ]
+    }
+  },
+  "radius": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 26,
+    "max_inclusive": 36
+  },
+  "depth": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 14,
+    "max_inclusive": 22
+  },
+  "rim_height": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 4,
+    "max_inclusive": 6
+  },
+  "flood_chance": 1.0
+}

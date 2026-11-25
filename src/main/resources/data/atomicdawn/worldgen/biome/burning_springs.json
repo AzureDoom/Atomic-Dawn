@@ -19,7 +19,9 @@
   "features": [
     [],
     [],
-    [],
+    [
+      "atomicdawn:sulfur_springs_common"
+    ],
     [],
     [],
     [],

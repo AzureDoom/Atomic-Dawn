@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:mojave_wasteland/roadside_store",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:mojave_wasteland/highway_checkpoint",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:mojave_wasteland/ranger_outpost",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 52819463
+  }
+}

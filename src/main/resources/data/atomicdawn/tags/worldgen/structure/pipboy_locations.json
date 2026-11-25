@@ -139,6 +139,50 @@
       "required": false
     },
     {
+      "id": "#atomicdawn:mojave_wasteland_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:glowing_sea_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:zion_canyon_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:far_harbor_coast_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:point_lookout_swamp_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:new_california_badlands_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:capital_wasteland_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:the_divide_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:commonwealth_wasteland_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:the_pitt_structures",
+      "required": false
+    },
+    {
+      "id": "#atomicdawn:special_locations",
+      "required": false
+    },
+    {
       "id": "#atomicdawn:radiation_sites",
       "required": false
     },

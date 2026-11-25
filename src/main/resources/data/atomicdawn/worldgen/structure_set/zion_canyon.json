@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:zion_canyon/ranger_cabin",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:zion_canyon/cliff_camp",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:zion_canyon/lookout_tower",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 63172058
+  }
+}

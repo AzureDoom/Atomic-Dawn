@@ -1,0 +1,14 @@
+{
+  "fallback": "atomicdawn:sierra_madre/caps",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "atomicdawn:sierra_madre/casino_floor",
+        "processors": "minecraft:empty",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

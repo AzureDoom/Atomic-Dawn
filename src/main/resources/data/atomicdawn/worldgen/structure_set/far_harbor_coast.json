@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:far_harbor_coast/harbor_pier",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:far_harbor_coast/fishing_shack",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:far_harbor_coast/lookout_tower",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 73390415
+  }
+}

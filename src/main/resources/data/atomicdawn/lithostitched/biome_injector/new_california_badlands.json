@@ -1,0 +1,23 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 107,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:new_california_badlands",
+  "parameters": {
+    "temperature": {
+      "min_inclusive": 0.2,
+      "max_inclusive": 0.55
+    },
+    "humidity": {
+      "max_inclusive": -0.1
+    },
+    "continentalness": {
+      "min_inclusive": 0.03
+    },
+    "depth": {
+      "max_inclusive": 0.2
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

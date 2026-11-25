@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "atomicdawn:radiation_sites/fissure_site",
-    "atomicdawn:radiation_sites/waste_disposal"
+    "atomicdawn:radiation_sites/waste_disposal",
+    "atomicdawn:the_glow",
+    "atomicdawn:big_mt/test_site"
   ]
 }

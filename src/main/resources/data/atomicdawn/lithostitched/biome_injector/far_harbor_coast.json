@@ -1,0 +1,21 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 88,
+  "targets": "#atomicdawn:far_harbor_coast_replaceable",
+  "replacement": "atomicdawn:far_harbor_coast",
+  "parameters": {
+    "temperature": {
+      "min_inclusive": -0.45,
+      "max_inclusive": 0.2
+    },
+    "continentalness": {
+      "min_inclusive": -0.19,
+      "max_inclusive": 0.0
+    },
+    "depth": {
+      "max_inclusive": 0.2
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:capital_wasteland/ruined_suburb",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:capital_wasteland/utility_substation",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:capital_wasteland/highway_checkpoint",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 31847562
+  }
+}

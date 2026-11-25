@@ -1,0 +1,22 @@
+{
+  "type": "atomicdawn:canyon",
+  "biomes": "atomicdawn:zion_canyon",
+  "step": "surface_structures",
+  "terrain_adaptation": "none",
+  "spawn_overrides": {},
+  "length": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 80,
+    "max_inclusive": 140
+  },
+  "half_width": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 9,
+    "max_inclusive": 15
+  },
+  "depth": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 18,
+    "max_inclusive": 30
+  }
+}

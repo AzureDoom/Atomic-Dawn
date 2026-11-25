@@ -1,0 +1,63 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.8,
+  "downfall": 0.9,
+  "effects": {
+    "water_color": 4876867,
+    "grass_color": 7503947,
+    "foliage_color": 5465157,
+    "dry_foliage_color": 9405528,
+    "fog_color": 10855309,
+    "sky_color": 9019283,
+    "water_fog_color": 2637101
+  },
+  "carvers": [
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
+  "attributes": {
+    "minecraft:visual/fog_start_distance": {
+      "modifier": "minimum",
+      "argument": 16.0
+    },
+    "minecraft:visual/fog_end_distance": {
+      "modifier": "minimum",
+      "argument": 140.0
+    },
+    "minecraft:visual/water_fog_end_distance": {
+      "modifier": "multiply",
+      "argument": 0.6
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_gold",
+      "minecraft:ore_redstone",
+      "minecraft:ore_diamond",
+      "minecraft:ore_lapis"
+    ],
+    [],
+    [
+      "minecraft:spring_water"
+    ],
+    [
+      "atomicdawn:twisted_hardwoods",
+      "minecraft:patch_grass_normal",
+      "minecraft:patch_waterlily"
+    ],
+    []
+  ]
+}

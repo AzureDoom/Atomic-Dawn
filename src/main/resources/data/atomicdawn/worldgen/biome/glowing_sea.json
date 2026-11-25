@@ -1,0 +1,59 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.85,
+  "downfall": 0.0,
+  "effects": {
+    "water_color": 6584156,
+    "grass_color": 9406041,
+    "foliage_color": 7829069,
+    "dry_foliage_color": 10655340,
+    "fog_color": 10137206,
+    "sky_color": 9213809,
+    "water_fog_color": 2505256
+  },
+  "carvers": [
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
+  "attributes": {
+    "minecraft:visual/cloud_color": "#A09AAE76",
+    "minecraft:visual/ambient_particles": [
+      {
+        "particle": {
+          "type": "minecraft:ash"
+        },
+        "probability": 0.025
+      }
+    ]
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_gold",
+      "minecraft:ore_redstone",
+      "minecraft:ore_diamond",
+      "minecraft:ore_lapis"
+    ],
+    [],
+    [
+      "minecraft:spring_water"
+    ],
+    [
+      "atomicdawn:skeletal_trees",
+      "minecraft:patch_dead_bush"
+    ],
+    []
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:capital_wasteland",
+  "spawners": [
+    {
+      "type": "minecraft:zombie_villager",
+      "weight": 10,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    },
+    {
+      "type": "atomicdawn:brahmin",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:rabbit",
+      "weight": 4,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    }
+  ]
+}

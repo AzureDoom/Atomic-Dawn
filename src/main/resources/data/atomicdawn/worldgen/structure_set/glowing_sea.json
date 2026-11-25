@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:glowing_sea/field_laboratory",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:glowing_sea/supply_bunker",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:glowing_sea/military_checkpoint",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 18,
+    "separation": 6,
+    "salt": 84417302
+  }
+}

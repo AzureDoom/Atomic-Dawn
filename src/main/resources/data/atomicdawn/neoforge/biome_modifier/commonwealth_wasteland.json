@@ -1,0 +1,42 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:commonwealth_wasteland",
+  "spawners": [
+    {
+      "type": "atomicdawn:feral_ghoul",
+      "weight": 30,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "minecraft:wolf",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "minecraft:fox",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    },
+    {
+      "type": "minecraft:chicken",
+      "weight": 4,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    }
+  ]
+}

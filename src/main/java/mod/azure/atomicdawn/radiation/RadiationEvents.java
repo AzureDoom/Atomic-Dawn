@@ -33,6 +33,11 @@ public final class RadiationEvents {
         AtomicDawn.id("radiation_sites")
     );
 
+    public static final TagKey<Structure> EXTREME_RADIATION_SITES = TagKey.create(
+        Registries.STRUCTURE,
+        AtomicDawn.id("extreme_radiation_sites")
+    );
+
     private RadiationEvents() {}
 
     @SubscribeEvent
@@ -113,21 +118,47 @@ public final class RadiationEvents {
         if (AtomicDawn.CONFIG.environmentalRadiation.RADIATION_SITES_ENABLED) {
             total += siteRadiation(level, pos);
         }
+        if (AtomicDawn.CONFIG.environmentalRadiation.BIOME_RADIATION_ENABLED) {
+            total += biomeRadiation(level, player);
+        }
         return total;
+    }
+
+    private static float biomeRadiation(ServerLevel level, Player player) {
+        var biome = level.getBiome(player.blockPosition());
+        var config = AtomicDawn.CONFIG.environmentalRadiation;
+        double rate;
+        if (biome.is(ADBiomes.AMBIENT_RADIATION_HIGH)) {
+            rate = config.BIOME_RADIATION_HIGH_RADS_PER_SECOND;
+        } else if (biome.is(ADBiomes.AMBIENT_RADIATION_LOW)) {
+            rate = config.BIOME_RADIATION_LOW_RADS_PER_SECOND;
+        } else {
+            return 0F;
+        }
+        if (rate <= 0.0) {
+            return 0F;
+        }
+        if (!level.canSeeSky(BlockPos.containing(player.getEyePosition()))) {
+            rate *= config.BIOME_RADIATION_SHELTER_MULTIPLIER;
+        }
+        return (float) rate;
     }
 
     private static float siteRadiation(ServerLevel level, BlockPos pos) {
         var rate = (float) AtomicDawn.CONFIG.environmentalRadiation.RADIATION_SITE_RADS_PER_SECOND;
-        if (rate <= 0F) {
+        var extreme = (float) AtomicDawn.CONFIG.environmentalRadiation.EXTREME_SITE_RADS_PER_SECOND;
+        if (rate <= 0F && extreme <= 0F) {
             return 0F;
         }
         var structures = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
         var manager = level.structureManager();
         var best = 0F;
         for (var structure : manager.getAllStructuresAt(pos).keySet()) {
-            if (!structures.wrapAsHolder(structure).is(RADIATION_SITES)) {
+            var holder = structures.wrapAsHolder(structure);
+            if (!holder.is(RADIATION_SITES)) {
                 continue;
             }
+            var siteRate = holder.is(EXTREME_RADIATION_SITES) ? extreme : rate;
             var start = manager.getStructureAt(pos, structure);
             if (!start.isValid()) {
                 continue;
@@ -139,7 +170,7 @@ public final class RadiationEvents {
             var dz = pos.getZ() - center.getZ();
             var distance = Math.sqrt((double) dx * dx + (double) dz * dz);
             var proximity = 1F - 0.75F * (float) Math.min(1.0, distance / Math.max(1.0, reach));
-            best = Math.max(best, rate * proximity);
+            best = Math.max(best, siteRate * proximity);
         }
         return best;
     }

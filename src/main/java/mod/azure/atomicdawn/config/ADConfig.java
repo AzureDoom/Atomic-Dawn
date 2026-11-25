@@ -398,19 +398,62 @@ public class ADConfig {
         @DecimalRange(min = 0.0, max = 1000.0)
         public double WASTELAND_WATER_RADS_PER_SECOND = 1.0;
 
+        @Comment("Waste barrels, toxic sludge and fissure blocks irradiate players standing near them.")
         @Configurable
         @Configurable.Synchronized
         public boolean RADIATION_HOTSPOTS_ENABLED = true;
 
+        @Comment("Rads per second right next to a radiation hotspot block (falls off with distance).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 1000.0)
         public double RADIATION_HOTSPOT_RADS_PER_SECOND = 6.0;
 
+        @Comment("Distance in blocks searched around each player for radiation hotspot blocks.")
         @Configurable
         @Configurable.Synchronized
         @Range(min = 0, max = 12)
         public int RADIATION_HOTSPOT_RADIUS = 6;
+
+        @Comment("Some wasteland biomes give off constant background radiation.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean BIOME_RADIATION_ENABLED = true;
+
+        @Comment(
+            "Rads per second under open sky in lightly irradiated biomes (biome tag atomicdawn:ambient_radiation_low)."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double BIOME_RADIATION_LOW_RADS_PER_SECOND = 0.02;
+
+        @Comment(
+            "Rads per second under open sky in heavily irradiated biomes such as the Glowing Sea (biome tag atomicdawn:ambient_radiation_high)."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double BIOME_RADIATION_HIGH_RADS_PER_SECOND = 1.0;
+
+        @Comment("Multiplier applied to biome radiation while sheltered with no open sky above.")
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double BIOME_RADIATION_SHELTER_MULTIPLIER = 0.5;
+
+        @Comment(
+            "Rads per second at the centre of extreme radiation sites such as The Glow (falls off to a quarter at its edge)."
+        )
+        @Configurable
+        @Configurable.Synchronized
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double EXTREME_SITE_RADS_PER_SECOND = 10.0;
+
+        @Comment("Toxic cloud sites such as the Sierra Madre poison players while they are inside.")
+        @Configurable
+        @Configurable.Synchronized
+        public boolean TOXIC_CLOUDS_ENABLED = true;
 
     }
 
@@ -897,26 +940,31 @@ public class ADConfig {
         @DecimalRange(min = 0.0, max = 20.0)
         public double DIRTY_WATER_THIRST = 5.0;
 
+        @Comment("Thirst restored by drinkable potions other than water (item tag atomicdawn:thirst/potions).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 20.0)
         public double POTION_THIRST = 4.0;
 
+        @Comment("Thirst restored by milk (item tag atomicdawn:thirst/milk).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 20.0)
         public double MILK_THIRST = 6.0;
 
+        @Comment("Thirst restored by honey bottles (item tag atomicdawn:thirst/honey).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 20.0)
         public double HONEY_THIRST = 3.0;
 
+        @Comment("Thirst restored by stews and soups (item tag atomicdawn:thirst/stews).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 20.0)
         public double STEW_THIRST = 4.0;
 
+        @Comment("Thirst restored by soft drinks such as Nuka-Cola (item tag atomicdawn:thirst/soft_drinks).")
         @Configurable
         @Configurable.Synchronized
         @DecimalRange(min = 0.0, max = 20.0)

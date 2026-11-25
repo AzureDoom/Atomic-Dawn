@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:the_divide/ravine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 7,
+    "separation": 2,
+    "salt": 18374652
+  }
+}

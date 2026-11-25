@@ -84,7 +84,8 @@ public record WeaponDefinition(
         float explosionPower,
         boolean breakBlocks,
         boolean nuclear,
-        int fuseTicks
+        int fuseTicks,
+        float flatRange
     ) {
 
         public static final Codec<Projectile> CODEC = RecordCodecBuilder.create(
@@ -95,7 +96,8 @@ public record WeaponDefinition(
                 Codec.floatRange(0F, 32F).optionalFieldOf("explosion_power", 3F).forGetter(Projectile::explosionPower),
                 Codec.BOOL.optionalFieldOf("break_blocks", true).forGetter(Projectile::breakBlocks),
                 Codec.BOOL.optionalFieldOf("nuclear", false).forGetter(Projectile::nuclear),
-                ExtraCodecs.POSITIVE_INT.optionalFieldOf("fuse_ticks", 200).forGetter(Projectile::fuseTicks)
+                ExtraCodecs.POSITIVE_INT.optionalFieldOf("fuse_ticks", 200).forGetter(Projectile::fuseTicks),
+                Codec.floatRange(0F, 512F).optionalFieldOf("flat_range", 0F).forGetter(Projectile::flatRange)
             ).apply(instance, Projectile::new)
         );
     }

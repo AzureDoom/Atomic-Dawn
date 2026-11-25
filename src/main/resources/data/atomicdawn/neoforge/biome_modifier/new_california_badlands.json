@@ -1,0 +1,42 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:new_california_badlands",
+  "spawners": [
+    {
+      "type": "minecraft:husk",
+      "weight": 40,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "atomicdawn:brahmin",
+      "weight": 10,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "minecraft:rabbit",
+      "weight": 6,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 3
+      }
+    },
+    {
+      "type": "minecraft:horse",
+      "weight": 4,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    }
+  ]
+}

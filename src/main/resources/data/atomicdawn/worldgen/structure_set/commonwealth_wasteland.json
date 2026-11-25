@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:commonwealth_wasteland/suburban_house",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:commonwealth_wasteland/ranger_post",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:commonwealth_wasteland/supply_cache",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 47102938
+  }
+}

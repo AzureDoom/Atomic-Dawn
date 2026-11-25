@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:point_lookout_swamp/fishing_dock",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:point_lookout_swamp/flooded_cabin",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:point_lookout_swamp/research_hut",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 19482763
+  }
+}

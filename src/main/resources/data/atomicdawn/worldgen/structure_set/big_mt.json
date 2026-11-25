@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:big_mt/research_lab",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:big_mt/test_site",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 10,
+    "salt": 84102736
+  }
+}

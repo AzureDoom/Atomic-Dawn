@@ -1,0 +1,23 @@
+{
+  "type": "atomicdawn:canyon",
+  "biomes": "atomicdawn:the_divide",
+  "step": "surface_structures",
+  "terrain_adaptation": "none",
+  "spawn_overrides": {},
+  "stream": false,
+  "length": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 60,
+    "max_inclusive": 120
+  },
+  "half_width": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 4,
+    "max_inclusive": 7
+  },
+  "depth": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 16,
+    "max_inclusive": 28
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:the_divide/collapsed_overpass",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:the_divide/courier_camp",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:the_divide/military_checkpoint",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 82736410
+  }
+}

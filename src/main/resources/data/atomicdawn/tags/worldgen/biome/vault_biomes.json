@@ -5,6 +5,7 @@
     "#minecraft:is_badlands",
     "#minecraft:is_hill",
     "atomicdawn:savage_divide",
+    "atomicdawn:zion_canyon",
     {
       "id": "minecraft:windswept_hills",
       "required": false

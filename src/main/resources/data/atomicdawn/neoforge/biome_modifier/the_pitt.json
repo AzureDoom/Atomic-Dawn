@@ -1,0 +1,33 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "atomicdawn:the_pitt",
+  "spawners": [
+    {
+      "type": "atomicdawn:feral_ghoul",
+      "weight": 40,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 5
+      }
+    },
+    {
+      "type": "minecraft:zombie",
+      "weight": 20,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 4
+      }
+    },
+    {
+      "type": "minecraft:silverfish",
+      "weight": 10,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 2
+      }
+    }
+  ]
+}

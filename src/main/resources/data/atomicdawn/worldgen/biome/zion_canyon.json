@@ -1,0 +1,49 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.9,
+  "downfall": 0.35,
+  "effects": {
+    "water_color": 4489121,
+    "grass_color": 7711332,
+    "foliage_color": 6589005,
+    "dry_foliage_color": 12034159,
+    "fog_color": 13809307,
+    "sky_color": 8105692,
+    "water_fog_color": 2444377
+  },
+  "carvers": [
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_gold",
+      "minecraft:ore_redstone",
+      "minecraft:ore_diamond",
+      "minecraft:ore_lapis"
+    ],
+    [],
+    [
+      "minecraft:spring_water"
+    ],
+    [
+      "atomicdawn:canyon_pines",
+      "minecraft:patch_grass_normal",
+      "minecraft:patch_dead_bush"
+    ],
+    []
+  ]
+}

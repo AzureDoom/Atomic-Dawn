@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "atomicdawn:the_pitt/supply_depot",
+      "weight": 3
+    },
+    {
+      "structure": "atomicdawn:the_pitt/mining_shack",
+      "weight": 2
+    },
+    {
+      "structure": "atomicdawn:the_pitt/pump_station",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 6,
+    "salt": 95817264
+  }
+}

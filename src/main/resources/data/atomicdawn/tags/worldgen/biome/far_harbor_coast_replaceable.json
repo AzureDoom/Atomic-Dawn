@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#atomicdawn:wasteland_replaceable",
+    {
+      "id": "minecraft:beach",
+      "required": false
+    },
+    {
+      "id": "minecraft:stony_shore",
+      "required": false
+    }
+  ]
+}

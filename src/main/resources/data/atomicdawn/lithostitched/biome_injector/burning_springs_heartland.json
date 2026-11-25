@@ -1,0 +1,20 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 102,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:burning_springs",
+  "parameters": {
+    "temperature": {
+      "min_inclusive": 0.55
+    },
+    "humidity": {
+      "min_inclusive": -0.35,
+      "max_inclusive": -0.1
+    },
+    "depth": {
+      "max_inclusive": 0.2
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

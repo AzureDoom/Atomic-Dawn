@@ -1,0 +1,20 @@
+{
+  "type": "lithostitched:replace_partially",
+  "dimension": "minecraft:overworld",
+  "priority": 116,
+  "targets": "#atomicdawn:wasteland_replaceable",
+  "replacement": "atomicdawn:commonwealth_wasteland",
+  "parameters": {
+    "temperature": {
+      "min_inclusive": -0.45,
+      "max_inclusive": -0.15
+    },
+    "humidity": {
+      "min_inclusive": -0.1
+    },
+    "depth": {
+      "max_inclusive": 0.2
+    }
+  },
+  "region": "atomicdawn:wasteland"
+}

@@ -1,5 +1,5 @@
 {
   "dimension": "minecraft:overworld",
-  "biomes": "#atomicdawn:wasteland_replaceable",
+  "biomes": "#atomicdawn:wasteland_region",
   "weight": 20
 }
