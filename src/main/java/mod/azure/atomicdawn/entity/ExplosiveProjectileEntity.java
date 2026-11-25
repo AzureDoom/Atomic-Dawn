@@ -27,6 +27,13 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
         EntityDataSerializers.FLOAT
     );
 
+    private static final EntityDataAccessor<Boolean> FALLING = SynchedEntityData.defineId(
+        ExplosiveProjectileEntity.class,
+        EntityDataSerializers.BOOLEAN
+    );
+
+    private static final int DROP_RAMP_TICKS = 12;
+
     private float damage = 100F;
 
     private WeaponDefinition.Projectile parameters = new WeaponDefinition.Projectile(
@@ -36,7 +43,8 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
         3F,
         true,
         false,
-        200
+        200,
+        0F
     );
 
     private ItemStack weapon = ItemStack.EMPTY;
@@ -45,6 +53,10 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
     private WeaponDefinition definition;
 
     private boolean detonated;
+
+    private double traveled;
+
+    private int fallingTicks;
 
     public ExplosiveProjectileEntity(EntityType<? extends ExplosiveProjectileEntity> type, Level level) {
         super(type, level);
@@ -61,16 +73,37 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
         this.parameters = parameters;
         this.damage = damage;
         entityData.set(GRAVITY, parameters.gravity());
+        entityData.set(FALLING, parameters.flatRange() <= 0F);
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         builder.define(GRAVITY, 0.03F);
+        builder.define(FALLING, true);
     }
 
     @Override
     protected double getDefaultGravity() {
-        return entityData.get(GRAVITY);
+        if (!entityData.get(FALLING)) {
+            return 0.0;
+        }
+        var ramp = Math.min(1F, (fallingTicks + 1F) / DROP_RAMP_TICKS);
+        return entityData.get(GRAVITY) * ramp;
+    }
+
+    private void trackRange() {
+        if (entityData.get(FALLING)) {
+            fallingTicks++;
+            return;
+        }
+        fallingTicks = 0;
+        if (level().isClientSide()) {
+            return;
+        }
+        traveled += position().distanceTo(new Vec3(xo, yo, zo));
+        if (traveled >= parameters.flatRange()) {
+            entityData.set(FALLING, true);
+        }
     }
 
     private void faceVelocity() {
@@ -92,6 +125,7 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
         yRotO = getYRot();
         xRotO = getXRot();
         super.tick();
+        trackRange();
         faceVelocity();
         var level = level();
         if (level.isClientSide()) {
@@ -143,6 +177,8 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
     protected void addAdditionalSaveData(@NotNull ValueOutput output) {
         super.addAdditionalSaveData(output);
         output.putFloat("Damage", damage);
+        output.putDouble("Traveled", traveled);
+        output.putBoolean("Falling", entityData.get(FALLING));
         output.store("Parameters", WeaponDefinition.Projectile.CODEC, parameters);
     }
 
@@ -150,6 +186,8 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
         damage = input.getFloatOr("Damage", damage);
+        traveled = input.getDoubleOr("Traveled", 0.0);
+        entityData.set(FALLING, input.getBooleanOr("Falling", true));
         input.read("Parameters", WeaponDefinition.Projectile.CODEC).ifPresent(p -> {
             parameters = p;
             entityData.set(GRAVITY, p.gravity());

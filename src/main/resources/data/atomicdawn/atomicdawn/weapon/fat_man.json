@@ -45,13 +45,14 @@
     "draw": "atomicdawn:weapon.fat_man.draw"
   },
   "projectile": {
-    "speed": 1.4,
-    "gravity": 0.035,
+    "speed": 1.8,
+    "gravity": 0.04,
     "blast_radius": 10,
     "explosion_power": 6,
     "break_blocks": true,
     "nuclear": true,
-    "fuse_ticks": 200
+    "fuse_ticks": 200,
+    "flat_range": 72
   },
   "condition": {
     "max": 60,
