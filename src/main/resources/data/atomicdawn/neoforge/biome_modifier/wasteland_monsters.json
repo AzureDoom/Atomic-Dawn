@@ -59,7 +59,7 @@
     },
     {
       "type": "atomicdawn:feral_ghoul",
-      "weight": 90,
+      "weight": 25,
       "count": {
         "type": "minecraft:uniform",
         "min_inclusive": 2,

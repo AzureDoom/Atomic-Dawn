@@ -547,18 +547,8 @@
   "scorched.ambient": {
     "subtitle": "subtitles.atomicdawn.scorched.ambient",
     "sounds": [
-      {
-        "name": "minecraft:entity.zombie_villager.ambient",
-        "type": "event",
-        "pitch": 0.85,
-        "volume": 1.0
-      },
-      {
-        "name": "minecraft:entity.villager.ambient",
-        "type": "event",
-        "pitch": 0.7,
-        "volume": 1.0
-      }
+      "atomicdawn:scorched/scorched_ambient_1",
+      "atomicdawn:scorched/scorched_ambient_2"
     ]
   },
   "scorched.alert": {
@@ -581,34 +571,23 @@
   "scorched.attack": {
     "subtitle": "subtitles.atomicdawn.scorched.attack",
     "sounds": [
-      {
-        "name": "minecraft:entity.vindicator.ambient",
-        "type": "event",
-        "pitch": 0.8,
-        "volume": 1.0
-      }
+      "atomicdawn:scorched/scorched_attack_1",
+      "atomicdawn:scorched/scorched_attack_2"
     ]
   },
   "scorched.hurt": {
     "subtitle": "subtitles.atomicdawn.scorched.hurt",
     "sounds": [
-      {
-        "name": "minecraft:entity.zombie_villager.hurt",
-        "type": "event",
-        "pitch": 0.85,
-        "volume": 1.0
-      }
+      "atomicdawn:scorched/scorched_hurt_1",
+      "atomicdawn:scorched/scorched_hurt_2",
+      "atomicdawn:scorched/scorched_hurt_3"
     ]
   },
   "scorched.death": {
     "subtitle": "subtitles.atomicdawn.scorched.death",
     "sounds": [
-      {
-        "name": "minecraft:entity.zombie_villager.death",
-        "type": "event",
-        "pitch": 0.85,
-        "volume": 1.0
-      }
+      "atomicdawn:scorched/scorched_death_1",
+      "atomicdawn:scorched/scorched_death_2"
     ]
   },
   "scorched.radio": {
