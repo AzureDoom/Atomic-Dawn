@@ -222,9 +222,12 @@ public class FeralGhoulEntity extends Monster implements AzHitboxHolder {
             var dx = getX() - xo;
             var dz = getZ() - zo;
             var speed = dx * dx + dz * dz;
-            state = speed > RUN_THRESHOLD_SQR
-                ? FeralGhoulState.RUN
-                : speed > WALK_THRESHOLD_SQR ? FeralGhoulState.WALK : FeralGhoulState.IDLE;
+            if (speed > RUN_THRESHOLD_SQR) {
+                var target = getTarget();
+                state = target != null && target.isAlive() ? FeralGhoulState.CHARGE : FeralGhoulState.RUN;
+            } else {
+                state = speed > WALK_THRESHOLD_SQR ? FeralGhoulState.WALK : FeralGhoulState.IDLE;
+            }
         }
         if (state.ordinal() != entityData.get(DATA_STATE)) {
             entityData.set(DATA_STATE, state.ordinal());

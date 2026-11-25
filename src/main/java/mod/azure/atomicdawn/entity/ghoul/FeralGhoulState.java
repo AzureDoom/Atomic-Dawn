@@ -6,7 +6,8 @@ public enum FeralGhoulState {
     WALK("walk"),
     RUN("run"),
     DORMANT("dormant"),
-    DEAD("death");
+    DEAD("death"),
+    CHARGE("charge");
 
     private static final FeralGhoulState[] VALUES = values();
 
