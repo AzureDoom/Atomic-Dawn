@@ -175,6 +175,36 @@ public final class ADSounds {
 
     public static final DeferredHolder<SoundEvent, SoundEvent> SUPER_MUTANT_STEP = register("super_mutant.step");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_AMBIENT = register("scorchbeast.ambient");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_SCREECH = register("scorchbeast.screech");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_SCREAM = register("scorchbeast.scream");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_SONIC = register("scorchbeast.sonic");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_SONIC_IMPACT = register(
+        "scorchbeast.sonic_impact"
+    );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_DUST = register("scorchbeast.dust");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_FLAP = register("scorchbeast.flap");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_SWEEP = register("scorchbeast.sweep");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_SHOCKWAVE = register(
+        "scorchbeast.shockwave"
+    );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_LAND = register("scorchbeast.land");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_HURT = register("scorchbeast.hurt");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_DEATH = register("scorchbeast.death");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_STEP = register("scorchbeast.step");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return REGISTER.register(name, SoundEvent::createVariableRangeEvent);
     }

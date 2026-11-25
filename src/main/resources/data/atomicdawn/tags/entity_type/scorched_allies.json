@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "atomicdawn:scorched"
+    "atomicdawn:scorched",
+    "atomicdawn:scorchbeast"
   ]
 }

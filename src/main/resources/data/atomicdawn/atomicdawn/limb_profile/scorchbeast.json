@@ -1,0 +1,54 @@
+{
+  "entities": [
+    "atomicdawn:scorchbeast"
+  ],
+  "parts": [
+    "head",
+    "torso",
+    "left_arm",
+    "right_arm",
+    "left_leg",
+    "right_leg"
+  ],
+  "bones": {
+    "head": [
+      "head",
+      "jaw",
+      "leftEar",
+      "rightEar"
+    ],
+    "torso": [
+      "body",
+      "upperBody",
+      "main"
+    ],
+    "left_arm": [
+      "leftArm",
+      "leftForearm",
+      "leftWing"
+    ],
+    "right_arm": [
+      "rightArm",
+      "rightForearm",
+      "rightWing"
+    ],
+    "left_leg": [
+      "leftLeg",
+      "leftShin",
+      "leftFoot",
+      "leftFrontArm",
+      "leftFrontForearm",
+      "leftFrontHand"
+    ],
+    "right_leg": [
+      "rightLeg",
+      "rightShin",
+      "rightFoot",
+      "rightFrontArm",
+      "rightFrontForearm",
+      "rightFrontHand"
+    ]
+  },
+  "health": 1.25,
+  "priority": 10
+}

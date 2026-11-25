@@ -65,6 +65,8 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
         EntityDataSerializers.INT
     );
 
+    private boolean scorchbeastSummon;
+
     public static final int WAKE_DURATION = 30;
 
     private static final double RUN_THRESHOLD_SQR = 0.17 * 0.17;
@@ -259,6 +261,14 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
         return tickCount % 40 < 4;
     }
 
+    public boolean isScorchbeastSummon() {
+        return scorchbeastSummon;
+    }
+
+    public void setScorchbeastSummon(boolean value) {
+        this.scorchbeastSummon = value;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -394,7 +404,11 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
         var variant = ScorchedSpawning.rollVariant(random);
         setVariant(variant);
         setItemSlot(EquipmentSlot.MAINHAND, ScorchedWeapons.roll(level.getLevel(), variant, random));
-        home = ScorchedSpawning.fissureCenter(level.getLevel(), blockPosition()).orElse(blockPosition());
+        var fissure = ScorchedSpawning.fissureCenter(level.getLevel(), blockPosition());
+        home = fissure.orElse(blockPosition());
+        if (reason == EntitySpawnReason.NATURAL && fissure.isPresent()) {
+            ScorchedSpawning.recordNatural(level.getLevel(), fissure.get());
+        }
         var min = Math.min(config.PATROL_RADIUS_MIN, config.PATROL_RADIUS_MAX);
         var max = Math.max(config.PATROL_RADIUS_MIN, config.PATROL_RADIUS_MAX);
         patrolRadius = Mth.randomBetweenInclusive(random, min, max);
@@ -419,6 +433,7 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
             output.putInt("HomeY", home.getY());
             output.putInt("HomeZ", home.getZ());
         }
+        output.putBoolean("ScorchbeastSummon", scorchbeastSummon);
     }
 
     @Override
@@ -433,6 +448,7 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
         if (dormant) {
             entityData.set(DATA_POSE, Math.floorMod(input.getIntOr("DormantPose", 0), ScorchedState.DORMANT_POSES));
         }
+        scorchbeastSummon = input.getBooleanOr("ScorchbeastSummon", false);
     }
 
     @Override

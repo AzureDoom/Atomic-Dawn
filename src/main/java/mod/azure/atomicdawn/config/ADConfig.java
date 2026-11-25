@@ -53,6 +53,9 @@ public class ADConfig {
     public SuperMutants superMutants = new SuperMutants();
 
     @Configurable
+    public Scorchbeast scorchbeast = new Scorchbeast();
+
+    @Configurable
     public PowerArmor powerArmor = new PowerArmor();
 
     @Configurable
@@ -878,6 +881,21 @@ public class ADConfig {
         @DecimalRange(min = 0.0, max = 1.0)
         public double MELEE_WEAPON_CHANCE = 0.6;
 
+        @Comment("Most naturally spawned Scorched allowed at one fissure site at a time.")
+        @Configurable
+        @Range(min = 0, max = 64)
+        public int MAX_PER_FISSURE = 5;
+
+        @Comment("Scorched only spawn naturally within this many blocks of their fissure's centre.")
+        @Configurable
+        @DecimalRange(min = 2.0, max = 64.0)
+        public double FISSURE_SPAWN_RADIUS = 14.0;
+
+        @Comment("Seconds a fissure site waits between natural Scorched spawns once it is below its limit.")
+        @Configurable
+        @Range(min = 0, max = 3600)
+        public int FISSURE_RESPAWN_SECONDS = 90;
+
         @Comment("Chance a Scorched spawns as an officer.")
         @Configurable
         @DecimalRange(min = 0.0, max = 1.0)
@@ -895,6 +913,199 @@ public class ADConfig {
         @Comment("Scorched hunt villagers and wandering traders.")
         @Configurable
         public boolean ATTACK_VILLAGERS = true;
+
+    }
+
+    public static class Scorchbeast {
+
+        @Comment("Max health of a Scorchbeast.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 4096.0)
+        public double MAX_HEALTH = 400.0;
+
+        @Comment("Armor points of a Scorchbeast.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 30.0)
+        public double ARMOR = 12.0;
+
+        @Comment("How far a Scorchbeast can spot a target.")
+        @Configurable
+        @DecimalRange(min = 8.0, max = 160.0)
+        public double DETECTION_RANGE = 64.0;
+
+        @Comment("Blocks from its fissure after which a Scorchbeast abandons a target.")
+        @Configurable
+        @Range(min = 32, max = 512)
+        public int LEASH_RANGE = 160;
+
+        @Comment("Chance an unoccupied fissure site near a player gets a Scorchbeast on each spawn check.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double SPAWN_CHANCE = 0.35;
+
+        @Comment("Seconds between Scorchbeast spawn checks around each player.")
+        @Configurable
+        @Range(min = 5, max = 3600)
+        public int SPAWN_INTERVAL_SECONDS = 45;
+
+        @Comment("Minutes before a fissure site can spawn another Scorchbeast after its last one appeared.")
+        @Configurable
+        @Range(min = 0, max = 1440)
+        public int SITE_RESPAWN_MINUTES = 15;
+
+        @Comment("Fewest seconds a Scorchbeast stays airborne before it may land to fight on the ground.")
+        @Configurable
+        @Range(min = 1, max = 600)
+        public int MIN_AIR_SECONDS = 20;
+
+        @Comment("Fewest seconds a Scorchbeast stays grounded before it may take off again.")
+        @Configurable
+        @Range(min = 1, max = 600)
+        public int MIN_GROUND_SECONDS = 12;
+
+        @Comment("Height above its target that a Scorchbeast circles at.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 64.0)
+        public double CRUISE_ALTITUDE = 14.0;
+
+        @Comment("Radius of the circle a Scorchbeast flies around its target.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 64.0)
+        public double CIRCLE_RADIUS = 18.0;
+
+        @Comment("A grounded Scorchbeast takes off when its target is further than this.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 96.0)
+        public double TAKEOFF_DISTANCE = 22.0;
+
+        @Comment("Furthest distance the sonic attack is used from.")
+        @Configurable
+        @DecimalRange(min = 8.0, max = 128.0)
+        public double SONIC_RANGE = 48.0;
+
+        @Comment("Speed in blocks per tick of each sonic projectile.")
+        @Configurable
+        @DecimalRange(min = 0.2, max = 5.0)
+        public double SONIC_SPEED = 1.4;
+
+        @Comment("Aim spread in blocks applied to each sonic projectile.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 8.0)
+        public double SONIC_SPREAD = 1.0;
+
+        @Comment("Explosion radius of each sonic projectile.")
+        @Configurable
+        @DecimalRange(min = 0.5, max = 12.0)
+        public double SONIC_BLAST_RADIUS = 3.0;
+
+        @Comment("Damage at the centre of each sonic projectile's explosion.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double SONIC_BLAST_DAMAGE = 12.0;
+
+        @Comment("Sonic projectiles also break blocks like a mob explosion.")
+        @Configurable
+        public boolean SONIC_BREAKS_BLOCKS = false;
+
+        @Comment("Ticks between sonic attacks. Values below 200 are raised to 200.")
+        @Configurable
+        @Range(min = 200, max = 6000)
+        public int SONIC_COOLDOWN_TICKS = 200;
+
+        @Comment("Horizontal distance within which a Scorchbeast starts a crop dusting run.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 128.0)
+        public double DUST_TRIGGER_RANGE = 40.0;
+
+        @Comment("Height above the target a Scorchbeast flies during a crop dusting run.")
+        @Configurable
+        @DecimalRange(min = 3.0, max = 32.0)
+        public double DUST_ALTITUDE = 4.5;
+
+        @Comment("Speed in blocks per tick of the crop dusting dive.")
+        @Configurable
+        @DecimalRange(min = 0.3, max = 4.0)
+        public double DUST_DIVE_SPEED = 1.7;
+
+        @Comment("Radius of each radioactive cloud released while crop dusting.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 16.0)
+        public double DUST_CLOUD_RADIUS = 4.5;
+
+        @Comment("Seconds each radioactive cloud lingers.")
+        @Configurable
+        @Range(min = 1, max = 120)
+        public int DUST_CLOUD_SECONDS = 8;
+
+        @Comment("Rads per second inside a crop dusting cloud. Applies through blocks.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1000.0)
+        public double DUST_RADS_PER_SECOND = 6.0;
+
+        @Comment("Ticks between crop dusting runs.")
+        @Configurable
+        @Range(min = 20, max = 6000)
+        public int DUST_COOLDOWN_TICKS = 400;
+
+        @Comment("Damage of the grounded wing sweep.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double WING_SWEEP_DAMAGE = 18.0;
+
+        @Comment("Reach in blocks of the wing sweep beyond the Scorchbeast's body.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 16.0)
+        public double WING_SWEEP_RANGE = 5.0;
+
+        @Comment("Width in degrees of the wing sweep's frontal arc.")
+        @Configurable
+        @DecimalRange(min = 10.0, max = 360.0)
+        public double WING_SWEEP_ARC = 150.0;
+
+        @Comment("Knockback strength of the wing sweep.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 5.0)
+        public double WING_SWEEP_KNOCKBACK = 1.8;
+
+        @Comment("Furthest distance a grounded Scorchbeast lunges from.")
+        @Configurable
+        @DecimalRange(min = 8.0, max = 48.0)
+        public double LUNGE_RANGE = 18.0;
+
+        @Comment("Damage dealt when a lunge connects.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double LUNGE_DAMAGE = 14.0;
+
+        @Comment("Ticks between lunges.")
+        @Configurable
+        @Range(min = 20, max = 6000)
+        public int LUNGE_COOLDOWN_TICKS = 140;
+
+        @Comment("Radius of the grounded shockwave scream.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 32.0)
+        public double SHOCKWAVE_RADIUS = 8.0;
+
+        @Comment("Damage at the centre of the shockwave scream.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 256.0)
+        public double SHOCKWAVE_DAMAGE = 10.0;
+
+        @Comment("Ticks between shockwave screams.")
+        @Configurable
+        @Range(min = 20, max = 6000)
+        public int SHOCKWAVE_COOLDOWN_TICKS = 400;
+
+        @Comment("Scorched summoned by each shockwave scream.")
+        @Configurable
+        @Range(min = 0, max = 8)
+        public int SUMMONS_PER_SHOCKWAVE = 2;
+
+        @Comment("Most summoned Scorched allowed near a Scorchbeast at once.")
+        @Configurable
+        @Range(min = 0, max = 16)
+        public int MAX_ACTIVE_SUMMONS = 4;
 
     }
 

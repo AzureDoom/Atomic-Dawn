@@ -1,0 +1,15 @@
+{
+  "entity": "atomicdawn:scorchbeast",
+  "category": "monster",
+  "threat": 5,
+  "weaknesses": [
+    "headshots",
+    "projectiles"
+  ],
+  "resistances": [
+    "radiation",
+    "knockback"
+  ],
+  "study_kills": 3,
+  "sort": 4
+}

@@ -11,6 +11,10 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.ExplosiveProjectileEntity;
 import mod.azure.atomicdawn.entity.brahmin.BrahminEntity;
 import mod.azure.atomicdawn.entity.ghoul.FeralGhoulEntity;
+import mod.azure.atomicdawn.entity.misterhandy.MisterHandyEntity;
+import mod.azure.atomicdawn.entity.scorchbeast.ScorchbeastCloudEntity;
+import mod.azure.atomicdawn.entity.scorchbeast.ScorchbeastEntity;
+import mod.azure.atomicdawn.entity.scorchbeast.SonicBlastEntity;
 import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
 import mod.azure.atomicdawn.entity.supermutant.SuperMutantEntity;
 import mod.azure.atomicdawn.npc.NpcEntity;
@@ -99,6 +103,45 @@ public final class ADEntities {
             .clientTrackingRange(10)
             .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
     );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<ScorchbeastEntity>> SCORCHBEAST = REGISTER.register(
+        "scorchbeast",
+        id -> EntityType.Builder.of(ScorchbeastEntity::new, MobCategory.MONSTER)
+            .sized(3.5F, 3.0F)
+            .eyeHeight(2.6F)
+            .clientTrackingRange(16)
+            .updateInterval(2)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<MisterHandyEntity>> MISTER_HANDY = REGISTER.register(
+        "mister_handy",
+        id -> EntityType.Builder.of(MisterHandyEntity::new, MobCategory.MONSTER)
+            .sized(1.1F, 2.2F)
+            .eyeHeight(1.9F)
+            .fireImmune()
+            .clientTrackingRange(10)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<SonicBlastEntity>> SONIC_BLAST = REGISTER.register(
+        "sonic_blast",
+        id -> EntityType.Builder.<SonicBlastEntity>of(SonicBlastEntity::new, MobCategory.MISC)
+            .sized(0.75F, 0.75F)
+            .clientTrackingRange(12)
+            .updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<ScorchbeastCloudEntity>> SCORCHBEAST_CLOUD = REGISTER
+        .register(
+            "scorchbeast_cloud",
+            id -> EntityType.Builder.<ScorchbeastCloudEntity>of(ScorchbeastCloudEntity::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F)
+                .clientTrackingRange(10)
+                .updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, id))
+        );
 
     private ADEntities() {}
 }
