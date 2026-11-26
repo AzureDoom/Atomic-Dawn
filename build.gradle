@@ -100,6 +100,30 @@ tasks.named('processResources', ProcessResources) {
     filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand expandProps
     }
+
+    // Minify only copied resources, preserving JSON strings and numeric literals.
+    doLast { task ->
+        def pattern = ~/("(?:\\.|[^"\\])*")|[ \t\r\n]+/
+        long originalBytes = 0
+        long compactBytes = 0
+        int filesProcessed = 0
+
+        task.destinationDir.eachFileRecurse(groovy.io.FileType.FILES) { file ->
+            if (file.name.endsWith('.json') || file.name.endsWith('.mcmeta')) {
+                def original = file.getText('UTF-8')
+                def compact = pattern.matcher(original).replaceAll('$1')
+                originalBytes += file.length()
+                if (compact != original) {
+                    file.setText(compact, 'UTF-8')
+                }
+                compactBytes += file.length()
+                filesProcessed++
+            }
+        }
+
+        task.logger.lifecycle("JSON minification: ${filesProcessed} files, " +
+                "${originalBytes - compactBytes} bytes saved before JAR compression")
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -107,9 +131,13 @@ tasks.withType(JavaCompile).configureEach {
     options.release = java_version as int
 }
 
-jar {
+final String licenseSuffix = project.property('mod_name').toString()
+
+tasks.named('jar', Jar) {
     from('LICENSE') {
-        rename { "${it}_${mod_name}" }
+        rename { String fileName ->
+            "${fileName}_${licenseSuffix}"
+        }
     }
     manifest {
         attributes([
@@ -117,7 +145,7 @@ jar {
                 'Specification-Vendor'  : mod_authors,
                 'Specification-Version' : '1',
                 'Implementation-Title'  : project.name,
-                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Version': project.version.toString(),
                 'Implementation-Vendor' : mod_authors
         ])
     }
