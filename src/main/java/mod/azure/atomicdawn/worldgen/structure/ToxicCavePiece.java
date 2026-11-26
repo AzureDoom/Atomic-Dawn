@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import org.jetbrains.annotations.NotNull;
 
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADBlocks;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
@@ -55,13 +56,13 @@ public class ToxicCavePiece extends StructurePiece {
 
     public ToxicCavePiece(CompoundTag tag) {
         super(ADStructureTypes.TOXIC_CAVE_PIECE.get(), tag);
-        this.centerX = tag.getIntOr("CX", 0);
-        this.centerY = tag.getIntOr("CY", 0);
-        this.centerZ = tag.getIntOr("CZ", 0);
-        this.radiusX = tag.getIntOr("RX", 12);
-        this.radiusY = tag.getIntOr("RY", 6);
-        this.radiusZ = tag.getIntOr("RZ", 12);
-        this.seed = tag.getLongOr("Seed", 0L);
+        this.centerX = ADSerialization.getInt(tag, "CX", 0);
+        this.centerY = ADSerialization.getInt(tag, "CY", 0);
+        this.centerZ = ADSerialization.getInt(tag, "CZ", 0);
+        this.radiusX = ADSerialization.getInt(tag, "RX", 12);
+        this.radiusY = ADSerialization.getInt(tag, "RY", 6);
+        this.radiusZ = ADSerialization.getInt(tag, "RZ", 12);
+        this.seed = ADSerialization.getLong(tag, "Seed", 0L);
     }
 
     private static BoundingBox bounds(BlockPos center, int radiusX, int radiusY, int radiusZ) {

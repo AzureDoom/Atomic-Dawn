@@ -10,6 +10,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.limb.LimbHits;
 import mod.azure.atomicdawn.perks.PerkCombat;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
@@ -99,15 +100,21 @@ public final class DamageApplier {
         var type = ADDamageTypes.forTarget(definition.damage().type(), target);
         if (penetration > 0F) {
             var piercing = total * penetration;
-            target.hurtServer(
+            ADEntityUtil.hurt(
+                target,
                 level,
                 ADDamageTypes.source(level, type, attacker),
                 total - piercing
             );
             resetInvulnerability(target);
-            target.hurtServer(level, ADDamageTypes.source(level, ADDamageTypes.ARMOR_PIERCING, attacker), piercing);
+            ADEntityUtil.hurt(
+                target,
+                level,
+                ADDamageTypes.source(level, ADDamageTypes.ARMOR_PIERCING, attacker),
+                piercing
+            );
         } else {
-            target.hurtServer(level, ADDamageTypes.source(level, type, attacker), total);
+            ADEntityUtil.hurt(target, level, ADDamageTypes.source(level, type, attacker), total);
         }
     }
 

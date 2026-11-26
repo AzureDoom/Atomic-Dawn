@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import org.jetbrains.annotations.NotNull;
 
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADBlocks;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
@@ -57,13 +58,13 @@ public class PittWorksPiece extends StructurePiece {
 
     public PittWorksPiece(CompoundTag tag) {
         super(ADStructureTypes.PITT_WORKS_PIECE.get(), tag);
-        this.centerX = tag.getIntOr("CX", 0);
-        this.centerY = tag.getIntOr("CY", 0);
-        this.centerZ = tag.getIntOr("CZ", 0);
-        this.heapRadius = tag.getIntOr("HeapRadius", 10);
-        this.heapHeight = tag.getIntOr("HeapHeight", 8);
-        this.stacks = tag.getIntArray("Stacks").orElse(new int[0]);
-        this.seed = tag.getLongOr("Seed", 0L);
+        this.centerX = ADSerialization.getInt(tag, "CX", 0);
+        this.centerY = ADSerialization.getInt(tag, "CY", 0);
+        this.centerZ = ADSerialization.getInt(tag, "CZ", 0);
+        this.heapRadius = ADSerialization.getInt(tag, "HeapRadius", 10);
+        this.heapHeight = ADSerialization.getInt(tag, "HeapHeight", 8);
+        this.stacks = ADSerialization.getIntArray(tag, "Stacks", new int[0]);
+        this.seed = ADSerialization.getLong(tag, "Seed", 0L);
     }
 
     private static BoundingBox bounds(BlockPos center, int heapRadius, int heapHeight, int[] stacks, int minY) {

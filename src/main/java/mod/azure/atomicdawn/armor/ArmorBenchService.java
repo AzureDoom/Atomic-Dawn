@@ -22,6 +22,7 @@ import mod.azure.atomicdawn.armor.upgrade.ArmorMod;
 import mod.azure.atomicdawn.armor.upgrade.ArmorUpgrades;
 import mod.azure.atomicdawn.crafting.ArmorBenchMenu;
 import mod.azure.atomicdawn.crafting.WorkbenchService;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.network.ArmorBenchActionPayload;
 import mod.azure.atomicdawn.powerarmor.PowerArmorService;
 import mod.azure.atomicdawn.registry.ADItems;
@@ -55,9 +56,7 @@ public final class ArmorBenchService {
     }
 
     private static void fabricate(ServerPlayer player, Identifier id) {
-        var recipe = player.level()
-            .registryAccess()
-            .lookupOrThrow(ADRegistries.ARMOR_RECIPE)
+        var recipe = ADRegistryUtil.registry(player.level().registryAccess(), ADRegistries.ARMOR_RECIPE)
             .get(ResourceKey.create(ADRegistries.ARMOR_RECIPE, id));
         if (recipe.isEmpty()) {
             return;

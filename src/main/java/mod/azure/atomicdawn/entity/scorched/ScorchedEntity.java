@@ -30,6 +30,8 @@ import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.scorched.ai.ScorchedBrain;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADSounds;
 
 @SuppressWarnings({ "unused", "deprecation" })
@@ -236,9 +238,10 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
     public void meleeHit(ServerLevel level, LivingEntity target) {
         var damage = ScorchedWeapons.meleeDamage(this);
         if (damage > 0F) {
-            var hit = target.hurtServer(level, damageSources().mobAttack(this), damage);
+            var hit = ADEntityUtil.hurt(target, level, damageSources().mobAttack(this), damage);
             if (hit) {
-                target.knockback(
+                ADEntityUtil.knockback(
+                    target,
                     0.4,
                     getX() - target.getX(),
                     getZ() - target.getZ(),
@@ -439,16 +442,23 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        setVariant(ScorchedVariant.byName(input.getStringOr("Variant", "")));
-        patrolRadius = input.getIntOr("PatrolRadius", 32);
-        home = input.getBooleanOr("HasHome", false)
-            ? new BlockPos(input.getIntOr("HomeX", 0), input.getIntOr("HomeY", 0), input.getIntOr("HomeZ", 0))
+        setVariant(ScorchedVariant.byName(ADSerialization.getString(input, "Variant", "")));
+        patrolRadius = ADSerialization.getInt(input, "PatrolRadius", 32);
+        home = ADSerialization.getBoolean(input, "HasHome", false)
+            ? new BlockPos(
+                ADSerialization.getInt(input, "HomeX", 0),
+                ADSerialization.getInt(input, "HomeY", 0),
+                ADSerialization.getInt(input, "HomeZ", 0)
+            )
             : null;
-        setDormant(input.getBooleanOr("Dormant", false));
+        setDormant(ADSerialization.getBoolean(input, "Dormant", false));
         if (dormant) {
-            entityData.set(DATA_POSE, Math.floorMod(input.getIntOr("DormantPose", 0), ScorchedState.DORMANT_POSES));
+            entityData.set(
+                DATA_POSE,
+                Math.floorMod(ADSerialization.getInt(input, "DormantPose", 0), ScorchedState.DORMANT_POSES)
+            );
         }
-        scorchbeastSummon = input.getBooleanOr("ScorchbeastSummon", false);
+        scorchbeastSummon = ADSerialization.getBoolean(input, "ScorchbeastSummon", false);
     }
 
     @Override

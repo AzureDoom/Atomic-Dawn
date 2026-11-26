@@ -20,7 +20,7 @@ public class WeaponItemRenderer extends AzItemRenderer {
     private WeaponItemRenderer(Identifier model, Identifier texture, Identifier animations) {
         super(
             AzItemRendererConfig.builder(
-                _ -> model,
+                ignored -> model,
                 stack -> WeaponModelParts.textureOverride(stack).orElse(texture)
             )
                 .setAnimatorProvider(() -> new WeaponAnimator(animations))

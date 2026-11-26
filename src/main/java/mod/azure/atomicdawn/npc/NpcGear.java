@@ -16,7 +16,7 @@ public final class NpcGear {
     public static void openEditor(ServerPlayer player, NpcEntity npc) {
         player.openMenu(
             new SimpleMenuProvider(
-                (id, inventory, _) -> new NpcGearMenu(id, inventory, npc),
+                (id, inventory, ignored) -> new NpcGearMenu(id, inventory, npc),
                 Component.translatable("npc.atomicdawn.gear.title")
             ),
             buffer -> buffer.writeVarInt(npc.getId())

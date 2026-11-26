@@ -2,15 +2,15 @@ package mod.azure.atomicdawn.client.pipboy;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
@@ -19,7 +19,7 @@ import mod.azure.atomicdawn.quest.QuestDefinition;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.registry.ADSounds;
 
-public final class PipBoyNotificationHud implements GuiLayer {
+public final class PipBoyNotificationHud implements ADHudLayer {
 
     private static final int MAX_VISIBLE = 4;
 
@@ -75,7 +75,7 @@ public final class PipBoyNotificationHud implements GuiLayer {
         }
     }
 
-    private static int renderTracked(GuiGraphicsExtractor graphics, Minecraft minecraft) {
+    private static int renderTracked(ADGuiGraphics graphics, Minecraft minecraft) {
         var player = minecraft.player;
         if (player == null || minecraft.level == null || minecraft.gui.screen() != null) {
             return 4;
@@ -125,9 +125,9 @@ public final class PipBoyNotificationHud implements GuiLayer {
     }
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
-        if (minecraft.player == null || minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden) {
+        if (minecraft.player == null || ADGuiRenderUtil.isHudHidden()) {
             return;
         }
         var now = now();

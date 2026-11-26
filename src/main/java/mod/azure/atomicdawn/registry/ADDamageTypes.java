@@ -1,6 +1,5 @@
 package mod.azure.atomicdawn.registry;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -11,6 +10,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 
 @SuppressWarnings("unused")
 public final class ADDamageTypes {
@@ -41,17 +42,17 @@ public final class ADDamageTypes {
     private ADDamageTypes() {}
 
     public static DamageSource radiation(Level level) {
-        var holder = level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(RADIATION);
+        var holder = ADRegistryUtil.registry(level.registryAccess(), Registries.DAMAGE_TYPE).getOrThrow(RADIATION);
         return new DamageSource(holder);
     }
 
     public static DamageSource source(Level level, ResourceKey<DamageType> type, Entity attacker) {
-        var holder = level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(type);
+        var holder = ADRegistryUtil.registry(level.registryAccess(), Registries.DAMAGE_TYPE).getOrThrow(type);
         return new DamageSource(holder, attacker);
     }
 
     public static ResourceKey<DamageType> forTarget(ResourceKey<DamageType> type, Entity target) {
-        if (!BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(target.getType()).is(TAKES_DIRECT_SHOTS)) {
+        if (!ADEntityUtil.isIn(target, TAKES_DIRECT_SHOTS)) {
             return type;
         }
         if (type.equals(BALLISTIC)) {

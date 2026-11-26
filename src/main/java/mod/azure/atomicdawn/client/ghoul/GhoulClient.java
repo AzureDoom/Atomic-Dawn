@@ -1,12 +1,9 @@
 package mod.azure.atomicdawn.client.ghoul;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.PlayerModelType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -16,6 +13,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADPlayerRenderUtil;
 import mod.azure.atomicdawn.ghoul.GhoulAppearance;
 import mod.azure.atomicdawn.ghoul.GhoulService;
 import mod.azure.atomicdawn.ghoul.GhoulState;
@@ -85,12 +83,7 @@ public final class GhoulClient {
     }
 
     public static void addLayers(EntityRenderersEvent.AddLayers event) {
-        for (var model : event.getSkins()) {
-            AvatarRenderer<AbstractClientPlayer> renderer = event.getPlayerRenderer(model);
-            if (renderer != null) {
-                renderer.addLayer(new GhoulPlayerRenderLayer(renderer, model == PlayerModelType.SLIM));
-            }
-        }
+        ADPlayerRenderUtil.addPlayerLayers(event, GhoulPlayerRenderLayer::new);
     }
 
     public static void send(GhoulActionPayload.Action action, int value) {

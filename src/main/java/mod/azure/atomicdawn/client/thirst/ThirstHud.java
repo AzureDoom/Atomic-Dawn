@@ -2,16 +2,16 @@ package mod.azure.atomicdawn.client.thirst;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.thirst.Thirst;
@@ -19,7 +19,7 @@ import mod.azure.atomicdawn.thirst.ThirstService;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID, value = Dist.CLIENT)
-public final class ThirstHud implements GuiLayer {
+public final class ThirstHud implements ADHudLayer {
 
     private static final int COLOR = 0xFF3CA0FF;
 
@@ -36,10 +36,10 @@ public final class ThirstHud implements GuiLayer {
     private static final float LOW = 6F;
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (
             player == null || hudHidden || !ThirstService.enabled() || player.isCreative() || player.isSpectator()
         ) {

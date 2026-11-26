@@ -18,7 +18,7 @@ public class PowerArmorRenderer extends AzEntityRenderer<PowerArmorEntity> {
 
     public PowerArmorRenderer(EntityRendererProvider.Context context) {
         super(
-            AzEntityRendererConfig.builder(_ -> MODEL, PowerArmorTextures::texture)
+            AzEntityRendererConfig.builder(ignored -> MODEL, PowerArmorTextures::texture)
                 .setAnimatorProvider(PowerArmorAnimator::new)
                 .setPrerenderEntry(render -> {
                     PowerArmorModelParts.apply(render.animatable(), render.bakedModel());

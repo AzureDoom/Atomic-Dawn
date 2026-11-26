@@ -67,27 +67,27 @@ public final class ADStructureTypes {
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType> FISSURE_PIECE = PIECES.register(
         "fissure",
-        () -> (_, tag) -> new FissurePiece(tag)
+        () -> (ignored, tag) -> new FissurePiece(tag)
     );
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType> CRATER_PIECE = PIECES.register(
         "crater",
-        () -> (_, tag) -> new CraterPiece(tag)
+        () -> (ignored, tag) -> new CraterPiece(tag)
     );
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType> CANYON_PIECE = PIECES.register(
         "canyon",
-        () -> (_, tag) -> new CanyonPiece(tag)
+        () -> (ignored, tag) -> new CanyonPiece(tag)
     );
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType> PITT_WORKS_PIECE = PIECES.register(
         "pitt_works",
-        () -> (_, tag) -> new PittWorksPiece(tag)
+        () -> (ignored, tag) -> new PittWorksPiece(tag)
     );
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType> TOXIC_CAVE_PIECE = PIECES.register(
         "toxic_cave",
-        () -> (_, tag) -> new ToxicCavePiece(tag)
+        () -> (ignored, tag) -> new ToxicCavePiece(tag)
     );
 
     private ADStructureTypes() {}

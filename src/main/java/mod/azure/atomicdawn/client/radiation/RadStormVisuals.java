@@ -2,18 +2,18 @@ package mod.azure.atomicdawn.client.radiation;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.config.ADColors;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.worldgen.ADBiomes;
 
@@ -49,8 +49,11 @@ public final class RadStormVisuals {
         if (minecraft.isPaused()) {
             return;
         }
-        var active = player.getData(ADAttachments.RAD_STORM.get()) && level.getBiome(player.blockPosition())
-            .is(ADBiomes.WASTELAND);
+        var active = player.getData(ADAttachments.RAD_STORM.get()) && ADWorldgenUtil.biomeIs(
+            level,
+            player.blockPosition(),
+            ADBiomes.WASTELAND
+        );
         var exposed = active && level.canSeeSky(BlockPos.containing(player.getEyePosition()));
         var target = exposed ? 1F : active ? 0.2F : 0F;
         tint += Math.clamp(target - tint, -0.02F, 0.02F);
@@ -71,10 +74,10 @@ public final class RadStormVisuals {
         }
     }
 
-    public static final class Overlay implements GuiLayer {
+    public static final class Overlay implements ADHudLayer {
 
         @Override
-        public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+        public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
             if (!AtomicDawn.CONFIG.client.effects.radStorm.RAD_STORM_OVERLAY) {
                 return;
             }

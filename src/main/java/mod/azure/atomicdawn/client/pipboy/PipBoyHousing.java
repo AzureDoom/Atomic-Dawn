@@ -1,10 +1,10 @@
 package mod.azure.atomicdawn.client.pipboy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.registry.ADAttachments;
 
 public final class PipBoyHousing {
@@ -43,15 +43,15 @@ public final class PipBoyHousing {
         };
     }
 
-    public static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Layout l, State s) {
+    public static void render(ADGuiGraphics graphics, PipBoyScreen screen, Layout l, State s) {
         if (l.fullscreen() || l.parts() == null) {
             return;
         }
         switch (l.parts()) {
-            case PipBoyHousing76.Parts _ -> PipBoyHousing76.render(graphics, screen, l, s);
-            case PipBoyHousing4.Parts _ -> PipBoyHousing4.render(graphics, screen, l, s);
-            case PipBoyHousing3000.Parts _ -> PipBoyHousing3000.render(graphics, screen, l, s);
-            case PipBoyHousing2000.Parts _ -> PipBoyHousing2000.render(graphics, screen, l, s);
+            case PipBoyHousing76.Parts ignored -> PipBoyHousing76.render(graphics, screen, l, s);
+            case PipBoyHousing4.Parts ignored -> PipBoyHousing4.render(graphics, screen, l, s);
+            case PipBoyHousing3000.Parts ignored -> PipBoyHousing3000.render(graphics, screen, l, s);
+            case PipBoyHousing2000.Parts ignored -> PipBoyHousing2000.render(graphics, screen, l, s);
             default -> {}
         }
     }
@@ -68,7 +68,7 @@ public final class PipBoyHousing {
         return 0x50000000;
     }
 
-    static void ribs(GuiGraphicsExtractor graphics, Rect r, int pitch, int light, int dark, boolean horizontal) {
+    static void ribs(ADGuiGraphics graphics, Rect r, int pitch, int light, int dark, boolean horizontal) {
         if (horizontal) {
             for (var y = r.y(); y < r.bottom(); y += pitch) {
                 var end = Math.min(r.bottom(), y + pitch);
@@ -84,7 +84,7 @@ public final class PipBoyHousing {
         }
     }
 
-    static void roundButton(GuiGraphicsExtractor graphics, Rect r, boolean lit, boolean hovered, int on, int off) {
+    static void roundButton(ADGuiGraphics graphics, Rect r, boolean lit, boolean hovered, int on, int off) {
         var cx = r.x() + r.width() / 2;
         var cy = r.y() + r.height() / 2;
         var radius = Math.max(3, Math.min(r.width(), r.height()) / 2);
@@ -109,7 +109,7 @@ public final class PipBoyHousing {
     }
 
     static void gauge(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int cx,
         int cy,
         int radius,
@@ -145,7 +145,7 @@ public final class PipBoyHousing {
     }
 
     static void dialKnob(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int cx,
         int cy,
         int radius,

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.camp.CampStashService;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.junk.ScrapboxService;
 
 public record StorageActionPayload(
@@ -38,7 +39,7 @@ public record StorageActionPayload(
         }
     }
 
-    public static final Identifier NONE = Identifier.withDefaultNamespace("air");
+    public static final Identifier NONE = ADRegistryUtil.vanillaId("air");
 
     public static final Type<StorageActionPayload> TYPE = new Type<>(AtomicDawn.id("storage_action"));
 

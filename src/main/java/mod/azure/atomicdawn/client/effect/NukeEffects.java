@@ -2,7 +2,6 @@ package mod.azure.atomicdawn.client.effect;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -15,13 +14,13 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.network.NukeExplosionPayload;
 
 @SuppressWarnings("unused")
@@ -201,10 +200,10 @@ public final class NukeEffects {
         event.setRoll(event.getRoll() + (random.nextFloat() - 0.5F) * amplitude * 0.5F);
     }
 
-    public static final class FlashLayer implements GuiLayer {
+    public static final class FlashLayer implements ADHudLayer {
 
         @Override
-        public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+        public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
             if (flash <= 0.01F) {
                 return;
             }

@@ -13,6 +13,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import java.util.Comparator;
 import java.util.List;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record PowerArmorRecipe(
@@ -40,7 +41,7 @@ public record PowerArmorRecipe(
     }
 
     public static List<Holder.Reference<PowerArmorRecipe>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.POWER_ARMOR_RECIPE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.POWER_ARMOR_RECIPE)
             .map(registry -> registry.listElements().sorted(ORDER).toList())
             .orElse(List.of());
     }

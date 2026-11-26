@@ -41,7 +41,10 @@ public final class LimbCommands {
                                         .then(
                                             Commands.argument("part", StringArgumentType.word())
                                                 .suggests(
-                                                    (_, builder) -> SharedSuggestionProvider.suggest(parts, builder)
+                                                    (ignored, builder) -> SharedSuggestionProvider.suggest(
+                                                        parts,
+                                                        builder
+                                                    )
                                                 )
                                                 .executes(LimbCommands::cripple)
                                         )

@@ -38,6 +38,7 @@ import java.util.UUID;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.ArmorPiece;
 import mod.azure.atomicdawn.armor.ArmorPieceItem;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.perks.PerkHooks;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
@@ -328,7 +329,7 @@ public final class ArmorEvents {
         }
         var energy = bonuses.get(ArmorEffectType.RETALIATE_ENERGY);
         if (energy > 0F) {
-            attacker.hurtServer(player.level(), player.level().damageSources().thorns(player), energy);
+            ADEntityUtil.hurt(attacker, player.level(), player.level().damageSources().thorns(player), energy);
         }
     }
 
@@ -675,6 +676,6 @@ public final class ArmorEvents {
     }
 
     private static WearerState state(ServerPlayer player) {
-        return WEARERS.computeIfAbsent(player.getUUID(), _ -> new WearerState());
+        return WEARERS.computeIfAbsent(player.getUUID(), ignored -> new WearerState());
     }
 }

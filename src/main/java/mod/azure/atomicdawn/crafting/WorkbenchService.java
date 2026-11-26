@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.progression.LegendaryRolls;
 import mod.azure.atomicdawn.progression.ModUnlocks;
@@ -167,7 +168,8 @@ public final class WorkbenchService {
     public static Result applyLegendary(ServerPlayer player, ItemStack weapon, ResourceKey<LegendaryEffect> effectKey) {
         var level = player.level();
         var base = Weapons.baseDefinition(level, weapon);
-        var effect = level.registryAccess().lookup(ADRegistries.LEGENDARY_EFFECT).flatMap(r -> r.get(effectKey));
+        var effect = ADRegistryUtil.optionalRegistry(level.registryAccess(), ADRegistries.LEGENDARY_EFFECT)
+            .flatMap(r -> r.get(effectKey));
         if (base == null || effect.isEmpty() || !effect.get().value().appliesTo(base.category())) {
             return Result.LEGENDARY_NOT_ALLOWED;
         }
@@ -187,8 +189,7 @@ public final class WorkbenchService {
         var existingStars = new ArrayList<Integer>();
         for (var key : current.effects()) {
             existingStars.add(
-                level.registryAccess()
-                    .lookup(ADRegistries.LEGENDARY_EFFECT)
+                ADRegistryUtil.optionalRegistry(level.registryAccess(), ADRegistries.LEGENDARY_EFFECT)
                     .flatMap(r -> r.get(key))
                     .map(Holder.Reference::value)
                     .map(LegendaryEffect::star)

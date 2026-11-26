@@ -12,11 +12,12 @@ import net.neoforged.neoforge.client.fluid.FluidTintSources;
 import org.joml.Vector4f;
 import org.jspecify.annotations.NonNull;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADFluids;
 
 public final class IrradiatedWaterClient {
 
-    private static final Identifier UNDERWATER = Identifier.withDefaultNamespace("textures/misc/underwater.png");
+    private static final Identifier UNDERWATER = ADRegistryUtil.vanillaId("textures/misc/underwater.png");
 
     public static final IClientFluidTypeExtensions EXTENSIONS = new IClientFluidTypeExtensions() {
 
@@ -43,9 +44,9 @@ public final class IrradiatedWaterClient {
     public static void registerModel(RegisterFluidModelsEvent event) {
         event.register(
             new FluidModel.Unbaked(
-                new Material(Identifier.withDefaultNamespace("block/water_still")),
-                new Material(Identifier.withDefaultNamespace("block/water_flow")),
-                new Material(Identifier.withDefaultNamespace("block/water_overlay")),
+                new Material(ADRegistryUtil.vanillaId("block/water_still")),
+                new Material(ADRegistryUtil.vanillaId("block/water_flow")),
+                new Material(ADRegistryUtil.vanillaId("block/water_overlay")),
                 FluidTintSources.constant(0xFF5BC236)
             ),
             ADFluids.IRRADIATED_WATER,

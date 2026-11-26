@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.camp.CampMaterials;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public final class ScrapRecipes {
@@ -35,7 +36,7 @@ public final class ScrapRecipes {
     }
 
     private static Optional<List<ScrapRecipe.Output>> lookup(RegistryAccess access, Item item) {
-        var registry = access.lookup(ADRegistries.SCRAP_RECIPE);
+        var registry = ADRegistryUtil.optionalRegistry(access, ADRegistries.SCRAP_RECIPE);
         if (registry.isEmpty()) {
             return Optional.empty();
         }

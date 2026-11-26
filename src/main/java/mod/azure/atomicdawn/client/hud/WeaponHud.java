@@ -2,13 +2,13 @@ package mod.azure.atomicdawn.client.hud;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.ammunition.AmmoInventory;
 import mod.azure.atomicdawn.client.ClientWeaponState;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.weapon.ScopeClient;
@@ -16,7 +16,7 @@ import mod.azure.atomicdawn.weapon.action.WeaponActions;
 import mod.azure.atomicdawn.weapon.combat.SpreadModel;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
-public final class WeaponHud implements GuiLayer {
+public final class WeaponHud implements ADHudLayer {
 
     private static final int COLOR = 0xFF7CFC9A;
 
@@ -31,10 +31,10 @@ public final class WeaponHud implements GuiLayer {
     private static final int COLOR_BROKEN = 0xFFFF5050;
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (player == null || minecraft.level == null || hudHidden || player.isSpectator()) {
             return;
         }
@@ -144,7 +144,7 @@ public final class WeaponHud implements GuiLayer {
         drawBrackets(graphics, centerX, centerY, gap);
     }
 
-    private static void drawBrackets(GuiGraphicsExtractor graphics, int cx, int cy, int gap) {
+    private static void drawBrackets(ADGuiGraphics graphics, int cx, int cy, int gap) {
         var length = 3;
         graphics.fill(cx - gap - length, cy, cx - gap, cy + 1, COLOR_DIM);
         graphics.fill(cx + gap + 1, cy, cx + gap + 1 + length, cy + 1, COLOR_DIM);

@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.worldgen.structure.FissurePiece;
 
 public final class ScorchedSpawning {
@@ -83,11 +85,11 @@ public final class ScorchedSpawning {
     }
 
     public static Optional<BlockPos> fissureCenter(ServerLevel level, BlockPos pos) {
-        var structure = level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getValue(FISSURE_SITE);
+        var structure = ADRegistryUtil.registry(level.registryAccess(), Registries.STRUCTURE).getValue(FISSURE_SITE);
         if (structure == null) {
             return Optional.empty();
         }
-        var start = level.structureManager().getStructureWithPieceAt(pos, holder -> holder.is(FISSURE_SITE));
+        var start = ADWorldgenUtil.structureWithPieceAt(level, pos, FISSURE_SITE);
         if (!start.isValid()) {
             return Optional.empty();
         }

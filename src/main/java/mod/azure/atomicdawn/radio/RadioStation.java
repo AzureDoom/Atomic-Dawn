@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record RadioStation(
@@ -38,13 +39,13 @@ public record RadioStation(
             .thenComparing(holder -> holder.key().identifier().toString());
 
     public static List<Holder.Reference<RadioStation>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.RADIO_STATION)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.RADIO_STATION)
             .map(registry -> registry.listElements().filter(holder -> holder.value().enabled()).sorted(ORDER).toList())
             .orElse(List.of());
     }
 
     public static Optional<RadioStation> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.RADIO_STATION)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.RADIO_STATION)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.RADIO_STATION, id)))
             .map(Holder::value)
             .filter(RadioStation::enabled);

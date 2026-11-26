@@ -4,9 +4,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.TagParser;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
+
+import mod.azure.atomicdawn.helper.ADSerialization;
 
 public final class CampNbt {
 
@@ -19,7 +20,7 @@ public final class CampNbt {
 
     private static DataResult<CompoundTag> parse(String value) {
         try {
-            return DataResult.success(TagParser.parseCompoundFully(value));
+            return DataResult.success(ADSerialization.parseCompound(value));
         } catch (CommandSyntaxException exception) {
             return DataResult.error(exception::getMessage);
         }

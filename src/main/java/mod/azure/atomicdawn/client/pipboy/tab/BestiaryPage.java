@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,9 +13,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 import mod.azure.atomicdawn.pipboy.bestiary.BestiaryEntry;
 import mod.azure.atomicdawn.registry.ADAttachments;
@@ -89,7 +90,7 @@ final class BestiaryPage {
         }
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var player = Minecraft.getInstance().player;
         if (player == null) {
             return;
@@ -201,7 +202,7 @@ final class BestiaryPage {
     }
 
     private static int traits(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         String key,
         List<String> values,
@@ -227,7 +228,7 @@ final class BestiaryPage {
     private static ItemStack icon(BestiaryEntry entry) {
         var id = entry.icon()
             .orElseGet(
-                () -> Identifier.fromNamespaceAndPath(
+                () -> ADRegistryUtil.id(
                     entry.entity().getNamespace(),
                     entry.entity().getPath() + "_spawn_egg"
                 )

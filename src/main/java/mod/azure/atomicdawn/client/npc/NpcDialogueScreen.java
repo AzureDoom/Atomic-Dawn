@@ -1,21 +1,20 @@
 package mod.azure.atomicdawn.client.npc;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.network.NpcDialogueChoicePayload;
 import mod.azure.atomicdawn.network.NpcDialoguePayload;
 
-public final class NpcDialogueScreen extends Screen {
+public final class NpcDialogueScreen extends ADScreen {
 
     private static final int MAX_WIDTH = 420;
 
@@ -76,7 +75,7 @@ public final class NpcDialogueScreen extends Screen {
             var index = i;
             var label = Component.literal((i + 1) + ". ").append(options.get(i));
             addRenderableWidget(
-                Button.builder(label, _ -> choose(index))
+                Button.builder(label, ignored -> choose(index))
                     .pos(panelLeft + 8, y)
                     .size(panelWidth - 16, OPTION_H)
                     .build()
@@ -90,7 +89,7 @@ public final class NpcDialogueScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(@NotNull KeyEvent event) {
+    public boolean keyPressed(ADGuiInput.Key event) {
         var key = event.key();
         if (key >= InputConstants.KEY_1 && key <= InputConstants.KEY_9) {
             var index = key - InputConstants.KEY_1;
@@ -117,7 +116,7 @@ public final class NpcDialogueScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         graphics.fill(panelLeft - 1, panelTop - 1, panelLeft + panelWidth + 1, panelBottom + 1, PipBoyTheme.border());
         graphics.fill(
             panelLeft,

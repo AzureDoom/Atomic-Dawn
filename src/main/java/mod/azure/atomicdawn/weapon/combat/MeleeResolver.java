@@ -14,6 +14,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.weapon.action.ShooterState;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 
@@ -139,7 +140,8 @@ public final class MeleeResolver {
     private static void knockback(ServerPlayer attacker, Entity target, float strength) {
         if (strength > 0F && target instanceof LivingEntity living) {
             var yaw = attacker.getYRot() * Mth.DEG_TO_RAD;
-            living.knockback(
+            ADEntityUtil.knockback(
+                living,
                 strength,
                 Mth.sin(yaw),
                 -Mth.cos(yaw),

@@ -30,6 +30,7 @@ import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.ghoul.ai.FeralGhoulBrain;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADSounds;
 
@@ -307,8 +308,8 @@ public class FeralGhoulEntity extends Monster implements AzHitboxHolder {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        setVariant(FeralGhoulVariant.byName(input.getStringOr("Variant", "")));
-        setDormant(input.getBooleanOr("Dormant", false));
+        setVariant(FeralGhoulVariant.byName(ADSerialization.getString(input, "Variant", "")));
+        setDormant(ADSerialization.getBoolean(input, "Dormant", false));
     }
 
     @Override

@@ -18,6 +18,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADFluids;
 import mod.azure.atomicdawn.worldgen.ADBiomes;
 
@@ -104,7 +105,13 @@ public final class RadiationEvents {
 
     private static float wastelandWaterRadiation(Player player) {
         var type = NeoForgeMod.WATER_TYPE.value();
-        if (!player.isInFluidType(type) || !player.level().getBiome(player.blockPosition()).is(ADBiomes.WASTELAND)) {
+        if (
+            !player.isInFluidType(type) || !ADWorldgenUtil.biomeIs(
+                player.level(),
+                player.blockPosition(),
+                ADBiomes.WASTELAND
+            )
+        ) {
             return 0F;
         }
         var rate = (float) AtomicDawn.CONFIG.common.survival.radiation.water.WASTELAND_WATER_RADS_PER_SECOND;
@@ -125,7 +132,7 @@ public final class RadiationEvents {
     }
 
     private static float biomeRadiation(ServerLevel level, Player player) {
-        var biome = level.getBiome(player.blockPosition());
+        var biome = ADWorldgenUtil.biome(level, player.blockPosition());
         var config = AtomicDawn.CONFIG.common.survival.radiation.biomes;
         double rate;
         if (biome.is(ADBiomes.AMBIENT_RADIATION_HIGH)) {
@@ -150,20 +157,10 @@ public final class RadiationEvents {
         if (rate <= 0F && extreme <= 0F) {
             return 0F;
         }
-        var structures = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        var manager = level.structureManager();
         var best = 0F;
-        for (var structure : manager.getAllStructuresAt(pos).keySet()) {
-            var holder = structures.wrapAsHolder(structure);
-            if (!holder.is(RADIATION_SITES)) {
-                continue;
-            }
-            var siteRate = holder.is(EXTREME_RADIATION_SITES) ? extreme : rate;
-            var start = manager.getStructureAt(pos, structure);
-            if (!start.isValid()) {
-                continue;
-            }
-            var box = start.getBoundingBox();
+        for (var hit : ADWorldgenUtil.structuresAt(level, pos, RADIATION_SITES)) {
+            var siteRate = hit.structure().is(EXTREME_RADIATION_SITES) ? extreme : rate;
+            var box = hit.start().getBoundingBox();
             var center = box.getCenter();
             var reach = Math.max(box.getXSpan(), box.getZSpan()) / 2.0;
             var dx = pos.getX() - center.getX();

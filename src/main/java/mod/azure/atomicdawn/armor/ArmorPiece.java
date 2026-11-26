@@ -3,7 +3,6 @@ package mod.azure.atomicdawn.armor;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 
 @SuppressWarnings("unused")
 public enum ArmorPiece implements StringRepresentable {
@@ -42,7 +43,7 @@ public enum ArmorPiece implements StringRepresentable {
     ArmorPiece(ArmorType type, EquipmentSlot slot, String tag, int units, float weightShare) {
         this.type = type;
         this.slot = slot;
-        this.tag = TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace(tag));
+        this.tag = TagKey.create(Registries.ITEM, ADRegistryUtil.vanillaId(tag));
         this.units = units;
         this.weightShare = weightShare;
     }

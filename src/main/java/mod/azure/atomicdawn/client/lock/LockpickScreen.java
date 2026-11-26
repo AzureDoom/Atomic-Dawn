@@ -1,9 +1,6 @@
 package mod.azure.atomicdawn.client.lock;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,8 +9,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyDraw;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.lock.BobbyPins;
@@ -21,7 +20,7 @@ import mod.azure.atomicdawn.lock.LockLevel;
 import mod.azure.atomicdawn.network.LockpickActionPayload;
 import mod.azure.atomicdawn.network.LockpickStatePayload;
 
-public final class LockpickScreen extends Screen {
+public final class LockpickScreen extends ADScreen {
 
     private static final float TURN_SPEED = 0.08F;
 
@@ -229,7 +228,7 @@ public final class LockpickScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             if (!turning && !finished && brokenTicks == 0 && turn <= 0.05F) {
                 pinAngle = angleFrom(event.x(), event.y());
@@ -245,7 +244,7 @@ public final class LockpickScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(@NotNull MouseButtonEvent event) {
+    public boolean mouseReleased(ADGuiInput.Mouse event) {
         if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             if (turning && !openSent) {
                 release();
@@ -270,8 +269,8 @@ public final class LockpickScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         if (!turning && !finished && brokenTicks == 0) {
             pinAngle = angleFrom(mouseX, mouseY);
         }
@@ -290,7 +289,7 @@ public final class LockpickScreen extends Screen {
         drawText(graphics, cx, cy, r);
     }
 
-    private void drawLock(GuiGraphicsExtractor graphics, int cx, int cy, int r, float rotation) {
+    private void drawLock(ADGuiGraphics graphics, int cx, int cy, int r, float rotation) {
         PipBoyDraw.disc(graphics, cx, cy, r + 12, PLATE);
         PipBoyDraw.ring(graphics, cx, cy, r + 12, 2, PLATE_EDGE);
         for (var corner = 0; corner < 4; corner++) {
@@ -302,16 +301,16 @@ public final class LockpickScreen extends Screen {
         var cylinder = Math.round(r * 0.62F);
         PipBoyDraw.disc(graphics, cx, cy, cylinder, CYLINDER);
         PipBoyDraw.ring(graphics, cx, cy, cylinder, 2, CYLINDER_EDGE);
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(cx, cy);
-        graphics.pose().rotate(rotation * Mth.DEG_TO_RAD);
+        graphics.push();
+        graphics.translate(cx, cy);
+        graphics.rotate(rotation * Mth.DEG_TO_RAD);
         var slotHalf = Math.max(2, cylinder / 9);
         graphics.fill(-slotHalf, -Math.round(cylinder * 0.15F), slotHalf, Math.round(cylinder * 0.6F), KEYHOLE);
         PipBoyDraw.disc(graphics, 0, -Math.round(cylinder * 0.2F), Math.max(3, cylinder / 5), KEYHOLE);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 
-    private void drawScrewdriver(GuiGraphicsExtractor graphics, int cx, int cy, int r, float rotation) {
+    private void drawScrewdriver(ADGuiGraphics graphics, int cx, int cy, int r, float rotation) {
         var angle = SCREWDRIVER_ANGLE + rotation;
         var shaft = point(cx, cy, angle, r * 1.05F);
         var handle = point(cx, cy, angle, r * 1.6F);
@@ -320,7 +319,7 @@ public final class LockpickScreen extends Screen {
         PipBoyDraw.line(graphics, shaft[0], shaft[1], handle[0], handle[1], 3, HANDLE_SHINE);
     }
 
-    private void drawPin(GuiGraphicsExtractor graphics, int cx, int cy, int r, float rotation) {
+    private void drawPin(ADGuiGraphics graphics, int cx, int cy, int r, float rotation) {
         var jitter = straining ? (random.nextFloat() - 0.5F) * 3F : 0F;
         var angle = pinAngle + rotation + jitter;
         var color = 0xFF000000 | PipBoyDraw.blend(PIN, PIN_WORN, Math.clamp(1F - pinHealth, 0F, 1F));
@@ -335,7 +334,7 @@ public final class LockpickScreen extends Screen {
         PipBoyDraw.line(graphics, tip[0], tip[1], head[0], head[1], 2, color);
     }
 
-    private void drawText(GuiGraphicsExtractor graphics, int cx, int cy, int r) {
+    private void drawText(ADGuiGraphics graphics, int cx, int cy, int r) {
         centered(graphics, title, cy - r - 30, PipBoyTheme.text());
         if (finished) {
             centered(
@@ -379,11 +378,11 @@ public final class LockpickScreen extends Screen {
         hint(graphics, "exit", height - 14);
     }
 
-    private void hint(GuiGraphicsExtractor graphics, String key, int y) {
+    private void hint(ADGuiGraphics graphics, String key, int y) {
         centered(graphics, Component.translatable("screen.atomicdawn.lockpick.hint." + key), y, PipBoyTheme.dim());
     }
 
-    private void centered(GuiGraphicsExtractor graphics, Component text, int y, int color) {
+    private void centered(ADGuiGraphics graphics, Component text, int y, int color) {
         graphics.text(font, text, width / 2 - font.width(text) / 2, y, color, false);
     }
 }

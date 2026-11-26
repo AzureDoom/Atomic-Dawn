@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -10,6 +9,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyClientState;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
@@ -237,7 +237,7 @@ final class LegendaryPage {
         }
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var player = Minecraft.getInstance().player;
         if (player == null) {
             return;

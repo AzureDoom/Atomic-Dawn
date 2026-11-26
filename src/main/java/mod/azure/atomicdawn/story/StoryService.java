@@ -3,7 +3,6 @@ package mod.azure.atomicdawn.story;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -18,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.npc.NpcCompanions;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.registry.ADAttachments;
@@ -36,17 +37,19 @@ public final class StoryService {
     }
 
     public static List<Holder.Reference<Faction>> factions(RegistryAccess access) {
-        return access.lookup(ADRegistries.FACTION).map(registry -> registry.listElements().toList()).orElse(List.of());
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.FACTION)
+            .map(registry -> registry.listElements().toList())
+            .orElse(List.of());
     }
 
     public static Optional<Faction> faction(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.FACTION)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.FACTION)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.FACTION, id)))
             .map(Holder::value);
     }
 
     public static Optional<CompanionProfile> companion(RegistryAccess access, Identifier npc) {
-        return access.lookup(ADRegistries.COMPANION)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.COMPANION)
             .flatMap(
                 registry -> registry.listElements()
                     .map(Holder::value)
@@ -141,7 +144,7 @@ public final class StoryService {
     public static List<Identifier> factionsOf(Entity entity) {
         var result = new ArrayList<Identifier>();
         var npcId = entity instanceof NpcEntity npc ? npc.config().identifier().orElse(null) : null;
-        var type = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType());
+        var type = ADEntityUtil.typeHolder(entity);
         for (var holder : factions(entity.level().registryAccess())) {
             var faction = holder.value();
             if ((npcId != null && faction.npcs().contains(npcId)) || faction.entities().contains(type)) {

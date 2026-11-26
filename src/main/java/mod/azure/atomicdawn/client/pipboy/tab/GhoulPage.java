@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
@@ -9,6 +8,7 @@ import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.ghoul.GhoulClient;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -94,7 +94,7 @@ final class GhoulPage {
         }
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var player = Minecraft.getInstance().player;
         if (player == null) {
             return;
@@ -239,7 +239,7 @@ final class GhoulPage {
     }
 
     private static int pair(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         int x,
         int y,
@@ -254,7 +254,7 @@ final class GhoulPage {
     }
 
     private static int effect(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         int x,
         int y,
@@ -279,7 +279,7 @@ final class GhoulPage {
     }
 
     private static int gauge(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         int x,
         int y,

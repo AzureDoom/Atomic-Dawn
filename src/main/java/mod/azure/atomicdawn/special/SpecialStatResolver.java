@@ -17,6 +17,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulPerks;
 import mod.azure.atomicdawn.ghoul.GhoulService;
 import mod.azure.atomicdawn.ghoul.PlayerForm;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.perks.LegendaryPerkCatalog;
 import mod.azure.atomicdawn.perks.PerkCatalog;
 import mod.azure.atomicdawn.perks.PerkEffect;
@@ -68,8 +69,8 @@ public final class SpecialStatResolver {
         }
         var progress = progress(player);
         var access = player.level().registryAccess();
-        var catalog = access.lookup(ADRegistries.PERK).orElse(null);
-        var legendaryCatalog = access.lookup(ADRegistries.LEGENDARY_PERK).orElse(null);
+        var catalog = ADRegistryUtil.optionalRegistry(access, ADRegistries.PERK).orElse(null);
+        var legendaryCatalog = ADRegistryUtil.optionalRegistry(access, ADRegistries.LEGENDARY_PERK).orElse(null);
         var temporary = temporary(player);
         var generation = configGeneration;
         var form = GhoulService.form(player);

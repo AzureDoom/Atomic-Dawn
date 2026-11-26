@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyClientState;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -48,7 +47,7 @@ final class PageList {
         return true;
     }
 
-    static void decorate(GuiGraphicsExtractor graphics, Rect list, Rect detail, String key, int count) {
+    static void decorate(ADGuiGraphics graphics, Rect list, Rect detail, String key, int count) {
         graphics.fill(detail.x() - 5, detail.y(), detail.x() - 4, detail.bottom(), PipBoyTheme.faint());
         var rows = rows(list);
         if (count <= rows) {

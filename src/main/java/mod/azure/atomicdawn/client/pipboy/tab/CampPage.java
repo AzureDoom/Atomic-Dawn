@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.UUID;
 
 import mod.azure.atomicdawn.camp.CampScrapbox;
 import mod.azure.atomicdawn.client.camp.CampClientState;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -242,7 +242,7 @@ final class CampPage {
         }
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var x = area.x() + 4;
         var y = area.y() + 4;
         var width = area.width() - 8;
@@ -393,7 +393,7 @@ final class CampPage {
     }
 
     private static int pair(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         int x,
         int y,

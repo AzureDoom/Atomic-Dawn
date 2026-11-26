@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -10,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -126,7 +126,7 @@ final class NotesPage {
         });
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var player = Minecraft.getInstance().player;
         if (player == null) {
             return;

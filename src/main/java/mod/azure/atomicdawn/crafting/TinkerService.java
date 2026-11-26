@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 import java.util.Comparator;
 import java.util.List;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.perks.PerkHooks;
 import mod.azure.atomicdawn.quest.QuestActions;
 import mod.azure.atomicdawn.registry.ADRegistries;
@@ -21,8 +22,7 @@ public final class TinkerService {
     private TinkerService() {}
 
     public static List<Holder.Reference<TinkerRecipe>> recipes(Level level, TinkerRecipe.Category category) {
-        return level.registryAccess()
-            .lookupOrThrow(ADRegistries.TINKER_RECIPE)
+        return ADRegistryUtil.registry(level.registryAccess(), ADRegistries.TINKER_RECIPE)
             .listElements()
             .filter(holder -> holder.value().category() == category)
             .sorted(
@@ -33,7 +33,7 @@ public final class TinkerService {
     }
 
     public static Result craft(ServerPlayer player, ResourceKey<TinkerRecipe> key, int times) {
-        var recipe = player.level().registryAccess().lookupOrThrow(ADRegistries.TINKER_RECIPE).get(key);
+        var recipe = ADRegistryUtil.registry(player.level().registryAccess(), ADRegistries.TINKER_RECIPE).get(key);
         if (recipe.isEmpty()) {
             return Result.NOT_CRAFTABLE;
         }

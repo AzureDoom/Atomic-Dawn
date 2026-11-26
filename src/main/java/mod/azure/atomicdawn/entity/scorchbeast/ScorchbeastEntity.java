@@ -4,7 +4,6 @@ import mod.azure.azurelib.hitbox.AzHitboxHolder;
 import mod.azure.azurelib.hitbox.AzHitboxSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -37,6 +36,8 @@ import mod.azure.atomicdawn.entity.scorchbeast.ai.ScorchbeastBrain;
 import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
 import mod.azure.atomicdawn.entity.scorched.ScorchedSpawning;
 import mod.azure.atomicdawn.entity.scorched.ai.ScorchedBrain;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.registry.ADSounds;
 import mod.azure.atomicdawn.vats.BodyPart;
@@ -138,9 +139,10 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
     }
 
     public static boolean ally(Entity entity) {
-        return entity instanceof ScorchbeastEntity || entity instanceof ScorchedEntity || BuiltInRegistries.ENTITY_TYPE
-            .wrapAsHolder(entity.getType())
-            .is(ScorchedBrain.ALLIES);
+        return entity instanceof ScorchbeastEntity || entity instanceof ScorchedEntity || ADEntityUtil.isIn(
+            entity,
+            ScorchedBrain.ALLIES
+        );
     }
 
     public static boolean validTarget(LivingEntity candidate) {
@@ -488,7 +490,7 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
             if (distance > getBbWidth() * 0.6 && angle > config.WING_SWEEP_ARC * 0.5) {
                 continue;
             }
-            if (victim.hurtServer(level, damageSources().mobAttack(this), (float) config.WING_SWEEP_DAMAGE)) {
+            if (ADEntityUtil.hurt(victim, level, damageSources().mobAttack(this), (float) config.WING_SWEEP_DAMAGE)) {
                 hit = true;
                 var side = forward.yRot((float) Math.toRadians(left ? 90 : -90));
                 var push = offset.normalize()
@@ -519,7 +521,14 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
                 continue;
             }
             var falloff = (float) Mth.clamp(1.0 - distance / (radius * 1.25), 0.3, 1.0);
-            if (victim.hurtServer(level, damageSources().sonicBoom(this), (float) config.SHOCKWAVE_DAMAGE * falloff)) {
+            if (
+                ADEntityUtil.hurt(
+                    victim,
+                    level,
+                    damageSources().sonicBoom(this),
+                    (float) config.SHOCKWAVE_DAMAGE * falloff
+                )
+            ) {
                 var push = victim.position().subtract(center).multiply(1, 0, 1).normalize().scale(1.4 * falloff);
                 victim.setDeltaMovement(victim.getDeltaMovement().add(push.x, 0.5 * falloff, push.z));
                 victim.syncVelocity = true;
@@ -545,7 +554,7 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
 
     public void lungeContact(ServerLevel level, LivingEntity target) {
         var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks;
-        if (target.hurtServer(level, damageSources().mobAttack(this), (float) config.LUNGE_DAMAGE)) {
+        if (ADEntityUtil.hurt(target, level, damageSources().mobAttack(this), (float) config.LUNGE_DAMAGE)) {
             var push = target.position().subtract(position()).multiply(1, 0, 1).normalize().scale(1.2);
             target.setDeltaMovement(target.getDeltaMovement().add(push.x, 0.6, push.z));
             target.syncVelocity = true;
@@ -612,11 +621,15 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        if (input.getIntOr("Flight", 0) == 1) {
+        if (ADSerialization.getInt(input, "Flight", 0) == 1) {
             setFlight(ScorchbeastFlight.FLYING);
         }
-        home = input.getBooleanOr("HasHome", false)
-            ? new BlockPos(input.getIntOr("HomeX", 0), input.getIntOr("HomeY", 0), input.getIntOr("HomeZ", 0))
+        home = ADSerialization.getBoolean(input, "HasHome", false)
+            ? new BlockPos(
+                ADSerialization.getInt(input, "HomeX", 0),
+                ADSerialization.getInt(input, "HomeY", 0),
+                ADSerialization.getInt(input, "HomeZ", 0)
+            )
             : null;
     }
 

@@ -1,17 +1,13 @@
 package mod.azure.atomicdawn.client.storage;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -21,6 +17,9 @@ import java.util.Locale;
 
 import mod.azure.atomicdawn.camp.CampScrapbox;
 import mod.azure.atomicdawn.camp.CampStash;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyDraw;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -29,7 +28,7 @@ import mod.azure.atomicdawn.junk.ScrapRecipes;
 import mod.azure.atomicdawn.network.StorageActionPayload;
 import mod.azure.atomicdawn.network.StorageOpenPayload;
 
-public final class StorageScreen extends Screen {
+public final class StorageScreen extends ADScreen {
 
     private static final int WIDTH = 236;
 
@@ -88,7 +87,7 @@ public final class StorageScreen extends Screen {
         search = new EditBox(font, left + 8, top + 20, WIDTH - 16, 12, Component.translatable(key("search")));
         search.setHint(Component.translatable(key("search")));
         search.setValue(previous);
-        search.setResponder(_ -> scroll = 0);
+        search.setResponder(ignored -> scroll = 0);
         addRenderableWidget(search);
     }
 
@@ -184,8 +183,8 @@ public final class StorageScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         if (!inRange()) {
             return;
         }
@@ -327,7 +326,7 @@ public final class StorageScreen extends Screen {
         }
     }
 
-    private void tooltip(GuiGraphicsExtractor graphics, Component text, int mouseX, int mouseY) {
+    private void tooltip(ADGuiGraphics graphics, Component text, int mouseX, int mouseY) {
         var w = font.width(text);
         var x = Math.min(mouseX + 10, width - w - 8);
         var y = Math.max(4, mouseY - 14);
@@ -338,7 +337,7 @@ public final class StorageScreen extends Screen {
     }
 
     private void button(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Rect rect,
         Component label,
         int mouseX,
@@ -362,7 +361,7 @@ public final class StorageScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (!inRange()) {
             return super.mouseClicked(event, doubleClick);
         }

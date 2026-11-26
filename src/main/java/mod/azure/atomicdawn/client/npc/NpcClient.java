@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.network.NpcDialogueChoicePayload;
 import mod.azure.atomicdawn.network.NpcDialoguePayload;
 import mod.azure.atomicdawn.network.NpcEditorPayload;
@@ -118,7 +119,7 @@ public final class NpcClient {
                 continue;
             }
             try {
-                var entity = type.create(level, EntitySpawnReason.LOAD);
+                var entity = ADEntityUtil.create(type, level, EntitySpawnReason.LOAD);
                 if (entity instanceof LivingEntity) {
                     result.add(id);
                 }

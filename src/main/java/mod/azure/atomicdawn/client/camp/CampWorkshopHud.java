@@ -3,13 +3,10 @@ package mod.azure.atomicdawn.client.camp;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.gui.GuiLayer;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -17,12 +14,15 @@ import java.util.List;
 
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampWorkshopService;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.network.CampSyncPayload;
 
-public final class CampWorkshopHud implements GuiLayer {
+public final class CampWorkshopHud implements ADHudLayer {
 
     private static final int MIN_WIDTH = 170;
 
@@ -40,10 +40,10 @@ public final class CampWorkshopHud implements GuiLayer {
     ) {}
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (player == null || hudHidden || minecraft.gui.screen() instanceof PipBoyScreen) {
             return;
         }
@@ -339,7 +339,7 @@ public final class CampWorkshopHud implements GuiLayer {
         return new Line(text, PipBoyTheme.dim(), null, 0);
     }
 
-    private static void renderToast(GuiGraphicsExtractor graphics, Font font, int screenWidth, int screenHeight) {
+    private static void renderToast(ADGuiGraphics graphics, Font font, int screenWidth, int screenHeight) {
         var toast = CampWorkshopClient.toast();
         if (toast == null) {
             return;

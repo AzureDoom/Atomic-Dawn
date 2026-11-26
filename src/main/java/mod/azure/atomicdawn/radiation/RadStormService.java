@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.worldgen.ADBiomes;
 
@@ -44,7 +45,7 @@ public final class RadStormService {
             return;
         }
         for (var player : level.players()) {
-            if (level.getBiome(player.blockPosition()).is(ADBiomes.WASTELAND)) {
+            if (ADWorldgenUtil.biomeIs(level, player.blockPosition(), ADBiomes.WASTELAND)) {
                 player.sendSystemMessage(
                     Component.translatable("message.atomicdawn.rad_storm").withStyle(ChatFormatting.GREEN),
                     true
@@ -61,7 +62,7 @@ public final class RadStormService {
     }
 
     public static boolean exposed(ServerLevel level, Player player) {
-        if (!active(level) || !level.getBiome(player.blockPosition()).is(ADBiomes.WASTELAND)) {
+        if (!active(level) || !ADWorldgenUtil.biomeIs(level, player.blockPosition(), ADBiomes.WASTELAND)) {
             return false;
         }
         return level.canSeeSky(BlockPos.containing(player.getEyePosition()));

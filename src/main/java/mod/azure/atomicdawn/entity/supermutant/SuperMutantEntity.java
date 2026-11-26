@@ -36,6 +36,8 @@ import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.supermutant.ai.SuperMutantBrain;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADSounds;
 
 @SuppressWarnings({ "unused", "deprecation" })
@@ -221,7 +223,7 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
     public void meleeHit(ServerLevel level, LivingEntity target) {
         var damage = SuperMutantWeapons.meleeDamage(this);
         var hit = damage > 0F
-            ? target.hurtServer(level, damageSources().mobAttack(this), damage)
+            ? ADEntityUtil.hurt(target, level, damageSources().mobAttack(this), damage)
             : doHurtTarget(level, target);
         if (hit) {
             knock(target, 0.7, 0.15);
@@ -252,7 +254,7 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
                 continue;
             }
             var falloff = (float) Mth.clamp(1.0 - distance / (radius * 1.5), 0.4, 1.0);
-            if (victim.hurtServer(level, damageSources().mobAttack(this), damage * falloff)) {
+            if (ADEntityUtil.hurt(victim, level, damageSources().mobAttack(this), damage * falloff)) {
                 knock(victim, 1.1 * falloff, 0.45 * falloff);
             }
         }
@@ -285,7 +287,8 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
     }
 
     private void knock(LivingEntity victim, double strength, double lift) {
-        victim.knockback(
+        ADEntityUtil.knockback(
+            victim,
             strength,
             getX() - victim.getX(),
             getZ() - victim.getZ(),
@@ -428,13 +431,18 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        setVariant(SuperMutantVariant.byName(input.getStringOr("Variant", "")));
-        patrolRadius = input.getIntOr(
+        setVariant(SuperMutantVariant.byName(ADSerialization.getString(input, "Variant", "")));
+        patrolRadius = ADSerialization.getInt(
+            input,
             "PatrolRadius",
             AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.PATROL_RADIUS
         );
-        home = input.getBooleanOr("HasHome", false)
-            ? new BlockPos(input.getIntOr("HomeX", 0), input.getIntOr("HomeY", 0), input.getIntOr("HomeZ", 0))
+        home = ADSerialization.getBoolean(input, "HasHome", false)
+            ? new BlockPos(
+                ADSerialization.getInt(input, "HomeX", 0),
+                ADSerialization.getInt(input, "HomeY", 0),
+                ADSerialization.getInt(input, "HomeZ", 0)
+            )
             : null;
     }
 

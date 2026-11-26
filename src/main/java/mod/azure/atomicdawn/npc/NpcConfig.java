@@ -10,6 +10,8 @@ import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+
 public record NpcConfig(
     String npcId,
     String name,
@@ -63,7 +65,7 @@ public record NpcConfig(
         .fromCodecWithRegistries(CODEC);
 
     public Optional<Identifier> identifier() {
-        return npcId.isBlank() ? Optional.empty() : Optional.ofNullable(Identifier.tryParse(npcId));
+        return npcId.isBlank() ? Optional.empty() : Optional.ofNullable(ADRegistryUtil.tryParse(npcId));
     }
 
     public NpcConfig sanitized() {
@@ -80,7 +82,7 @@ public record NpcConfig(
             cleanAppearance = NpcAppearance.DEFAULT;
         }
         var cleanId = npcId == null ? "" : npcId.strip();
-        if (!cleanId.isEmpty() && Identifier.tryParse(cleanId) == null) {
+        if (!cleanId.isEmpty() && ADRegistryUtil.tryParse(cleanId) == null) {
             cleanId = "";
         }
         return new NpcConfig(

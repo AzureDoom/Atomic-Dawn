@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
 public class ToxicCaveStructure extends Structure {
@@ -48,14 +49,7 @@ public class ToxicCaveStructure extends Structure {
         var chunk = context.chunkPos();
         var x = chunk.getMiddleBlockX();
         var z = chunk.getMiddleBlockZ();
-        var surface = context.chunkGenerator()
-            .getFirstFreeHeight(
-                x,
-                z,
-                Heightmap.Types.WORLD_SURFACE_WG,
-                context.heightAccessor(),
-                context.randomState()
-            );
+        var surface = ADWorldgenUtil.firstFreeHeight(context, x, z, Heightmap.Types.WORLD_SURFACE_WG);
         var random = context.random();
         var rx = radius.sample(random);
         var rz = radius.sample(random);

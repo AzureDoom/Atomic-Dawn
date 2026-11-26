@@ -14,6 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
@@ -47,16 +48,6 @@ public final class ToxicCloudEvents {
     }
 
     public static boolean inside(ServerLevel level, BlockPos pos) {
-        var structures = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        var manager = level.structureManager();
-        for (var structure : manager.getAllStructuresAt(pos).keySet()) {
-            if (!structures.wrapAsHolder(structure).is(TOXIC_CLOUD_SITES)) {
-                continue;
-            }
-            if (manager.getStructureAt(pos, structure).isValid()) {
-                return true;
-            }
-        }
-        return false;
+        return ADWorldgenUtil.insideStructure(level, pos, TOXIC_CLOUD_SITES);
     }
 }

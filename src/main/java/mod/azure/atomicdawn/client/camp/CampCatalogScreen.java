@@ -1,16 +1,11 @@
 package mod.azure.atomicdawn.client.camp;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -23,11 +18,14 @@ import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampMaterials;
 import mod.azure.atomicdawn.camp.CampPlans;
 import mod.azure.atomicdawn.camp.CampStorage;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.network.CampSyncPayload;
 
-public final class CampCatalogScreen extends Screen {
+public final class CampCatalogScreen extends ADScreen {
 
     private static final int MIN_PANEL_WIDTH = 300;
 
@@ -257,8 +255,8 @@ public final class CampCatalogScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         hits.clear();
         var player = minecraft == null ? null : minecraft.player;
         if (player == null) {
@@ -318,7 +316,7 @@ public final class CampCatalogScreen extends Screen {
         }
     }
 
-    private void tab(GuiGraphicsExtractor graphics, Tab tab) {
+    private void tab(ADGuiGraphics graphics, Tab tab) {
         var x = tab.x();
         var y = tab.y();
         var active = tab.active();
@@ -344,7 +342,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private void blueprintList(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x,
         int mouseX,
         int mouseY,
@@ -382,7 +380,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private void blueprintRow(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         CampBlueprints.Ref ref,
         int x,
         int y,
@@ -445,7 +443,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private void storedList(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x,
         int mouseX,
         int mouseY,
@@ -503,7 +501,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private void storedRow(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         CampStorage.Stored stored,
         int x,
         int y,
@@ -557,7 +555,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private void footer(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x,
         int mouseX,
         int mouseY,
@@ -595,7 +593,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private int button(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x,
         int y,
         Component label,
@@ -617,7 +615,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     private void row(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Holder.Reference<CampBuildable> holder,
         int x,
         int y,
@@ -690,7 +688,7 @@ public final class CampCatalogScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             for (var hit : List.copyOf(hits)) {
                 if (hit.contains(event.x(), event.y())) {
@@ -709,9 +707,9 @@ public final class CampCatalogScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(@NotNull KeyEvent event) {
+    public boolean keyPressed(ADGuiInput.Key event) {
         var typing = (search != null && search.isFocused()) || (nameBox != null && nameBox.isFocused());
-        if (!typing && ADKeyMappings.WORKSHOP_CATALOG.matches(event)) {
+        if (!typing && ADGuiInput.matches(ADKeyMappings.WORKSHOP_CATALOG, event)) {
             onClose();
             return true;
         }

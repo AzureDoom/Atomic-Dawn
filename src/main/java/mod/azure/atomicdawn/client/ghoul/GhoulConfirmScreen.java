@@ -1,23 +1,22 @@
 package mod.azure.atomicdawn.client.ghoul;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.ghoul.GhoulTreatmentService;
 import mod.azure.atomicdawn.network.GhoulActionPayload;
 
-public final class GhoulConfirmScreen extends Screen {
+public final class GhoulConfirmScreen extends ADScreen {
 
     private static final int PANEL_WIDTH = 300;
 
@@ -55,13 +54,13 @@ public final class GhoulConfirmScreen extends Screen {
         var centerX = width / 2;
         var buttonY = panelBottom - 26;
         addRenderableWidget(
-            Button.builder(Component.translatable("ghoul.atomicdawn.confirm.accept"), _ -> answer(true))
+            Button.builder(Component.translatable("ghoul.atomicdawn.confirm.accept"), ignored -> answer(true))
                 .pos(centerX - 104, buttonY)
                 .size(100, 20)
                 .build()
         );
         addRenderableWidget(
-            Button.builder(CommonComponents.GUI_CANCEL, _ -> answer(false))
+            Button.builder(CommonComponents.GUI_CANCEL, ignored -> answer(false))
                 .pos(centerX + 4, buttonY)
                 .size(100, 20)
                 .build()
@@ -134,8 +133,8 @@ public final class GhoulConfirmScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         var left = width / 2 - PANEL_WIDTH / 2;
         var right = left + PANEL_WIDTH;
         graphics.fill(left - 1, panelTop - 1, right + 1, panelBottom + 1, PipBoyTheme.border());

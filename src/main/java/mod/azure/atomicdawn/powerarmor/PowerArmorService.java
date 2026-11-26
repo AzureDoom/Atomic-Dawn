@@ -20,6 +20,7 @@ import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.crafting.WorkbenchService;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.network.PowerArmorActionPayload;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorLegendary;
 import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorMod;
@@ -335,7 +336,7 @@ public final class PowerArmorService {
     }
 
     private static void fabricate(ServerPlayer player, ResourceKey<PowerArmorRecipe> key) {
-        var recipe = player.level().registryAccess().lookupOrThrow(ADRegistries.POWER_ARMOR_RECIPE).get(key);
+        var recipe = ADRegistryUtil.registry(player.level().registryAccess(), ADRegistries.POWER_ARMOR_RECIPE).get(key);
         if (recipe.isEmpty()) {
             return;
         }

@@ -3,13 +3,13 @@ package mod.azure.atomicdawn.client.hud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.party.PartyClient;
@@ -18,7 +18,7 @@ import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.pipboy.location.Waypoint;
 import mod.azure.atomicdawn.registry.ADAttachments;
 
-public final class WaypointHud implements GuiLayer {
+public final class WaypointHud implements ADHudLayer {
 
     private static final float HALF_SPAN = 90F;
 
@@ -27,14 +27,14 @@ public final class WaypointHud implements GuiLayer {
     private static final String[] CARDINALS = { "S", "SW", "W", "NW", "N", "NE", "E", "SE" };
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var config = AtomicDawn.CONFIG.client.hud.waypointCompass;
         if (!config.WAYPOINT_HUD) {
             return;
         }
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (
             player == null || minecraft.level == null || hudHidden || minecraft.gui.screen() instanceof PipBoyScreen
         ) {
@@ -131,14 +131,14 @@ public final class WaypointHud implements GuiLayer {
         return centerX + Math.round(relative / HALF_SPAN * (width / 2F - 4));
     }
 
-    private static void marker(GuiGraphicsExtractor graphics, int x, int y, int color) {
+    private static void marker(ADGuiGraphics graphics, int x, int y, int color) {
         graphics.fill(x - 2, y, x + 3, y + 1, color);
         graphics.fill(x - 1, y + 1, x + 2, y + 2, color);
         graphics.fill(x, y + 2, x + 1, y + 3, color);
     }
 
     private static void label(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         Waypoint waypoint,
         int distance,

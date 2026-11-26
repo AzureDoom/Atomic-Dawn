@@ -53,6 +53,7 @@ import java.util.UUID;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.ArmorPiece;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
@@ -116,7 +117,7 @@ public final class PerkEvents {
     private PerkEvents() {}
 
     private static PlayerState state(ServerPlayer player) {
-        return STATES.computeIfAbsent(player.getUUID(), _ -> new PlayerState());
+        return STATES.computeIfAbsent(player.getUUID(), ignored -> new PlayerState());
     }
 
     private static long cooldownTicks() {
@@ -318,7 +319,7 @@ public final class PerkEvents {
                     && PerkCombat.roll(random, stats.extra(PerkEffectType.RICOCHET))
             ) {
                 attacker.setInvulnerableTime(0);
-                attacker.hurtServer(level, level.damageSources().thorns(player), event.getAmount());
+                ADEntityUtil.hurt(attacker, level, level.damageSources().thorns(player), event.getAmount());
             }
         }
     }
@@ -683,7 +684,7 @@ public final class PerkEvents {
         if (PACIFIED.size() > PACIFY_CACHE_LIMIT) {
             PACIFIED.clear();
         }
-        var pacified = PACIFIED.computeIfAbsent(mob.getUUID(), _ -> PerkCombat.roll(player.getRandom(), chance));
+        var pacified = PACIFIED.computeIfAbsent(mob.getUUID(), ignored -> PerkCombat.roll(player.getRandom(), chance));
         if (pacified) {
             event.setCanceled(true);
         }
@@ -829,8 +830,8 @@ public final class PerkEvents {
             if (target.getVehicle() == player || target == player.getVehicle()) {
                 continue;
             }
-            target.hurtServer(level, level.damageSources().playerAttack(player), damage);
-            target.knockback(1.2, -look.x, -look.z, target.damageSources().generic(), 0.0F);
+            ADEntityUtil.hurt(target, level, level.damageSources().playerAttack(player), damage);
+            ADEntityUtil.knockback(target, 1.2, -look.x, -look.z, target.damageSources().generic(), 0.0F);
         }
     }
 

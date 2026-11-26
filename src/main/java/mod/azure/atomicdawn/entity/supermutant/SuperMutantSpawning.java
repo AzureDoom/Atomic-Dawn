@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 
 public final class SuperMutantSpawning {
 
@@ -40,7 +41,7 @@ public final class SuperMutantSpawning {
     }
 
     public static Optional<BlockPos> campCenter(ServerLevel level, BlockPos pos) {
-        var start = level.structureManager().getStructureWithPieceAt(pos, holder -> holder.is(CAMPS));
+        var start = ADWorldgenUtil.structureWithPieceAt(level, pos, CAMPS);
         if (!start.isValid()) {
             return Optional.empty();
         }
@@ -48,7 +49,7 @@ public final class SuperMutantSpawning {
     }
 
     public static SuperMutantVariant variantFor(LevelReader level, BlockPos pos) {
-        var biome = level.getBiome(pos);
+        var biome = ADWorldgenUtil.biome(level, pos);
         for (var variant : SuperMutantVariant.values()) {
             if (biome.is(variant.biomes())) {
                 return variant;

@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 import mod.azure.atomicdawn.vats.BodyPart;
 
@@ -37,7 +39,7 @@ public final class LimbProfiles {
     private static LimbProfile lookup(Entity entity, EntityType<?> type) {
         var holder = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(type);
         var best = LimbProfile.DEFAULT;
-        var registry = entity.level().registryAccess().lookup(ADRegistries.LIMB_PROFILE);
+        var registry = ADRegistryUtil.optionalRegistry(entity.level().registryAccess(), ADRegistries.LIMB_PROFILE);
         if (registry.isEmpty()) {
             return best;
         }
@@ -51,7 +53,7 @@ public final class LimbProfiles {
     }
 
     public static boolean immune(Entity entity) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).is(NO_LIMBS) || of(entity).immune();
+        return ADEntityUtil.isIn(entity, NO_LIMBS) || of(entity).immune();
     }
 
     public static @Nullable BodyPart classify(Entity entity, String name, String bone, Predicate<String> hasTag) {

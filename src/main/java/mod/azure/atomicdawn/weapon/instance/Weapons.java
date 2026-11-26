@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.registry.ADDataComponents;
 import mod.azure.atomicdawn.registry.ADItems;
@@ -52,7 +53,7 @@ public final class Weapons {
         if (!(stack.getItem() instanceof WeaponItem weapon)) {
             return null;
         }
-        var registry = level.registryAccess().lookup(ADRegistries.WEAPON_DEFINITION);
+        var registry = ADRegistryUtil.optionalRegistry(level.registryAccess(), ADRegistries.WEAPON_DEFINITION);
         if (registry.isEmpty()) {
             return null;
         }
@@ -141,7 +142,8 @@ public final class Weapons {
         Level level,
         ResourceKey<WeaponDefinition> key
     ) {
-        return level.registryAccess().lookup(ADRegistries.WEAPON_DEFINITION).flatMap(registry -> registry.get(key));
+        return ADRegistryUtil.optionalRegistry(level.registryAccess(), ADRegistries.WEAPON_DEFINITION)
+            .flatMap(registry -> registry.get(key));
     }
 
     private static void warnMissing(WeaponItem weapon) {

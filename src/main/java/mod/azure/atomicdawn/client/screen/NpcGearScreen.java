@@ -1,20 +1,19 @@
 package mod.azure.atomicdawn.client.screen;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
+import mod.azure.atomicdawn.client.helper.ADContainerScreen;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 import mod.azure.atomicdawn.npc.NpcGearMenu;
 
-public class NpcGearScreen extends AbstractContainerScreen<NpcGearMenu> {
+public class NpcGearScreen extends ADContainerScreen<NpcGearMenu> {
 
     private static final int PREVIEW_X = 30;
 
@@ -33,8 +32,8 @@ public class NpcGearScreen extends AbstractContainerScreen<NpcGearMenu> {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         int x = leftPos, y = topPos;
         PipBoyStyle.window(graphics, x, y, imageWidth, imageHeight);
         var preview = new Rect(x + PREVIEW_X, y + PREVIEW_Y, PREVIEW_W, PREVIEW_H);
@@ -58,7 +57,7 @@ public class NpcGearScreen extends AbstractContainerScreen<NpcGearMenu> {
             npc.xRotO = 0F;
             npc.yHeadRot = yaw;
             npc.yHeadRotO = yaw;
-            InventoryScreen.renderEntityInInventoryFollowsAngle(
+            ADGuiRenderUtil.entityPreview(
                 graphics,
                 preview.x(),
                 preview.y() + 2,
@@ -109,7 +108,7 @@ public class NpcGearScreen extends AbstractContainerScreen<NpcGearMenu> {
     }
 
     @Override
-    protected void extractLabels(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    protected void drawLabels(ADGuiGraphics graphics, int mouseX, int mouseY) {
         graphics.text(font, title, titleLabelX, titleLabelY, PipBoyStyle.text(), false);
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, PipBoyStyle.dim(), false);
     }

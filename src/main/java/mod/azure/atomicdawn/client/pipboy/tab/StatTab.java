@@ -1,9 +1,8 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 
@@ -50,7 +49,7 @@ public final class StatTab implements PipBoyTab {
 
     @Override
     public void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect area,
         String subtab,

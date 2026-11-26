@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.mutation.MutationEvents;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
@@ -227,7 +228,7 @@ public final class PowerArmorUpgradeEvents {
         var energy = bonuses.get(PowerArmorEffectType.RETALIATE_ENERGY);
         if (energy > 0F) {
             ServerLevel level = pilot.level();
-            attacker.hurtServer(level, level.damageSources().thorns(pilot), energy);
+            ADEntityUtil.hurt(attacker, level, level.damageSources().thorns(pilot), energy);
         }
     }
 
@@ -311,7 +312,7 @@ public final class PowerArmorUpgradeEvents {
         ) {
             var bleeding = living.getEffect(ADMobEffects.BLEEDING);
             if (bleeding != null) {
-                living.hurtServer(level, level.damageSources().generic(), 1F + bleeding.getAmplifier());
+                ADEntityUtil.hurt(living, level, level.damageSources().generic(), 1F + bleeding.getAmplifier());
             }
         }
     }
@@ -464,6 +465,6 @@ public final class PowerArmorUpgradeEvents {
     }
 
     private static PilotState state(ServerPlayer player) {
-        return PILOTS.computeIfAbsent(player.getUUID(), _ -> new PilotState());
+        return PILOTS.computeIfAbsent(player.getUUID(), ignored -> new PilotState());
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.function.BiPredicate;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 import mod.azure.atomicdawn.quest.QuestDefinition;
 import mod.azure.atomicdawn.quest.QuestService;
@@ -64,7 +65,7 @@ public final class QuestCommands {
         BiPredicate<ServerPlayer, Identifier> handler
     ) throws CommandSyntaxException {
         var player = EntityArgument.getPlayer(context, "player");
-        var id = Identifier.tryParse(StringArgumentType.getString(context, "quest"));
+        var id = ADRegistryUtil.tryParse(StringArgumentType.getString(context, "quest"));
         if (id == null || !handler.test(player, id)) {
             context.getSource().sendFailure(Component.translatable("commands.atomicdawn.quest.failed"));
             return 0;

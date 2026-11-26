@@ -16,6 +16,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.worldgen.ADBiomes;
 
 @SuppressWarnings("unused")
@@ -47,7 +48,7 @@ public final class SkylineSkyRenderer {
         var target = 0F;
         if (minecraft.level != null && AtomicDawn.CONFIG.client.effects.skyline.SKYLINE_SKY) {
             var pos = minecraft.gameRenderer.mainCamera().blockPosition();
-            if (minecraft.level.getBiome(pos).is(ADBiomes.SKYLINE_VALLEY)) {
+            if (ADWorldgenUtil.biomeIs(minecraft.level, pos, ADBiomes.SKYLINE_VALLEY)) {
                 target = 1F;
             }
         }

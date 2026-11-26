@@ -2,32 +2,32 @@ package mod.azure.atomicdawn.client.hud;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.party.PartyClient;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 
-public final class PartyHud implements GuiLayer {
+public final class PartyHud implements ADHudLayer {
 
     private static final int WIDTH = 92;
 
     private static final int ROW = 16;
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         if (!AtomicDawn.CONFIG.client.hud.party.PARTY_HUD || !PartyClient.inParty()) {
             return;
         }
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (player == null || minecraft.level == null || hudHidden || minecraft.gui.screen() instanceof PipBoyScreen) {
             return;
         }

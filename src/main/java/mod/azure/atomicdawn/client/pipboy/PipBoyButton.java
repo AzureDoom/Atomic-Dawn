@@ -1,8 +1,9 @@
 package mod.azure.atomicdawn.client.pipboy;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 
 public final class PipBoyButton {
 
@@ -69,7 +70,7 @@ public final class PipBoyButton {
         return rect.contains(mouseX, mouseY);
     }
 
-    public void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, int mouseX, int mouseY) {
+    public void render(ADGuiGraphics graphics, PipBoyScreen screen, int mouseX, int mouseY) {
         var hovered = hovered(mouseX, mouseY) && active;
         var font = screen.font();
         var textY = rect.y() + (rect.height() - 8) / 2 + (rect.height() % 2 == 0 ? 0 : 1);

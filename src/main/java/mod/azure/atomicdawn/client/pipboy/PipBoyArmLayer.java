@@ -6,27 +6,24 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.player.PlayerModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADPlayerRenderUtil;
 import mod.azure.atomicdawn.config.ADColors;
 import mod.azure.atomicdawn.pipboy.PipBoyService;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
@@ -69,25 +66,20 @@ public final class PipBoyArmLayer extends RenderLayer<AvatarRenderState, PlayerM
     }
 
     public static void addLayers(EntityRenderersEvent.AddLayers event) {
-        for (var model : event.getSkins()) {
-            AvatarRenderer<AbstractClientPlayer> renderer = event.getPlayerRenderer(model);
-            if (renderer != null) {
-                renderer.addLayer(new PipBoyArmLayer(renderer, model == PlayerModelType.SLIM));
-            }
-        }
+        ADPlayerRenderUtil.addPlayerLayers(event, PipBoyArmLayer::new);
     }
 
     static PlayerModel bakeDevice(float inflate, boolean slim, HumanoidArm side) {
-        var mesh = PlayerModel.createMesh(CubeDeformation.NONE, slim);
+        var mesh = ADPlayerRenderUtil.playerMesh(CubeDeformation.NONE, slim);
         addDevice(mesh.getRoot().getChild(side == HumanoidArm.RIGHT ? "right_arm" : "left_arm"), side, inflate, slim);
-        var model = new PlayerModel(LayerDefinition.create(mesh, TEX_WIDTH, TEX_HEIGHT).bakeRoot(), slim);
+        var model = ADPlayerRenderUtil.bakePlayerModel(mesh, TEX_WIDTH, TEX_HEIGHT, slim);
         model.root().getAllParts().forEach(part -> part.skipDraw = true);
         arm(model, side).getChild(PART).skipDraw = false;
         return model;
     }
 
     static ModelPart arm(PlayerModel model, HumanoidArm side) {
-        return side == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
+        return ADPlayerRenderUtil.arm(model, side);
     }
 
     static int screenColor() {

@@ -1,10 +1,7 @@
 package mod.azure.atomicdawn.client.screen;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -28,6 +24,9 @@ import mod.azure.atomicdawn.armor.upgrade.ArmorLegendary;
 import mod.azure.atomicdawn.armor.upgrade.ArmorMod;
 import mod.azure.atomicdawn.armor.upgrade.ArmorModKind;
 import mod.azure.atomicdawn.armor.upgrade.ArmorUpgrades;
+import mod.azure.atomicdawn.client.helper.ADContainerScreen;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.crafting.ArmorBenchMenu;
 import mod.azure.atomicdawn.crafting.WorkbenchService;
@@ -36,7 +35,7 @@ import mod.azure.atomicdawn.powerarmor.PowerArmorService;
 import mod.azure.atomicdawn.registry.ADItems;
 import mod.azure.atomicdawn.util.RepairKits;
 
-public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
+public class ArmorBenchScreen extends ADContainerScreen<ArmorBenchMenu> {
 
     private enum Tab {
 
@@ -138,7 +137,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         var tabW = PANEL_W / tabs.length;
         for (var i = 0; i < tabs.length; i++) {
             var value = tabs[i];
-            var button = Button.builder(Component.translatable(value.translationKey()), _ -> {
+            var button = Button.builder(Component.translatable(value.translationKey()), ignored -> {
                 tab = value;
                 rebuildWidgets();
             }).pos(leftPos + PANEL_X + i * tabW, topPos + 2).size(tabW - 2, 11).build();
@@ -148,13 +147,13 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
 
         var rotateY = topPos + PREVIEW_Y + PREVIEW_H + 2;
         addRenderableWidget(
-            Button.builder(Component.literal("◀"), _ -> previewYaw -= ROTATE_STEP)
+            Button.builder(Component.literal("◀"), ignored -> previewYaw -= ROTATE_STEP)
                 .pos(leftPos + PREVIEW_X, rotateY)
                 .size(16, 12)
                 .build()
         );
         addRenderableWidget(
-            Button.builder(Component.literal("▶"), _ -> previewYaw += ROTATE_STEP)
+            Button.builder(Component.literal("▶"), ignored -> previewYaw += ROTATE_STEP)
                 .pos(leftPos + PREVIEW_X + PREVIEW_W - 16, rotateY)
                 .size(16, 12)
                 .build()
@@ -170,7 +169,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
     }
 
     private Button actionButton(Component label, Runnable action, boolean active) {
-        var button = Button.builder(label, _ -> action.run())
+        var button = Button.builder(label, ignored -> action.run())
             .pos(leftPos + PANEL_X + PANEL_W - ACTION_W, topPos + ACTION_Y)
             .size(ACTION_W, 13)
             .build();
@@ -199,7 +198,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         var w = PANEL_W / categories.length;
         for (var i = 0; i < categories.length; i++) {
             var value = categories[i];
-            var button = Button.builder(Component.translatable(value.translationKey()), _ -> {
+            var button = Button.builder(Component.translatable(value.translationKey()), ignored -> {
                 category = value;
                 craftScroll = 0;
                 selectedRecipe = null;
@@ -216,7 +215,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         for (var r = 0; r < CRAFT_ROWS && craftScroll + r < recipes.size(); r++) {
             var holder = recipes.get(craftScroll + r);
             var id = holder.key().identifier();
-            var button = Button.builder(holder.value().resultStack().getHoverName(), _ -> {
+            var button = Button.builder(holder.value().resultStack().getHoverName(), ignored -> {
                 selectedRecipe = id;
                 rebuildWidgets();
             }).pos(leftPos + PANEL_X + 18, topPos + LIST_Y + r * ROW_H).size(PANEL_W - 18, 14).build();
@@ -248,7 +247,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         var w = PANEL_W / kinds.length;
         for (var i = 0; i < kinds.length; i++) {
             var value = kinds[i];
-            var button = Button.builder(Component.translatable(value.translationKey()), _ -> {
+            var button = Button.builder(Component.translatable(value.translationKey()), ignored -> {
                 modKind = value;
                 modScroll = 0;
                 selectedMod = null;
@@ -270,7 +269,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
             var id = mods.get(modScroll + r).key().identifier();
             var label = Component.literal(id.equals(installed) ? "» " : "")
                 .append(Component.translatable(ArmorMod.translationKey(id)));
-            var button = Button.builder(label, _ -> {
+            var button = Button.builder(label, ignored -> {
                 selectedMod = id;
                 rebuildWidgets();
             })
@@ -306,7 +305,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
     private void initLegendary() {
         for (var star = 1; star <= 3; star++) {
             var s = star;
-            var button = Button.builder(Component.literal("★".repeat(star)), _ -> {
+            var button = Button.builder(Component.literal("★".repeat(star)), ignored -> {
                 legendaryStar = s;
                 selectedLegendary = null;
                 legendaryScroll = 0;
@@ -335,7 +334,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
             var id = effects.get(legendaryScroll + r).key().identifier();
             var label = Component.literal(id.equals(current) ? "» " : "")
                 .append(Component.translatable(ArmorLegendary.translationKey(id)));
-            var button = Button.builder(label, _ -> {
+            var button = Button.builder(label, ignored -> {
                 selectedLegendary = id;
                 rebuildWidgets();
             })
@@ -377,7 +376,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         );
         var kit = Button.builder(
             Component.translatable("armor.atomicdawn.bench.kit_button", RepairKits.count(minecraft.player)),
-            _ -> send(ArmorBenchActionPayload.of(ArmorBenchActionPayload.Action.REPAIR_KIT))
+            ignored -> send(ArmorBenchActionPayload.of(ArmorBenchActionPayload.Action.REPAIR_KIT))
         )
             .pos(leftPos + PANEL_X + PANEL_W - ACTION_W * 2 - 4, topPos + ACTION_Y)
             .size(ACTION_W, 13)
@@ -427,7 +426,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         return true;
     }
 
-    private void drawCost(GuiGraphicsExtractor graphics, List<SizedIngredient> cost, int x, int y) {
+    private void drawCost(ADGuiGraphics graphics, List<SizedIngredient> cost, int x, int y) {
         graphics.text(font, Component.translatable("armor.atomicdawn.bench.cost"), x, y, PipBoyTheme.dim(), false);
         var infinite = minecraft.player.hasInfiniteMaterials();
         var width = PANEL_W - ACTION_W - 34;
@@ -490,8 +489,8 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         var x = leftPos;
         var y = topPos;
         PipBoyStyle.window(graphics, x, y, imageWidth, imageHeight);
@@ -515,13 +514,13 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
     }
 
     @Override
-    protected void extractLabels(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    protected void drawLabels(ADGuiGraphics graphics, int mouseX, int mouseY) {
         PipBoyStyle.skinButtons(graphics, font, children(), leftPos, topPos);
         graphics.text(font, title, titleLabelX, titleLabelY, PipBoyStyle.text(), false);
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, PipBoyStyle.dim(), false);
     }
 
-    private void renderWorkInfo(GuiGraphicsExtractor graphics) {
+    private void renderWorkInfo(ADGuiGraphics graphics) {
         var x = leftPos + ArmorBenchMenu.WORK_X - 2;
         var y = topPos + ArmorBenchMenu.WORK_Y + 20;
         var stack = work();
@@ -563,7 +562,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         );
     }
 
-    private void renderPreview(GuiGraphicsExtractor graphics) {
+    private void renderPreview(ADGuiGraphics graphics) {
         var px = leftPos + PREVIEW_X;
         var py = topPos + PREVIEW_Y;
         graphics.fill(px - 1, py - 1, px + PREVIEW_W + 1, py + PREVIEW_H + 1, PipBoyTheme.faint());
@@ -588,7 +587,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         player.yHeadRot = yaw;
         player.yHeadRotO = yaw;
 
-        InventoryScreen.renderEntityInInventoryFollowsAngle(
+        ADGuiRenderUtil.entityPreview(
             graphics,
             px,
             py,
@@ -611,7 +610,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         player.yHeadRotO = headRotO;
     }
 
-    private void renderCraft(GuiGraphicsExtractor graphics) {
+    private void renderCraft(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         var recipes = recipes();
         for (var r = 0; r < CRAFT_ROWS && craftScroll + r < recipes.size(); r++) {
@@ -626,7 +625,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         drawCost(graphics, selected.value().cost(), x, topPos + LIST_Y + CRAFT_ROWS * ROW_H + 1);
     }
 
-    private void scrollbar(GuiGraphicsExtractor graphics, int size, int rows, int scroll) {
+    private void scrollbar(ADGuiGraphics graphics, int size, int rows, int scroll) {
         if (size <= rows) {
             return;
         }
@@ -639,7 +638,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         graphics.fill(x + 1, thumbY, x + 3, thumbY + thumbH, PipBoyTheme.text());
     }
 
-    private boolean renderNoArmor(GuiGraphicsExtractor graphics, int y) {
+    private boolean renderNoArmor(ADGuiGraphics graphics, int y) {
         if (ArmorPiece.isArmor(work())) {
             return false;
         }
@@ -647,7 +646,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         return true;
     }
 
-    private void renderMods(GuiGraphicsExtractor graphics) {
+    private void renderMods(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         var y = topPos + LIST_Y + 2;
         if (renderNoArmor(graphics, y)) {
@@ -669,7 +668,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         }
     }
 
-    private void renderLegendary(GuiGraphicsExtractor graphics) {
+    private void renderLegendary(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         if (renderNoArmor(graphics, topPos + LIST_Y + 2)) {
             return;
@@ -702,7 +701,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         );
     }
 
-    private void renderRepair(GuiGraphicsExtractor graphics) {
+    private void renderRepair(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         var y = topPos + CONTENT_Y + 2;
         if (renderNoArmor(graphics, y)) {
@@ -726,7 +725,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         wrapped(graphics, Component.translatable("armor.atomicdawn.bench.repair_hint"), x, barY + 30, 3);
     }
 
-    private void renderScrap(GuiGraphicsExtractor graphics) {
+    private void renderScrap(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         var y = topPos + CONTENT_Y + 2;
         if (renderNoArmor(graphics, y)) {
@@ -765,7 +764,7 @@ public class ArmorBenchScreen extends AbstractContainerScreen<ArmorBenchMenu> {
         }
     }
 
-    private void wrapped(GuiGraphicsExtractor graphics, Component text, int x, int y, int maxLines) {
+    private void wrapped(ADGuiGraphics graphics, Component text, int x, int y, int maxLines) {
         var lines = font.split(text, PANEL_W);
         for (var i = 0; i < Math.min(maxLines, lines.size()); i++) {
             graphics.text(font, lines.get(i), x, y + i * 9, PipBoyTheme.dim(), false);

@@ -1,6 +1,5 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyDraw;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
@@ -33,7 +33,7 @@ final class StatusFigure {
         float condition
     ) {}
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect panel, Player player) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect panel, Player player) {
         var millis = System.currentTimeMillis();
         var bob = (int) Math.round(Math.sin(millis / 650.0) * 0.6);
         if (player.getVehicle() instanceof PowerArmorEntity armor) {
@@ -43,7 +43,7 @@ final class StatusFigure {
         }
     }
 
-    private static void normal(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect panel, Player player, int bob) {
+    private static void normal(ADGuiGraphics graphics, PipBoyScreen screen, Rect panel, Player player, int bob) {
         var u = Math.clamp(Math.min((panel.height() - 34) / 32, (panel.width() - 130) / 16), 2, 4);
         var w = 16 * u;
         var ox = panel.x() + (panel.width() - w) / 2;
@@ -112,7 +112,7 @@ final class StatusFigure {
     }
 
     private static void powerArmor(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect panel,
         PowerArmorEntity armor,
@@ -231,7 +231,7 @@ final class StatusFigure {
     }
 
     private static void callouts(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect panel,
         List<Callout> callouts,
@@ -289,7 +289,7 @@ final class StatusFigure {
     }
 
     private static void readout(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect panel,
         int y,
@@ -303,15 +303,15 @@ final class StatusFigure {
         var cx = panel.x() + panel.width() / 2;
         var scale = 1.5F;
         var vw = font.width(value) * scale;
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(cx - vw / 2F, y);
-        graphics.pose().scale(scale, scale);
+        graphics.push();
+        graphics.translate(cx - vw / 2F, y);
+        graphics.scale(scale, scale);
         screen.text(graphics, value, 0, 0, PipBoyTheme.text());
-        graphics.pose().popMatrix();
+        graphics.pop();
         screen.text(graphics, caption, cx - font.width(caption) / 2, y + 14, PipBoyTheme.dim());
     }
 
-    private static void limb(GuiGraphicsExtractor graphics, Rect r, Player player, BodyPart part, int skin) {
+    private static void limb(ADGuiGraphics graphics, Rect r, Player player, BodyPart part, int skin) {
         var condition = LimbService.state(player).get(part);
         if (condition >= 1F) {
             body(graphics, r, skin);
@@ -325,12 +325,12 @@ final class StatusFigure {
         }
     }
 
-    private static void body(GuiGraphicsExtractor graphics, Rect r, int rim) {
+    private static void body(ADGuiGraphics graphics, Rect r, int rim) {
         PipBoyDraw.fill(graphics, r, PipBoyTheme.phosphor(0.14F, 0xFF));
         PipBoyDraw.outline(graphics, r, rim);
     }
 
-    private static void plate(GuiGraphicsExtractor graphics, Rect r, int color) {
+    private static void plate(ADGuiGraphics graphics, Rect r, int color) {
         PipBoyDraw.fill(graphics, r, PipBoyTheme.scaled(color, 0.38F, 0xFF));
         PipBoyDraw.outline(graphics, r, PipBoyTheme.scaled(color, 0.85F, 0xFF));
         if (r.width() > 3 && r.height() > 3) {

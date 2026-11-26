@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.network.NukeExplosionPayload;
 import mod.azure.atomicdawn.radiation.BlastZoneService;
 import mod.azure.atomicdawn.radiation.FalloutCloudEntity;
@@ -137,8 +139,8 @@ public final class Detonation {
                     definition != null ? definition.damage().type() : ADDamageTypes.NUCLEAR,
                     target
                 );
-                var holder = level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(type);
-                target.hurtServer(level, new DamageSource(holder, projectile, owner), amount);
+                var holder = ADRegistryUtil.registry(level.registryAccess(), Registries.DAMAGE_TYPE).getOrThrow(type);
+                ADEntityUtil.hurt(target, level, new DamageSource(holder, projectile, owner), amount);
             }
             var push = target.position().subtract(at).normalize().scale(1.5 * falloff);
             target.push(push.x, Math.max(0.3, push.y + 0.4) * falloff, push.z);

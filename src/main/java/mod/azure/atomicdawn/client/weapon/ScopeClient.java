@@ -2,8 +2,6 @@ package mod.azure.atomicdawn.client.weapon;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.neoforged.api.distmarker.Dist;
@@ -14,14 +12,15 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
-import net.neoforged.neoforge.client.gui.GuiLayer;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.weapon.action.WeaponActions;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
@@ -112,16 +111,16 @@ public final class ScopeClient {
         }
     }
 
-    public static final class Overlay implements GuiLayer {
+    public static final class Overlay implements ADHudLayer {
 
         @Override
-        public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+        public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
             var scope = active;
             if (scope == null) {
                 return;
             }
             var minecraft = Minecraft.getInstance();
-            if (minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden) {
+            if (ADGuiRenderUtil.isHudHidden()) {
                 return;
             }
             scale = Mth.lerp(0.5F * deltaTracker.getRealtimeDeltaTicks(), scale, 1.125F);
@@ -136,7 +135,6 @@ public final class ScopeClient {
             var right = left + size;
             var bottom = top + size;
             graphics.blit(
-                RenderPipelines.GUI_TEXTURED,
                 scope.overlayTexture(),
                 left,
                 top,

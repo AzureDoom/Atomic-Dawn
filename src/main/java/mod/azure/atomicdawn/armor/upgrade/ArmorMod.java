@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import mod.azure.atomicdawn.armor.ArmorPiece;
 import mod.azure.atomicdawn.armor.ArmorPieceItem;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record ArmorMod(
@@ -54,7 +55,7 @@ public record ArmorMod(
     }
 
     public static List<Holder.Reference<ArmorMod>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.ARMOR_MOD)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.ARMOR_MOD)
             .map(registry -> registry.listElements().sorted(ORDER).toList())
             .orElse(List.of());
     }
@@ -70,7 +71,7 @@ public record ArmorMod(
     }
 
     public static Optional<Holder.Reference<ArmorMod>> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.ARMOR_MOD)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.ARMOR_MOD)
             .flatMap(registry -> registry.get(ADRegistries.key(ADRegistries.ARMOR_MOD, id)));
     }
 

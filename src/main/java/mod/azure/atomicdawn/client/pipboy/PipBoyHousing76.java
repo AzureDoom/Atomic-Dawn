@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,6 +8,7 @@ import java.time.LocalTime;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.radio.HolotapePlayer;
 import mod.azure.atomicdawn.client.pipboy.radio.RadioPlayer;
 import mod.azure.atomicdawn.registry.ADAttachments;
@@ -136,7 +136,7 @@ final class PipBoyHousing76 {
     }
 
     static void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         PipBoyHousing.State s
@@ -161,7 +161,7 @@ final class PipBoyHousing76 {
     }
 
     private static void mainPanel(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         Parts q,
@@ -201,7 +201,7 @@ final class PipBoyHousing76 {
         lcd(graphics, screen, q.lcd(), s);
     }
 
-    static void powerButton(GuiGraphicsExtractor graphics, Rect r, PipBoyHousing.State s) {
+    static void powerButton(ADGuiGraphics graphics, Rect r, PipBoyHousing.State s) {
         PipBoyDraw.bevel(graphics, r.inset(-2), p().outline(), p().body(), p().bodyLight(), p().bodyShade());
         var face = r.inset(1);
         if (s.power() > 0.05F) {
@@ -223,7 +223,7 @@ final class PipBoyHousing76 {
         }
     }
 
-    static void lcd(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect r, PipBoyHousing.State s) {
+    static void lcd(ADGuiGraphics graphics, PipBoyScreen screen, Rect r, PipBoyHousing.State s) {
         PipBoyDraw.recess(graphics, r, 0xFF060805, 0xFF000000, p().bodyDark());
         var lit = 0.2F + 0.8F * s.power();
         var on = PipBoyTheme.phosphor(lit, 0xFF);
@@ -259,7 +259,7 @@ final class PipBoyHousing76 {
     }
 
     private static void sidePanel(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         Parts q,
@@ -325,7 +325,7 @@ final class PipBoyHousing76 {
         geiger(graphics, q.geiger(), s);
     }
 
-    static void lamp(GuiGraphicsExtractor graphics, Rect r, boolean lit, boolean hovered) {
+    static void lamp(ADGuiGraphics graphics, Rect r, boolean lit, boolean hovered) {
         PipBoyDraw.bevel(graphics, r, p().outline(), p().bodyDark(), p().bodyLight(), p().outline());
         var face = r.inset(2);
         if (lit) {
@@ -339,7 +339,7 @@ final class PipBoyHousing76 {
         }
     }
 
-    static void tube(GuiGraphicsExtractor graphics, int cx, Rect cage, PipBoyHousing.State s, int index) {
+    static void tube(ADGuiGraphics graphics, int cx, Rect cage, PipBoyHousing.State s, int index) {
         var top = cage.y() + cage.height() / 6;
         var bottom = cage.bottom() - cage.height() / 5;
         var glass = new Rect(cx - 5, top, 11, bottom - top);
@@ -376,7 +376,7 @@ final class PipBoyHousing76 {
         graphics.fill(glass.x() - 1, bottom, glass.right() + 1, bottom + 1, 0xFF8A857C);
     }
 
-    static void geiger(GuiGraphicsExtractor graphics, Rect g, PipBoyHousing.State s) {
+    static void geiger(ADGuiGraphics graphics, Rect g, PipBoyHousing.State s) {
         PipBoyDraw.bevel(graphics, g, p().outline(), p().body(), p().bodyLight(), p().bodyShade());
         var plate = g.inset(6);
         PipBoyDraw.bevel(graphics, plate, p().outline(), STEEL, STEEL_LIGHT, STEEL_SHADE);
@@ -429,7 +429,7 @@ final class PipBoyHousing76 {
         graphics.fill(meter.x() - 3, needleY + 2, meter.right() + 1, needleY + 3, 0x70000000);
     }
 
-    static void knob(GuiGraphicsExtractor graphics, Rect r) {
+    static void knob(ADGuiGraphics graphics, Rect r) {
         graphics.fill(r.x(), r.y() + 3, r.x() + 3, r.bottom() - 3, p().bodyDark());
         graphics.fill(r.x(), r.y() + 3, r.x() + 3, r.y() + 4, p().bodyLight());
         var body = new Rect(r.x() + 3, r.y(), r.width() - 3, r.height());

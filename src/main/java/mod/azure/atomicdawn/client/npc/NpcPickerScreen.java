@@ -1,22 +1,21 @@
 package mod.azure.atomicdawn.client.npc;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.network.NpcPickPayload;
 import mod.azure.atomicdawn.network.NpcPickerPayload;
 
-public final class NpcPickerScreen extends Screen {
+public final class NpcPickerScreen extends ADScreen {
 
     private static final int ROW = 14;
 
@@ -64,7 +63,7 @@ public final class NpcPickerScreen extends Screen {
         listY = top + 18 + FIELD_H + 4;
         listRows = Math.max(1, (panelBottom - FIELD_H - 10 - listY) / ROW);
         addRenderableWidget(
-            Button.builder(Component.translatable("npc.atomicdawn.editor.cancel"), _ -> onClose())
+            Button.builder(Component.translatable("npc.atomicdawn.editor.cancel"), ignored -> onClose())
                 .pos(left + 6, panelBottom - FIELD_H - 4)
                 .size(panelW - 12, FIELD_H)
                 .build()
@@ -94,7 +93,7 @@ public final class NpcPickerScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         var index = rowAt(event.x(), event.y());
         if (index >= 0) {
             ClientPacketDistributor.sendToServer(new NpcPickPayload(visible().get(index).entityId()));
@@ -116,7 +115,7 @@ public final class NpcPickerScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         graphics.fill(left - 1, top - 1, left + panelW + 1, panelBottom + 1, PipBoyTheme.border());
         graphics.fill(left, top, left + panelW, panelBottom, PipBoyTheme.withAlpha(PipBoyTheme.background(), 0xE8));
         graphics.text(font, title, left + 6, top + 5, PipBoyTheme.text(), false);

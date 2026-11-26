@@ -125,10 +125,10 @@ public final class AtomicDawnClient {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ADBlockEntities.WEAPONS_WORKBENCH.get(), _ -> new WorkbenchRenderer());
-        event.registerBlockEntityRenderer(ADBlockEntities.TINKERS_BENCH.get(), _ -> new TinkersBenchRenderer());
-        event.registerBlockEntityRenderer(ADBlockEntities.ARMOR_BENCH.get(), _ -> new ArmorBenchRenderer());
-        event.registerBlockEntityRenderer(ADBlockEntities.VAULT_DOOR.get(), _ -> new VaultDoorRenderer());
+        event.registerBlockEntityRenderer(ADBlockEntities.WEAPONS_WORKBENCH.get(), ignored -> new WorkbenchRenderer());
+        event.registerBlockEntityRenderer(ADBlockEntities.TINKERS_BENCH.get(), ignored -> new TinkersBenchRenderer());
+        event.registerBlockEntityRenderer(ADBlockEntities.ARMOR_BENCH.get(), ignored -> new ArmorBenchRenderer());
+        event.registerBlockEntityRenderer(ADBlockEntities.VAULT_DOOR.get(), ignored -> new VaultDoorRenderer());
         event.registerEntityRenderer(ADEntities.MINI_NUKE.get(), MiniNukeRenderer::new);
         event.registerEntityRenderer(ADEntities.FALLOUT_CLOUD.get(), NoopRenderer::new);
         event.registerEntityRenderer(ADEntities.POWER_ARMOR.get(), PowerArmorRenderer::new);
@@ -143,7 +143,7 @@ public final class AtomicDawnClient {
         event.registerEntityRenderer(ADEntities.BRAHMIN.get(), BrahminRenderer::new);
         event.registerBlockEntityRenderer(
             ADBlockEntities.POWER_ARMOR_STATION.get(),
-            _ -> new PowerArmorStationRenderer()
+            ignored -> new PowerArmorStationRenderer()
         );
     }
 

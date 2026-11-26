@@ -9,9 +9,9 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.special.SpecialService;
 
 public final class AtomicDawnCommands {
@@ -62,7 +62,7 @@ public final class AtomicDawnCommands {
                                                     Commands.argument("rank", IntegerArgumentType.integer(1, 10))
                                                         .executes(context -> {
                                                             var player = player(context);
-                                                            var id = Identifier.tryParse(
+                                                            var id = ADRegistryUtil.tryParse(
                                                                 StringArgumentType.getString(context, "perk")
                                                             );
                                                             if (
@@ -107,7 +107,7 @@ public final class AtomicDawnCommands {
                                                     Commands.argument("rank", IntegerArgumentType.integer(1, 8))
                                                         .executes(context -> {
                                                             var player = player(context);
-                                                            var id = Identifier.tryParse(
+                                                            var id = ADRegistryUtil.tryParse(
                                                                 StringArgumentType.getString(context, "perk")
                                                             );
                                                             if (

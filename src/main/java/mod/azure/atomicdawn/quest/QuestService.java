@@ -11,6 +11,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.ArrayDeque;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.item.CampPlanItem;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
@@ -296,7 +297,9 @@ public final class QuestService {
                 }
                 yield count;
             }
-            case VISIT_BIOME -> target != null && target.matchesBiome(player.level().getBiome(player.blockPosition()))
+            case VISIT_BIOME -> target != null && target.matchesBiome(
+                ADWorldgenUtil.biome(player.level(), player.blockPosition())
+            )
                 ? 1
                 : 0;
             case REACH_LEVEL -> SpecialService.get(player).level();

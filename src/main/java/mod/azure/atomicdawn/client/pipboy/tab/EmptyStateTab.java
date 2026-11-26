@@ -1,10 +1,10 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -35,7 +35,7 @@ abstract class EmptyStateTab implements PipBoyTab {
 
     @Override
     public void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect area,
         String subtab,

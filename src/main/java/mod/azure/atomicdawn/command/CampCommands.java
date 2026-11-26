@@ -22,6 +22,7 @@ import mod.azure.atomicdawn.camp.CampManager;
 import mod.azure.atomicdawn.camp.CampPlans;
 import mod.azure.atomicdawn.camp.CampSlot;
 import mod.azure.atomicdawn.camp.CampSync;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 
 public final class CampCommands {
 
@@ -104,7 +105,7 @@ public final class CampCommands {
 
     private static int plan(CommandContext<CommandSourceStack> context, boolean grant) throws CommandSyntaxException {
         var source = context.getSource();
-        var id = Identifier.tryParse(StringArgumentType.getString(context, "plan").trim());
+        var id = ADRegistryUtil.tryParse(StringArgumentType.getString(context, "plan").trim());
         if (id == null) {
             source.sendFailure(Component.translatable("commands.atomicdawn.camp.plan.invalid"));
             return 0;

@@ -15,10 +15,11 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 
 public final class ADWorldgen {
 
-    private static final Identifier OVERWORLD_RULE = Identifier.withDefaultNamespace("overworld");
+    private static final Identifier OVERWORLD_RULE = ADRegistryUtil.vanillaId("overworld");
 
     private ADWorldgen() {}
 

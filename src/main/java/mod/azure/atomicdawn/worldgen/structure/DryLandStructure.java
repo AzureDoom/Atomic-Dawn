@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
 public class DryLandStructure extends Structure {
@@ -50,20 +51,8 @@ public class DryLandStructure extends Structure {
 
     private static boolean wet(GenerationContext context, int x, int z) {
         var generator = context.chunkGenerator();
-        var surface = generator.getFirstFreeHeight(
-            x,
-            z,
-            Heightmap.Types.WORLD_SURFACE_WG,
-            context.heightAccessor(),
-            context.randomState()
-        );
-        var floor = generator.getFirstFreeHeight(
-            x,
-            z,
-            Heightmap.Types.OCEAN_FLOOR_WG,
-            context.heightAccessor(),
-            context.randomState()
-        );
+        var surface = ADWorldgenUtil.firstFreeHeight(context, x, z, Heightmap.Types.WORLD_SURFACE_WG);
+        var floor = ADWorldgenUtil.firstFreeHeight(context, x, z, Heightmap.Types.OCEAN_FLOOR_WG);
         return surface != floor;
     }
 

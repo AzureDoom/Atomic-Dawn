@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record BestiaryEntry(
@@ -44,13 +45,13 @@ public record BestiaryEntry(
             .thenComparing(holder -> holder.key().identifier().toString());
 
     public static List<Holder.Reference<BestiaryEntry>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.BESTIARY)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.BESTIARY)
             .map(registry -> registry.listElements().sorted(ORDER).toList())
             .orElse(List.of());
     }
 
     public static Optional<Holder.Reference<BestiaryEntry>> forEntity(RegistryAccess access, Identifier entity) {
-        return access.lookup(ADRegistries.BESTIARY)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.BESTIARY)
             .flatMap(
                 registry -> registry.listElements().filter(holder -> holder.value().entity().equals(entity)).findFirst()
             );

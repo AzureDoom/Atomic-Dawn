@@ -162,7 +162,7 @@ public class PowerArmorStationBlock extends BaseEntityBlock {
     public static void openMenu(ServerPlayer player, PowerArmorEntity armor) {
         player.openMenu(
             new SimpleMenuProvider(
-                (id, inventory, _) -> new PowerArmorStationMenu(id, inventory, armor),
+                (id, inventory, ignored) -> new PowerArmorStationMenu(id, inventory, armor),
                 Component.translatable("container.atomicdawn.power_armor_station")
             ),
             buffer -> buffer.writeVarInt(armor.getId())

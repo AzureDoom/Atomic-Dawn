@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.IOException;
@@ -16,6 +15,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 
 public final class HudLayout {
@@ -42,7 +42,7 @@ public final class HudLayout {
         return FMLPaths.CONFIGDIR.get().resolve("atomicdawn-hud.json");
     }
 
-    public static boolean push(GuiGraphicsExtractor graphics, HudElement element, int x, int y, int width, int height) {
+    public static boolean push(ADGuiGraphics graphics, HudElement element, int x, int y, int width, int height) {
         ensureLoaded();
         LAST_RECTS.put(element, new Rect(x, y, width, height));
         LAST_SEEN.put(element, System.currentTimeMillis());
@@ -50,19 +50,19 @@ public final class HudLayout {
         if (placement != null && placement.hidden() && !editing) {
             return false;
         }
-        graphics.pose().pushMatrix();
+        graphics.push();
         if (placement != null) {
             var window = Minecraft.getInstance().getWindow();
             var target = place(placement, width, height, window.getGuiScaledWidth(), window.getGuiScaledHeight());
-            graphics.pose().translate(target.x(), target.y());
-            graphics.pose().scale(placement.scale(), placement.scale());
-            graphics.pose().translate(-x, -y);
+            graphics.translate(target.x(), target.y());
+            graphics.scale(placement.scale(), placement.scale());
+            graphics.translate(-x, -y);
         }
         return true;
     }
 
-    public static void pop(GuiGraphicsExtractor graphics) {
-        graphics.pose().popMatrix();
+    public static void pop(ADGuiGraphics graphics) {
+        graphics.pop();
     }
 
     public static boolean customized(HudElement element) {

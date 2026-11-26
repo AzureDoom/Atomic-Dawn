@@ -5,17 +5,13 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.player.PlayerModelPart;
-import net.minecraft.world.entity.player.PlayerModelType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -24,6 +20,7 @@ import net.neoforged.neoforge.client.event.RenderHandEvent;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADPlayerRenderUtil;
 import mod.azure.atomicdawn.client.powerarmor.PowerArmorFirstPerson;
 import mod.azure.atomicdawn.config.ADConfig.Client.PipBoy.WornDevice.PipBoyFirstPersonMode;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
@@ -103,7 +100,7 @@ public final class PipBoyFirstPerson {
     }
 
     private static boolean slim(AbstractClientPlayer player) {
-        return player.getSkin().model() == PlayerModelType.SLIM;
+        return ADPlayerRenderUtil.isSlim(player);
     }
 
     private static void applyBareArmPose(PoseStack pose, float equipProgress, float swingProgress, HumanoidArm arm) {
@@ -146,24 +143,21 @@ public final class PipBoyFirstPerson {
             BODY[s][a] = PipBoyArmLayer.bakeDevice(PipBoyArmLayer.BODY_INFLATE, slim, arm);
             SCREEN[s][a] = PipBoyArmLayer.bakeDevice(PipBoyArmLayer.SCREEN_INFLATE, slim, arm);
         }
-        collector.submitModelPart(
+        ADPlayerRenderUtil.submitPart(
+            collector,
             posedArm(BODY[s][a], arm),
             pose,
             RenderTypes.entityCutout(PipBoyArmLayer.TEXTURE),
-            light,
-            OverlayTexture.NO_OVERLAY,
-            null
+            light
         );
         if (AtomicDawn.CONFIG.client.pipboy.wornDevice.PIPBOY_ARM_SCREEN_GLOW) {
-            collector.submitModelPart(
+            ADPlayerRenderUtil.submitPart(
+                collector,
                 posedArm(SCREEN[s][a], arm),
                 pose,
                 RenderTypes.entityCutout(PipBoyArmLayer.SCREEN_TEXTURE),
                 PipBoyArmLayer.FULL_BRIGHT,
-                OverlayTexture.NO_OVERLAY,
-                null,
-                PipBoyArmLayer.screenColor(),
-                0
+                PipBoyArmLayer.screenColor()
             );
         }
     }
@@ -178,21 +172,16 @@ public final class PipBoyFirstPerson {
     ) {
         var s = slim ? 1 : 0;
         if (SKIN[s] == null) {
-            var mesh = PlayerModel.createMesh(CubeDeformation.NONE, slim);
-            SKIN[s] = new PlayerModel(LayerDefinition.create(mesh, 64, 64).bakeRoot(), slim);
+            SKIN[s] = ADPlayerRenderUtil.bakePlayerModel(CubeDeformation.NONE, slim);
         }
         var model = SKIN[s];
-        var right = arm == HumanoidArm.RIGHT;
-        (right ? model.rightSleeve : model.leftSleeve).visible = player.isModelPartShown(
-            right ? PlayerModelPart.RIGHT_SLEEVE : PlayerModelPart.LEFT_SLEEVE
-        );
-        collector.submitModelPart(
+        ADPlayerRenderUtil.sleeve(model, arm).visible = ADPlayerRenderUtil.sleeveShown(player, arm);
+        ADPlayerRenderUtil.submitPart(
+            collector,
             posedArm(model, arm),
             pose,
-            RenderTypes.entityTranslucent(player.getSkin().body().texturePath()),
-            light,
-            OverlayTexture.NO_OVERLAY,
-            null
+            RenderTypes.entityTranslucent(ADPlayerRenderUtil.skinTexture(player)),
+            light
         );
     }
 }

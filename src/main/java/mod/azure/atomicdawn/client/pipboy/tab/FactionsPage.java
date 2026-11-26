@@ -1,16 +1,17 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 import mod.azure.atomicdawn.story.CompanionProfile;
 import mod.azure.atomicdawn.story.StoryService;
@@ -74,25 +75,26 @@ final class FactionsPage {
             rows.addAll(factions);
         }
         var companions = new ArrayList<Row>();
-        access.lookup(ADRegistries.COMPANION).ifPresent(registry -> registry.listElements().forEach(holder -> {
-            var profile = holder.value();
-            Identifier npc = profile.npc();
-            if (!state.affinity().containsKey(npc)) {
-                return;
-            }
-            var value = state.affinity().get(npc);
-            companions.add(
-                new Row(
-                    Component.translatableWithFallback(profile.name(), profile.name()),
-                    Component.translatable(CompanionProfile.tier(value)),
-                    PipBoyTheme.text(),
-                    value,
-                    CompanionProfile.MIN,
-                    CompanionProfile.MAX,
-                    false
-                )
-            );
-        }));
+        ADRegistryUtil.optionalRegistry(access, ADRegistries.COMPANION)
+            .ifPresent(registry -> registry.listElements().forEach(holder -> {
+                var profile = holder.value();
+                Identifier npc = profile.npc();
+                if (!state.affinity().containsKey(npc)) {
+                    return;
+                }
+                var value = state.affinity().get(npc);
+                companions.add(
+                    new Row(
+                        Component.translatableWithFallback(profile.name(), profile.name()),
+                        Component.translatable(CompanionProfile.tier(value)),
+                        PipBoyTheme.text(),
+                        value,
+                        CompanionProfile.MIN,
+                        CompanionProfile.MAX,
+                        false
+                    )
+                );
+            }));
         if (!companions.isEmpty()) {
             rows.add(header("pipboy.atomicdawn.factions.companions"));
             rows.addAll(companions);
@@ -119,7 +121,7 @@ final class FactionsPage {
         return 0;
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var rows = rows();
         if (rows.isEmpty()) {
             screen.text(

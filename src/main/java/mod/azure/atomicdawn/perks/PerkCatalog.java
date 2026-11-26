@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 import mod.azure.atomicdawn.special.SpecialAttribute;
 
@@ -26,14 +27,14 @@ public final class PerkCatalog {
     }
 
     public static Optional<PerkDefinition> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.PERK)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.PERK)
             .flatMap(registry -> registry.get(key(id)))
             .map(Holder::value)
             .filter(PerkDefinition::enabled);
     }
 
     public static List<Holder.Reference<PerkDefinition>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.PERK)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.PERK)
             .map(registry -> registry.listElements().filter(holder -> holder.value().enabled()).sorted(ORDER).toList())
             .orElse(List.of());
     }

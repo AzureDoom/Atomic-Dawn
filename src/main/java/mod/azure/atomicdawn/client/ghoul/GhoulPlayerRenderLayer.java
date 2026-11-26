@@ -2,7 +2,6 @@ package mod.azure.atomicdawn.client.ghoul;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -10,6 +9,8 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+
+import mod.azure.atomicdawn.client.helper.ADPlayerRenderUtil;
 
 public final class GhoulPlayerRenderLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
@@ -34,8 +35,7 @@ public final class GhoulPlayerRenderLayer extends RenderLayer<AvatarRenderState,
     }
 
     private static PlayerModel bake(float inflate, boolean slim) {
-        var mesh = PlayerModel.createMesh(new CubeDeformation(inflate), slim);
-        return new PlayerModel(LayerDefinition.create(mesh, 64, 64).bakeRoot(), slim);
+        return ADPlayerRenderUtil.bakePlayerModel(new CubeDeformation(inflate), slim);
     }
 
     @Override

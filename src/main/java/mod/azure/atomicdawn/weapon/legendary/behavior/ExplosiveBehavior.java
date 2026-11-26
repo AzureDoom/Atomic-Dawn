@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryBehavior;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryContext;
@@ -43,7 +44,7 @@ public record ExplosiveBehavior(
         for (var entity : level.getEntitiesOfClass(LivingEntity.class, area, e -> e != context.attacker())) {
             if (entity.position().distanceToSqr(pos) <= radius * radius + entity.getBbWidth()) {
                 entity.setInvulnerableTime(0);
-                entity.hurtServer(level, source, amount);
+                ADEntityUtil.hurt(entity, level, source, amount);
             }
         }
         level.sendParticles(ParticleTypes.EXPLOSION, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);

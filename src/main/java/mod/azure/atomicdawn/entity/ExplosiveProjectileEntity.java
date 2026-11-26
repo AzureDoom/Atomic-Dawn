@@ -17,6 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.weapon.combat.Detonation;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 
@@ -179,16 +180,16 @@ public class ExplosiveProjectileEntity extends ThrowableProjectile {
         output.putFloat("Damage", damage);
         output.putDouble("Traveled", traveled);
         output.putBoolean("Falling", entityData.get(FALLING));
-        output.store("Parameters", WeaponDefinition.Projectile.CODEC, parameters);
+        ADSerialization.store(output, "Parameters", WeaponDefinition.Projectile.CODEC, parameters);
     }
 
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        damage = input.getFloatOr("Damage", damage);
-        traveled = input.getDoubleOr("Traveled", 0.0);
-        entityData.set(FALLING, input.getBooleanOr("Falling", true));
-        input.read("Parameters", WeaponDefinition.Projectile.CODEC).ifPresent(p -> {
+        damage = ADSerialization.getFloat(input, "Damage", damage);
+        traveled = ADSerialization.getDouble(input, "Traveled", 0.0);
+        entityData.set(FALLING, ADSerialization.getBoolean(input, "Falling", true));
+        ADSerialization.read(input, "Parameters", WeaponDefinition.Projectile.CODEC).ifPresent(p -> {
             parameters = p;
             entityData.set(GRAVITY, p.gravity());
         });

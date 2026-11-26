@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public final class NpcModels {
@@ -25,13 +26,13 @@ public final class NpcModels {
     private NpcModels() {}
 
     public static Optional<NpcModelDefinition> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.NPC_MODEL)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.NPC_MODEL)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.NPC_MODEL, id)))
             .map(Holder::value);
     }
 
     public static List<Identifier> ids(RegistryAccess access) {
-        return access.lookup(ADRegistries.NPC_MODEL)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.NPC_MODEL)
             .map(
                 registry -> registry.listElementIds()
                     .map(ResourceKey::identifier)

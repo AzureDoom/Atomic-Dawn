@@ -1,11 +1,11 @@
 package mod.azure.atomicdawn.client.pipboy;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.radio.HolotapePlayer;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 
@@ -162,7 +162,7 @@ public final class PipBoyBoot {
         return Math.clamp((e - POWER_MS) / (float) CRT_MS, 0F, 1F);
     }
 
-    public void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area, long now) {
+    public void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area, long now) {
         var e = elapsed(now);
         if (e < POWER_MS + CRT_MS * 0.6F) {
             return;
@@ -174,7 +174,7 @@ public final class PipBoyBoot {
         }
     }
 
-    private void terminal(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area, long e) {
+    private void terminal(ADGuiGraphics graphics, PipBoyScreen screen, Rect area, long e) {
         var font = screen.font();
         var x = area.x() + 10;
         var top = area.y() + 8;
@@ -223,7 +223,7 @@ public final class PipBoyBoot {
     }
 
     private static void textLine(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         String text,
         int x,
@@ -239,7 +239,7 @@ public final class PipBoyBoot {
         screen.fitted(graphics, Component.literal(text), x, y, area.right() - x - 6, color);
     }
 
-    private void emblem(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area, long t) {
+    private void emblem(ADGuiGraphics graphics, PipBoyScreen screen, Rect area, long t) {
         var bright = PipBoyTheme.text();
         var mid = PipBoyTheme.phosphor(0.55F, 0xFF);
         var low = PipBoyTheme.phosphor(0.22F, 0xFF);
@@ -306,11 +306,11 @@ public final class PipBoyBoot {
         if (brandAlpha > 0 && textTop + 12 < area.bottom()) {
             var scale = 1.5F;
             var bw = screen.font().width(brand) * scale;
-            graphics.pose().pushMatrix();
-            graphics.pose().translate(cx - bw / 2F, textTop);
-            graphics.pose().scale(scale, scale);
+            graphics.push();
+            graphics.translate(cx - bw / 2F, textTop);
+            graphics.scale(scale, scale);
             screen.text(graphics, brand, 0, 0, PipBoyTheme.phosphor(brandAlpha, 0xFF));
-            graphics.pose().popMatrix();
+            graphics.pop();
         }
         var dots = (int) ((t / 300) % 4);
         var status = Component.translatable("pipboy.atomicdawn.boot.initiating").append(".".repeat(dots));
@@ -322,7 +322,7 @@ public final class PipBoyBoot {
         }
     }
 
-    public void renderReveal(GuiGraphicsExtractor graphics, Rect area, long now) {
+    public void renderReveal(ADGuiGraphics graphics, Rect area, long now) {
         if (mode != Mode.FULL) {
             return;
         }

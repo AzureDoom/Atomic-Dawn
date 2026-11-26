@@ -1,6 +1,5 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
@@ -10,6 +9,7 @@ import java.util.UUID;
 
 import mod.azure.atomicdawn.camp.CampAccess;
 import mod.azure.atomicdawn.client.camp.CampClientState;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -115,7 +115,7 @@ final class CampAccessPage {
         }
     }
 
-    static void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area) {
+    static void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area) {
         var x = area.x() + 4;
         var y = area.y() + 4;
         var width = area.width() - 8;

@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADEntities;
 
@@ -118,8 +119,8 @@ public class ScorchbeastCloudEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
-        entityData.set(RADIUS, input.getFloatOr("Radius", 4F));
-        remainingTicks = input.getIntOr("Remaining", 0);
+        entityData.set(RADIUS, ADSerialization.getFloat(input, "Radius", 4F));
+        remainingTicks = ADSerialization.getInt(input, "Remaining", 0);
     }
 
     @Override

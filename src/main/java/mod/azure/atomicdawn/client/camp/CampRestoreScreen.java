@@ -1,12 +1,8 @@
 package mod.azure.atomicdawn.client.camp;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -15,11 +11,14 @@ import java.util.List;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.camp.CampSlotService;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.network.CampActionPayload;
 import mod.azure.atomicdawn.network.CampRestorePayload;
 
-public final class CampRestoreScreen extends Screen {
+public final class CampRestoreScreen extends ADScreen {
 
     private static final int PANEL_WIDTH = 300;
 
@@ -96,8 +95,8 @@ public final class CampRestoreScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         hits.clear();
         var lines = rows();
         var shown = Math.min(lines.size(), MAX_ROWS);
@@ -185,7 +184,7 @@ public final class CampRestoreScreen extends Screen {
     }
 
     private int button(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x,
         int y,
         Component label,
@@ -205,7 +204,7 @@ public final class CampRestoreScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             for (var hit : List.copyOf(hits)) {
                 if (hit.contains(event.x(), event.y())) {

@@ -2,10 +2,8 @@ package mod.azure.atomicdawn.client.pipboy.map;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
@@ -19,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 
 public final class PipBoyMapRenderer {
@@ -273,16 +272,16 @@ public final class PipBoyMapRenderer {
         return Integer.MIN_VALUE;
     }
 
-    public void render(GuiGraphicsExtractor graphics, int x, int y, int cell) {
+    public void render(ADGuiGraphics graphics, int x, int y, int cell) {
         if (cols == 0 || rows == 0) {
             return;
         }
         uploadIfNeeded();
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x, y);
-        graphics.pose().scale(cell, cell);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE_ID, 0, 0, 0F, 0F, cols, rows, cols, rows);
-        graphics.pose().popMatrix();
+        graphics.push();
+        graphics.translate(x, y);
+        graphics.scale(cell, cell);
+        graphics.blit(TEXTURE_ID, 0, 0, 0F, 0F, cols, rows, cols, rows);
+        graphics.pop();
     }
 
     private void uploadIfNeeded() {

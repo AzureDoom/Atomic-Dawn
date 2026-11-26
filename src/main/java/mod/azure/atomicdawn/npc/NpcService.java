@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 
 import java.util.Comparator;
 
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.network.NpcEditPayload;
 import mod.azure.atomicdawn.network.NpcEditorPayload;
@@ -41,7 +42,7 @@ public final class NpcService {
     }
 
     public static NpcEntity spawn(ServerLevel level, double x, double y, double z, float yaw, NpcConfig config) {
-        var npc = ADEntities.NPC.get().create(level, EntitySpawnReason.COMMAND);
+        var npc = ADEntityUtil.create(ADEntities.NPC.get(), level, EntitySpawnReason.COMMAND);
         if (npc == null) {
             return null;
         }

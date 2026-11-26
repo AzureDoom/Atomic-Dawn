@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.perks;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -24,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
@@ -120,7 +120,7 @@ public final class PerkCombat {
     }
 
     static Buffs buffs(Player player) {
-        return BUFFS.computeIfAbsent(player.getUUID(), _ -> new Buffs());
+        return BUFFS.computeIfAbsent(player.getUUID(), ignored -> new Buffs());
     }
 
     static void forget(UUID id) {
@@ -172,7 +172,7 @@ public final class PerkCombat {
             bonus += stats.value(PerkEffectType.LONG_RANGE_DAMAGE, category, automatic);
         }
 
-        if (BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(target.getType()).is(EntityTypeTags.ARTHROPOD)) {
+        if (ADEntityUtil.isIn(target, EntityTypeTags.ARTHROPOD)) {
             bonus += stats.value(PerkEffectType.BUG_DAMAGE, category, automatic);
         }
         if (target.isCurrentlyGlowing()) {
@@ -234,7 +234,7 @@ public final class PerkCombat {
         }
         if (melee && roll(random, stats.value(PerkEffectType.STAGGER_CHANCE, category, automatic))) {
             var away = living.position().subtract(attacker.position());
-            living.knockback(0.6, -away.x, -away.z, living.damageSources().generic(), 0.0F);
+            ADEntityUtil.knockback(living, 0.6, -away.x, -away.z, living.damageSources().generic(), 0.0F);
             living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 0), attacker);
         } else if (!melee && roll(random, stats.value(PerkEffectType.STAGGER_CHANCE, category, automatic))) {
             living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 30, 2), attacker);
@@ -264,7 +264,7 @@ public final class PerkCombat {
         try {
             if (vats && roll(random, stats.value(PerkEffectType.VATS_PROC, category, automatic)) && living.isAlive()) {
                 living.setInvulnerableTime(0);
-                living.hurtServer(level, level.damageSources().playerAttack(attacker), damage);
+                ADEntityUtil.hurt(living, level, level.damageSources().playerAttack(attacker), damage);
                 level.sendParticles(ParticleTypes.CRIT, position.x, position.y, position.z, 8, 0.2, 0.2, 0.2, 0.1);
             }
             var cleave = stats.value(PerkEffectType.VATS_CLEAVE, category, automatic);
@@ -273,7 +273,7 @@ public final class PerkCombat {
                 for (var other : level.getEntitiesOfClass(LivingEntity.class, area, e -> isFoe(attacker, e))) {
                     if (other != living) {
                         other.setInvulnerableTime(0);
-                        other.hurtServer(level, level.damageSources().playerAttack(attacker), damage * cleave);
+                        ADEntityUtil.hurt(other, level, level.damageSources().playerAttack(attacker), damage * cleave);
                     }
                 }
             }
@@ -289,7 +289,7 @@ public final class PerkCombat {
     }
 
     static void mark(LivingEntity target, float bonus, float weaken, long now) {
-        var mark = MARKS.computeIfAbsent(target.getUUID(), _ -> new Mark());
+        var mark = MARKS.computeIfAbsent(target.getUUID(), ignored -> new Mark());
         if (bonus > 0F) {
             mark.bonus = now < mark.bonusUntil ? Math.max(mark.bonus, bonus) : bonus;
             mark.bonusUntil = now + MARK_TICKS;
@@ -336,7 +336,7 @@ public final class PerkCombat {
             for (var entity : level.getEntitiesOfClass(LivingEntity.class, area, e -> isFoe(attacker, e))) {
                 if (entity.position().distanceToSqr(at) <= radius * radius + entity.getBbWidth()) {
                     entity.setInvulnerableTime(0);
-                    entity.hurtServer(level, source, damage);
+                    ADEntityUtil.hurt(entity, level, source, damage);
                 }
             }
             level.sendParticles(ParticleTypes.EXPLOSION, at.x, at.y, at.z, 1, 0, 0, 0, 0);
@@ -374,7 +374,7 @@ public final class PerkCombat {
                     ? level.damageSources().playerAttack(attacker)
                     : level.damageSources().generic();
                 target.setInvulnerableTime(0);
-                target.hurtServer(level, source, bleed.damage);
+                ADEntityUtil.hurt(target, level, source, bleed.damage);
                 level.sendParticles(
                     ParticleTypes.DAMAGE_INDICATOR,
                     target.getX(),

@@ -22,6 +22,7 @@ import java.util.function.Predicate;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.supermutant.SuperMutantDisturbances;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.limb.LimbHits;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.weapon.action.WeaponAnimations;
@@ -158,7 +159,8 @@ public final class MobGunfire {
             var type = ADDamageTypes.forTarget(damage.type(), entity);
             LimbHits.begin(entity, null, hitPositions.get(entity));
             try {
-                entity.hurtServer(
+                ADEntityUtil.hurt(
+                    entity,
                     level,
                     ADDamageTypes.source(level, type, shooter),
                     entry.getFloatValue() * multiplier

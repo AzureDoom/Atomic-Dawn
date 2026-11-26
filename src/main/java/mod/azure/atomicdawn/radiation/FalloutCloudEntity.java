@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADEntities;
 
 public class FalloutCloudEntity extends Entity {
@@ -106,8 +107,8 @@ public class FalloutCloudEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
-        setRadius(input.getFloatOr("Radius", 8F));
-        remainingTicks = input.getIntOr("Remaining", 0);
+        setRadius(ADSerialization.getFloat(input, "Radius", 8F));
+        remainingTicks = ADSerialization.getInt(input, "Remaining", 0);
     }
 
     @Override

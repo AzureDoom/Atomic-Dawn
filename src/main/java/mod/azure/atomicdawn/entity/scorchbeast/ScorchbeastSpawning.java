@@ -19,6 +19,7 @@ import java.util.Map;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.scorched.ScorchedSpawning;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADEntities;
 
 public final class ScorchbeastSpawning {
@@ -117,7 +118,7 @@ public final class ScorchbeastSpawning {
                 (int) Math.floor(z)
             );
             var y = ground + 28.0 + random.nextDouble() * 12.0;
-            var beast = ADEntities.SCORCHBEAST.get().create(level, EntitySpawnReason.EVENT);
+            var beast = ADEntityUtil.create(ADEntities.SCORCHBEAST.get(), level, EntitySpawnReason.EVENT);
             if (beast == null) {
                 return false;
             }

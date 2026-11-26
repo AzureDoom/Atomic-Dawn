@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record QuestDefinition(
@@ -55,13 +56,13 @@ public record QuestDefinition(
             .thenComparing(holder -> holder.key().identifier().toString());
 
     public static List<Holder.Reference<QuestDefinition>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.QUEST)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.QUEST)
             .map(registry -> registry.listElements().filter(holder -> holder.value().enabled()).sorted(ORDER).toList())
             .orElse(List.of());
     }
 
     public static Optional<QuestDefinition> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.QUEST)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.QUEST)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.QUEST, id)))
             .map(Holder::value)
             .filter(QuestDefinition::enabled);

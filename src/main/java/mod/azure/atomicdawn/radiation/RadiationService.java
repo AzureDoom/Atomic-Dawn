@@ -1,6 +1,5 @@
 package mod.azure.atomicdawn.radiation;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,6 +14,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEffectType;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.mutation.MutationService;
 import mod.azure.atomicdawn.pipboy.PipBoyService;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
@@ -36,8 +36,7 @@ public final class RadiationService {
     );
 
     public static boolean immune(LivingEntity entity) {
-        return entity instanceof PowerArmorEntity || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType())
-            .is(RADIATION_IMMUNE);
+        return entity instanceof PowerArmorEntity || ADEntityUtil.isIn(entity, RADIATION_IMMUNE);
     }
 
     private RadiationService() {}
@@ -86,7 +85,7 @@ public final class RadiationService {
         }
         var damage = amount * (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.MOB_RADIATION_DAMAGE;
         if (damage > 0F) {
-            entity.hurtServer(level, ADDamageTypes.radiation(level), damage);
+            ADEntityUtil.hurt(entity, level, ADDamageTypes.radiation(level), damage);
         }
     }
 

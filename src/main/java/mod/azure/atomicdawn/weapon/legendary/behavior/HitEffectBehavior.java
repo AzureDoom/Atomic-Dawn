@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 import mod.azure.atomicdawn.weapon.legendary.LegendaryBehavior;
@@ -59,14 +60,14 @@ public record HitEffectBehavior(
                     living.addEffect(new MobEffectInstance(MobEffects.POISON, duration, 0), attacker);
                     living.setInvulnerableTime(0);
                     var source = level.damageSources().indirectMagic(attacker, attacker);
-                    living.hurtServer(level, source, damageDealt * amount);
+                    ADEntityUtil.hurt(living, level, source, damageDealt * amount);
                 }
             }
             case FIRE -> {
                 if (target instanceof LivingEntity living && living.isAlive()) {
                     living.igniteForSeconds(duration / 20F);
                     living.setInvulnerableTime(0);
-                    living.hurtServer(level, level.damageSources().onFire(), damageDealt * amount);
+                    ADEntityUtil.hurt(living, level, level.damageSources().onFire(), damageDealt * amount);
                 }
             }
             case TWO_SHOT -> {
@@ -77,7 +78,7 @@ public record HitEffectBehavior(
                     }
                     var type = ADDamageTypes.forTarget(definition.damage().type(), target);
                     living.setInvulnerableTime(0);
-                    living.hurtServer(level, ADDamageTypes.source(level, type, attacker), damageDealt * amount);
+                    ADEntityUtil.hurt(living, level, ADDamageTypes.source(level, type, attacker), damageDealt * amount);
                     var pos = context.hitPosition();
                     level.sendParticles(ParticleTypes.CRIT, pos.x, pos.y, pos.z, 4, 0.1, 0.1, 0.1, 0.1);
                 }

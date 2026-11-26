@@ -16,6 +16,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.powerarmor.PowerArmorChassisItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
@@ -121,7 +122,7 @@ public final class PowerArmorPreview {
         if (ghost != null) {
             return ghost;
         }
-        var created = ADEntities.POWER_ARMOR.get().create(level, EntitySpawnReason.SPAWN_ITEM_USE);
+        var created = ADEntityUtil.create(ADEntities.POWER_ARMOR.get(), level, EntitySpawnReason.SPAWN_ITEM_USE);
         if (created == null) {
             return null;
         }

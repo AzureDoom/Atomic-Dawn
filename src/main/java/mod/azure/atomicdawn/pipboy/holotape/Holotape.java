@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record Holotape(
@@ -34,13 +35,13 @@ public record Holotape(
             .thenComparing(holder -> holder.key().identifier().toString());
 
     public static List<Holder.Reference<Holotape>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.HOLOTAPE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.HOLOTAPE)
             .map(registry -> registry.listElements().sorted(ORDER).toList())
             .orElse(List.of());
     }
 
     public static Optional<Holotape> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.HOLOTAPE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.HOLOTAPE)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.HOLOTAPE, id)))
             .map(Holder::value);
     }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADDataComponents;
 import mod.azure.atomicdawn.registry.ADRegistries;
 import mod.azure.atomicdawn.weapon.definition.FireMode;
@@ -38,7 +39,7 @@ public final class ModificationResolver {
         WeaponDefinition base,
         WeaponMods mods
     ) {
-        var registry = access.lookup(ADRegistries.WEAPON_MODIFICATION);
+        var registry = ADRegistryUtil.optionalRegistry(access, ADRegistries.WEAPON_MODIFICATION);
         var weapon = weaponHolder(access, weaponKey);
         if (registry.isEmpty() || weapon == null || mods.installed().isEmpty()) {
             return List.of();
@@ -58,7 +59,7 @@ public final class ModificationResolver {
         ResourceKey<WeaponDefinition> weaponKey,
         ModSlot slot
     ) {
-        var registry = access.lookup(ADRegistries.WEAPON_MODIFICATION);
+        var registry = ADRegistryUtil.optionalRegistry(access, ADRegistries.WEAPON_MODIFICATION);
         var weapon = weaponHolder(access, weaponKey);
         if (registry.isEmpty() || weapon == null) {
             return List.of();
@@ -74,7 +75,7 @@ public final class ModificationResolver {
         RegistryAccess access,
         ResourceKey<WeaponDefinition> weaponKey
     ) {
-        var registry = access.lookup(ADRegistries.WEAPON_MODIFICATION);
+        var registry = ADRegistryUtil.optionalRegistry(access, ADRegistries.WEAPON_MODIFICATION);
         var weapon = weaponHolder(access, weaponKey);
         if (registry.isEmpty() || weapon == null) {
             return List.of();
@@ -86,7 +87,8 @@ public final class ModificationResolver {
         RegistryAccess access,
         ResourceKey<WeaponModification> key
     ) {
-        return access.lookup(ADRegistries.WEAPON_MODIFICATION).flatMap(registry -> registry.get(key));
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.WEAPON_MODIFICATION)
+            .flatMap(registry -> registry.get(key));
     }
 
     public static Set<String> managedBones(RegistryAccess access, ResourceKey<WeaponDefinition> weaponKey) {
@@ -131,7 +133,7 @@ public final class ModificationResolver {
         if (keys.isEmpty()) {
             return List.of();
         }
-        var registry = access.lookup(ADRegistries.LEGENDARY_EFFECT);
+        var registry = ADRegistryUtil.optionalRegistry(access, ADRegistries.LEGENDARY_EFFECT);
         return registry.map(
             legendaryEffects -> keys.effects()
                 .stream()
@@ -143,7 +145,7 @@ public final class ModificationResolver {
     }
 
     public static List<Holder.Reference<LegendaryEffect>> legendaryEffectsForStar(RegistryAccess access, int star) {
-        return access.lookup(ADRegistries.LEGENDARY_EFFECT)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.LEGENDARY_EFFECT)
             .map(
                 registry -> registry.listElements()
                     .filter(holder -> holder.value().star() == star)

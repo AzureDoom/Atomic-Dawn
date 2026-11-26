@@ -617,7 +617,7 @@ public final class GhoulService {
     }
 
     private static Runtime runtime(ServerPlayer player) {
-        return RUNTIME.computeIfAbsent(player.getUUID(), _ -> new Runtime());
+        return RUNTIME.computeIfAbsent(player.getUUID(), ignored -> new Runtime());
     }
 
     private static float lerp(float to, float t) {

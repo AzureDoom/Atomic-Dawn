@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public record NpcAppearance(
     Kind kind,
@@ -37,7 +39,7 @@ public record NpcAppearance(
 
     public static final float MAX_SCALE = 5F;
 
-    public static final Identifier DEFAULT_MODEL = Identifier.withDefaultNamespace("mannequin");
+    public static final Identifier DEFAULT_MODEL = ADRegistryUtil.vanillaId("mannequin");
 
     public static final NpcAppearance DEFAULT = new NpcAppearance(
         Kind.ENTITY,

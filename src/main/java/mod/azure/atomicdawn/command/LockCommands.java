@@ -36,7 +36,10 @@ public final class LockCommands {
                                         .then(
                                             Commands.argument("level", StringArgumentType.word())
                                                 .suggests(
-                                                    (_, builder) -> SharedSuggestionProvider.suggest(names, builder)
+                                                    (ignored, builder) -> SharedSuggestionProvider.suggest(
+                                                        names,
+                                                        builder
+                                                    )
                                                 )
                                                 .executes(LockCommands::set)
                                         )

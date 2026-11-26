@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADEntities;
 import mod.azure.atomicdawn.registry.ADItems;
 
@@ -112,7 +113,7 @@ public class BrahminEntity extends Animal {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob partner) {
-        return ADEntities.BRAHMIN.get().create(level, EntitySpawnReason.BREEDING);
+        return ADEntityUtil.create(ADEntities.BRAHMIN.get(), level, EntitySpawnReason.BREEDING);
     }
 
     @Override

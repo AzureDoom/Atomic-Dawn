@@ -46,6 +46,8 @@ import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.armor.upgrade.ArmorEvents;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.network.ADNetwork;
 import mod.azure.atomicdawn.network.PowerArmorLandingPayload;
 import mod.azure.atomicdawn.perks.PerkHooks;
@@ -720,7 +722,7 @@ public class PowerArmorEntity extends LivingEntity {
         if (rider != null && remaining > 0F) {
             forwarding = true;
             try {
-                rider.hurtServer(level, source, remaining);
+                ADEntityUtil.hurt(rider, level, source, remaining);
             } finally {
                 forwarding = false;
             }
@@ -829,25 +831,25 @@ public class PowerArmorEntity extends LivingEntity {
         for (var i = 0; i < SLOT_COUNT; i++) {
             items.add(getSlotItem(i));
         }
-        output.store("PowerArmorItems", ItemStack.OPTIONAL_CODEC.listOf(), items);
+        ADSerialization.store(output, "PowerArmorItems", ItemStack.OPTIONAL_CODEC.listOf(), items);
         output.putBoolean("Docked", isDocked());
         output.putFloat("DockYaw", entityData.get(DOCK_YAW));
         if (stationPos != null) {
-            output.store("Station", BlockPos.CODEC, stationPos);
+            ADSerialization.store(output, "Station", BlockPos.CODEC, stationPos);
         }
     }
 
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        input.read("PowerArmorItems", ItemStack.OPTIONAL_CODEC.listOf()).ifPresent(items -> {
+        ADSerialization.read(input, "PowerArmorItems", ItemStack.OPTIONAL_CODEC.listOf()).ifPresent(items -> {
             for (var i = 0; i < Math.min(items.size(), SLOT_COUNT); i++) {
                 setSlotItem(i, items.get(i));
             }
         });
-        entityData.set(DOCKED, input.getBooleanOr("Docked", false));
-        entityData.set(DOCK_YAW, input.getFloatOr("DockYaw", getYRot()));
-        stationPos = input.read("Station", BlockPos.CODEC).orElse(null);
+        entityData.set(DOCKED, ADSerialization.getBoolean(input, "Docked", false));
+        entityData.set(DOCK_YAW, ADSerialization.getFloat(input, "DockYaw", getYRot()));
+        stationPos = ADSerialization.read(input, "Station", BlockPos.CODEC).orElse(null);
     }
 
     private final class ArmorContainer implements Container {

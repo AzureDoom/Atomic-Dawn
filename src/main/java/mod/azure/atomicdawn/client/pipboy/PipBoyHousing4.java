@@ -1,7 +1,8 @@
 package mod.azure.atomicdawn.client.pipboy;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 
 final class PipBoyHousing4 {
 
@@ -101,7 +102,7 @@ final class PipBoyHousing4 {
     }
 
     static void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         PipBoyHousing.State s
@@ -127,7 +128,7 @@ final class PipBoyHousing4 {
     }
 
     private static void mainPanel(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         Parts q,
@@ -172,7 +173,7 @@ final class PipBoyHousing4 {
     }
 
     private static void side(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         Parts q,

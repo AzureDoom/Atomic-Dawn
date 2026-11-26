@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record CampBuildable(
@@ -96,7 +97,7 @@ public record CampBuildable(
     }
 
     public static List<Holder.Reference<CampBuildable>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.CAMP_BUILDABLE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.CAMP_BUILDABLE)
             .map(
                 registry -> registry.listElements()
                     .filter(holder -> holder.value().placeable())
@@ -111,7 +112,7 @@ public record CampBuildable(
     }
 
     public static Optional<CampBuildable> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.CAMP_BUILDABLE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.CAMP_BUILDABLE)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.CAMP_BUILDABLE, id)))
             .map(Holder.Reference::value)
             .filter(CampBuildable::placeable);

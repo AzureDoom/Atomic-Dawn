@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +13,9 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 import java.util.Optional;
+
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 
 @SuppressWarnings("NullableProblems")
 public record PowerArmorEffect(
@@ -44,9 +46,8 @@ public record PowerArmorEffect(
         }
         var value = target.get();
         if (value.startsWith("#")) {
-            var id = Identifier.tryParse(value.substring(1));
-            return id != null && BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(attacker.getType())
-                .is(TagKey.create(Registries.ENTITY_TYPE, id));
+            var id = ADRegistryUtil.tryParse(value.substring(1));
+            return id != null && ADEntityUtil.isIn(attacker, TagKey.create(Registries.ENTITY_TYPE, id));
         }
         return switch (value) {
             case "player" -> attacker instanceof Player;

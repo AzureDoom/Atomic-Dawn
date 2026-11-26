@@ -10,6 +10,7 @@ import net.minecraft.world.phys.Vec3;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.ghoul.FeralGhoulAction;
 import mod.azure.atomicdawn.entity.ghoul.FeralGhoulEntity;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 
 final class FeralLeapAction extends FeralAction {
 
@@ -71,7 +72,8 @@ final class FeralLeapAction extends FeralAction {
         ) {
             landedHit = true;
             agent.doHurtTarget(level, target);
-            target.knockback(
+            ADEntityUtil.knockback(
+                target,
                 0.6,
                 agent.getX() - target.getX(),
                 agent.getZ() - target.getZ(),

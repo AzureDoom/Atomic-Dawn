@@ -51,6 +51,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.registry.ADDataSerializers;
 import mod.azure.atomicdawn.story.StoryService;
@@ -182,8 +184,8 @@ public class NpcEntity extends PathfinderMob {
     }
 
     private void rebuildGoals() {
-        goalSelector.removeAllGoals(_ -> true);
-        targetSelector.removeAllGoals(_ -> true);
+        goalSelector.removeAllGoals(ignored -> true);
+        targetSelector.removeAllGoals(ignored -> true);
         var behavior = config().behavior();
         var hostility = config().combat().hostility();
         var wander = behavior.movement() == NpcBehavior.Movement.WANDER;
@@ -222,7 +224,7 @@ public class NpcEntity extends PathfinderMob {
                     10,
                     true,
                     false,
-                    (target, _) -> target instanceof Player player && StoryService.hostile(this, player)
+                    (target, ignored) -> target instanceof Player player && StoryService.hostile(this, player)
                 )
             );
         }
@@ -235,7 +237,7 @@ public class NpcEntity extends PathfinderMob {
                     10,
                     true,
                     false,
-                    (target, _) -> isEnemyOfGuards(target)
+                    (target, ignored) -> isEnemyOfGuards(target)
                 )
             );
         } else if (hostility == NpcCombat.Hostility.HOSTILE) {
@@ -248,7 +250,7 @@ public class NpcEntity extends PathfinderMob {
                     10,
                     true,
                     false,
-                    (target, _) -> target instanceof NpcEntity npc && !npc.isHostile() && npc.canFight()
+                    (target, ignored) -> target instanceof NpcEntity npc && !npc.isHostile() && npc.canFight()
                 )
             );
         }
@@ -649,7 +651,12 @@ public class NpcEntity extends PathfinderMob {
         boolean hit;
         if (definition != null && definition.isMelee()) {
             var amount = definition.damage().base() * config().combat().damageMultiplier();
-            hit = target.hurtServer(level, ADDamageTypes.source(level, definition.damage().type(), this), amount);
+            hit = ADEntityUtil.hurt(
+                target,
+                level,
+                ADDamageTypes.source(level, definition.damage().type(), this),
+                amount
+            );
         } else {
             hit = super.doHurtTarget(level, target);
         }
@@ -808,17 +815,17 @@ public class NpcEntity extends PathfinderMob {
     @Override
     protected void addAdditionalSaveData(@NotNull ValueOutput output) {
         super.addAdditionalSaveData(output);
-        output.store("NpcConfig", NpcConfig.CODEC, config());
+        ADSerialization.store(output, "NpcConfig", NpcConfig.CODEC, config());
         if (home != null) {
-            output.store("NpcHome", BlockPos.CODEC, home);
+            ADSerialization.store(output, "NpcHome", BlockPos.CODEC, home);
         }
         output.putFloat("NpcHomeYaw", homeYaw);
         if (owner != null) {
-            output.store("NpcOwner", UUIDUtil.CODEC, owner);
+            ADSerialization.store(output, "NpcOwner", UUIDUtil.CODEC, owner);
             output.putLong("NpcHireExpires", hireExpires);
             output.putString("NpcCompanionMode", companionMode.name());
         }
-        output.store("NpcShopUses", Codec.INT.listOf(), Arrays.stream(shopUses).boxed().toList());
+        ADSerialization.store(output, "NpcShopUses", Codec.INT.listOf(), Arrays.stream(shopUses).boxed().toList());
         output.putLong("NpcLastRestock", lastRestock);
         output.putInt("NpcRespawnTicks", respawnTicks);
     }
@@ -826,20 +833,22 @@ public class NpcEntity extends PathfinderMob {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        applyConfig(input.read("NpcConfig", NpcConfig.CODEC).orElse(NpcConfig.DEFAULT));
-        home = input.read("NpcHome", BlockPos.CODEC).orElse(null);
-        homeYaw = input.getFloatOr("NpcHomeYaw", getYRot());
-        owner = input.read("NpcOwner", UUIDUtil.CODEC).orElse(null);
-        hireExpires = input.getLongOr("NpcHireExpires", -1L);
+        applyConfig(ADSerialization.read(input, "NpcConfig", NpcConfig.CODEC).orElse(NpcConfig.DEFAULT));
+        home = ADSerialization.read(input, "NpcHome", BlockPos.CODEC).orElse(null);
+        homeYaw = ADSerialization.getFloat(input, "NpcHomeYaw", getYRot());
+        owner = ADSerialization.read(input, "NpcOwner", UUIDUtil.CODEC).orElse(null);
+        hireExpires = ADSerialization.getLong(input, "NpcHireExpires", -1L);
         try {
-            companionMode = CompanionMode.valueOf(input.getStringOr("NpcCompanionMode", CompanionMode.FOLLOW.name()));
+            companionMode = CompanionMode.valueOf(
+                ADSerialization.getString(input, "NpcCompanionMode", CompanionMode.FOLLOW.name())
+            );
         } catch (IllegalArgumentException exception) {
             companionMode = CompanionMode.FOLLOW;
         }
-        var uses = input.read("NpcShopUses", Codec.INT.listOf()).orElse(List.of());
+        var uses = ADSerialization.read(input, "NpcShopUses", Codec.INT.listOf()).orElse(List.of());
         shopUses = Arrays.copyOf(uses.stream().mapToInt(Integer::intValue).toArray(), config().shop().trades().size());
-        lastRestock = input.getLongOr("NpcLastRestock", 0L);
-        respawnTicks = input.getIntOr("NpcRespawnTicks", 0);
+        lastRestock = ADSerialization.getLong(input, "NpcLastRestock", 0L);
+        respawnTicks = ADSerialization.getInt(input, "NpcRespawnTicks", 0);
         if (respawnTicks > 0) {
             entityData.set(DATA_DOWNED, true);
             setInvisible(true);

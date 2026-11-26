@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADBlocks;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
@@ -82,15 +83,15 @@ public class FissurePiece extends StructurePiece {
 
     public FissurePiece(CompoundTag tag) {
         super(ADStructureTypes.FISSURE_PIECE.get(), tag);
-        this.centerX = tag.getIntOr("CX", 0);
-        this.centerY = tag.getIntOr("CY", 0);
-        this.centerZ = tag.getIntOr("CZ", 0);
-        this.angle = tag.getFloatOr("Angle", 0F);
-        this.length = tag.getIntOr("Length", 32);
-        this.halfWidth = tag.getIntOr("HalfWidth", 5);
-        this.depth = tag.getIntOr("Depth", 20);
-        this.crackCount = tag.getIntOr("Cracks", 10);
-        this.seed = tag.getLongOr("Seed", 0L);
+        this.centerX = ADSerialization.getInt(tag, "CX", 0);
+        this.centerY = ADSerialization.getInt(tag, "CY", 0);
+        this.centerZ = ADSerialization.getInt(tag, "CZ", 0);
+        this.angle = ADSerialization.getFloat(tag, "Angle", 0F);
+        this.length = ADSerialization.getInt(tag, "Length", 32);
+        this.halfWidth = ADSerialization.getInt(tag, "HalfWidth", 5);
+        this.depth = ADSerialization.getInt(tag, "Depth", 20);
+        this.crackCount = ADSerialization.getInt(tag, "Cracks", 10);
+        this.seed = ADSerialization.getLong(tag, "Seed", 0L);
     }
 
     public BlockPos center() {

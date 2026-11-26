@@ -6,7 +6,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.QuartPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -34,6 +33,8 @@ import java.util.List;
 import java.util.Optional;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -166,7 +167,7 @@ public class RoadStructure extends Structure {
         var maxChunkX = SectionPos.blockToSectionCoord(area.maxX() + reach);
         var minChunkZ = SectionPos.blockToSectionCoord(area.minZ() - reach);
         var maxChunkZ = SectionPos.blockToSectionCoord(area.maxZ() + reach);
-        var sets = context.registryAccess().lookupOrThrow(Registries.STRUCTURE_SET);
+        var sets = ADRegistryUtil.registry(context.registryAccess(), Registries.STRUCTURE_SET);
         sets.listElements().forEach(holder -> {
             var set = holder.value();
             if (!(set.placement() instanceof RandomSpreadStructurePlacement spread)) {
@@ -226,15 +227,9 @@ public class RoadStructure extends Structure {
     }
 
     private static boolean validBiome(GenerationContext context, int x, int z, List<Holder<Structure>> candidates) {
-        var y = context.chunkGenerator()
-            .getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
+        var y = ADWorldgenUtil.baseHeight(context, x, z, Heightmap.Types.WORLD_SURFACE_WG);
 
-        var biome = context.biomeResolver()
-            .getNoiseBiome(
-                QuartPos.fromBlock(x),
-                QuartPos.fromBlock(y),
-                QuartPos.fromBlock(z)
-            );
+        var biome = ADWorldgenUtil.noiseBiome(context, x, y, z);
 
         return candidates.stream()
             .anyMatch(candidate -> candidate.value().biomes().contains(biome));

@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADEntities;
 import mod.azure.atomicdawn.registry.ADItems;
 
@@ -56,7 +57,7 @@ public class PowerArmorChassisItem extends Item {
     }
 
     public static PowerArmorEntity create(ServerLevel level, ItemStack stack) {
-        var entity = ADEntities.POWER_ARMOR.get().create(level, EntitySpawnReason.SPAWN_ITEM_USE);
+        var entity = ADEntityUtil.create(ADEntities.POWER_ARMOR.get(), level, EntitySpawnReason.SPAWN_ITEM_USE);
         if (entity != null) {
             applyContents(entity, stack);
         }

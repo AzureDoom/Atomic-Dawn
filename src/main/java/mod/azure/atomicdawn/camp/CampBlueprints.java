@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public final class CampBlueprints {
@@ -32,7 +33,7 @@ public final class CampBlueprints {
     }
 
     public static Identifier personalId(String key) {
-        return Identifier.fromNamespaceAndPath(PERSONAL, key);
+        return ADRegistryUtil.id(PERSONAL, key);
     }
 
     public static String slug(String name) {
@@ -55,7 +56,7 @@ public final class CampBlueprints {
     }
 
     public static List<Holder.Reference<CampBlueprint>> datapack(RegistryAccess access) {
-        return access.lookup(ADRegistries.CAMP_BLUEPRINT)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.CAMP_BLUEPRINT)
             .map(
                 registry -> registry.listElements()
                     .sorted(Comparator.comparing(holder -> holder.key().identifier().toString()))
@@ -82,9 +83,7 @@ public final class CampBlueprints {
         if (personal(id)) {
             return CampBlueprintLibrary.of(player).get(id.getPath());
         }
-        return player.level()
-            .registryAccess()
-            .lookup(ADRegistries.CAMP_BLUEPRINT)
+        return ADRegistryUtil.optionalRegistry(player.level().registryAccess(), ADRegistries.CAMP_BLUEPRINT)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.CAMP_BLUEPRINT, id)))
             .map(Holder.Reference::value);
     }

@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record ArmorLegendary(
@@ -28,7 +29,7 @@ public record ArmorLegendary(
         Comparator.comparing(holder -> holder.key().identifier().getPath());
 
     public static List<Holder.Reference<ArmorLegendary>> all(RegistryAccess access, int star) {
-        return access.lookup(ADRegistries.ARMOR_LEGENDARY)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.ARMOR_LEGENDARY)
             .map(
                 registry -> registry.listElements()
                     .filter(holder -> holder.value().star() == star)
@@ -39,7 +40,7 @@ public record ArmorLegendary(
     }
 
     public static Optional<Holder.Reference<ArmorLegendary>> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.ARMOR_LEGENDARY)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.ARMOR_LEGENDARY)
             .flatMap(registry -> registry.get(ADRegistries.key(ADRegistries.ARMOR_LEGENDARY, id)));
     }
 

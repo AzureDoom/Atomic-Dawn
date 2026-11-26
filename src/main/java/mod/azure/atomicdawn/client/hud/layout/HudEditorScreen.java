@@ -1,21 +1,19 @@
 package mod.azure.atomicdawn.client.hud.layout;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 
-public final class HudEditorScreen extends Screen {
+public final class HudEditorScreen extends ADScreen {
 
     private static final int COLOR_GRID = 0x30FFFFFF;
 
@@ -64,26 +62,26 @@ public final class HudEditorScreen extends Screen {
         var centerX = width / 2;
         var y = height / 2 + 30;
         addRenderableWidget(
-            Button.builder(Component.translatable("hud_editor.atomicdawn.reset_selected"), _ -> resetSelected())
+            Button.builder(Component.translatable("hud_editor.atomicdawn.reset_selected"), ignored -> resetSelected())
                 .pos(centerX - 154, y)
                 .size(100, 20)
                 .build()
         );
         addRenderableWidget(
-            Button.builder(Component.translatable("hud_editor.atomicdawn.reset_all"), _ -> {
+            Button.builder(Component.translatable("hud_editor.atomicdawn.reset_all"), ignored -> {
                 for (var element : HudElement.values()) {
                     HudLayout.set(element, null);
                 }
             }).pos(centerX - 50, y).size(100, 20).build()
         );
         addRenderableWidget(
-            Button.builder(Component.translatable("hud_editor.atomicdawn.done"), _ -> {
+            Button.builder(Component.translatable("hud_editor.atomicdawn.done"), ignored -> {
                 save();
                 onClose();
             }).pos(centerX + 54, y).size(100, 20).build()
         );
         addRenderableWidget(
-            Button.builder(Component.translatable("hud_editor.atomicdawn.cancel"), _ -> {
+            Button.builder(Component.translatable("hud_editor.atomicdawn.cancel"), ignored -> {
                 HudLayout.restore(original);
                 saved = true;
                 onClose();
@@ -118,7 +116,7 @@ public final class HudEditorScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         if (dragging != null) {
             drag(dragging, mouseX, mouseY);
         }
@@ -188,11 +186,11 @@ public final class HudEditorScreen extends Screen {
         }
     }
 
-    private void text(GuiGraphicsExtractor graphics, Component text, int x, int y, int color) {
+    private void text(ADGuiGraphics graphics, Component text, int x, int y, int color) {
         graphics.text(font, text, x, y, color, true);
     }
 
-    private static void outline(GuiGraphicsExtractor graphics, Rect rect, int color) {
+    private static void outline(ADGuiGraphics graphics, Rect rect, int color) {
         graphics.fill(rect.x(), rect.y(), rect.right(), rect.y() + 1, color);
         graphics.fill(rect.x(), rect.bottom() - 1, rect.right(), rect.bottom(), color);
         graphics.fill(rect.x(), rect.y(), rect.x() + 1, rect.bottom(), color);
@@ -211,7 +209,7 @@ public final class HudEditorScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (super.mouseClicked(event, doubleClick)) {
             return true;
         }
@@ -237,7 +235,7 @@ public final class HudEditorScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(@NotNull MouseButtonEvent event) {
+    public boolean mouseReleased(ADGuiInput.Mouse event) {
         if (dragging != null && event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             drag(dragging, event.x(), event.y());
             dragging = null;
@@ -279,7 +277,7 @@ public final class HudEditorScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(@NotNull KeyEvent event) {
+    public boolean keyPressed(ADGuiInput.Key event) {
         if (selected != null) {
             var step = shiftDown() ? 10 : 1;
             switch (event.key()) {

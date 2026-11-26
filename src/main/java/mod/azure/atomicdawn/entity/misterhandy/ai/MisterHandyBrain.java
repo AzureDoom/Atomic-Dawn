@@ -3,7 +3,6 @@ package mod.azure.atomicdawn.entity.misterhandy.ai;
 import com.azure.azurecortex.api.blackboard.Blackboard;
 import com.azure.azurecortex.api.blackboard.CommonBlackboardKeys;
 import com.azure.azurecortex.runtime.CortexRuntime;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -18,6 +17,7 @@ import java.util.Comparator;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.misterhandy.MisterHandyEntity;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.npc.NpcEntity;
 import mod.azure.atomicdawn.registry.ADSounds;
 
@@ -188,6 +188,6 @@ public final class MisterHandyBrain {
         if (candidate instanceof AbstractVillager || candidate instanceof AbstractGolem) {
             return true;
         }
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(candidate.getType()).is(TARGETS);
+        return ADEntityUtil.isIn(candidate, TARGETS);
     }
 }

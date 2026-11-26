@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
 public class CanyonPiece extends StructurePiece {
@@ -101,15 +102,15 @@ public class CanyonPiece extends StructurePiece {
 
     public CanyonPiece(CompoundTag tag) {
         super(ADStructureTypes.CANYON_PIECE.get(), tag);
-        this.centerX = tag.getIntOr("CX", 0);
-        this.centerY = tag.getIntOr("CY", 0);
-        this.centerZ = tag.getIntOr("CZ", 0);
-        this.angle = tag.getFloatOr("Angle", 0F);
-        this.length = tag.getIntOr("Length", 96);
-        this.halfWidth = tag.getIntOr("HalfWidth", 12);
-        this.depth = tag.getIntOr("Depth", 24);
-        this.flowing = tag.getBooleanOr("Stream", true);
-        this.seed = tag.getLongOr("Seed", 0L);
+        this.centerX = ADSerialization.getInt(tag, "CX", 0);
+        this.centerY = ADSerialization.getInt(tag, "CY", 0);
+        this.centerZ = ADSerialization.getInt(tag, "CZ", 0);
+        this.angle = ADSerialization.getFloat(tag, "Angle", 0F);
+        this.length = ADSerialization.getInt(tag, "Length", 96);
+        this.halfWidth = ADSerialization.getInt(tag, "HalfWidth", 12);
+        this.depth = ADSerialization.getInt(tag, "Depth", 24);
+        this.flowing = ADSerialization.getBoolean(tag, "Stream", true);
+        this.seed = ADSerialization.getLong(tag, "Seed", 0L);
     }
 
     private static BoundingBox bounds(BlockPos center, int length, int halfWidth, int depth, int minY) {

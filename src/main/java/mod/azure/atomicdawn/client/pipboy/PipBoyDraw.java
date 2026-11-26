@@ -1,23 +1,23 @@
 package mod.azure.atomicdawn.client.pipboy;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 
 public final class PipBoyDraw {
 
     private PipBoyDraw() {}
 
-    public static void fill(GuiGraphicsExtractor graphics, Rect rect, int color) {
+    public static void fill(ADGuiGraphics graphics, Rect rect, int color) {
         graphics.fill(rect.x(), rect.y(), rect.right(), rect.bottom(), color);
     }
 
-    public static void outline(GuiGraphicsExtractor graphics, Rect r, int color) {
+    public static void outline(ADGuiGraphics graphics, Rect r, int color) {
         graphics.fill(r.x(), r.y(), r.right(), r.y() + 1, color);
         graphics.fill(r.x(), r.bottom() - 1, r.right(), r.bottom(), color);
         graphics.fill(r.x(), r.y() + 1, r.x() + 1, r.bottom() - 1, color);
         graphics.fill(r.right() - 1, r.y() + 1, r.right(), r.bottom() - 1, color);
     }
 
-    public static void bevel(GuiGraphicsExtractor graphics, Rect r, int outline, int base, int light, int shade) {
+    public static void bevel(ADGuiGraphics graphics, Rect r, int outline, int base, int light, int shade) {
         outline(graphics, r, outline);
         var in = r.inset(1);
         fill(graphics, in, base);
@@ -27,7 +27,7 @@ public final class PipBoyDraw {
         graphics.fill(in.right() - 1, in.y() + 1, in.right(), in.bottom() - 1, shade);
     }
 
-    public static void recess(GuiGraphicsExtractor graphics, Rect r, int base, int shade, int light) {
+    public static void recess(ADGuiGraphics graphics, Rect r, int base, int shade, int light) {
         fill(graphics, r, base);
         graphics.fill(r.x(), r.y(), r.right(), r.y() + 1, shade);
         graphics.fill(r.x(), r.y() + 1, r.x() + 1, r.bottom(), shade);
@@ -35,18 +35,18 @@ public final class PipBoyDraw {
         graphics.fill(r.right() - 1, r.y() + 1, r.right(), r.bottom() - 1, light);
     }
 
-    public static void screw(GuiGraphicsExtractor graphics, int x, int y) {
+    public static void screw(ADGuiGraphics graphics, int x, int y) {
         graphics.fill(x, y, x + 4, y + 4, 0xFF1A1C14);
         graphics.fill(x + 1, y + 1, x + 3, y + 3, 0xFF8E9378);
         graphics.fill(x + 1, y + 2, x + 2, y + 3, 0xFF2A2C20);
         graphics.fill(x + 2, y + 1, x + 3, y + 2, 0xFF2A2C20);
     }
 
-    public static void disc(GuiGraphicsExtractor graphics, int cx, int cy, int radius, int color) {
+    public static void disc(ADGuiGraphics graphics, int cx, int cy, int radius, int color) {
         disc(graphics, cx, cy, radius, Integer.MAX_VALUE, color);
     }
 
-    public static void disc(GuiGraphicsExtractor graphics, int cx, int cy, int radius, int clipBottom, int color) {
+    public static void disc(ADGuiGraphics graphics, int cx, int cy, int radius, int clipBottom, int color) {
         if (radius <= 0) {
             return;
         }
@@ -60,7 +60,7 @@ public final class PipBoyDraw {
         }
     }
 
-    public static void ring(GuiGraphicsExtractor graphics, int cx, int cy, int radius, int thickness, int color) {
+    public static void ring(ADGuiGraphics graphics, int cx, int cy, int radius, int thickness, int color) {
         var inner = Math.max(0, radius - thickness);
         for (var dy = -radius; dy <= radius; dy++) {
             var outerHalf = (int) Math.round(Math.sqrt(radius * radius - dy * dy + 0.25));
@@ -75,7 +75,7 @@ public final class PipBoyDraw {
     }
 
     public static void line(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         float x0,
         float y0,
         float x1,
@@ -89,15 +89,15 @@ public final class PipBoyDraw {
         if (length < 0.5F) {
             return;
         }
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x0, y0);
-        graphics.pose().rotate((float) Math.atan2(dy, dx));
+        graphics.push();
+        graphics.translate(x0, y0);
+        graphics.rotate((float) Math.atan2(dy, dx));
         graphics.fill(0, -thickness / 2, Math.round(length), thickness - thickness / 2, color);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 
     public static void ellipse(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         float cx,
         float cy,
         float rx,
@@ -134,7 +134,7 @@ public final class PipBoyDraw {
         };
     }
 
-    public static void mesh(GuiGraphicsExtractor graphics, Rect r, int spacing, int color, int shine) {
+    public static void mesh(ADGuiGraphics graphics, Rect r, int spacing, int color, int shine) {
         var left = r.x();
         var top = r.y();
         var right = r.right();
@@ -160,7 +160,7 @@ public final class PipBoyDraw {
         }
     }
 
-    public static void stripes(GuiGraphicsExtractor graphics, Rect r, int period, int base, int stripe) {
+    public static void stripes(ADGuiGraphics graphics, Rect r, int period, int base, int stripe) {
         fill(graphics, r, base);
         var half = period / 2;
         for (var y = r.y(); y < r.bottom(); y++) {
@@ -175,7 +175,7 @@ public final class PipBoyDraw {
         }
     }
 
-    public static void glow(GuiGraphicsExtractor graphics, Rect r, int rgb, int alpha, int layers) {
+    public static void glow(ADGuiGraphics graphics, Rect r, int rgb, int alpha, int layers) {
         for (var i = layers; i >= 1; i--) {
             var a = Math.round(alpha * (1F - (float) i / (layers + 1)) / layers * 2F);
             graphics.fill(
@@ -188,7 +188,7 @@ public final class PipBoyDraw {
         }
     }
 
-    public static void vignette(GuiGraphicsExtractor graphics, Rect r, int steps, int maxAlpha) {
+    public static void vignette(ADGuiGraphics graphics, Rect r, int steps, int maxAlpha) {
         for (var i = 0; i < steps; i++) {
             var a = Math.round(maxAlpha * (1F - (float) i / steps) * (1F - (float) i / steps)) << 24;
             graphics.fill(r.x(), r.y() + i, r.right(), r.y() + i + 1, a);
@@ -198,7 +198,7 @@ public final class PipBoyDraw {
         }
     }
 
-    public static void crtMask(GuiGraphicsExtractor graphics, Rect r, float open) {
+    public static void crtMask(ADGuiGraphics graphics, Rect r, float open) {
         if (open >= 1F) {
             return;
         }

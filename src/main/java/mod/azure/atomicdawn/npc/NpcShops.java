@@ -106,7 +106,7 @@ public final class NpcShops {
         }
         player.openMenu(
             new SimpleMenuProvider(
-                (id, inventory, _) -> new ChestMenu(MenuType.GENERIC_9x6, id, inventory, container, ROWS) {
+                (id, inventory, ignored) -> new ChestMenu(MenuType.GENERIC_9x6, id, inventory, container, ROWS) {
 
                     @Override
                     public void clicked(

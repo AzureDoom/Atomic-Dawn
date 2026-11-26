@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.screen;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyDraw;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
@@ -67,30 +67,30 @@ public final class PipBoyStyle {
         return PipBoyTheme.warn();
     }
 
-    public static void window(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
+    public static void window(ADGuiGraphics graphics, int x, int y, int width, int height) {
         var rect = new Rect(x, y, width, height);
         PipBoyDraw.fill(graphics, rect.inset(-1), frame());
         PipBoyDraw.fill(graphics, rect, background());
         PipBoyDraw.fill(graphics, rect.inset(Math.max(4, height / 6)), PipBoyTheme.phosphor(0.035F, 0x50));
     }
 
-    public static void panel(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
+    public static void panel(ADGuiGraphics graphics, int x, int y, int width, int height) {
         var rect = new Rect(x, y, width, height);
         PipBoyDraw.fill(graphics, rect, panel());
         PipBoyDraw.outline(graphics, rect, PipBoyTheme.faint());
     }
 
-    public static void slot(GuiGraphicsExtractor graphics, int x, int y) {
+    public static void slot(ADGuiGraphics graphics, int x, int y) {
         graphics.fill(x - 1, y - 1, x + 17, y + 17, slotEdge());
         graphics.fill(x, y, x + 16, y + 16, slotBackground());
     }
 
-    public static void title(GuiGraphicsExtractor graphics, Font font, Component title, int x, int y, int width) {
+    public static void title(ADGuiGraphics graphics, Font font, Component title, int x, int y, int width) {
         graphics.text(font, title, x, y, text(), false);
         graphics.fill(x, y + font.lineHeight + 1, x + width, y + font.lineHeight + 2, PipBoyTheme.border());
     }
 
-    public static void crt(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
+    public static void crt(ADGuiGraphics graphics, int x, int y, int width, int height) {
         var scan = PipBoyTheme.scanline();
         if ((scan >>> 24) > 0) {
             for (var line = y; line < y + height; line += 3) {
@@ -111,7 +111,7 @@ public final class PipBoyStyle {
     }
 
     public static void skinButtons(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         List<? extends GuiEventListener> children,
         int originX,
@@ -182,7 +182,7 @@ public final class PipBoyStyle {
     }
 
     private static void scaled(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         Component text,
         int x,
@@ -194,15 +194,15 @@ public final class PipBoyStyle {
             graphics.text(font, text, x, y, color, false);
             return;
         }
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x, y + (1 - scale) * 4);
-        graphics.pose().scale(scale, scale);
+        graphics.push();
+        graphics.translate(x, y + (1 - scale) * 4);
+        graphics.scale(scale, scale);
         graphics.text(font, text, 0, 0, color, false);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 
     public static void fitted(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         Component text,
         int x,
@@ -216,10 +216,10 @@ public final class PipBoyStyle {
             return;
         }
         var scale = Math.max(0.01F, (float) maxWidth / w);
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x, y + (1 - scale) * 4);
-        graphics.pose().scale(scale, scale);
+        graphics.push();
+        graphics.translate(x, y + (1 - scale) * 4);
+        graphics.scale(scale, scale);
         graphics.text(font, text, 0, 0, color, false);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 }

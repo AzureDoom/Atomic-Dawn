@@ -2,21 +2,16 @@ package mod.azure.atomicdawn.client.pipboy;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.FormattedCharSequence;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalTime;
@@ -25,6 +20,9 @@ import java.util.List;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
 import mod.azure.atomicdawn.client.pipboy.tab.DataTab;
 import mod.azure.atomicdawn.client.pipboy.tab.InventoryTab;
@@ -33,12 +31,13 @@ import mod.azure.atomicdawn.client.pipboy.tab.PipBoyTab;
 import mod.azure.atomicdawn.client.pipboy.tab.RadioTab;
 import mod.azure.atomicdawn.client.pipboy.tab.StatTab;
 import mod.azure.atomicdawn.config.ADConfig.Client.PipBoy.Display.PipBoyLayout;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.registry.ADSounds;
 import mod.azure.atomicdawn.special.SpecialXp;
 import mod.azure.atomicdawn.weapon.action.VatsActions;
 
-public class PipBoyScreen extends Screen {
+public class PipBoyScreen extends ADScreen {
 
     public static final List<PipBoyTab> TABS = List.of(
         new StatTab(),
@@ -611,13 +610,13 @@ public class PipBoyScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(@NotNull KeyEvent event) {
+    public boolean keyPressed(ADGuiInput.Key event) {
         if (closingSince >= 0) {
             finishClose();
             return true;
         }
         if (booting()) {
-            if (event.key() == InputConstants.KEY_ESCAPE || ADKeyMappings.PIPBOY.matches(event)) {
+            if (event.key() == InputConstants.KEY_ESCAPE || ADGuiInput.matches(ADKeyMappings.PIPBOY, event)) {
                 finishClose();
             } else {
                 skipBoot();
@@ -627,7 +626,7 @@ public class PipBoyScreen extends Screen {
         if (getFocused() instanceof EditBox box && box.isFocused() && event.key() != InputConstants.KEY_ESCAPE) {
             return super.keyPressed(event);
         }
-        if (ADKeyMappings.PIPBOY.matches(event)) {
+        if (ADGuiInput.matches(ADKeyMappings.PIPBOY, event)) {
             onClose();
             return true;
         }
@@ -667,7 +666,7 @@ public class PipBoyScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (closingSince >= 0) {
             return true;
         }
@@ -769,7 +768,7 @@ public class PipBoyScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         lastMouseX = mouseX;
         lastMouseY = mouseY;
         var now = millis();
@@ -846,7 +845,7 @@ public class PipBoyScreen extends Screen {
         return HOVER_NONE;
     }
 
-    private void renderHeader(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    private void renderHeader(ADGuiGraphics graphics, int mouseX, int mouseY) {
         var lineY = inner.y() + HEADER_H - 3;
         var color = PipBoyTheme.text();
         graphics.fill(inner.x(), lineY, inner.right(), lineY + 1, color);
@@ -886,7 +885,7 @@ public class PipBoyScreen extends Screen {
         }
     }
 
-    private void glowText(GuiGraphicsExtractor graphics, Component text, int x, int y, int color) {
+    private void glowText(ADGuiGraphics graphics, Component text, int x, int y, int color) {
         var halo = PipBoyTheme.phosphor(0.5F, 0x38);
         graphics.text(font, text, x - 1, y, halo, false);
         graphics.text(font, text, x + 1, y, halo, false);
@@ -894,7 +893,7 @@ public class PipBoyScreen extends Screen {
         graphics.text(font, text, x, y, color, false);
     }
 
-    private void renderFooter(GuiGraphicsExtractor graphics) {
+    private void renderFooter(ADGuiGraphics graphics) {
         if (minecraft == null || minecraft.player == null) {
             return;
         }
@@ -977,7 +976,7 @@ public class PipBoyScreen extends Screen {
         return new StatusLine(fallback, PipBoyTheme.text());
     }
 
-    private void renderPanelFooter(GuiGraphicsExtractor graphics) {
+    private void renderPanelFooter(ADGuiGraphics graphics) {
         if (minecraft == null || minecraft.player == null) {
             return;
         }
@@ -1015,7 +1014,7 @@ public class PipBoyScreen extends Screen {
         fitted(graphics, status.text(), right.right() - 4 - w, ty, maxW, status.color());
     }
 
-    private void renderFallout3000(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    private void renderFallout3000(ADGuiGraphics graphics, int mouseX, int mouseY) {
         var color = PipBoyTheme.text();
         var frameTop = inner.y() + 5;
         var left = inner.x() + 2;
@@ -1081,7 +1080,7 @@ public class PipBoyScreen extends Screen {
         }
     }
 
-    private void renderStatSegments(GuiGraphicsExtractor graphics, int start, int color) {
+    private void renderStatSegments(ADGuiGraphics graphics, int start, int color) {
         var player = minecraft == null ? null : minecraft.player;
         if (player == null) {
             return;
@@ -1116,7 +1115,7 @@ public class PipBoyScreen extends Screen {
     }
 
     private void segment(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x0,
         int x1,
         Component label,
@@ -1137,7 +1136,7 @@ public class PipBoyScreen extends Screen {
         fitted(graphics, value, x1 - 3 - valueW, y, room, valueColor);
     }
 
-    private void renderVegasHeader(GuiGraphicsExtractor graphics, int start, int frameTop, int color) {
+    private void renderVegasHeader(ADGuiGraphics graphics, int start, int frameTop, int color) {
         var dayNumber = minecraft == null || minecraft.level == null
             ? 1L
             : minecraft.level.getGameTime() / 24000L + 1L;
@@ -1164,7 +1163,7 @@ public class PipBoyScreen extends Screen {
         if (minecraft == null || minecraft.level == null || minecraft.player == null) {
             return Component.empty();
         }
-        return minecraft.level.getBiome(minecraft.player.blockPosition())
+        return ADWorldgenUtil.biome(minecraft.level, minecraft.player.blockPosition())
             .unwrapKey()
             .<Component>map(
                 key -> Component.translatable(
@@ -1174,14 +1173,14 @@ public class PipBoyScreen extends Screen {
             .orElse(Component.empty());
     }
 
-    private void bracketUp(GuiGraphicsExtractor graphics, int left, int right, int top, int bottom, int color) {
+    private void bracketUp(ADGuiGraphics graphics, int left, int right, int top, int bottom, int color) {
         graphics.fill(left, top, left + 1, bottom, color);
         graphics.fill(right, top, right + 1, bottom, color);
         graphics.fill(left, top, left + 4, top + 1, color);
         graphics.fill(right - 3, top, right + 1, top + 1, color);
     }
 
-    private void renderClassicHoused(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    private void renderClassicHoused(ADGuiGraphics graphics, int mouseX, int mouseY) {
         var bright = PipBoyTheme.text();
         var title = currentTab().label();
         glowText(graphics, title, inner.x() + 4, inner.y() + 5, bright);
@@ -1232,7 +1231,7 @@ public class PipBoyScreen extends Screen {
         fitted(graphics, status.text(), inner.x() + 6, y, inner.width() - 12, status.color());
     }
 
-    private void renderClassic(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    private void renderClassic(ADGuiGraphics graphics, int mouseX, int mouseY) {
         if (!layout.fullscreen()) {
             renderClassicHoused(graphics, mouseX, mouseY);
             return;
@@ -1324,7 +1323,7 @@ public class PipBoyScreen extends Screen {
         PipBoyDraw.outline(graphics, frame.inset(2), PipBoyTheme.faint());
     }
 
-    private void crtEffects(GuiGraphicsExtractor graphics, long now) {
+    private void crtEffects(ADGuiGraphics graphics, long now) {
         var scan = PipBoyTheme.scanline();
         if ((scan >>> 24) > 0) {
             var offset = (int) (ticks % 3);
@@ -1351,7 +1350,7 @@ public class PipBoyScreen extends Screen {
         graphics.fill(screenArea.x() + 2, screenArea.y() + 1, screenArea.right() - 2, screenArea.y() + 2, 0x14FFFFFF);
     }
 
-    private void renderTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    private void renderTooltip(ADGuiGraphics graphics, int mouseX, int mouseY) {
         for (var widget : hiddenUnderTooltip) {
             widget.visible = true;
         }
@@ -1394,26 +1393,26 @@ public class PipBoyScreen extends Screen {
         }
     }
 
-    public void text(GuiGraphicsExtractor graphics, Component text, int x, int y, int color) {
+    public void text(ADGuiGraphics graphics, Component text, int x, int y, int color) {
         graphics.text(font, text, x, y, color, false);
     }
 
-    public void fitted(GuiGraphicsExtractor graphics, Component text, int x, int y, int maxWidth, int color) {
+    public void fitted(ADGuiGraphics graphics, Component text, int x, int y, int maxWidth, int color) {
         var w = font.width(text);
         if (w <= maxWidth || w == 0) {
             graphics.text(font, text, x, y, color, false);
             return;
         }
         var scale = Math.max(0.01F, (float) maxWidth / w);
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x, y + (1 - scale) * 4);
-        graphics.pose().scale(scale, scale);
+        graphics.push();
+        graphics.translate(x, y + (1 - scale) * 4);
+        graphics.scale(scale, scale);
         graphics.text(font, text, 0, 0, color, false);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 
     public int wrapped(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Component text,
         int x,
         int y,
@@ -1431,7 +1430,7 @@ public class PipBoyScreen extends Screen {
         return y;
     }
 
-    public void bar(GuiGraphicsExtractor graphics, int x, int y, int w, int h, float fraction, int color) {
+    public void bar(ADGuiGraphics graphics, int x, int y, int w, int h, float fraction, int color) {
         graphics.fill(x, y, x + w, y + h, PipBoyTheme.faint());
         graphics.fill(x, y, x + Math.round(w * Math.clamp(fraction, 0F, 1F)), y + h, color);
     }

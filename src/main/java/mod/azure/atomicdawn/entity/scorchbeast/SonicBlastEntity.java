@@ -19,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADEntities;
 import mod.azure.atomicdawn.registry.ADSounds;
 
@@ -112,7 +114,7 @@ public class SonicBlastEntity extends ThrowableProjectile {
                 continue;
             }
             var falloff = (float) Mth.clamp(1.0 - distance / radius, 0.25, 1.0);
-            if (victim.hurtServer(level, source, damage * falloff)) {
+            if (ADEntityUtil.hurt(victim, level, source, damage * falloff)) {
                 var push = victim.position().subtract(center).normalize().scale(0.9 * falloff);
                 victim.setDeltaMovement(victim.getDeltaMovement().add(push.x, 0.3 * falloff, push.z));
                 victim.syncVelocity = true;
@@ -145,6 +147,6 @@ public class SonicBlastEntity extends ThrowableProjectile {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        detonated = input.getBooleanOr("Detonated", false);
+        detonated = ADSerialization.getBoolean(input, "Detonated", false);
     }
 }

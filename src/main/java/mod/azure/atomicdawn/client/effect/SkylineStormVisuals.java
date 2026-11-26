@@ -11,6 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.worldgen.ADBiomes;
 
 @SuppressWarnings("unused")
@@ -48,7 +49,7 @@ public final class SkylineStormVisuals {
             return;
         }
 
-        boolean inValley = level.getBiome(minecraft.player.blockPosition()).is(ADBiomes.SKYLINE_VALLEY);
+        boolean inValley = ADWorldgenUtil.biomeIs(level, minecraft.player.blockPosition(), ADBiomes.SKYLINE_VALLEY);
         stormStrength = Math.clamp(stormStrength + (inValley ? 1 : -2), 0, 40);
         if (stormStrength == 0)
             return;

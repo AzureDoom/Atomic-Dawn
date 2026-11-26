@@ -13,6 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID)
@@ -27,7 +28,7 @@ public final class SkylineStormEvents {
         var player = event.getEntity();
         if (player.tickCount % 100 != 0)
             return;
-        if (!level.getBiome(player.blockPosition()).is(ADBiomes.SKYLINE_VALLEY))
+        if (!ADWorldgenUtil.biomeIs(level, player.blockPosition(), ADBiomes.SKYLINE_VALLEY))
             return;
         if (level.getRandom().nextInt(5) != 0)
             return;
@@ -41,7 +42,7 @@ public final class SkylineStormEvents {
             return;
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
         BlockPos strikePos = new BlockPos(x, y, z);
-        if (!level.getBiome(strikePos).is(ADBiomes.SKYLINE_VALLEY))
+        if (!ADWorldgenUtil.biomeIs(level, strikePos, ADBiomes.SKYLINE_VALLEY))
             return;
 
         LightningBolt lightning = new LightningBolt(EntityTypes.LIGHTNING_BOLT, level);

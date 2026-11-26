@@ -101,7 +101,7 @@ public final class CampStorageService {
         for (var part : live) {
             bounds = bounds.minmax(new AABB(part));
         }
-        var entities = CampContents.assign(level, List.of(object), bounds.inflate(1.0), _ -> true)
+        var entities = CampContents.assign(level, List.of(object), bounds.inflate(1.0), ignored -> true)
             .getOrDefault(object.objectId(), List.of())
             .stream()
             .filter(entity -> attached(entity, live))

@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -10,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyClientState;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
@@ -118,7 +118,7 @@ public final class RadioTab implements PipBoyTab {
 
     @Override
     public void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect area,
         String subtab,
@@ -206,7 +206,7 @@ public final class RadioTab implements PipBoyTab {
         return stop + 2 + next + 6;
     }
 
-    private static void renderWave(GuiGraphicsExtractor graphics, Rect box) {
+    private static void renderWave(ADGuiGraphics graphics, Rect box) {
         if (box.height() < 8 || box.width() < 16) {
             return;
         }
@@ -229,7 +229,7 @@ public final class RadioTab implements PipBoyTab {
         }
     }
 
-    private static void centered(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area, Component message) {
+    private static void centered(ADGuiGraphics graphics, PipBoyScreen screen, Rect area, Component message) {
         var width = Math.min(area.width() - 20, 260);
         screen.wrapped(
             graphics,

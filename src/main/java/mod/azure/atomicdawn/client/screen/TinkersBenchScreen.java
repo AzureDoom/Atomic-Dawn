@@ -1,27 +1,26 @@
 package mod.azure.atomicdawn.client.screen;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
 
+import mod.azure.atomicdawn.client.helper.ADContainerScreen;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
 import mod.azure.atomicdawn.crafting.TinkerService;
 import mod.azure.atomicdawn.crafting.TinkersBenchMenu;
 import mod.azure.atomicdawn.network.TinkerCraftPayload;
 import mod.azure.atomicdawn.weapon.modification.WeaponModding;
 
-public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu> {
+public class TinkersBenchScreen extends ADContainerScreen<TinkersBenchMenu> {
 
     private static final int LIST_X = 8;
 
@@ -98,7 +97,7 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
         var tabW = (imageWidth - tabsX - 4) / categories.length;
         for (var i = 0; i < categories.length; i++) {
             var c = categories[i];
-            var button = Button.builder(Component.translatable(c.translationKey()), _ -> switchCategory(c))
+            var button = Button.builder(Component.translatable(c.translationKey()), ignored -> switchCategory(c))
                 .pos(leftPos + tabsX + i * tabW, topPos + 3)
                 .size(tabW - 2, 12)
                 .build();
@@ -121,7 +120,7 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
             var holder = recipes.get(index);
             var recipe = holder.value();
             var label = Component.literal(recipe.count() + "× ").append(recipe.resultStack().getHoverName());
-            var button = Button.builder(label, _ -> {
+            var button = Button.builder(label, ignored -> {
                 selected = holder.key();
                 costScroll = 0;
                 rebuildWidgets();
@@ -135,13 +134,13 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
         }
         if (pages > 1) {
             var pagerY = topPos + LIST_Y + LIST_ROWS * ROW_H;
-            var prev = Button.builder(Component.literal("<"), _ -> changePage(-1))
+            var prev = Button.builder(Component.literal("<"), ignored -> changePage(-1))
                 .pos(leftPos + LIST_X, pagerY)
                 .size(20, 12)
                 .build();
             prev.active = page > 0;
             addRenderableWidget(prev);
-            var next = Button.builder(Component.literal(">"), _ -> changePage(1))
+            var next = Button.builder(Component.literal(">"), ignored -> changePage(1))
                 .pos(leftPos + LIST_X + LIST_W - 20, pagerY)
                 .size(20, 12)
                 .build();
@@ -154,7 +153,10 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
             var affordable = minecraft.player.hasInfiniteMaterials()
                 || WeaponModding.hasMaterials(minecraft.player, recipe.cost());
             var width = imageWidth - RIGHT_X - 8;
-            var one = Button.builder(Component.translatable("screen.atomicdawn.tinkers_bench.craft"), _ -> craft(1))
+            var one = Button.builder(
+                Component.translatable("screen.atomicdawn.tinkers_bench.craft"),
+                ignored -> craft(1)
+            )
                 .pos(leftPos + RIGHT_X, topPos + ACTION_Y)
                 .size(width / 2 - 1, 14)
                 .build();
@@ -162,7 +164,7 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
             addRenderableWidget(one);
             var many = Button.builder(
                 Component.translatable("screen.atomicdawn.tinkers_bench.craft_many", BATCH),
-                _ -> craft(BATCH)
+                ignored -> craft(BATCH)
             )
                 .pos(leftPos + RIGHT_X + width / 2 + 1, topPos + ACTION_Y)
                 .size(width / 2 - 1, 14)
@@ -216,8 +218,8 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         var x = leftPos;
         var y = topPos;
         var panelHeight = TinkersBenchMenu.INVENTORY_Y - 30;
@@ -260,11 +262,11 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
         }
         var stack = recipe.resultStack();
         var previewX = x + RIGHT_X + (imageWidth - RIGHT_X - 8 - PREVIEW_SIZE) / 2;
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(previewX, y + 20);
-        graphics.pose().scale(PREVIEW_SIZE / 16F, PREVIEW_SIZE / 16F);
+        graphics.push();
+        graphics.translate(previewX, y + 20);
+        graphics.scale(PREVIEW_SIZE / 16F, PREVIEW_SIZE / 16F);
         graphics.item(stack, 0, 0);
-        graphics.pose().popMatrix();
+        graphics.pop();
 
         graphics.text(
             font,
@@ -285,7 +287,7 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
         drawCost(graphics, x, y, recipe);
     }
 
-    private void drawCost(GuiGraphicsExtractor graphics, int x, int y, TinkerRecipe recipe) {
+    private void drawCost(ADGuiGraphics graphics, int x, int y, TinkerRecipe recipe) {
         var costY = y + COST_Y;
         if (recipe.cost().isEmpty() || minecraft.player.hasInfiniteMaterials()) {
             graphics.text(
@@ -365,13 +367,13 @@ public class TinkersBenchScreen extends AbstractContainerScreen<TinkersBenchMenu
     }
 
     @Override
-    protected void extractLabels(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    protected void drawLabels(ADGuiGraphics graphics, int mouseX, int mouseY) {
         PipBoyStyle.skinButtons(graphics, font, children(), leftPos, topPos);
         graphics.text(font, title, titleLabelX, titleLabelY, PipBoyStyle.text(), false);
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, PipBoyStyle.dim(), false);
     }
 
-    private static void panel(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
+    private static void panel(ADGuiGraphics graphics, int x, int y, int width, int height) {
         PipBoyStyle.panel(graphics, x, y, width, height);
     }
 }

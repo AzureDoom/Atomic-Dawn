@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 import mod.azure.atomicdawn.story.SkillCheck;
 
@@ -94,13 +95,13 @@ public record NpcDialogue(
     }
 
     public static Optional<NpcDialogue> get(RegistryAccess access, Identifier id) {
-        return access.lookup(ADRegistries.NPC_DIALOGUE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.NPC_DIALOGUE)
             .flatMap(registry -> registry.get(ResourceKey.create(ADRegistries.NPC_DIALOGUE, id)))
             .map(Holder::value);
     }
 
     public static List<Identifier> ids(RegistryAccess access) {
-        return access.lookup(ADRegistries.NPC_DIALOGUE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.NPC_DIALOGUE)
             .map(
                 registry -> registry.listElementIds()
                     .map(ResourceKey::identifier)

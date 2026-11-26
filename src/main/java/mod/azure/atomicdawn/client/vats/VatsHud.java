@@ -3,19 +3,19 @@ package mod.azure.atomicdawn.client.vats;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.camera.KillCam;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.limb.LimbHud;
@@ -29,7 +29,7 @@ import mod.azure.atomicdawn.weapon.action.VatsActions;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
-public final class VatsHud implements GuiLayer {
+public final class VatsHud implements ADHudLayer {
 
     private static int primary() {
         return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR, 0xFF7CFC9A);
@@ -72,10 +72,10 @@ public final class VatsHud implements GuiLayer {
     }
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (player == null || minecraft.level == null || hudHidden || player.isSpectator()) {
             return;
         }
@@ -99,7 +99,7 @@ public final class VatsHud implements GuiLayer {
     }
 
     private static void renderMeters(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         LocalPlayer player,
         WeaponDefinition definition,
@@ -142,7 +142,7 @@ public final class VatsHud implements GuiLayer {
     }
 
     private static void renderTargeting(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         LocalPlayer player,
         WeaponDefinition definition,
@@ -292,7 +292,7 @@ public final class VatsHud implements GuiLayer {
     }
 
     private static void renderSelectedTargetHighlight(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         AABB bounds,
         Vec3 eye,
         Basis basis,
@@ -343,7 +343,7 @@ public final class VatsHud implements GuiLayer {
         outline(graphics, x0, y0, x1, y1, targetOutline());
     }
 
-    private static void outline(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, int color) {
+    private static void outline(ADGuiGraphics graphics, int x0, int y0, int x1, int y1, int color) {
         graphics.fill(x0, y0, x1 + 1, y0 + 1, color);
         graphics.fill(x0, y1, x1 + 1, y1 + 1, color);
         graphics.fill(x0, y0, x0 + 1, y1 + 1, color);

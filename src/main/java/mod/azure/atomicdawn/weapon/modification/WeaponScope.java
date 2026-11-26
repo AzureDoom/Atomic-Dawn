@@ -6,6 +6,8 @@ import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+
 public record WeaponScope(
     float zoom,
     float sensitivity,
@@ -13,7 +15,7 @@ public record WeaponScope(
     boolean reticle
 ) {
 
-    public static final Identifier DEFAULT_OVERLAY = Identifier.withDefaultNamespace(
+    public static final Identifier DEFAULT_OVERLAY = ADRegistryUtil.vanillaId(
         "textures/misc/spyglass_scope.png"
     );
 

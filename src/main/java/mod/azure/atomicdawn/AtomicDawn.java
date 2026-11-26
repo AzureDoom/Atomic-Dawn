@@ -24,6 +24,7 @@ import mod.azure.atomicdawn.camp.CampBuildable;
 import mod.azure.atomicdawn.camp.CampPlanLootModifier;
 import mod.azure.atomicdawn.config.ADConfig;
 import mod.azure.atomicdawn.crafting.TinkerRecipe;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.item.NukaColaEffects;
 import mod.azure.atomicdawn.junk.ScrapRecipe;
 import mod.azure.atomicdawn.limb.LimbProfile;
@@ -95,15 +96,15 @@ public final class AtomicDawn {
         SpecialStatResolver.registerTemporarySource(PerkHooks::specialBonus);
         SpecialStatResolver.registerTemporarySource(NukaColaEffects::specialBonus);
         SpecialStatResolver.registerTemporarySource(LegendaryHooks::specialBonus);
-        modBus.addListener((ModConfigEvent.Loading _) -> SpecialStatResolver.invalidateAll());
-        modBus.addListener((ModConfigEvent.Reloading _) -> SpecialStatResolver.invalidateAll());
+        modBus.addListener((ModConfigEvent.Loading ignored) -> SpecialStatResolver.invalidateAll());
+        modBus.addListener((ModConfigEvent.Reloading ignored) -> SpecialStatResolver.invalidateAll());
 
         CONFIG_HOLDER = AzureLibMod.registerConfig(ADConfig.class, ConfigFormats.json());
         CONFIG = CONFIG_HOLDER.getConfigInstance();
     }
 
     public static Identifier id(String path) {
-        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+        return ADRegistryUtil.id(MOD_ID, path);
     }
 
     private static void registerDatapackRegistries(NewDatapackRegistryEvent event) {

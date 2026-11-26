@@ -1,8 +1,6 @@
 package mod.azure.atomicdawn.weapon.legendary;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +17,8 @@ import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulService;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.special.SpecialAttribute;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
@@ -78,7 +78,7 @@ public final class LegendaryHooks {
             return false;
         }
         if (target.startsWith("#")) {
-            var id = Identifier.tryParse(target.substring(1));
+            var id = ADRegistryUtil.tryParse(target.substring(1));
             return id != null && is(entity, TagKey.create(Registries.ENTITY_TYPE, id));
         }
         return switch (target) {
@@ -91,7 +91,7 @@ public final class LegendaryHooks {
     }
 
     public static boolean is(Entity entity, TagKey<EntityType<?>> tag) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).is(tag);
+        return ADEntityUtil.isIn(entity, tag);
     }
 
     public static boolean friendly(Player attacker, Entity target) {

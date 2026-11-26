@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.registry.ADRegistries;
 
 public record ArmorRecipe(
@@ -73,7 +74,7 @@ public record ArmorRecipe(
     }
 
     public static List<Holder.Reference<ArmorRecipe>> all(RegistryAccess access) {
-        return access.lookup(ADRegistries.ARMOR_RECIPE)
+        return ADRegistryUtil.optionalRegistry(access, ADRegistries.ARMOR_RECIPE)
             .map(registry -> registry.listElements().sorted(ORDER).toList())
             .orElse(List.of());
     }

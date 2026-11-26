@@ -9,6 +9,8 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import java.util.ArrayList;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 import mod.azure.atomicdawn.pipboy.PipBoyNotifications;
 import mod.azure.atomicdawn.quest.QuestService;
@@ -37,22 +39,13 @@ public final class LocationService {
         }
         var level = player.level();
         var pos = player.blockPosition();
-        var structures = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        var manager = level.structureManager();
-        for (var structure : manager.getAllStructuresAt(pos).keySet()) {
-            var holder = structures.wrapAsHolder(structure);
-            if (!holder.is(PIPBOY_LOCATIONS)) {
-                continue;
-            }
-            var start = manager.getStructureAt(pos, structure);
-            if (!start.isValid()) {
-                continue;
-            }
-            var key = structures.getKey(structure);
+        var structures = ADRegistryUtil.registry(level.registryAccess(), Registries.STRUCTURE);
+        for (var hit : ADWorldgenUtil.structuresAt(level, pos, PIPBOY_LOCATIONS)) {
+            var key = structures.getKey(hit.structure().value());
             if (key == null) {
                 continue;
             }
-            var center = start.getBoundingBox().getCenter();
+            var center = hit.start().getBoundingBox().getCenter();
             discover(player, new DiscoveredLocation(key, level.dimension(), center, level.getGameTime()));
         }
     }

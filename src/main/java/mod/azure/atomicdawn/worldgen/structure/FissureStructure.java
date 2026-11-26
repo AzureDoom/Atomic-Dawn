@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
 public class FissureStructure extends Structure {
@@ -53,14 +54,7 @@ public class FissureStructure extends Structure {
         var chunk = context.chunkPos();
         var x = chunk.getMiddleBlockX();
         var z = chunk.getMiddleBlockZ();
-        var y = context.chunkGenerator()
-            .getFirstFreeHeight(
-                x,
-                z,
-                Heightmap.Types.WORLD_SURFACE_WG,
-                context.heightAccessor(),
-                context.randomState()
-            );
+        var y = ADWorldgenUtil.firstFreeHeight(context, x, z, Heightmap.Types.WORLD_SURFACE_WG);
         if (y <= context.chunkGenerator().getSeaLevel() + 1) {
             return Optional.empty();
         }

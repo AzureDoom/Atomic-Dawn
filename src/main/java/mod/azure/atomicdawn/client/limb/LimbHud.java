@@ -2,18 +2,18 @@ package mod.azure.atomicdawn.client.limb;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.limb.LimbState;
 import mod.azure.atomicdawn.vats.BodyPart;
 
-public final class LimbHud implements GuiLayer {
+public final class LimbHud implements ADHudLayer {
 
     private static final int UNIT = 2;
 
@@ -24,10 +24,10 @@ public final class LimbHud implements GuiLayer {
     private static final int BACKGROUND = 0x80000000;
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (
             player == null || hudHidden || player.isSpectator() || !AtomicDawn.CONFIG.client.hud.limbs.LIMB_HUD
                 || !AtomicDawn.CONFIG.common.combat.limbs.general.LIMBS_ENABLED
@@ -58,7 +58,7 @@ public final class LimbHud implements GuiLayer {
     }
 
     private static void part(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         LimbState state,
         BodyPart part,
         int ox,

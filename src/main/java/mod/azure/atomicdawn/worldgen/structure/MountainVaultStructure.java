@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
 public class MountainVaultStructure extends Structure {
@@ -198,14 +199,7 @@ public class MountainVaultStructure extends Structure {
     }
 
     private static int height(GenerationContext context, BlockPos pos) {
-        return context.chunkGenerator()
-            .getFirstFreeHeight(
-                pos.getX(),
-                pos.getZ(),
-                Heightmap.Types.WORLD_SURFACE_WG,
-                context.heightAccessor(),
-                context.randomState()
-            );
+        return ADWorldgenUtil.firstFreeHeight(context, pos.getX(), pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG);
     }
 
     @Override

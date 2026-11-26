@@ -48,6 +48,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.mixin.FoodDataAccessor;
 import mod.azure.atomicdawn.party.PartyService;
 import mod.azure.atomicdawn.perks.PerkEffectType;
@@ -83,7 +84,7 @@ public final class MutationEvents {
     private MutationEvents() {}
 
     private static State state(ServerPlayer player) {
-        return STATES.computeIfAbsent(player.getUUID(), _ -> new State());
+        return STATES.computeIfAbsent(player.getUUID(), ignored -> new State());
     }
 
     private static boolean isMelee(DamageSource source) {
@@ -163,7 +164,7 @@ public final class MutationEvents {
         var extra = 0F;
         var random = player.getRandom();
         if (MutationService.positive(player, Mutation.ELECTRICALLY_CHARGED) && random.nextFloat() < 0.3F) {
-            attacker.hurtServer(level, level.damageSources().thorns(player), 4F);
+            ADEntityUtil.hurt(attacker, level, level.damageSources().thorns(player), 4F);
             if (MutationService.negative(player, Mutation.ELECTRICALLY_CHARGED)) {
                 extra += 1F;
             }
@@ -172,7 +173,7 @@ public final class MutationEvents {
             var source = ADDamageTypes.source(level, ADDamageTypes.ENERGY, player);
             var area = player.getBoundingBox().inflate(4.0);
             for (var target : level.getEntitiesOfClass(LivingEntity.class, area, entity -> isFoe(player, entity))) {
-                target.hurtServer(level, source, 5F);
+                ADEntityUtil.hurt(target, level, source, 5F);
                 RadiationService.expose(target, 10F);
             }
             level.sendParticles(
@@ -512,7 +513,7 @@ public final class MutationEvents {
     ) {
         var names = Arrays.stream(Mutation.values()).map(Mutation::getSerializedName).toList();
         return Commands.argument("mutation", StringArgumentType.word())
-            .suggests((_, builder) -> SharedSuggestionProvider.suggest(names, builder))
+            .suggests((ignored, builder) -> SharedSuggestionProvider.suggest(names, builder))
             .executes(context -> {
                 var mutation = parse(StringArgumentType.getString(context, "mutation"));
                 if (mutation == null) {

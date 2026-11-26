@@ -2,7 +2,6 @@ package mod.azure.atomicdawn.client.npc;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -13,13 +12,14 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.TagValueInput;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.npc.NpcAppearance;
 import mod.azure.atomicdawn.npc.NpcBehavior;
 import mod.azure.atomicdawn.npc.NpcEntity;
@@ -85,13 +85,13 @@ public final class NpcPuppets {
             return null;
         }
         try {
-            var entity = type.create(level, EntitySpawnReason.LOAD);
+            var entity = ADEntityUtil.create(type, level, EntitySpawnReason.LOAD);
             if (entity == null) {
                 return null;
             }
             var data = appearance.kind() == NpcAppearance.Kind.ENTITY ? appearance.data() : null;
             if (data != null && !data.isEmpty()) {
-                entity.load(TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), data));
+                ADSerialization.loadEntity(entity, data, level.registryAccess());
             }
             entity.setCustomName(null);
             entity.setCustomNameVisible(false);

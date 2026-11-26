@@ -36,8 +36,8 @@ public final class ADBlocks {
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
-            .isViewBlocking((_, _, _, _) -> false)
-            .isSuffocating((_, _, _) -> false)
+            .isViewBlocking((ignored, ignored2, ignored3, ignored4) -> false)
+            .isSuffocating((ignored, ignored2, ignored3) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 
@@ -49,8 +49,8 @@ public final class ADBlocks {
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
-            .isViewBlocking((_, _, _, _) -> false)
-            .isSuffocating((_, _, _) -> false)
+            .isViewBlocking((ignored, ignored2, ignored3, ignored4) -> false)
+            .isSuffocating((ignored, ignored2, ignored3) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 
@@ -62,8 +62,8 @@ public final class ADBlocks {
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
-            .isViewBlocking((_, _, _, _) -> false)
-            .isSuffocating((_, _, _) -> false)
+            .isViewBlocking((ignored, ignored2, ignored3, ignored4) -> false)
+            .isSuffocating((ignored, ignored2, ignored3) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 
@@ -75,8 +75,8 @@ public final class ADBlocks {
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
             .noOcclusion()
-            .isViewBlocking((_, _, _, _) -> false)
-            .isSuffocating((_, _, _) -> false)
+            .isViewBlocking((ignored, ignored2, ignored3, ignored4) -> false)
+            .isSuffocating((ignored, ignored2, ignored3) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 
@@ -88,15 +88,15 @@ public final class ADBlocks {
             .sound(SoundType.METAL)
             .noOcclusion()
             .noLootTable()
-            .isViewBlocking((_, _, _, _) -> false)
-            .isSuffocating((_, _, _) -> false)
+            .isViewBlocking((ignored, ignored2, ignored3, ignored4) -> false)
+            .isSuffocating((ignored, ignored2, ignored3) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 
     public static final DeferredBlock<LiquidBlock> IRRADIATED_WATER = REGISTER.registerBlock(
         "irradiated_water",
         properties -> new LiquidBlock(ADFluids.IRRADIATED_WATER.get(), properties),
-        () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).lightLevel(_ -> 2)
+        () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).lightLevel(ignored -> 2)
     );
 
     public static final DeferredBlock<PipBoyLightBlock> PIPBOY_LIGHT = REGISTER.registerBlock(
@@ -119,10 +119,10 @@ public final class ADBlocks {
             .strength(3.5F, 3600000.0F)
             .sound(SoundType.METAL)
             .requiresCorrectToolForDrops()
-            .lightLevel(_ -> 7)
+            .lightLevel(ignored -> 7)
             .noOcclusion()
-            .isViewBlocking((_, _, _, _) -> false)
-            .isSuffocating((_, _, _) -> false)
+            .isViewBlocking((ignored, ignored2, ignored3, ignored4) -> false)
+            .isSuffocating((ignored, ignored2, ignored3) -> false)
             .pushReaction(PushReaction.IMMOVEABLE)
     );
 
@@ -143,7 +143,7 @@ public final class ADBlocks {
             .strength(2.0F, 4.0F)
             .sound(SoundType.METAL)
             .noOcclusion()
-            .lightLevel(_ -> 3)
+            .lightLevel(ignored -> 3)
     );
 
     public static final DeferredBlock<WasteBarrelBlock> LEAKING_WASTE_BARREL = REGISTER.registerBlock(
@@ -153,7 +153,7 @@ public final class ADBlocks {
             .strength(2.0F, 4.0F)
             .sound(SoundType.METAL)
             .noOcclusion()
-            .lightLevel(_ -> 7)
+            .lightLevel(ignored -> 7)
     );
 
     public static final DeferredBlock<ToxicSludgeBlock> TOXIC_SLUDGE = REGISTER.registerBlock(
@@ -164,8 +164,8 @@ public final class ADBlocks {
             .sound(SoundType.SLIME_BLOCK)
             .noOcclusion()
             .speedFactor(0.6F)
-            .lightLevel(_ -> 9)
-            .emissiveRendering((_) -> true)
+            .lightLevel(ignored -> 9)
+            .emissiveRendering((ignored) -> true)
             .pushReaction(PushReaction.POPPED)
     );
 
@@ -185,8 +185,8 @@ public final class ADBlocks {
             .strength(2.5F, 6.0F)
             .sound(SoundType.BASALT)
             .requiresCorrectToolForDrops()
-            .lightLevel(_ -> 13)
-            .emissiveRendering((_) -> true)
+            .lightLevel(ignored -> 13)
+            .emissiveRendering((ignored) -> true)
     );
 
     public static final DeferredBlock<FissureVentBlock> FISSURE_VENT = REGISTER.registerBlock(
@@ -196,8 +196,8 @@ public final class ADBlocks {
             .strength(3.0F, 6.0F)
             .sound(SoundType.BASALT)
             .requiresCorrectToolForDrops()
-            .lightLevel(_ -> 15)
-            .emissiveRendering((_) -> true)
+            .lightLevel(ignored -> 15)
+            .emissiveRendering((ignored) -> true)
     );
 
     public static final DeferredBlock<ScrapboxBlock> SCRAPBOX = REGISTER.registerBlock(

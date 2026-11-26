@@ -41,7 +41,7 @@ public final class HudEditor {
 
     @SubscribeEvent
     public static void onRegisterClientCommands(RegisterClientCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("adhud").executes(_ -> {
+        event.getDispatcher().register(Commands.literal("adhud").executes(ignored -> {
             requestOpen();
             return 1;
         }));

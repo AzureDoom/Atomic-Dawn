@@ -25,6 +25,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulPerks;
 import mod.azure.atomicdawn.ghoul.GhoulService;
 import mod.azure.atomicdawn.ghoul.PlayerForm;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
 import mod.azure.atomicdawn.item.NukaColaEffects;
 import mod.azure.atomicdawn.network.SpecialActionPayload;
 import mod.azure.atomicdawn.party.PartyService;
@@ -219,7 +220,7 @@ public final class SpecialService {
                 return Optional.empty();
             }
         }
-        var id = Identifier.tryParse(idText.trim());
+        var id = ADRegistryUtil.tryParse(idText.trim());
         return id == null ? Optional.empty() : Optional.of(new Starter(id, rank));
     }
 
@@ -428,7 +429,7 @@ public final class SpecialService {
 
     private static boolean rateLimited(ServerPlayer player) {
         var now = player.level().getGameTime();
-        var window = RATE.computeIfAbsent(player.getUUID(), _ -> new long[] { now, 0 });
+        var window = RATE.computeIfAbsent(player.getUUID(), ignored -> new long[] { now, 0 });
         if (now - window[0] >= 20) {
             window[0] = now;
             window[1] = 0;
@@ -516,7 +517,7 @@ public final class SpecialService {
         var granted = Math.round(amount);
         if (cap > 0) {
             var now = killer.level().getGameTime();
-            var budget = KILL_XP_BUDGET.computeIfAbsent(killer.getUUID(), _ -> new long[] { now, 0 });
+            var budget = KILL_XP_BUDGET.computeIfAbsent(killer.getUUID(), ignored -> new long[] { now, 0 });
             if (now - budget[0] >= 1200) {
                 budget[0] = now;
                 budget[1] = 0;

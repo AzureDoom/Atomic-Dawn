@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import org.jetbrains.annotations.NotNull;
 
 import mod.azure.atomicdawn.block.WasteBarrelBlock;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.registry.ADBlocks;
 import mod.azure.atomicdawn.registry.ADStructureTypes;
 
@@ -71,14 +72,14 @@ public class CraterPiece extends StructurePiece {
 
     public CraterPiece(CompoundTag tag) {
         super(ADStructureTypes.CRATER_PIECE.get(), tag);
-        this.centerX = tag.getIntOr("CX", 0);
-        this.centerY = tag.getIntOr("CY", 0);
-        this.centerZ = tag.getIntOr("CZ", 0);
-        this.radius = tag.getIntOr("Radius", 16);
-        this.depth = tag.getIntOr("Depth", 8);
-        this.rimHeight = tag.getIntOr("RimHeight", 3);
-        this.flooded = tag.getBooleanOr("Flooded", false);
-        this.seed = tag.getLongOr("Seed", 0L);
+        this.centerX = ADSerialization.getInt(tag, "CX", 0);
+        this.centerY = ADSerialization.getInt(tag, "CY", 0);
+        this.centerZ = ADSerialization.getInt(tag, "CZ", 0);
+        this.radius = ADSerialization.getInt(tag, "Radius", 16);
+        this.depth = ADSerialization.getInt(tag, "Depth", 8);
+        this.rimHeight = ADSerialization.getInt(tag, "RimHeight", 3);
+        this.flooded = ADSerialization.getBoolean(tag, "Flooded", false);
+        this.seed = ADSerialization.getLong(tag, "Seed", 0L);
     }
 
     public BlockPos center() {

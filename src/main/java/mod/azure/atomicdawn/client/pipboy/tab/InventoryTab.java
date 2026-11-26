@@ -1,7 +1,6 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -20,6 +19,7 @@ import java.util.Map;
 import mod.azure.atomicdawn.ammunition.AmmoContainerStorage;
 import mod.azure.atomicdawn.ammunition.AmmoInventory;
 import mod.azure.atomicdawn.ammunition.AmmoItem;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyClientState;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
@@ -208,7 +208,7 @@ public final class InventoryTab implements PipBoyTab {
 
     @Override
     public void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect area,
         String subtab,
@@ -253,11 +253,11 @@ public final class InventoryTab implements PipBoyTab {
         }
         var x = detail.x();
         var y = detail.y() + 2;
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x, y);
-        graphics.pose().scale(2F, 2F);
+        graphics.push();
+        graphics.translate(x, y);
+        graphics.scale(2F, 2F);
         graphics.item(selected.sample, 0, 0);
-        graphics.pose().popMatrix();
+        graphics.pop();
         screen.fitted(graphics, selected.sample.getHoverName(), x + 38, y + 4, detail.width() - 40, PipBoyTheme.text());
         screen.text(
             graphics,

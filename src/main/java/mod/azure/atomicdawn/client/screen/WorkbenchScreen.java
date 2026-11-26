@@ -1,10 +1,8 @@
 package mod.azure.atomicdawn.client.screen;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -15,7 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -23,6 +20,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import mod.azure.atomicdawn.client.helper.ADContainerScreen;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.crafting.WorkbenchMenu;
 import mod.azure.atomicdawn.crafting.WorkbenchService;
 import mod.azure.atomicdawn.item.WeaponItem;
@@ -45,7 +44,7 @@ import mod.azure.atomicdawn.weapon.modification.WeaponMods;
 import mod.azure.atomicdawn.weapon.modification.WeaponStat;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
+public class WorkbenchScreen extends ADContainerScreen<WorkbenchMenu> {
 
     private static final int LEFT_X = 8;
 
@@ -216,7 +215,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         var tabW = (imageWidth - tabsX - 4) / tabs.length;
         for (var i = 0; i < tabs.length; i++) {
             var t = tabs[i];
-            var button = Button.builder(t.label(), _ -> switchTab(t))
+            var button = Button.builder(t.label(), ignored -> switchTab(t))
                 .pos(leftPos + tabsX + i * tabW, topPos + 3)
                 .size(tabW - 2, 12)
                 .build();
@@ -247,7 +246,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
 
         for (var i = 0; i < slots.size(); i++) {
             var slot = slots.get(i);
-            var button = Button.builder(Component.translatable(slot.translationKey()), _ -> selectSlot(slot))
+            var button = Button.builder(Component.translatable(slot.translationKey()), ignored -> selectSlot(slot))
                 .pos(leftPos + LEFT_X, topPos + LEFT_LIST_Y + i * ROW_H)
                 .size(LEFT_W, ROW_H - 1)
                 .build();
@@ -275,7 +274,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             if (locked) {
                 tooltip = Component.translatable("screen.atomicdawn.workbench.locked").append("\n").append(tooltip);
             }
-            var button = Button.builder(label, _ -> selectMod(key))
+            var button = Button.builder(label, ignored -> selectMod(key))
                 .pos(leftPos + MID_X, topPos + MID_Y + row * MID_ROW_H)
                 .size(MID_W, MID_ROW_H - 2)
                 .tooltip(Tooltip.create(tooltip))
@@ -310,7 +309,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         var damaged = condition.missing() > 0;
         var repair = Button.builder(
             Component.translatable("screen.atomicdawn.workbench.repair"),
-            _ -> action(WorkbenchActionPayload.Action.REPAIR, Optional.empty())
+            ignored -> action(WorkbenchActionPayload.Action.REPAIR, Optional.empty())
         )
             .pos(leftPos + MID_X, topPos + MID_Y + 28)
             .size(MID_W, 14)
@@ -321,7 +320,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         var kits = RepairKits.count(minecraft.player);
         var kit = Button.builder(
             Component.translatable("screen.atomicdawn.workbench.repair_kit", kits),
-            _ -> action(WorkbenchActionPayload.Action.REPAIR_WITH_KIT, Optional.empty())
+            ignored -> action(WorkbenchActionPayload.Action.REPAIR_WITH_KIT, Optional.empty())
         )
             .pos(leftPos + MID_X, topPos + MID_Y + 46)
             .size(MID_W, 14)
@@ -355,7 +354,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
         pagedList(craftables.size(), (row, index) -> {
             var item = craftables.get(index);
-            var button = Button.builder(item.getName(new ItemStack(item)), _ -> {
+            var button = Button.builder(item.getName(new ItemStack(item)), ignored -> {
                 selectedCraft = item;
                 rebuildWidgets();
             })
@@ -383,7 +382,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
         for (var star = 1; star <= 3; star++) {
             var s = star;
-            var button = Button.builder(Component.literal("★".repeat(star)), _ -> {
+            var button = Button.builder(Component.literal("★".repeat(star)), ignored -> {
                 selectedStar = s;
                 selectedEffect = null;
                 page = 0;
@@ -405,7 +404,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             if (current.contains(effect.key())) {
                 label = Component.literal("» ").append(label);
             }
-            var button = Button.builder(label, _ -> {
+            var button = Button.builder(label, ignored -> {
                 selectedEffect = effect.key();
                 rebuildWidgets();
             })
@@ -447,13 +446,13 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
         if (pages > 1) {
             var pagerY = topPos + MID_Y + MID_ROWS * MID_ROW_H;
-            var prev = Button.builder(Component.literal("<"), _ -> changePage(-1))
+            var prev = Button.builder(Component.literal("<"), ignored -> changePage(-1))
                 .pos(leftPos + MID_X, pagerY)
                 .size(20, 12)
                 .build();
             prev.active = page > 0;
             addRenderableWidget(prev);
-            var next = Button.builder(Component.literal(">"), _ -> changePage(1))
+            var next = Button.builder(Component.literal(">"), ignored -> changePage(1))
                 .pos(leftPos + MID_X + MID_W - 20, pagerY)
                 .size(20, 12)
                 .build();
@@ -469,7 +468,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     private void actionButton(Component label, boolean active, Runnable onPress) {
-        var button = Button.builder(label, _ -> onPress.run())
+        var button = Button.builder(label, ignored -> onPress.run())
             .pos(leftPos + 198, topPos + 119)
             .size(imageWidth - 198 - 8, 14)
             .build();
@@ -544,8 +543,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         var x = leftPos;
         var y = topPos;
         var panelHeight = WorkbenchMenu.INVENTORY_Y - 30;
@@ -585,7 +584,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
     }
 
-    private void extractModify(GuiGraphicsExtractor graphics, int x, int y, WeaponItem item, WeaponDefinition base) {
+    private void extractModify(ADGuiGraphics graphics, int x, int y, WeaponItem item, WeaponDefinition base) {
         if (base.modifications().slots().isEmpty()) {
             hint(graphics, x, y, "screen.atomicdawn.workbench.no_slots");
         }
@@ -608,7 +607,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
     }
 
-    private void extractRepair(GuiGraphicsExtractor graphics, int x, int y) {
+    private void extractRepair(ADGuiGraphics graphics, int x, int y) {
         var definition = effective();
         drawPreview(graphics, x, y, weapon());
         if (definition == null || !definition.condition().enabled()) {
@@ -642,7 +641,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         drawCost(graphics, x, y, WorkbenchService.repairCost(definition, condition));
     }
 
-    private void extractScrap(GuiGraphicsExtractor graphics, int x, int y, WeaponDefinition base) {
+    private void extractScrap(ADGuiGraphics graphics, int x, int y, WeaponDefinition base) {
         drawPreview(graphics, x, y, weapon());
         var lineY = y + MID_Y + 4;
         var textX = x + MID_X + 2;
@@ -668,11 +667,11 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
                     break;
                 }
                 var stack = new ItemStack(entry.item(), entry.count());
-                graphics.pose().pushMatrix();
-                graphics.pose().translate(textX, lineY);
-                graphics.pose().scale(0.5F, 0.5F);
+                graphics.push();
+                graphics.translate(textX, lineY);
+                graphics.scale(0.5F, 0.5F);
                 graphics.item(stack, 0, 0);
-                graphics.pose().popMatrix();
+                graphics.pop();
 
                 drawFittedText(
                     graphics,
@@ -719,7 +718,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         );
     }
 
-    private void extractCraft(GuiGraphicsExtractor graphics, int x, int y) {
+    private void extractCraft(ADGuiGraphics graphics, int x, int y) {
         if (selectedCraft == null) {
             hint(graphics, x, y, "screen.atomicdawn.workbench.nothing_craftable");
             return;
@@ -728,7 +727,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         drawCraftCost(graphics, x, y, craftCost(selectedCraft));
     }
 
-    private void extractLegendary(GuiGraphicsExtractor graphics, int x, int y) {
+    private void extractLegendary(ADGuiGraphics graphics, int x, int y) {
         drawPreview(graphics, x, y, weapon());
         var lineY = y + 55;
         for (var effect : ModificationResolver.legendary(minecraft.level.registryAccess(), weapon())) {
@@ -762,21 +761,21 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
     }
 
-    private void drawPreview(GuiGraphicsExtractor graphics, int x, int y, ItemStack stack) {
+    private void drawPreview(ADGuiGraphics graphics, int x, int y, ItemStack stack) {
         if (stack.isEmpty()) {
             return;
         }
         var previewX = x + RIGHT_X + (imageWidth - RIGHT_X - 8 - PREVIEW_SIZE) / 2;
         var previewY = y + 20;
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(previewX, previewY);
-        graphics.pose().scale(PREVIEW_SIZE / 16F, PREVIEW_SIZE / 16F);
+        graphics.push();
+        graphics.translate(previewX, previewY);
+        graphics.scale(PREVIEW_SIZE / 16F, PREVIEW_SIZE / 16F);
         graphics.item(stack, 0, 0);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 
     private void drawStats(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         int x,
         int y,
         WeaponDefinition current,
@@ -823,7 +822,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     private void drawFittedText(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Component message,
         int x,
         int y,
@@ -836,15 +835,15 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             return;
         }
         var scale = Math.min(1F, (float) maxWidth / width);
-        graphics.pose().pushMatrix();
-        graphics.pose().translate(x, y);
-        graphics.pose().scale(scale, scale);
+        graphics.push();
+        graphics.translate(x, y);
+        graphics.scale(scale, scale);
         graphics.text(font, message, 0, 0, color, false);
-        graphics.pose().popMatrix();
+        graphics.pop();
     }
 
     private int drawWrappedText(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Component message,
         int x,
         int y,
@@ -862,7 +861,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         return y;
     }
 
-    private void drawCraftCost(GuiGraphicsExtractor graphics, int x, int y, List<SizedIngredient> cost) {
+    private void drawCraftCost(ADGuiGraphics graphics, int x, int y, List<SizedIngredient> cost) {
         var textX = x + RIGHT_X + 3;
         var width = imageWidth - RIGHT_X - 12;
         var lineY = y + 56;
@@ -908,7 +907,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
     }
 
-    private void drawCost(GuiGraphicsExtractor graphics, int x, int y, List<SizedIngredient> cost) {
+    private void drawCost(ADGuiGraphics graphics, int x, int y, List<SizedIngredient> cost) {
         var lineY = y + COST_Y - 3;
         if (cost.isEmpty() || minecraft.player.hasInfiniteMaterials()) {
             graphics.text(
@@ -951,7 +950,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         }
     }
 
-    private void hint(GuiGraphicsExtractor graphics, int x, int y, String key) {
+    private void hint(ADGuiGraphics graphics, int x, int y, String key) {
         drawWrappedText(
             graphics,
             Component.translatable(key),
@@ -964,13 +963,13 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     @Override
-    protected void extractLabels(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    protected void drawLabels(ADGuiGraphics graphics, int mouseX, int mouseY) {
         PipBoyStyle.skinButtons(graphics, font, children(), leftPos, topPos);
         graphics.text(font, title, titleLabelX, titleLabelY, PipBoyStyle.text(), false);
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, PipBoyStyle.dim(), false);
     }
 
-    private static void panel(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
+    private static void panel(ADGuiGraphics graphics, int x, int y, int width, int height) {
         PipBoyStyle.panel(graphics, x, y, width, height);
     }
 

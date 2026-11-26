@@ -63,7 +63,7 @@ public record CampStash(List<Entry> entries) {
     public static final MapCodec<CampStash> MAP_CODEC = RecordCodecBuilder.mapCodec(
         instance -> instance.group(
             Entry.CODEC.listOf().optionalFieldOf("entries", List.of()).forGetter(CampStash::entries),
-            LegacySlot.CODEC.listOf().optionalFieldOf("items", List.of()).forGetter(_ -> List.of())
+            LegacySlot.CODEC.listOf().optionalFieldOf("items", List.of()).forGetter(ignored -> List.of())
         ).apply(instance, CampStash::migrate)
     );
 

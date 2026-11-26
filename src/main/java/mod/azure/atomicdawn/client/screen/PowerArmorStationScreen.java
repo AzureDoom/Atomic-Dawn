@@ -1,10 +1,7 @@
 package mod.azure.atomicdawn.client.screen;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
@@ -22,6 +18,9 @@ import java.util.List;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADContainerScreen;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.crafting.WorkbenchService;
 import mod.azure.atomicdawn.network.PowerArmorActionPayload;
@@ -38,7 +37,7 @@ import mod.azure.atomicdawn.powerarmor.upgrade.PowerArmorUpgrades;
 import mod.azure.atomicdawn.registry.ADItems;
 import mod.azure.atomicdawn.util.RepairKits;
 
-public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorStationMenu> {
+public class PowerArmorStationScreen extends ADContainerScreen<PowerArmorStationMenu> {
 
     private enum Tab {
 
@@ -148,7 +147,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         var tabW = (PANEL_X + PANEL_W - TABS_X) / tabs.length;
         for (var i = 0; i < tabs.length; i++) {
             var value = tabs[i];
-            var button = Button.builder(Component.translatable(value.translationKey()), _ -> {
+            var button = Button.builder(Component.translatable(value.translationKey()), ignored -> {
                 tab = value;
                 rebuildWidgets();
             }).pos(leftPos + TABS_X + i * tabW, topPos + 2).size(tabW - 2, 11).build();
@@ -158,7 +157,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
 
         var rotateY = topPos + PREVIEW_Y + PREVIEW_H + 2;
         addRenderableWidget(
-            Button.builder(Component.literal("◀"), _ -> previewYaw -= ROTATE_STEP)
+            Button.builder(Component.literal("◀"), ignored -> previewYaw -= ROTATE_STEP)
                 .pos(leftPos + PREVIEW_X, rotateY)
                 .size(16, 12)
                 .tooltip(Tooltip.create(Component.translatable("power_armor.atomicdawn.station.rotate_left")))
@@ -169,14 +168,14 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
                 Component.translatable(
                     autoRotate ? "power_armor.atomicdawn.station.auto_on" : "power_armor.atomicdawn.station.auto_off"
                 ),
-                _ -> {
+                ignored -> {
                     autoRotate = !autoRotate;
                     rebuildWidgets();
                 }
             ).pos(leftPos + PREVIEW_X + 18, rotateY).size(34, 12).build()
         );
         addRenderableWidget(
-            Button.builder(Component.literal("▶"), _ -> previewYaw += ROTATE_STEP)
+            Button.builder(Component.literal("▶"), ignored -> previewYaw += ROTATE_STEP)
                 .pos(leftPos + PREVIEW_X + PREVIEW_W - 16, rotateY)
                 .size(16, 12)
                 .tooltip(Tooltip.create(Component.translatable("power_armor.atomicdawn.station.rotate_right")))
@@ -206,7 +205,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         for (var r = 0; r < CRAFT_ROWS && craftScroll + r < recipes.size(); r++) {
             var holder = recipes.get(craftScroll + r);
             var id = holder.key().identifier();
-            var button = Button.builder(holder.value().resultStack().getHoverName(), _ -> {
+            var button = Button.builder(holder.value().resultStack().getHoverName(), ignored -> {
                 selectedRecipe = id;
                 rebuildWidgets();
             }).pos(leftPos + PANEL_X + 18, topPos + CONTENT_Y + r * ROW_H).size(PANEL_W - 18, 14).build();
@@ -221,7 +220,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         var label = Component.translatable("power_armor.atomicdawn.station.fabricate_button");
         var button = Button.builder(
             label,
-            _ -> ClientPacketDistributor.sendToServer(
+            ignored -> ClientPacketDistributor.sendToServer(
                 PowerArmorActionPayload.fabricate(armor.getId(), selected.key().identifier())
             )
         ).pos(leftPos + PANEL_X + PANEL_W - 70, topPos + 127).size(70, 13).build();
@@ -288,13 +287,13 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             var damaged = !piece.isEmpty() && piece.isDamaged();
             var kit = Button.builder(
                 Component.translatable("power_armor.atomicdawn.station.kit_button"),
-                _ -> send(PowerArmorActionPayload.Action.REPAIR_KIT, index)
+                ignored -> send(PowerArmorActionPayload.Action.REPAIR_KIT, index)
             ).pos(leftPos + PANEL_X + PANEL_W - 72, y).size(30, 14).tooltip(kitTooltip).build();
             kit.active = damaged && hasKit;
             addRenderableWidget(kit);
             var button = Button.builder(
                 Component.translatable("power_armor.atomicdawn.station.repair_button"),
-                _ -> send(PowerArmorActionPayload.Action.REPAIR, index)
+                ignored -> send(PowerArmorActionPayload.Action.REPAIR, index)
             ).pos(leftPos + PANEL_X + PANEL_W - 40, y).size(40, 14).build();
             button.active = damaged && hasMaterials;
             addRenderableWidget(button);
@@ -309,13 +308,13 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             var y = topPos + CONTENT_Y + index * ROW_H;
             var paint = Button.builder(
                 Component.translatable("power_armor.atomicdawn.station.paint_button"),
-                _ -> send(PowerArmorActionPayload.Action.PAINT, index)
+                ignored -> send(PowerArmorActionPayload.Action.PAINT, index)
             ).pos(leftPos + PANEL_X + PANEL_W - 86, y).size(42, 14).build();
             paint.active = !piece.isEmpty() && hasDye;
             addRenderableWidget(paint);
             var clear = Button.builder(
                 Component.translatable("power_armor.atomicdawn.station.clear_button"),
-                _ -> send(PowerArmorActionPayload.Action.CLEAR_PAINT, index)
+                ignored -> send(PowerArmorActionPayload.Action.CLEAR_PAINT, index)
             ).pos(leftPos + PANEL_X + PANEL_W - 42, y).size(42, 14).build();
             clear.active = !piece.isEmpty() && PowerArmorPieceItem.paint(piece) != PowerArmorPieceItem.NO_PAINT;
             addRenderableWidget(clear);
@@ -340,7 +339,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             addRenderableWidget(
                 Button.builder(
                     Component.translatable("power_armor.atomicdawn.station.scrap_button"),
-                    _ -> ClientPacketDistributor.sendToServer(
+                    ignored -> ClientPacketDistributor.sendToServer(
                         PowerArmorActionPayload.slot(PowerArmorActionPayload.Action.SCRAP, armor.getId(), inventorySlot)
                     )
                 )
@@ -364,7 +363,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             var slot = slots[i];
             var button = Button.builder(
                 Component.translatable("power_armor.atomicdawn.station.slot_short." + slot.getSerializedName()),
-                _ -> {
+                ignored -> {
                     upgradeSlot = slot;
                     selectedMod = null;
                     selectedLegendary = null;
@@ -421,7 +420,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
                         Component.translatable("power_armor.atomicdawn.mod_group." + holder.value().group())
                     )
                 );
-            var button = Button.builder(label, _ -> {
+            var button = Button.builder(label, ignored -> {
                 selectedMod = id;
                 rebuildWidgets();
             })
@@ -448,7 +447,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             : PowerArmorActionPayload.Action.INSTALL_MOD;
         var button = Button.builder(
             label,
-            _ -> ClientPacketDistributor.sendToServer(
+            ignored -> ClientPacketDistributor.sendToServer(
                 PowerArmorActionPayload.upgrade(action, armor.getId(), slotIndex, id)
             )
         ).pos(leftPos + PANEL_X + PANEL_W - 70, topPos + 127).size(70, 13).build();
@@ -458,7 +457,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         addRenderableWidget(button);
     }
 
-    private void renderMods(GuiGraphicsExtractor graphics, PowerArmorEntity armor) {
+    private void renderMods(ADGuiGraphics graphics, PowerArmorEntity armor) {
         var x = leftPos + PANEL_X;
         var piece = upgradePiece(armor);
         var listY = topPos + CONTENT_Y + 16;
@@ -499,7 +498,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         initUpgradeSlots();
         for (var star = 1; star <= 3; star++) {
             var s = star;
-            var button = Button.builder(Component.literal("★".repeat(star)), _ -> {
+            var button = Button.builder(Component.literal("★".repeat(star)), ignored -> {
                 legendaryStar = s;
                 selectedLegendary = null;
                 legendaryScroll = 0;
@@ -528,7 +527,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             var id = effects.get(legendaryScroll + r).key().identifier();
             var label = Component.literal(id.equals(current) ? "» " : "")
                 .append(Component.translatable(PowerArmorLegendary.translationKey(id)));
-            var button = Button.builder(label, _ -> {
+            var button = Button.builder(label, ignored -> {
                 selectedLegendary = id;
                 rebuildWidgets();
             })
@@ -546,7 +545,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             Component.translatable(
                 applied ? "power_armor.atomicdawn.station.installed" : "power_armor.atomicdawn.station.apply_button"
             ),
-            _ -> ClientPacketDistributor.sendToServer(
+            ignored -> ClientPacketDistributor.sendToServer(
                 PowerArmorActionPayload.upgrade(
                     PowerArmorActionPayload.Action.APPLY_LEGENDARY,
                     armor.getId(),
@@ -562,7 +561,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         addRenderableWidget(button);
     }
 
-    private void renderLegendary(GuiGraphicsExtractor graphics, PowerArmorEntity armor) {
+    private void renderLegendary(ADGuiGraphics graphics, PowerArmorEntity armor) {
         var x = leftPos + PANEL_X;
         var listY = topPos + CONTENT_Y + 31;
         if (upgradePiece(armor) == null) {
@@ -608,7 +607,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         return true;
     }
 
-    private void drawCost(GuiGraphicsExtractor graphics, List<SizedIngredient> cost, int x, int y) {
+    private void drawCost(ADGuiGraphics graphics, List<SizedIngredient> cost, int x, int y) {
         var title = Component.translatable("power_armor.atomicdawn.station.cost");
         graphics.text(font, title, x, y, PipBoyTheme.dim(), false);
         var infinite = minecraft.player.hasInfiniteMaterials();
@@ -685,8 +684,8 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.drawBackground(graphics, mouseX, mouseY, partialTick);
         var x = leftPos;
         var y = topPos;
         PipBoyStyle.window(graphics, x, y, imageWidth, imageHeight);
@@ -739,7 +738,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
     }
 
     @Override
-    protected void extractLabels(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    protected void drawLabels(ADGuiGraphics graphics, int mouseX, int mouseY) {
         PipBoyStyle.skinButtons(graphics, font, children(), leftPos, topPos);
         graphics.text(font, title, titleLabelX, titleLabelY, PipBoyStyle.text(), false);
         graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, PipBoyStyle.dim(), false);
@@ -750,7 +749,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         return previewYaw + spin;
     }
 
-    private void renderPreview(GuiGraphicsExtractor graphics, PowerArmorEntity armor) {
+    private void renderPreview(ADGuiGraphics graphics, PowerArmorEntity armor) {
         var px = leftPos + PREVIEW_X;
         var py = topPos + PREVIEW_Y;
         graphics.fill(px - 1, py - 1, px + PREVIEW_W + 1, py + PREVIEW_H + 1, PipBoyTheme.faint());
@@ -779,7 +778,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         var tilt = new Quaternionf().rotateX(-0.12F);
         pose.mul(tilt);
         var scale = 36F / armor.getScale();
-        InventoryScreen.renderEntityInInventoryFollowsAngle(
+        ADGuiRenderUtil.entityPreview(
             graphics,
             px,
             py,
@@ -802,7 +801,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         armor.yHeadRotO = headRotO;
     }
 
-    private void renderCraft(GuiGraphicsExtractor graphics) {
+    private void renderCraft(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         var y = topPos;
         var recipes = recipes();
@@ -850,7 +849,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         }
     }
 
-    private void renderRepair(GuiGraphicsExtractor graphics, PowerArmorEntity armor) {
+    private void renderRepair(ADGuiGraphics graphics, PowerArmorEntity armor) {
         var x = leftPos + PANEL_X;
         for (var slot : PowerArmorSlot.all()) {
             var rowY = topPos + CONTENT_Y + slot.ordinal() * ROW_H;
@@ -880,7 +879,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         wrapped(graphics, materials, x, topPos + CONTENT_Y + LIST_ROWS * ROW_H + 2, 2);
     }
 
-    private void renderPaint(GuiGraphicsExtractor graphics, PowerArmorEntity armor) {
+    private void renderPaint(ADGuiGraphics graphics, PowerArmorEntity armor) {
         var x = leftPos + PANEL_X;
         for (var slot : PowerArmorSlot.all()) {
             var rowY = topPos + CONTENT_Y + slot.ordinal() * ROW_H;
@@ -910,7 +909,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         wrapped(graphics, info, x, topPos + CONTENT_Y + LIST_ROWS * ROW_H + 2, 2);
     }
 
-    private void renderScrap(GuiGraphicsExtractor graphics) {
+    private void renderScrap(ADGuiGraphics graphics) {
         var x = leftPos + PANEL_X;
         var slots = scrapSlots();
         if (slots.isEmpty()) {
@@ -940,7 +939,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
         );
     }
 
-    private void wrapped(GuiGraphicsExtractor graphics, Component text, int x, int y, int maxLines) {
+    private void wrapped(ADGuiGraphics graphics, Component text, int x, int y, int maxLines) {
         var lines = font.split(text, PANEL_W);
         for (var i = 0; i < Math.min(maxLines, lines.size()); i++) {
             graphics.text(font, lines.get(i), x, y + i * 9, PipBoyTheme.dim(), false);

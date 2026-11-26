@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import org.jspecify.annotations.NonNull;
 
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+
 @SuppressWarnings({ "unused", "NullableProblems" })
 public record TargetSpec(
     boolean tag,
@@ -28,7 +30,7 @@ public record TargetSpec(
 
     public static DataResult<TargetSpec> parse(String raw) {
         var tag = raw.startsWith("#");
-        var id = Identifier.tryParse(tag ? raw.substring(1) : raw);
+        var id = ADRegistryUtil.tryParse(tag ? raw.substring(1) : raw);
         return id == null
             ? DataResult.error(() -> "Invalid target '" + raw + "'")
             : DataResult.success(new TargetSpec(tag, id));
@@ -67,7 +69,7 @@ public record TargetSpec(
         if (!tag) {
             return id.equals(structure);
         }
-        return access.lookup(Registries.STRUCTURE)
+        return ADRegistryUtil.optionalRegistry(access, Registries.STRUCTURE)
             .flatMap(registry -> registry.get(ResourceKey.create(Registries.STRUCTURE, structure)))
             .map(holder -> holder.is(TagKey.create(Registries.STRUCTURE, id)))
             .orElse(false);

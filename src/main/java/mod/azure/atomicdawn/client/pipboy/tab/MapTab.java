@@ -2,7 +2,6 @@ package mod.azure.atomicdawn.client.pipboy.tab;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -16,11 +15,13 @@ import java.util.List;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.camp.CampClientState;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 import mod.azure.atomicdawn.client.pipboy.map.PipBoyMapRenderer;
 import mod.azure.atomicdawn.config.ADConfigHelper;
+import mod.azure.atomicdawn.helper.ADWorldgenUtil;
 import mod.azure.atomicdawn.network.CampSyncPayload;
 import mod.azure.atomicdawn.network.WaypointActionPayload;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
@@ -240,7 +241,7 @@ public final class MapTab implements PipBoyTab {
             return null;
         }
         var y = level.getHeight(Heightmap.Types.WORLD_SURFACE, x, z);
-        return level.getBiome(new BlockPos(x, y, z))
+        return ADWorldgenUtil.biome(level, new BlockPos(x, y, z))
             .unwrapKey()
             .<Component>map(key -> PipBoyNames.biome(key.identifier()))
             .orElse(null);
@@ -248,7 +249,7 @@ public final class MapTab implements PipBoyTab {
 
     @Override
     public void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         Rect area,
         String subtab,
@@ -405,12 +406,12 @@ public final class MapTab implements PipBoyTab {
         var px = toScreenX(map, player.getX(), scale);
         var pz = toScreenY(map, player.getZ(), scale);
         if (map.contains(px, pz)) {
-            graphics.pose().pushMatrix();
-            graphics.pose().translate(px, pz);
-            graphics.pose().rotate((player.getYRot() + 180F) * Mth.DEG_TO_RAD);
+            graphics.push();
+            graphics.translate(px, pz);
+            graphics.rotate((player.getYRot() + 180F) * Mth.DEG_TO_RAD);
             var arrow = Component.literal("▲");
             graphics.text(screen.font(), arrow, -screen.font().width(arrow) / 2, -4, 0xFFFFFFFF, true);
-            graphics.pose().popMatrix();
+            graphics.pop();
         }
 
         var north = Component.literal("N");
@@ -438,7 +439,7 @@ public final class MapTab implements PipBoyTab {
             var pos = player.blockPosition();
             info = Component.translatable("pipboy.atomicdawn.map.position", pos.getX(), pos.getY(), pos.getZ());
         }
-        var currentBiome = level.getBiome(player.blockPosition())
+        var currentBiome = ADWorldgenUtil.biome(level, player.blockPosition())
             .unwrapKey()
             .<Component>map(key -> PipBoyNames.biome(key.identifier()))
             .orElse(Component.empty());
@@ -454,7 +455,7 @@ public final class MapTab implements PipBoyTab {
         screen.text(graphics, right, map.right() - rightW, infoY, PipBoyTheme.text());
     }
 
-    private static void outline(GuiGraphicsExtractor graphics, int x, int y, int color) {
+    private static void outline(ADGuiGraphics graphics, int x, int y, int color) {
         graphics.fill(x - 3, y - 3, x + 4, y - 2, color);
         graphics.fill(x - 3, y + 3, x + 4, y + 4, color);
         graphics.fill(x - 3, y - 2, x - 2, y + 3, color);

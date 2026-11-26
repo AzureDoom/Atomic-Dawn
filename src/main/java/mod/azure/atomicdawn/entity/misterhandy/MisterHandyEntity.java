@@ -4,7 +4,6 @@ import mod.azure.azurelib.hitbox.AzHitboxHolder;
 import mod.azure.azurelib.hitbox.AzHitboxSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,6 +35,8 @@ import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.misterhandy.ai.MisterHandyBrain;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.registry.ADSounds;
 import mod.azure.atomicdawn.vats.BodyPart;
@@ -104,8 +105,7 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
     }
 
     public static boolean ally(Entity entity) {
-        return entity instanceof MisterHandyEntity || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType())
-            .is(MisterHandyBrain.ALLIES);
+        return entity instanceof MisterHandyEntity || ADEntityUtil.isIn(entity, MisterHandyBrain.ALLIES);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
 
     public void sawHit(ServerLevel level, LivingEntity target) {
         var damage = (float) AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat.SAW_DAMAGE;
-        if (target.hurtServer(level, damageSources().mobAttack(this), damage)) {
+        if (ADEntityUtil.hurt(target, level, damageSources().mobAttack(this), damage)) {
             target.setInvulnerableTime(0);
             level.sendParticles(
                 ParticleTypes.CRIT,
@@ -203,8 +203,9 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
 
     public void clawHit(ServerLevel level, LivingEntity target) {
         var config = AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat;
-        if (target.hurtServer(level, damageSources().mobAttack(this), (float) config.CLAW_DAMAGE)) {
-            target.knockback(
+        if (ADEntityUtil.hurt(target, level, damageSources().mobAttack(this), (float) config.CLAW_DAMAGE)) {
+            ADEntityUtil.knockback(
+                target,
                 0.6,
                 getX() - target.getX(),
                 getZ() - target.getZ(),
@@ -263,7 +264,7 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
             if (!victim.fireImmune()) {
                 victim.igniteForSeconds((float) config.FLAMER_BURN_SECONDS);
             }
-            victim.hurtServer(level, damageSources().inFire(), (float) config.FLAMER_DAMAGE);
+            ADEntityUtil.hurt(victim, level, damageSources().inFire(), (float) config.FLAMER_DAMAGE);
         }
     }
 
@@ -447,8 +448,12 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
     @Override
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
-        home = input.getBooleanOr("HasHome", false)
-            ? new BlockPos(input.getIntOr("HomeX", 0), input.getIntOr("HomeY", 0), input.getIntOr("HomeZ", 0))
+        home = ADSerialization.getBoolean(input, "HasHome", false)
+            ? new BlockPos(
+                ADSerialization.getInt(input, "HomeX", 0),
+                ADSerialization.getInt(input, "HomeY", 0),
+                ADSerialization.getInt(input, "HomeZ", 0)
+            )
             : null;
     }
 

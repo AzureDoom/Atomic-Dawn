@@ -4,7 +4,6 @@ import com.azure.azurecortex.api.blackboard.Blackboard;
 import com.azure.azurecortex.api.blackboard.CommonBlackboardKeys;
 import com.azure.azurecortex.runtime.CortexRuntime;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -20,6 +19,7 @@ import java.util.Comparator;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
 import mod.azure.atomicdawn.entity.scorched.ScorchedHiveMind;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.npc.NpcEntity;
 
 public final class ScorchedBrain {
@@ -313,7 +313,7 @@ public final class ScorchedBrain {
         if (!candidate.isAlive() || candidate instanceof ScorchedEntity || candidate.isSpectator()) {
             return false;
         }
-        var holder = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(candidate.getType());
+        var holder = ADEntityUtil.typeHolder(candidate);
         if (holder.is(ALLIES)) {
             return false;
         }

@@ -1,18 +1,13 @@
 package mod.azure.atomicdawn.client.npc;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +15,12 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiInput;
+import mod.azure.atomicdawn.client.helper.ADScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
+import mod.azure.atomicdawn.helper.ADRegistryUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.network.NpcEditPayload;
 import mod.azure.atomicdawn.npc.NpcAppearance;
 import mod.azure.atomicdawn.npc.NpcBehavior;
@@ -34,7 +34,7 @@ import mod.azure.atomicdawn.npc.NpcStats;
 import mod.azure.atomicdawn.npc.dialogue.NpcDialogue;
 
 @SuppressWarnings("unused")
-public final class NpcEditorScreen extends Screen {
+public final class NpcEditorScreen extends ADScreen {
 
     private enum Tab {
 
@@ -113,7 +113,7 @@ public final class NpcEditorScreen extends Screen {
         var tabW = (panelW - 8) / Tab.values().length;
         var x = left + 4;
         for (var value : Tab.values()) {
-            var button = Button.builder(Component.translatable(value.key()), _ -> {
+            var button = Button.builder(Component.translatable(value.key()), ignored -> {
                 tab = value;
                 scroll = 0;
                 rebuildWidgets();
@@ -177,7 +177,7 @@ public final class NpcEditorScreen extends Screen {
 
     private void button(Component label, int y, Runnable action) {
         addRenderableWidget(
-            Button.builder(label, _ -> action.run()).pos(contentLeft(), y).size(panelW - 12, FIELD_H).build()
+            Button.builder(label, ignored -> action.run()).pos(contentLeft(), y).size(panelW - 12, FIELD_H).build()
         );
     }
 
@@ -289,33 +289,41 @@ public final class NpcEditorScreen extends Screen {
                 value -> setAppearance(
                     config.appearance()
                         .withTexture(
-                            value.isBlank() ? Optional.empty() : Optional.ofNullable(Identifier.tryParse(value.strip()))
+                            value.isBlank()
+                                ? Optional.empty()
+                                : Optional.ofNullable(ADRegistryUtil.tryParse(value.strip()))
                         )
                 )
             );
             texture.setHint(Component.translatable("npc.atomicdawn.editor.texture_hint"));
             return;
         }
-        var skin = field("npc.atomicdawn.editor.skin", y, appearance.data().getStringOr(SKIN_KEY, ""), 64, value -> {
-            var data = config.appearance().data().copy();
-            if (value.isBlank()) {
-                data.remove(SKIN_KEY);
-            } else {
-                data.putString(SKIN_KEY, value.strip());
-                data.putBoolean("hide_description", true);
+        var skin = field(
+            "npc.atomicdawn.editor.skin",
+            y,
+            ADSerialization.getString(appearance.data(), SKIN_KEY, ""),
+            64,
+            value -> {
+                var data = config.appearance().data().copy();
+                if (value.isBlank()) {
+                    data.remove(SKIN_KEY);
+                } else {
+                    data.putString(SKIN_KEY, value.strip());
+                    data.putBoolean("hide_description", true);
+                }
+                var updated = config.appearance().withData(data);
+                if (!value.isBlank()) {
+                    updated = new NpcAppearance(
+                        NpcAppearance.Kind.ENTITY,
+                        NpcAppearance.DEFAULT_MODEL,
+                        data,
+                        updated.scale(),
+                        Optional.empty()
+                    );
+                }
+                setAppearance(updated);
             }
-            var updated = config.appearance().withData(data);
-            if (!value.isBlank()) {
-                updated = new NpcAppearance(
-                    NpcAppearance.Kind.ENTITY,
-                    NpcAppearance.DEFAULT_MODEL,
-                    data,
-                    updated.scale(),
-                    Optional.empty()
-                );
-            }
-            setAppearance(updated);
-        });
+        );
         skin.setHint(Component.translatable("npc.atomicdawn.editor.skin_hint"));
         y += ROW;
         field("npc.atomicdawn.editor.data", y, appearance.data().toString(), NpcConfig.MAX_DATA_CHARS, value -> {
@@ -325,7 +333,7 @@ public final class NpcEditorScreen extends Screen {
                 return;
             }
             try {
-                var parsed = TagParser.parseCompoundFully(value);
+                var parsed = ADSerialization.parseCompound(value);
                 dataError = Component.empty();
                 setAppearance(config.appearance().withData(parsed));
             } catch (CommandSyntaxException exception) {
@@ -444,7 +452,7 @@ public final class NpcEditorScreen extends Screen {
         addRenderableWidget(
             Button.builder(
                 Component.translatable("npc.atomicdawn.editor.move_here"),
-                _ -> send(NpcEditPayload.Action.MOVE_HERE)
+                ignored -> send(NpcEditPayload.Action.MOVE_HERE)
             )
                 .pos(contentLeft(), y)
                 .size(half, FIELD_H)
@@ -453,7 +461,7 @@ public final class NpcEditorScreen extends Screen {
         addRenderableWidget(
             Button.builder(
                 Component.translatable("npc.atomicdawn.editor.set_home"),
-                _ -> send(NpcEditPayload.Action.SET_HOME)
+                ignored -> send(NpcEditPayload.Action.SET_HOME)
             )
                 .pos(contentLeft() + half + 2, y)
                 .size(half, FIELD_H)
@@ -463,13 +471,13 @@ public final class NpcEditorScreen extends Screen {
         addRenderableWidget(
             Button.builder(
                 Component.translatable("npc.atomicdawn.editor.edit_gear"),
-                _ -> send(NpcEditPayload.Action.EDIT_GEAR)
+                ignored -> send(NpcEditPayload.Action.EDIT_GEAR)
             ).pos(contentLeft(), y).size(half, FIELD_H).build()
         );
         addRenderableWidget(
             Button.builder(
                 Component.translatable("npc.atomicdawn.editor.clear_equipment"),
-                _ -> send(NpcEditPayload.Action.CLEAR_EQUIPMENT)
+                ignored -> send(NpcEditPayload.Action.CLEAR_EQUIPMENT)
             ).pos(contentLeft() + half + 2, y).size(half, FIELD_H).build()
         );
     }
@@ -496,16 +504,16 @@ public final class NpcEditorScreen extends Screen {
             new Label(Component.translatable("npc.atomicdawn.editor.dialogue"), contentLeft(), y + 5, PipBoyTheme.dim())
         );
         addRenderableWidget(
-            Button.builder(Component.literal("<"), _ -> cycleDialogue(dialogues, current - 1))
+            Button.builder(Component.literal("<"), ignored -> cycleDialogue(dialogues, current - 1))
                 .pos(fieldX(), y)
                 .size(16, FIELD_H)
                 .build()
         );
-        var middle = Button.builder(label, _ -> {}).pos(fieldX() + 18, y).size(fieldW() - 36, FIELD_H).build();
+        var middle = Button.builder(label, ignored -> {}).pos(fieldX() + 18, y).size(fieldW() - 36, FIELD_H).build();
         middle.active = false;
         addRenderableWidget(middle);
         addRenderableWidget(
-            Button.builder(Component.literal(">"), _ -> cycleDialogue(dialogues, current + 1))
+            Button.builder(Component.literal(">"), ignored -> cycleDialogue(dialogues, current + 1))
                 .pos(fieldX() + fieldW() - 16, y)
                 .size(16, FIELD_H)
                 .build()
@@ -618,7 +626,7 @@ public final class NpcEditorScreen extends Screen {
         y += ROW;
         var half = (panelW - 14) / 2;
         addRenderableWidget(
-            Button.builder(onOff("npc.atomicdawn.editor.respawn", combat.respawn()), _ -> {
+            Button.builder(onOff("npc.atomicdawn.editor.respawn", combat.respawn()), ignored -> {
                 var current = config.combat();
                 config = config.withCombat(current.withRespawn(!current.respawn(), current.respawnSeconds()));
                 rebuildWidgets();
@@ -637,7 +645,7 @@ public final class NpcEditorScreen extends Screen {
         if (isDowned()) {
             y += ROW;
             addRenderableWidget(
-                Button.builder(Component.translatable("npc.atomicdawn.editor.respawn_now"), _ -> {
+                Button.builder(Component.translatable("npc.atomicdawn.editor.respawn_now"), ignored -> {
                     send(NpcEditPayload.Action.RESPAWN_NOW);
                     onClose();
                 }).pos(contentLeft(), y).size(panelW - 12, FIELD_H).build()
@@ -685,7 +693,7 @@ public final class NpcEditorScreen extends Screen {
                 var current = config.companion();
                 var item = value.isBlank()
                     ? Optional.<Identifier>empty()
-                    : Optional.ofNullable(Identifier.tryParse(value.strip()));
+                    : Optional.ofNullable(ADRegistryUtil.tryParse(value.strip()));
                 config = config.withCompanion(
                     new NpcCompanion(current.hireable(), item, current.costCount(), current.durationMinutes())
                 );
@@ -787,19 +795,19 @@ public final class NpcEditorScreen extends Screen {
         var y = panelBottom - ROW - 2;
         var third = (panelW - 16) / 3;
         addRenderableWidget(
-            Button.builder(Component.translatable("npc.atomicdawn.editor.save"), _ -> {
+            Button.builder(Component.translatable("npc.atomicdawn.editor.save"), ignored -> {
                 send(NpcEditPayload.Action.SAVE);
                 onClose();
             }).pos(contentLeft(), y).size(third, FIELD_H + 2).build()
         );
         addRenderableWidget(
-            Button.builder(Component.translatable("npc.atomicdawn.editor.cancel"), _ -> onClose())
+            Button.builder(Component.translatable("npc.atomicdawn.editor.cancel"), ignored -> onClose())
                 .pos(contentLeft() + third + 2, y)
                 .size(third, FIELD_H + 2)
                 .build()
         );
         addRenderableWidget(
-            Button.builder(Component.translatable("npc.atomicdawn.editor.delete"), _ -> {
+            Button.builder(Component.translatable("npc.atomicdawn.editor.delete"), ignored -> {
                 send(NpcEditPayload.Action.DELETE);
                 onClose();
             }).pos(contentLeft() + 2 * (third + 2), y).size(third, FIELD_H + 2).build()
@@ -861,7 +869,7 @@ public final class NpcEditorScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(ADGuiInput.Mouse event, boolean doubleClick) {
         if (tab == Tab.APPEARANCE && inList(event.x(), event.y())) {
             var row = (int) ((event.y() - listY) / LIST_ROW) + scroll;
             var list = entries();
@@ -900,7 +908,7 @@ public final class NpcEditorScreen extends Screen {
     }
 
     @Override
-    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void drawBackground(ADGuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         graphics.fill(left - 1, top - 1, left + panelW + 1, panelBottom + 1, PipBoyTheme.border());
         graphics.fill(left, top, left + panelW, panelBottom, PipBoyTheme.withAlpha(PipBoyTheme.background(), 0xE8));
         for (var label : labels) {
@@ -916,7 +924,7 @@ public final class NpcEditorScreen extends Screen {
         }
     }
 
-    private void renderList(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+    private void renderList(ADGuiGraphics graphics, int mouseX, int mouseY) {
         graphics.fill(
             listX,
             listY,

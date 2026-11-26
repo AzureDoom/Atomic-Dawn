@@ -12,6 +12,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.weapon.action.WeaponActions;
 import mod.azure.atomicdawn.weapon.legendary.behavior.DefenseBehavior;
 
@@ -59,7 +60,7 @@ public final class LegendaryEvents {
             reflect > 0F && DefenseBehavior.melee(source) && source.getEntity() instanceof LivingEntity attacker
                 && attacker != holder && holder.level() instanceof ServerLevel level
         ) {
-            attacker.hurtServer(level, level.damageSources().thorns(holder), original * reflect);
+            ADEntityUtil.hurt(attacker, level, level.damageSources().thorns(holder), original * reflect);
         }
     }
 

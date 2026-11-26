@@ -1,11 +1,11 @@
 package mod.azure.atomicdawn.client.pipboy.tab;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
 import java.util.Locale;
 
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.Rect;
 
@@ -25,7 +25,7 @@ public interface PipBoyTab {
 
     void init(PipBoyScreen screen, Rect area, String subtab);
 
-    void render(GuiGraphicsExtractor graphics, PipBoyScreen screen, Rect area, String subtab, int mouseX, int mouseY);
+    void render(ADGuiGraphics graphics, PipBoyScreen screen, Rect area, String subtab, int mouseX, int mouseY);
 
     default boolean scroll(PipBoyScreen screen, String subtab, int direction) {
         return false;

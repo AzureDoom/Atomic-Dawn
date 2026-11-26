@@ -57,9 +57,12 @@ public final class CampManager {
             if (!slot.deployed()) {
                 continue;
             }
-            byDimension.computeIfAbsent(slot.dimension(), _ -> new ArrayList<>()).add(slot);
-            var chunks = byChunk.computeIfAbsent(slot.dimension(), _ -> new HashMap<>());
-            CampClaim.forEachChunk(slot.origin(), key -> chunks.computeIfAbsent(key, _ -> new ArrayList<>()).add(slot));
+            byDimension.computeIfAbsent(slot.dimension(), ignored -> new ArrayList<>()).add(slot);
+            var chunks = byChunk.computeIfAbsent(slot.dimension(), ignored -> new HashMap<>());
+            CampClaim.forEachChunk(
+                slot.origin(),
+                key -> chunks.computeIfAbsent(key, ignored -> new ArrayList<>()).add(slot)
+            );
         }
         var built = new Index(registry, byChunk, byDimension);
         index = built;

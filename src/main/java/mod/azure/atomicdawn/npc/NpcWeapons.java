@@ -20,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADDamageTypes;
 import mod.azure.atomicdawn.weapon.combat.SpreadModel;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
@@ -141,7 +142,8 @@ public final class NpcWeapons {
             if (entity instanceof LivingEntity living) {
                 living.setInvulnerableTime(0);
             }
-            entity.hurtServer(
+            ADEntityUtil.hurt(
+                entity,
                 level,
                 ADDamageTypes.source(level, damage.type(), npc),
                 entry.getFloatValue() * multiplier

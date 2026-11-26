@@ -33,7 +33,7 @@ public final class PowerArmorItemRenderers {
 
         public Fist() {
             super(
-                AzItemRendererConfig.builder(_ -> FIST_MODEL, _ -> currentTexture())
+                AzItemRendererConfig.builder(ignored -> FIST_MODEL, ignored -> currentTexture())
                     .disableAnimationInAllContexts()
                     .setPrerenderEntry(context -> {
                         applyVisibility(context.bakedModel());

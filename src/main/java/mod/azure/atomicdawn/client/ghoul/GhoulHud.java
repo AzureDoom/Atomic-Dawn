@@ -3,16 +3,16 @@ package mod.azure.atomicdawn.client.ghoul;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.ghoul.FeralTier;
@@ -21,7 +21,7 @@ import mod.azure.atomicdawn.registry.ADSounds;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = AtomicDawn.MOD_ID, value = Dist.CLIENT)
-public final class GhoulHud implements GuiLayer {
+public final class GhoulHud implements ADHudLayer {
 
     private static final int COLOR_GLOW = 0xFF8CFF5A;
 
@@ -44,10 +44,10 @@ public final class GhoulHud implements GuiLayer {
     private static float pendingClicks;
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
-        var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
+        var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (
             player == null || hudHidden || player.isSpectator() || !AtomicDawn.CONFIG.client.effects.ghoul.GHOUL_HUD
                 || !GhoulService.isGhoul(player)
@@ -83,7 +83,7 @@ public final class GhoulHud implements GuiLayer {
     }
 
     private static void row(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         Component label,
         int x,

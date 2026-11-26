@@ -4,7 +4,6 @@ import com.azure.azurecortex.api.blackboard.Blackboard;
 import com.azure.azurecortex.api.blackboard.CommonBlackboardKeys;
 import com.azure.azurecortex.runtime.CortexRuntime;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -21,6 +20,7 @@ import java.util.Comparator;
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.supermutant.SuperMutantEntity;
 import mod.azure.atomicdawn.entity.supermutant.SuperMutantPack;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.npc.NpcEntity;
 
 public final class SuperMutantBrain {
@@ -326,8 +326,7 @@ public final class SuperMutantBrain {
     }
 
     public static boolean ally(Entity entity) {
-        return entity instanceof SuperMutantEntity || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType())
-            .is(ALLIES);
+        return entity instanceof SuperMutantEntity || ADEntityUtil.isIn(entity, ALLIES);
     }
 
     public static boolean validTarget(LivingEntity candidate) {
@@ -343,7 +342,6 @@ public final class SuperMutantBrain {
         if (candidate instanceof AbstractVillager) {
             return AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.ATTACK_VILLAGERS;
         }
-        return candidate instanceof AbstractGolem || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(candidate.getType())
-            .is(TARGETS);
+        return candidate instanceof AbstractGolem || ADEntityUtil.isIn(candidate, TARGETS);
     }
 }

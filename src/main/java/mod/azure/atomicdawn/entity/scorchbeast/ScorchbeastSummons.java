@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.entity.scorched.ScorchedEntity;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
 import mod.azure.atomicdawn.registry.ADEntities;
 
 public final class ScorchbeastSummons {
@@ -41,7 +42,7 @@ public final class ScorchbeastSummons {
                 if (Math.abs(y - beast.getY()) > 4.0) {
                     continue;
                 }
-                var scorched = ADEntities.SCORCHED.get().create(level, EntitySpawnReason.MOB_SUMMONED);
+                var scorched = ADEntityUtil.create(ADEntities.SCORCHED.get(), level, EntitySpawnReason.MOB_SUMMONED);
                 if (scorched == null) {
                     return;
                 }

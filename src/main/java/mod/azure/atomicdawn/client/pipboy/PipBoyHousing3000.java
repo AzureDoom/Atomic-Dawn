@@ -1,8 +1,9 @@
 package mod.azure.atomicdawn.client.pipboy;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 
 final class PipBoyHousing3000 {
 
@@ -104,7 +105,7 @@ final class PipBoyHousing3000 {
     }
 
     static void render(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         PipBoyHousing.State s
@@ -130,7 +131,7 @@ final class PipBoyHousing3000 {
         bay(graphics, screen, l, q, s);
     }
 
-    private static void shell(GuiGraphicsExtractor graphics, Parts q) {
+    private static void shell(ADGuiGraphics graphics, Parts q) {
         var shell = q.shell();
         PipBoyDraw.bevel(graphics, shell, p().outline(), p().body(), p().bodyLight(), p().bodyShade());
         var frame = q.bezel().inset(-4);
@@ -154,7 +155,7 @@ final class PipBoyHousing3000 {
     }
 
     private static void bay(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         Parts q,
@@ -187,7 +188,7 @@ final class PipBoyHousing3000 {
     }
 
     private static void leftPanel(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         PipBoyScreen screen,
         PipBoyHousing.Layout l,
         Parts q,

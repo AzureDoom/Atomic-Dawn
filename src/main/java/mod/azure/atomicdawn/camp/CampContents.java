@@ -8,7 +8,6 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -21,8 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.storage.TagValueInput;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +33,8 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.helper.ADEntityUtil;
+import mod.azure.atomicdawn.helper.ADSerialization;
 import mod.azure.atomicdawn.powerarmor.PowerArmorChassisItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorStationBlock;
@@ -59,7 +58,7 @@ public final class CampContents {
         if (blockEntity == null) {
             return new CompoundTag();
         }
-        return blockEntity.saveWithoutMetadata(level.registryAccess());
+        return ADSerialization.saveBlockEntity(blockEntity, level.registryAccess());
     }
 
     public static void clear(ServerLevel level, BlockPos pos) {
@@ -77,8 +76,7 @@ public final class CampContents {
             return;
         }
         try {
-            var input = TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), data);
-            blockEntity.loadWithComponents(input);
+            ADSerialization.loadBlockEntity(blockEntity, data, level.registryAccess());
             blockEntity.setChanged();
             var state = level.getBlockState(pos);
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
@@ -107,14 +105,14 @@ public final class CampContents {
             for (var master : masters) {
                 var armor = PowerArmorStationBlock.docked(level, master);
                 if (armor != null && armor.getPassengers().isEmpty() && taken.add(armor.getUUID())) {
-                    result.computeIfAbsent(object.objectId(), _ -> new ArrayList<>()).add(armor);
+                    result.computeIfAbsent(object.objectId(), ignored -> new ArrayList<>()).add(armor);
                 }
             }
         }
         var loose = level.getEntities(
             (Entity) null,
             area,
-            entity -> BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.getType()).is(STORABLE)
+            entity -> ADEntityUtil.isIn(entity, STORABLE)
                 && !(entity instanceof PowerArmorEntity)
         );
         for (var entity : loose) {
@@ -124,7 +122,7 @@ public final class CampContents {
             var owner = nearest(objects, entity.blockPosition());
             if (owner != null) {
                 taken.add(entity.getUUID());
-                result.computeIfAbsent(owner.objectId(), _ -> new ArrayList<>()).add(entity);
+                result.computeIfAbsent(owner.objectId(), ignored -> new ArrayList<>()).add(entity);
             }
         }
         return result;
@@ -151,9 +149,7 @@ public final class CampContents {
     }
 
     public static EntitySnapshot capture(ServerLevel level, Entity entity, BlockPos anchor, Rotation toNorth) {
-        var output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, level.registryAccess());
-        entity.saveWithoutId(output);
-        var data = output.buildResult();
+        var data = ADSerialization.saveEntity(entity, level.registryAccess());
         for (var key : TRANSIENT_KEYS) {
             data.remove(key);
         }
@@ -173,12 +169,12 @@ public final class CampContents {
             return null;
         }
         try {
-            var entity = type.get().create(level, EntitySpawnReason.LOAD);
+            var entity = ADEntityUtil.create(type.get(), level, EntitySpawnReason.LOAD);
             if (entity == null) {
                 return null;
             }
             if (!snapshot.data().isEmpty()) {
-                entity.load(TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), snapshot.data()));
+                ADSerialization.loadEntity(entity, snapshot.data(), level.registryAccess());
             }
             return entity;
         } catch (RuntimeException exception) {
@@ -296,7 +292,7 @@ public final class CampContents {
         var items = new ArrayList<ItemStack>();
         var ops = level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
         for (var part : parts) {
-            for (var tag : part.data().getListOrEmpty("Items")) {
+            for (var tag : ADSerialization.getList(part.data(), "Items")) {
                 if (tag instanceof CompoundTag compound) {
                     ItemStack.CODEC.parse(ops, compound)
                         .result()

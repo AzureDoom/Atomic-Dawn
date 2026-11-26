@@ -3,15 +3,14 @@ package mod.azure.atomicdawn.client.powerarmor;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.gui.GuiLayer;
-import org.jspecify.annotations.NonNull;
 
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
+import mod.azure.atomicdawn.client.helper.ADHudLayer;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
@@ -25,7 +24,7 @@ import mod.azure.atomicdawn.radiation.RadiationService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.weapon.action.VatsActions;
 
-public final class PowerArmorHud implements GuiLayer {
+public final class PowerArmorHud implements ADHudLayer {
 
     private static final int PANEL_W = 150;
 
@@ -48,7 +47,7 @@ public final class PowerArmorHud implements GuiLayer {
         { 8, 22, 6, 14 } };
 
     @Override
-    public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+    public void draw(ADGuiGraphics graphics, DeltaTracker deltaTracker) {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
         if (
@@ -61,7 +60,7 @@ public final class PowerArmorHud implements GuiLayer {
     }
 
     private static void renderJetPackAp(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Minecraft minecraft,
         LocalPlayer player,
         PowerArmorEntity armor
@@ -102,7 +101,7 @@ public final class PowerArmorHud implements GuiLayer {
     }
 
     private static void renderPanel(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Minecraft minecraft,
         LocalPlayer player,
         PowerArmorEntity armor
@@ -224,7 +223,7 @@ public final class PowerArmorHud implements GuiLayer {
     }
 
     private static void bar(
-        GuiGraphicsExtractor graphics,
+        ADGuiGraphics graphics,
         Font font,
         int x,
         int y,
