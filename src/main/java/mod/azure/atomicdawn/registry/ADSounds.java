@@ -205,6 +205,26 @@ public final class ADSounds {
 
     public static final DeferredHolder<SoundEvent, SoundEvent> SCORCHBEAST_STEP = register("scorchbeast.step");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_AMBIENT = register("mister_handy.ambient");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_ALERT = register("mister_handy.alert");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_SCAN = register("mister_handy.scan");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_HOVER = register("mister_handy.hover");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_SAW = register("mister_handy.saw");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_FLAMER = register("mister_handy.flamer");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_CLAW = register("mister_handy.claw");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_HURT = register("mister_handy.hurt");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_DEATH = register("mister_handy.death");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> MISTER_HANDY_EXPLODE = register("mister_handy.explode");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return REGISTER.register(name, SoundEvent::createVariableRangeEvent);
     }

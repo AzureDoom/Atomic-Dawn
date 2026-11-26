@@ -16,6 +16,7 @@
     {
       "id": "minecraft:shulker",
       "required": false
-    }
+    },
+    "atomicdawn:mister_handy"
   ]
 }

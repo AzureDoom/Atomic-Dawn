@@ -1,0 +1,45 @@
+{
+  "entities": [
+    "atomicdawn:mister_handy"
+  ],
+  "parts": [
+    "head",
+    "torso",
+    "left_arm",
+    "right_arm"
+  ],
+  "bones": {
+    "head": [
+      "eye_center",
+      "optic_center",
+      "eye_left",
+      "optic_left",
+      "eye_right",
+      "optic_right"
+    ],
+    "torso": [
+      "main",
+      "body",
+      "thruster",
+      "claw_shoulder",
+      "claw_elbow",
+      "claw_wrist",
+      "claw_tool"
+    ],
+    "right_arm": [
+      "saw_shoulder",
+      "saw_elbow",
+      "saw_wrist",
+      "saw_tool",
+      "saw_blade"
+    ],
+    "left_arm": [
+      "flamer_shoulder",
+      "flamer_elbow",
+      "flamer_wrist",
+      "flamer_tool"
+    ]
+  },
+  "health": 2.0,
+  "priority": 20
+}

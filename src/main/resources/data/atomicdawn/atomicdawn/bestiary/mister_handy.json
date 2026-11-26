@@ -1,0 +1,15 @@
+{
+  "entity": "atomicdawn:mister_handy",
+  "category": "monster",
+  "threat": 2,
+  "weaknesses": [
+    "headshots",
+    "explosions"
+  ],
+  "resistances": [
+    "radiation",
+    "fire"
+  ],
+  "study_kills": 5,
+  "sort": 5
+}

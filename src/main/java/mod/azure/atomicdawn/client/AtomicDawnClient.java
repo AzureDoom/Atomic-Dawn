@@ -42,6 +42,7 @@ import mod.azure.atomicdawn.client.render.ammo.AmmoRenderer;
 import mod.azure.atomicdawn.client.render.brahmin.BrahminRenderer;
 import mod.azure.atomicdawn.client.render.entity.MiniNukeRenderer;
 import mod.azure.atomicdawn.client.render.ghoul.FeralGhoulRenderer;
+import mod.azure.atomicdawn.client.render.misterhandy.MisterHandyRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorItemRenderers;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorRenderer;
 import mod.azure.atomicdawn.client.render.powerarmor.PowerArmorStationRenderer;
@@ -136,6 +137,7 @@ public final class AtomicDawnClient {
         event.registerEntityRenderer(ADEntities.SCORCHED.get(), ScorchedRenderer::new);
         event.registerEntityRenderer(ADEntities.SUPER_MUTANT.get(), SuperMutantRenderer::new);
         event.registerEntityRenderer(ADEntities.SCORCHBEAST.get(), ScorchbeastRenderer::new);
+        event.registerEntityRenderer(ADEntities.MISTER_HANDY.get(), MisterHandyRenderer::new);
         event.registerEntityRenderer(ADEntities.SONIC_BLAST.get(), NoopRenderer::new);
         event.registerEntityRenderer(ADEntities.SCORCHBEAST_CLOUD.get(), NoopRenderer::new);
         event.registerEntityRenderer(ADEntities.BRAHMIN.get(), BrahminRenderer::new);

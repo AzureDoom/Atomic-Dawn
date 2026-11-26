@@ -38,6 +38,7 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.SCORCHED_SPAWN_EGG.get());
                 output.accept(ADItems.SUPER_MUTANT_SPAWN_EGG.get());
                 output.accept(ADItems.SCORCHBEAST_SPAWN_EGG.get());
+                output.accept(ADItems.MISTER_HANDY_SPAWN_EGG.get());
                 output.accept(ADItems.BRAHMIN_SPAWN_EGG.get());
                 output.accept(ADItems.RAD_X.get());
                 output.accept(ADItems.STIMPAK.get());

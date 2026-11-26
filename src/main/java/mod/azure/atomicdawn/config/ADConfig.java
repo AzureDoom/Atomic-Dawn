@@ -56,6 +56,9 @@ public class ADConfig {
     public Scorchbeast scorchbeast = new Scorchbeast();
 
     @Configurable
+    public MisterHandy misterHandy = new MisterHandy();
+
+    @Configurable
     public PowerArmor powerArmor = new PowerArmor();
 
     @Configurable
@@ -913,6 +916,85 @@ public class ADConfig {
         @Comment("Scorched hunt villagers and wandering traders.")
         @Configurable
         public boolean ATTACK_VILLAGERS = true;
+
+    }
+
+    public static class MisterHandy {
+
+        @Comment("Max health of a Mister Handy.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 2048.0)
+        public double MAX_HEALTH = 60.0;
+
+        @Comment("Armor points of a Mister Handy.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 30.0)
+        public double ARMOR = 10.0;
+
+        @Comment("How far a Mister Handy can see a target. Halved while its optics are crippled.")
+        @Configurable
+        @DecimalRange(min = 4.0, max = 128.0)
+        public double DETECTION_RANGE = 24.0;
+
+        @Comment("Blocks from its spawn point after which a Mister Handy gives up a chase.")
+        @Configurable
+        @Range(min = 8, max = 256)
+        public int LEASH_RANGE = 48;
+
+        @Comment("Patrol radius around a Mister Handy's spawn point.")
+        @Configurable
+        @Range(min = 2, max = 64)
+        public int PATROL_RADIUS = 12;
+
+        @Comment("Seconds a Mister Handy scans the area where it lost its target.")
+        @Configurable
+        @Range(min = 1, max = 120)
+        public int INVESTIGATE_SECONDS = 15;
+
+        @Comment("Damage of each buzz saw hit. The saw hits four times per attack.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 128.0)
+        public double SAW_DAMAGE = 3.5;
+
+        @Comment("Damage of the claw strike, which also briefly slows the target.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 128.0)
+        public double CLAW_DAMAGE = 7.0;
+
+        @Comment("Range in blocks of the flamer.")
+        @Configurable
+        @DecimalRange(min = 1.0, max = 24.0)
+        public double FLAMER_RANGE = 6.5;
+
+        @Comment("Width in degrees of the flamer's cone.")
+        @Configurable
+        @DecimalRange(min = 5.0, max = 180.0)
+        public double FLAMER_CONE_DEGREES = 40.0;
+
+        @Comment("Damage dealt every 4 ticks to anything inside the flamer's cone.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 64.0)
+        public double FLAMER_DAMAGE = 2.0;
+
+        @Comment("Seconds the flamer sets targets on fire for.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 30.0)
+        public double FLAMER_BURN_SECONDS = 4.0;
+
+        @Comment("Ticks between flamer bursts.")
+        @Configurable
+        @Range(min = 20, max = 2400)
+        public int FLAMER_COOLDOWN_TICKS = 100;
+
+        @Comment("Chance a natural spawn attempt produces a Mister Handy.")
+        @Configurable
+        @DecimalRange(min = 0.0, max = 1.0)
+        public double SPAWN_CHANCE = 0.5;
+
+        @Comment("Most Mister Handies allowed within 48 blocks before natural spawning stops.")
+        @Configurable
+        @Range(min = 0, max = 32)
+        public int MAX_NEARBY = 2;
 
     }
 

@@ -938,5 +938,117 @@
       }
     ]
   },
+  "mister_handy.ambient": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.ambient",
+        "type": "event",
+        "pitch": 1.8,
+        "volume": 0.6
+      },
+      {
+        "name": "minecraft:entity.villager.ambient",
+        "type": "event",
+        "pitch": 1.6,
+        "volume": 0.5
+      }
+    ]
+  },
+  "mister_handy.alert": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.alert",
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.activate",
+        "type": "event",
+        "pitch": 1.6,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:block.note_block.bit",
+        "type": "event",
+        "pitch": 1.2,
+        "volume": 0.8
+      }
+    ]
+  },
+  "mister_handy.scan": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.scan",
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.power_select",
+        "type": "event",
+        "pitch": 1.8,
+        "volume": 0.7
+      }
+    ]
+  },
+  "mister_handy.hover": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.hover",
+    "sounds": [
+      {
+        "name": "minecraft:block.fire.ambient",
+        "type": "event",
+        "pitch": 0.6,
+        "volume": 0.6
+      }
+    ]
+  },
+  "mister_handy.saw": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.saw",
+    "sounds": [
+      "atomicdawn:mister_handy/mister_saw_attack_1",
+      "atomicdawn:mister_handy/mister_saw_attack_2"
+    ]
+  },
+  "mister_handy.flamer": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.flamer",
+    "sounds": [
+      {
+        "name": "minecraft:item.firecharge.use",
+        "type": "event",
+        "pitch": 0.8,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:entity.blaze.shoot",
+        "type": "event",
+        "pitch": 0.7,
+        "volume": 0.8
+      }
+    ]
+  },
+  "mister_handy.claw": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.claw",
+    "sounds": [
+      "atomicdawn:mister_handy/mister_claw_attack_1",
+      "atomicdawn:mister_handy/mister_claw_attack_2"
+    ]
+  },
+  "mister_handy.hurt": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.hurt",
+    "sounds": [
+      "atomicdawn:mister_handy/mister_hurt_1",
+      "atomicdawn:mister_handy/mister_hurt_2"
+    ]
+  },
+  "mister_handy.death": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.death",
+    "sounds": [
+      "atomicdawn:mister_handy/mister_death_1",
+      "atomicdawn:mister_handy/mister_death_2",
+      "atomicdawn:mister_handy/mister_death_3"
+    ]
+  },
+  "mister_handy.explode": {
+    "subtitle": "subtitles.atomicdawn.mister_handy.explode",
+    "sounds": [
+      {
+        "name": "minecraft:entity.generic.explode",
+        "type": "event",
+        "pitch": 1.4,
+        "volume": 0.8
+      }
+    ]
   }
 }
