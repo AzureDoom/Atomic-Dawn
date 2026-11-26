@@ -71,13 +71,14 @@ public final class SuperMutantWeapons {
     public static float meleeDamage(SuperMutantEntity mutant) {
         var definition = definition(mutant);
         if (definition != null && kind(mutant) == Kind.MELEE) {
-            return definition.damage().base() * (float) AtomicDawn.CONFIG.superMutants.MELEE_WEAPON_DAMAGE_MULTIPLIER;
+            return definition.damage().base()
+                * (float) AtomicDawn.CONFIG.server.entities.mutants.superMutants.combat.MELEE_WEAPON_DAMAGE_MULTIPLIER;
         }
         return -1F;
     }
 
     public static ItemStack roll(Level level, RandomSource random) {
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.spawning;
         if (random.nextDouble() < config.RANGED_CHANCE) {
             var roll = random.nextInt(20);
             Item gun;

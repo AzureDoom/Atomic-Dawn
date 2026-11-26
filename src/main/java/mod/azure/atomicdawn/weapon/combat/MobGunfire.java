@@ -129,7 +129,9 @@ public final class MobGunfire {
                 pending.addTo(hit.getEntity(), amount);
                 hitPositions.putIfAbsent(hit.getEntity(), hitPos);
                 end = hitPos;
-            } else if (blockHit.getType() == HitResult.Type.BLOCK && AtomicDawn.CONFIG.weapons.IMPACT_PARTICLES) {
+            } else if (
+                blockHit.getType() == HitResult.Type.BLOCK && AtomicDawn.CONFIG.common.combat.weapons.IMPACT_PARTICLES
+            ) {
                 var state = level.getBlockState(blockHit.getBlockPos());
                 if (!state.isAir()) {
                     level.sendParticles(
@@ -147,7 +149,7 @@ public final class MobGunfire {
             }
             tracer(level, definition, muzzle, end);
         }
-        var multiplier = (float) AtomicDawn.CONFIG.weapons.DAMAGE_MULTIPLIER * damageMultiplier;
+        var multiplier = (float) AtomicDawn.CONFIG.common.combat.weapons.DAMAGE_MULTIPLIER * damageMultiplier;
         for (var entry : pending.object2FloatEntrySet()) {
             var entity = entry.getKey();
             if (entity instanceof LivingEntity living) {

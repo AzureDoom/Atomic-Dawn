@@ -77,7 +77,7 @@ public final class LocationService {
             0,
             PipBoyNames.key("location", location.structure())
         );
-        int xp = AtomicDawn.CONFIG.pipboy.PIPBOY_DISCOVERY_XP;
+        int xp = AtomicDawn.CONFIG.common.pipboy.locations.PIPBOY_DISCOVERY_XP;
         if (xp > 0) {
             SpecialService.awardXp(player, xp);
         }
@@ -87,7 +87,10 @@ public final class LocationService {
     public static void addWaypoint(ServerPlayer player, BlockPos pos, String name, int color) {
         var log = log(player);
         if (
-            log.waypoints().size() >= Math.min(AtomicDawn.CONFIG.pipboy.PIPBOY_MAX_WAYPOINTS, LocationLog.MAX_WAYPOINTS)
+            log.waypoints().size() >= Math.min(
+                AtomicDawn.CONFIG.common.pipboy.locations.PIPBOY_MAX_WAYPOINTS,
+                LocationLog.MAX_WAYPOINTS
+            )
         ) {
             return;
         }

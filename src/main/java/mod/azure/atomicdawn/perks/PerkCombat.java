@@ -187,7 +187,11 @@ public final class PerkCombat {
                 bonus += stats.extra(PerkEffectType.RETRIBUTION);
             }
         }
-        return 1F + Math.clamp(bonus, 0F, (float) AtomicDawn.CONFIG.perks.PERKS_MAX_DAMAGE_BONUS);
+        return 1F + Math.clamp(
+            bonus,
+            0F,
+            (float) AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_DAMAGE_BONUS
+        );
     }
 
     public static float armorPenetration(ServerPlayer attacker, WeaponCategory category, boolean automatic) {

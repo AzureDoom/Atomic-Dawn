@@ -49,7 +49,7 @@ final class SuperMutantMeleeAttackTask extends SuperMutantTask {
 
     private SuperMutantAction choose(SuperMutantEntity agent, CooldownTracker cooldowns) {
         var kind = SuperMutantWeapons.kind(agent);
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.combat;
         if (
             kind != SuperMutantWeapons.Kind.GUN && cooldowns.ready(SuperMutantBrain.SLAM_COOLDOWN) && agent.getRandom()
                 .nextDouble() < config.SLAM_CHANCE

@@ -296,13 +296,13 @@ final class PerksPage {
         var access = player.level().registryAccess();
         var form = GhoulService.form(player);
         var eligible = GhoulPerks.eligible(selected, form);
-        if (owned > 0 && AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (owned > 0 && AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED) {
             var keep = owned - 1;
             var locked = false;
             for (var loadout : progress.loadouts()) {
                 locked |= loadout.equipped().getOrDefault(selectedId, 0) > keep;
             }
-            var coins = AtomicDawn.CONFIG.perks.LEGENDARY_COINS_PER_SCRAPPED_RANK;
+            var coins = AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_COINS_PER_SCRAPPED_RANK;
             var label = Component.translatable("pipboy.atomicdawn.perks.scrap", coins);
             var w = screen.font().width(label) + 10;
             if (bx + w <= detail.right()) {

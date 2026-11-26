@@ -48,9 +48,10 @@ final class ScorchbeastPatrolTask extends ScorchbeastTask {
         angle += direction * SPEED / RADIUS;
         var x = center.x + Math.cos(angle) * RADIUS;
         var z = center.z + Math.sin(angle) * RADIUS;
-        var altitude = agent.groundY(x, z) + AtomicDawn.CONFIG.scorchbeast.CRUISE_ALTITUDE + 6.0 + Mth.sin(
-            agent.tickCount * 0.02F
-        ) * 3.0;
+        var altitude = agent.groundY(x, z) + AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.flight.CRUISE_ALTITUDE
+            + 6.0 + Mth.sin(
+                agent.tickCount * 0.02F
+            ) * 3.0;
         agent.flyTo(new Vec3(x, altitude, z), SPEED);
         return ActionOutcome.running();
     }

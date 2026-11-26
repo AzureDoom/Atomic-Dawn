@@ -64,7 +64,7 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
         return attackReady(cooldowns, ScorchbeastBrain.DUST_COOLDOWN) && horizontalDistance(
             agent,
             target
-        ) <= AtomicDawn.CONFIG.scorchbeast.DUST_TRIGGER_RANGE;
+        ) <= AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.cropDusting.DUST_TRIGGER_RANGE;
     }
 
     @Override
@@ -88,14 +88,14 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
         if (heading == null || ++ticks > MAX_TICKS) {
             return ActionOutcome.success();
         }
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast;
         switch (phase) {
             case SETUP -> {
                 if (target == null) {
                     return ActionOutcome.success();
                 }
                 var start = target.position().subtract(heading.scale(SETUP_DISTANCE));
-                var altitude = Math.max(target.getY(), agent.groundY(start.x, start.z)) + config.CRUISE_ALTITUDE;
+                var altitude = Math.max(target.getY(), agent.groundY(start.x, start.z)) + config.flight.CRUISE_ALTITUDE;
                 agent.flyTo(new Vec3(start.x, altitude, start.z), SETUP_SPEED, 0.2);
                 if (horizontalDistance(agent, target) >= SETUP_DISTANCE * 0.8) {
                     phase = Phase.DIVE;
@@ -106,7 +106,7 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
                     screeched = true;
                     agent.playSound(ADSounds.SCORCHBEAST_SCREECH.get(), 4F, agent.getVoicePitch());
                 }
-                agent.allowLowFlight(config.DUST_ALTITUDE * 0.6);
+                agent.allowLowFlight(config.cropDusting.DUST_ALTITUDE * 0.6);
                 Vec3 aim;
                 if (target != null) {
                     var flat = new Vec3(target.getX() - agent.getX(), 0, target.getZ() - agent.getZ());
@@ -122,7 +122,11 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
                     aim = agent.position().add(heading.scale(LEAD));
                 }
                 var floor = Math.max(aim.y, agent.groundY(aim.x, aim.z));
-                agent.flyTo(new Vec3(aim.x, floor + config.DUST_ALTITUDE, aim.z), config.DUST_DIVE_SPEED, DIVE_AGILITY);
+                agent.flyTo(
+                    new Vec3(aim.x, floor + config.cropDusting.DUST_ALTITUDE, aim.z),
+                    config.cropDusting.DUST_DIVE_SPEED,
+                    DIVE_AGILITY
+                );
                 if (target == null) {
                     startClimb(agent);
                 }
@@ -131,7 +135,7 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
                 if (exit == null) {
                     return ActionOutcome.success();
                 }
-                agent.allowLowFlight(config.DUST_ALTITUDE * 0.6);
+                agent.allowLowFlight(config.cropDusting.DUST_ALTITUDE * 0.6);
                 agent.flyTo(exit, CLIMB_SPEED, 0.25);
                 if (agent.position().distanceTo(exit) < 6.0) {
                     return ActionOutcome.success();
@@ -152,7 +156,7 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
         var out = agent.position().add(heading.scale(OVERSHOOT));
         exit = new Vec3(
             out.x,
-            agent.groundY(out.x, out.z) + AtomicDawn.CONFIG.scorchbeast.CRUISE_ALTITUDE,
+            agent.groundY(out.x, out.z) + AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.flight.CRUISE_ALTITUDE,
             out.z
         );
     }
@@ -173,7 +177,7 @@ final class ScorchbeastCropDustTask extends ScorchbeastTask {
 
     @Override
     void end(ScorchbeastEntity agent, Blackboard blackboard, CooldownTracker cooldowns, ActionStatus reason) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.cropDusting;
         cooldowns.set(ScorchbeastBrain.DUST_COOLDOWN, config.DUST_COOLDOWN_TICKS + agent.getRandom().nextInt(120));
         finishAttack(agent, cooldowns);
     }

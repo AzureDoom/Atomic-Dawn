@@ -339,7 +339,7 @@ public class PowerArmorEntity extends LivingEntity {
 
     @Override
     protected float getRiddenSpeed(@NotNull Player player) {
-        var speed = (float) (WALK_SPEED * AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_SPEED)
+        var speed = (float) (WALK_SPEED * AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_SPEED)
             * PowerArmorUpgradeEvents.speedMultiplier(player, this);
         if (isFlying()) {
             return speed * FLY_SPEED_MULTIPLIER;
@@ -556,7 +556,7 @@ public class PowerArmorEntity extends LivingEntity {
             var dx = getX() - lastX;
             var dz = getZ() - lastZ;
             if (dx * dx + dz * dz > 0.0001 && isFunctioning()) {
-                drain((float) AtomicDawn.CONFIG.powerArmor.FUSION_CORE_MOVE_COST);
+                drain((float) AtomicDawn.CONFIG.common.equipment.powerArmor.fusionCores.FUSION_CORE_MOVE_COST);
                 var kinetic = PowerArmorBonuses.of(this).get(PowerArmorEffectType.KINETIC_CHARGE);
                 if (kinetic > 0F) {
                     recharge(kinetic * (float) Math.sqrt(dx * dx + dz * dz));
@@ -568,9 +568,10 @@ public class PowerArmorEntity extends LivingEntity {
             ) {
                 jetPackTicks++;
                 if (jetPackTicks >= JET_PACK_AP_DELAY && canJetPack()) {
-                    var apCost = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_AP_COST;
+                    var apCost =
+                        (float) AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_JETPACK_AP_COST;
                     if (player.hasInfiniteMaterials() || apCost <= 0F || VatsActions.spend(player, apCost)) {
-                        drain((float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_COST);
+                        drain((float) AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_JETPACK_COST);
                     }
                 }
             } else {
@@ -683,12 +684,17 @@ public class PowerArmorEntity extends LivingEntity {
         if (intact.isEmpty()) {
             return amount;
         }
-        var absorbed = amount * coverage * AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_MAX_REDUCTION;
+        var absorbed = amount * coverage
+            * AtomicDawn.CONFIG.common.equipment.powerArmor.protection.POWER_ARMOR_MAX_REDUCTION;
         var pick = random.nextFloat() * coverage;
         for (var slot : intact) {
             pick -= slot.coverage();
             if (pick <= 0F) {
-                damagePiece(slot, (float) (absorbed * AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_CONDITION_PER_DAMAGE));
+                damagePiece(
+                    slot,
+                    (float) (absorbed
+                        * AtomicDawn.CONFIG.common.equipment.powerArmor.protection.POWER_ARMOR_CONDITION_PER_DAMAGE)
+                );
                 break;
             }
         }
@@ -733,7 +739,8 @@ public class PowerArmorEntity extends LivingEntity {
             if (absorb >= 1F) {
                 return false;
             }
-            var threshold = AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_LANDING_HEIGHT * (1F + absorb * 3F);
+            var threshold = AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_LANDING_HEIGHT * (1F
+                + absorb * 3F);
             if (fallDistance >= threshold) {
                 land(fallDistance);
             }
@@ -749,9 +756,10 @@ public class PowerArmorEntity extends LivingEntity {
         if (!(level() instanceof ServerLevel serverLevel)) {
             return;
         }
-        landingTicks = AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_LANDING_TICKS;
+        landingTicks = AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_LANDING_TICKS;
         var intensity = (float) Mth.clamp(
-            (fallDistance - AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_LANDING_HEIGHT) / 20.0 + 0.5,
+            (fallDistance - AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_LANDING_HEIGHT) / 20.0
+                + 0.5,
             0.5,
             1.0
         );

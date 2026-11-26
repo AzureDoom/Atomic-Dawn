@@ -185,7 +185,10 @@ public final class ArmorBenchService {
             inventory.setChanged();
         }
         var copy = stack.copy();
-        var amount = Math.max(1, (int) Math.ceil(copy.getMaxDamage() * AtomicDawn.CONFIG.armor.ARMOR_REPAIR_FRACTION));
+        var amount = Math.max(
+            1,
+            (int) Math.ceil(copy.getMaxDamage() * AtomicDawn.CONFIG.common.equipment.armor.ARMOR_REPAIR_FRACTION)
+        );
         copy.setDamageValue(Math.max(0, copy.getDamageValue() - amount));
         menu.setWork(copy);
         player.level().playSound(null, player.blockPosition(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.6F, 1.2F);
@@ -214,7 +217,7 @@ public final class ArmorBenchService {
         if (recipe == null) {
             return List.of();
         }
-        var fraction = (float) AtomicDawn.CONFIG.armor.ARMOR_SCRAP_RETURN * Math.max(
+        var fraction = (float) AtomicDawn.CONFIG.common.equipment.armor.ARMOR_SCRAP_RETURN * Math.max(
             0.2F,
             ArmorPieceItem.condition(stack)
         );

@@ -182,7 +182,7 @@ public final class SpecialStats {
                 bonus += effect.value();
             }
         }
-        return Math.clamp(bonus, 0F, (float) AtomicDawn.CONFIG.perks.PERKS_MAX_DAMAGE_BONUS);
+        return Math.clamp(bonus, 0F, (float) AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_DAMAGE_BONUS);
     }
 
     public float conditionLossMultiplier() {

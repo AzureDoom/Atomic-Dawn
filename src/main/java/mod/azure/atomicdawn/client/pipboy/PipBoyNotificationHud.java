@@ -55,7 +55,7 @@ public final class PipBoyNotificationHud implements GuiLayer {
     }
 
     public static void push(PipBoyNotifications.Kind kind, int value, String detail) {
-        var duration = AtomicDawn.CONFIG.clientPipboy.PIPBOY_NOTIFICATION_TICKS;
+        var duration = AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_NOTIFICATION_TICKS;
         if (duration <= 0) {
             return;
         }
@@ -70,7 +70,7 @@ public final class PipBoyNotificationHud implements GuiLayer {
         }
         ENTRIES.add(new Entry(kind, detail, value, expires));
         var player = Minecraft.getInstance().player;
-        if (player != null && AtomicDawn.CONFIG.clientPipboy.PIPBOY_SOUNDS) {
+        if (player != null && AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_SOUNDS) {
             player.playSound(ADSounds.PIPBOY_NOTIFICATION.get(), 1F, 1F);
         }
     }

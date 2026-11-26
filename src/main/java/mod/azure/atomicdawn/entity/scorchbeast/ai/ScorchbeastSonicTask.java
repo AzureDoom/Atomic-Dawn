@@ -38,7 +38,8 @@ final class ScorchbeastSonicTask extends ScorchbeastTask {
             return false;
         }
         var distance = agent.distanceTo(target);
-        return distance >= MIN_RANGE && distance <= AtomicDawn.CONFIG.scorchbeast.SONIC_RANGE;
+        return distance >= MIN_RANGE
+            && distance <= AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.sonicAttack.SONIC_RANGE;
     }
 
     @Override
@@ -68,7 +69,7 @@ final class ScorchbeastSonicTask extends ScorchbeastTask {
     }
 
     private static void fire(ServerLevel level, ScorchbeastEntity agent, LivingEntity target) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.sonicAttack;
         var origin = agent.mouth();
         var aim = target.position().add(0, target.getBbHeight() * 0.5, 0);
         var travel = aim.distanceTo(origin) / config.SONIC_SPEED;
@@ -85,7 +86,7 @@ final class ScorchbeastSonicTask extends ScorchbeastTask {
 
     @Override
     void end(ScorchbeastEntity agent, Blackboard blackboard, CooldownTracker cooldowns, ActionStatus reason) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.sonicAttack;
         var cooldown = Math.max(MIN_COOLDOWN, config.SONIC_COOLDOWN_TICKS);
         cooldowns.set(ScorchbeastBrain.SONIC_COOLDOWN, cooldown + agent.getRandom().nextInt(80));
         finishAttack(agent, cooldowns);

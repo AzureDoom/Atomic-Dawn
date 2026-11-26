@@ -105,7 +105,7 @@ public final class VatsTargeting {
     public static double maxRange(WeaponDefinition definition) {
         return definition.melee()
             .map(melee -> (double) melee.reach() + 1.5)
-            .orElse(Math.min(definition.damage().range(), AtomicDawn.CONFIG.vats.VATS_MAX_RANGE));
+            .orElse(Math.min(definition.damage().range(), AtomicDawn.CONFIG.common.combat.vats.VATS_MAX_RANGE));
     }
 
     public static double angleTo(Player shooter, Vec3 point) {
@@ -157,7 +157,7 @@ public final class VatsTargeting {
             return 0F;
         }
         var distance = shooter.getEyePosition().distanceTo(part.position());
-        var cap = (float) AtomicDawn.CONFIG.vats.VATS_MAX_HIT_CHANCE;
+        var cap = (float) AtomicDawn.CONFIG.common.combat.vats.VATS_MAX_HIT_CHANCE;
         if (definition.isMelee()) {
             var inReach = distance <= maxRange(definition);
             if (!inReach) {

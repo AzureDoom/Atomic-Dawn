@@ -68,7 +68,7 @@ public final class LockEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBreakProtect(BreakBlockEvent event) {
-        if (!LockService.enabled() || !AtomicDawn.CONFIG.locks.LOCKS_PROTECT_BLOCKS) {
+        if (!LockService.enabled() || !AtomicDawn.CONFIG.common.settlement.locks.locking.LOCKS_PROTECT_BLOCKS) {
             return;
         }
         if (!(event.getLevel() instanceof Level level) || level.isClientSide()) {

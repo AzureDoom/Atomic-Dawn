@@ -120,7 +120,7 @@ public final class PerkEvents {
     }
 
     private static long cooldownTicks() {
-        return AtomicDawn.CONFIG.perks.PERKS_PROC_COOLDOWN_SECONDS * 20L;
+        return AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_PROC_COOLDOWN_SECONDS * 20L;
     }
 
     private static boolean isMelee(DamageSource source, LivingEntity victim) {
@@ -294,7 +294,7 @@ public final class PerkEvents {
             reduction += dodge;
         }
         if (reduction > 0F) {
-            var cap = (float) AtomicDawn.CONFIG.perks.PERKS_MAX_DAMAGE_REDUCTION;
+            var cap = (float) AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_DAMAGE_REDUCTION;
             event.setAmount(event.getAmount() * (1F - Math.min(reduction, cap)));
         }
 
@@ -768,7 +768,7 @@ public final class PerkEvents {
             var ap = VatsActions.actionPoints(player);
             var max = VatsActions.maxActionPoints(player);
             if (ap.points() < max) {
-                var gain = (float) AtomicDawn.CONFIG.vats.AP_REGEN_PER_SECOND * soloAp;
+                var gain = (float) AtomicDawn.CONFIG.common.combat.vats.AP_REGEN_PER_SECOND * soloAp;
                 player.setData(
                     ADAttachments.ACTION_POINTS.get(),
                     ap.withPoints(Math.min(max, ap.points() + gain), max)
@@ -847,7 +847,7 @@ public final class PerkEvents {
         if (PerkCombat.lowHealth(player)) {
             speed += stats.extra(PerkEffectType.LOW_HEALTH_SPEED);
         }
-        speed = Math.clamp(speed, 0F, (float) AtomicDawn.CONFIG.perks.PERKS_MAX_SPEED_BONUS);
+        speed = Math.clamp(speed, 0F, (float) AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_SPEED_BONUS);
         setModifier(player, Attributes.MOVEMENT_SPEED, SPEED_MODIFIER, speed, true);
         var attackSpeed = Math.clamp(stats.value(PerkEffectType.ATTACK_SPEED, meleeCategory(player)), 0F, 1F);
         setModifier(player, Attributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, attackSpeed, true);

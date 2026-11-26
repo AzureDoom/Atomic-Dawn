@@ -43,7 +43,7 @@ public final class SkylineStormVisuals {
             return;
         }
 
-        if (!AtomicDawn.CONFIG.skylineVisuals.SKYLINE_STORM_VISUALS) {
+        if (!AtomicDawn.CONFIG.client.effects.skyline.SKYLINE_STORM_VISUALS) {
             stormStrength = 0;
             return;
         }
@@ -56,7 +56,7 @@ public final class SkylineStormVisuals {
         ticks++;
         RandomSource random = level.getRandom();
         Vec3 center = minecraft.player.position();
-        int detail = AtomicDawn.CONFIG.skylineVisuals.SKYLINE_STORM_DETAIL;
+        int detail = AtomicDawn.CONFIG.client.effects.skyline.SKYLINE_STORM_DETAIL;
 
         if (ticks % 2 == 0) {
             for (int i = 0; i < detail + 1; i++) {

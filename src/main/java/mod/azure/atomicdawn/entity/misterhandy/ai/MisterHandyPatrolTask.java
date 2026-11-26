@@ -37,7 +37,7 @@ final class MisterHandyPatrolTask extends MisterHandyTask {
         if (home == null) {
             goal = DefaultRandomPos.getPos(agent, 10, 4);
         } else {
-            var radius = AtomicDawn.CONFIG.misterHandy.PATROL_RADIUS;
+            var radius = AtomicDawn.CONFIG.server.entities.robots.misterHandy.behavior.PATROL_RADIUS;
             var angle = random.nextFloat() * Mth.TWO_PI;
             var distance = random.nextDouble() * radius;
             var point = new Vec3(

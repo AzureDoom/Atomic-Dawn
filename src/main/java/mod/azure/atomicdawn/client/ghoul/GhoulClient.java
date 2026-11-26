@@ -57,7 +57,10 @@ public final class GhoulClient {
 
     public static @Nullable GhoulAppearance appearance(int entityId) {
         var minecraft = Minecraft.getInstance();
-        if (minecraft.level == null || !GhoulService.enabled() || !AtomicDawn.CONFIG.clientGhoul.GHOUL_COSMETICS) {
+        if (
+            minecraft.level == null || !GhoulService.enabled()
+                || !AtomicDawn.CONFIG.client.effects.ghoul.GHOUL_COSMETICS
+        ) {
             return null;
         }
         if (!(minecraft.level.getEntity(entityId) instanceof Player player)) {
@@ -102,7 +105,7 @@ public final class GhoulClient {
         if (level == null || camera == null || minecraft.isPaused() || !GhoulService.enabled()) {
             return;
         }
-        if (!AtomicDawn.CONFIG.clientGhoul.GHOUL_COSMETICS) {
+        if (!AtomicDawn.CONFIG.client.effects.ghoul.GHOUL_COSMETICS) {
             return;
         }
         for (var player : level.players()) {

@@ -11,19 +11,19 @@ public final class CampClaim {
     private CampClaim() {}
 
     public static int radius() {
-        return AtomicDawn.CONFIG.camp.CAMP_RADIUS;
+        return AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_RADIUS;
     }
 
     public static int up() {
-        return AtomicDawn.CONFIG.camp.CAMP_HEIGHT_UP;
+        return AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_HEIGHT_UP;
     }
 
     public static int down() {
-        return AtomicDawn.CONFIG.camp.CAMP_HEIGHT_DOWN;
+        return AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_HEIGHT_DOWN;
     }
 
     public static int spacing() {
-        return Math.max(AtomicDawn.CONFIG.camp.CAMP_MIN_SPACING, radius() * 2 + 1);
+        return Math.max(AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_MIN_SPACING, radius() * 2 + 1);
     }
 
     public static boolean contains(BlockPos origin, BlockPos pos) {

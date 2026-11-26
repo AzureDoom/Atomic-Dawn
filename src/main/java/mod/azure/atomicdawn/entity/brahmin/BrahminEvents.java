@@ -76,6 +76,9 @@ public final class BrahminEvents {
         if (entity.level().isClientSide() || !event.getItem().has(ADDataComponents.IRRADIATED.get())) {
             return;
         }
-        RadiationService.expose(entity, (float) AtomicDawn.CONFIG.radiation.RAW_BRAHMIN_BEEF_RADS);
+        RadiationService.expose(
+            entity,
+            (float) AtomicDawn.CONFIG.common.survival.radiation.consumables.RAW_BRAHMIN_BEEF_RADS
+        );
     }
 }

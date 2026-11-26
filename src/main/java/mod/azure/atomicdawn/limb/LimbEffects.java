@@ -27,7 +27,7 @@ public final class LimbEffects {
         if (entity.level().isClientSide()) {
             return;
         }
-        var config = AtomicDawn.CONFIG.limbs;
+        var config = AtomicDawn.CONFIG.common.combat.limbs.penalties;
         var legs = LimbService.crippledLegs(entity);
         var speed = legs == 0
             ? 0.0

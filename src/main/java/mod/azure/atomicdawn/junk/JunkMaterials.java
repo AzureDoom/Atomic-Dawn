@@ -20,11 +20,11 @@ public final class JunkMaterials {
     private JunkMaterials() {}
 
     private static boolean autoScrap() {
-        return AtomicDawn.CONFIG.junk.AUTO_SCRAP_JUNK;
+        return AtomicDawn.CONFIG.common.equipment.junk.AUTO_SCRAP_JUNK;
     }
 
     private static boolean scrapboxCrafting() {
-        return AtomicDawn.CONFIG.junk.JUNK_STORAGE_CRAFTING;
+        return AtomicDawn.CONFIG.common.equipment.junk.JUNK_STORAGE_CRAFTING;
     }
 
     private static int scrapYield(RegistryAccess access, Item item, SizedIngredient entry) {

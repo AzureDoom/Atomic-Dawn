@@ -120,7 +120,7 @@ public final class MeleeResolver {
                     1F
                 )
             );
-        if (AtomicDawn.CONFIG.weapons.IMPACT_PARTICLES) {
+        if (AtomicDawn.CONFIG.common.combat.weapons.IMPACT_PARTICLES) {
             level.sendParticles(
                 ParticleTypes.CRIT,
                 hit.getLocation().x,

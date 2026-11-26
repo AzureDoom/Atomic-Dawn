@@ -27,7 +27,7 @@ public final class ScorchbeastSummons {
     }
 
     public static void summon(ServerLevel level, ScorchbeastEntity beast) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.shockwave;
         var allowed = Math.min(config.SUMMONS_PER_SHOCKWAVE, config.MAX_ACTIVE_SUMMONS - active(level, beast));
         var target = beast.getTarget();
         var random = beast.getRandom();

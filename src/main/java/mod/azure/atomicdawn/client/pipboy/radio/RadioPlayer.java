@@ -67,7 +67,7 @@ public final class RadioPlayer {
 
     public static void tune(Identifier id) {
         var minecraft = Minecraft.getInstance();
-        if (minecraft.level == null || !AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_RADIO) {
+        if (minecraft.level == null || !AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_RADIO) {
             return;
         }
         var definition = RadioStation.get(minecraft.level.registryAccess(), id).orElse(null);
@@ -131,7 +131,7 @@ public final class RadioPlayer {
             return;
         }
         var minecraft = Minecraft.getInstance();
-        if (AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_PAUSES_MUSIC) {
+        if (AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_PAUSES_MUSIC) {
             minecraft.getMusicManager().stopPlaying();
         }
         current = new RadioSoundInstance(SoundEvent.createVariableRangeEvent(track));
@@ -157,7 +157,10 @@ public final class RadioPlayer {
             return;
         }
         var minecraft = Minecraft.getInstance();
-        if (minecraft.level == null || minecraft.player == null || !AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_RADIO) {
+        if (
+            minecraft.level == null || minecraft.player == null
+                || !AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_RADIO
+        ) {
             stop();
             return;
         }
@@ -166,7 +169,7 @@ public final class RadioPlayer {
             return;
         }
         if (
-            !AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_WHEN_CLOSED && !(minecraft.gui
+            !AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_WHEN_CLOSED && !(minecraft.gui
                 .screen() instanceof PipBoyScreen)
         ) {
             stop();
@@ -179,7 +182,7 @@ public final class RadioPlayer {
         if (minecraft.getSoundManager().isActive(current)) {
             started = true;
             playedTicks++;
-            if (AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_PAUSES_MUSIC && playedTicks % 100 == 0) {
+            if (AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_PAUSES_MUSIC && playedTicks % 100 == 0) {
                 minecraft.getMusicManager().stopPlaying();
             }
             return;

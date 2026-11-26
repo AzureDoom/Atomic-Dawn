@@ -70,17 +70,17 @@ public final class GhoulConfirmScreen extends Screen {
 
     private List<Component> body() {
         var result = new ArrayList<Component>();
-        var config = AtomicDawn.CONFIG.ghoul;
+        var config = AtomicDawn.CONFIG.common.progression.ghoul;
         if (kind == GhoulTreatmentService.Kind.GHOULIFY) {
             result.add(
                 Component.translatable(
                     "ghoul.atomicdawn.confirm.ghoulify.radiation",
-                    Math.round(config.GLOW_CONVERSION * 100.0)
+                    Math.round(config.glow.GLOW_CONVERSION * 100.0)
                 )
             );
             result.add(Component.translatable("ghoul.atomicdawn.confirm.ghoulify.feral"));
             result.add(Component.translatable("ghoul.atomicdawn.confirm.ghoulify.keep"));
-            if (!config.ALLOW_REVERSION) {
+            if (!config.general.ALLOW_REVERSION) {
                 result.add(Component.translatable("ghoul.atomicdawn.confirm.no_reversion"));
             } else {
                 result.add(cooldownLine());
@@ -94,7 +94,7 @@ public final class GhoulConfirmScreen extends Screen {
     }
 
     private static Component cooldownLine() {
-        var hours = AtomicDawn.CONFIG.ghoul.FORM_CHANGE_COOLDOWN_HOURS;
+        var hours = AtomicDawn.CONFIG.common.progression.ghoul.general.FORM_CHANGE_COOLDOWN_HOURS;
         if (hours <= 0.0) {
             return Component.translatable("ghoul.atomicdawn.confirm.cooldown.none");
         }

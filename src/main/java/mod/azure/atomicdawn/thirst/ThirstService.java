@@ -13,7 +13,7 @@ public final class ThirstService {
     private ThirstService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.thirst.THIRST_ENABLED;
+        return AtomicDawn.CONFIG.common.survival.thirst.hydration.THIRST_ENABLED;
     }
 
     public static float thirst(Player player) {
@@ -25,7 +25,9 @@ public final class ThirstService {
     }
 
     public static float apMultiplier(Player player) {
-        return dehydrated(player) ? (float) AtomicDawn.CONFIG.thirst.DEHYDRATED_AP_MULTIPLIER : 1F;
+        return dehydrated(player)
+            ? (float) AtomicDawn.CONFIG.common.survival.thirst.hydration.DEHYDRATED_AP_MULTIPLIER
+            : 1F;
     }
 
     public static void set(Player player, float value) {
@@ -53,7 +55,7 @@ public final class ThirstService {
             }
             return;
         }
-        var config = AtomicDawn.CONFIG.thirst;
+        var config = AtomicDawn.CONFIG.common.survival.thirst.hydration;
         var drain = (float) config.THIRST_DRAIN_PER_SECOND;
         if (player.isSprinting()) {
             drain *= (float) config.THIRST_SPRINT_MULTIPLIER;

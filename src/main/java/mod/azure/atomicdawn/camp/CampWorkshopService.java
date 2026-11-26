@@ -89,7 +89,7 @@ public final class CampWorkshopService {
     private CampWorkshopService() {}
 
     public static int reach() {
-        return AtomicDawn.CONFIG.camp.CAMP_BUILD_REACH;
+        return AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_BUILD_REACH;
     }
 
     static boolean throttled(ServerPlayer player, int nonce) {
@@ -364,7 +364,7 @@ public final class CampWorkshopService {
         if (definition.isEmpty()) {
             return items;
         }
-        var fraction = AtomicDawn.CONFIG.camp.CAMP_SCRAP_REFUND;
+        var fraction = AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_SCRAP_REFUND;
         if (fraction <= 0.0) {
             return items;
         }
@@ -426,7 +426,7 @@ public final class CampWorkshopService {
     }
 
     public static Optional<Component> manualCheck(ServerPlayer player, ServerLevel level, BlockPos pos, Block block) {
-        if (!AtomicDawn.CONFIG.camp.CAMP_TRACK_MANUAL) {
+        if (!AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_TRACK_MANUAL) {
             return Optional.empty();
         }
         var camp = refreshed(level, CampManager.claimAt(level.getServer(), level.dimension(), pos));
@@ -449,7 +449,7 @@ public final class CampWorkshopService {
     }
 
     public static void trackManual(ServerPlayer player, ServerLevel level, BlockPos pos, BlockState state) {
-        if (!AtomicDawn.CONFIG.camp.CAMP_TRACK_MANUAL) {
+        if (!AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_TRACK_MANUAL) {
             return;
         }
         var server = level.getServer();

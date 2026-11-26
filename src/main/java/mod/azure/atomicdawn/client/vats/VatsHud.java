@@ -32,43 +32,43 @@ import mod.azure.atomicdawn.weapon.instance.Weapons;
 public final class VatsHud implements GuiLayer {
 
     private static int primary() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR, 0xFF7CFC9A);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR, 0xFF7CFC9A);
     }
 
     private static int dim() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_DIM, 0xB07CFC9A);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_DIM, 0xB07CFC9A);
     }
 
     private static int warn() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_WARN, 0xFFFFB347);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_WARN, 0xFFFFB347);
     }
 
     private static int critical() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_CRITICAL, 0xFFFFE066);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_CRITICAL, 0xFFFFE066);
     }
 
     private static int miss() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_MISS, 0xFFFF5050);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_MISS, 0xFFFF5050);
     }
 
     private static int background() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_BACKGROUND, 0x80000000);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_BACKGROUND, 0x80000000);
     }
 
     private static int barBackground() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_BAR_BACKGROUND, 0x60FFFFFF);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_BAR_BACKGROUND, 0x60FFFFFF);
     }
 
     private static int tint() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_TINT, 0x2234FF6A);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_TINT, 0x2234FF6A);
     }
 
     private static int targetFill() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_TARGET_FILL, 0x3034FF6A);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_TARGET_FILL, 0x3034FF6A);
     }
 
     private static int targetOutline() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientVats.VATS_COLOR_TARGET_OUTLINE, 0xFF34FF6A);
+        return ADColors.argb(AtomicDawn.CONFIG.client.hud.vatsColors.VATS_COLOR_TARGET_OUTLINE, 0xFF34FF6A);
     }
 
     @Override
@@ -209,7 +209,7 @@ public final class VatsHud implements GuiLayer {
                 var size = selected ? 5 : 3;
                 outline(graphics, sx - size, sy - size, sx + size, sy + size, color);
                 var condition = LimbService.state(target).get(entry.getKey());
-                if (condition < 1F && AtomicDawn.CONFIG.limbs.LIMBS_ENABLED) {
+                if (condition < 1F && AtomicDawn.CONFIG.common.combat.limbs.general.LIMBS_ENABLED) {
                     var barY = sy + size + 2;
                     graphics.fill(sx - 6, barY, sx + 6, barY + 2, barBackground());
                     graphics.fill(

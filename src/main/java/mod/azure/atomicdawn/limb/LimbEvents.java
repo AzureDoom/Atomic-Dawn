@@ -51,20 +51,20 @@ public final class LimbEvents {
             var part = pending.part() != null ? pending.part() : LimbService.resolve(target, pending.position());
             if (part != null) {
                 var multiplier = pending.part() != null
-                    ? (float) AtomicDawn.CONFIG.limbs.VATS_LIMB_DAMAGE_MULTIPLIER
+                    ? (float) AtomicDawn.CONFIG.common.combat.limbs.damage.VATS_LIMB_DAMAGE_MULTIPLIER
                     : 1F;
                 LimbService.damage(target, part, amount * multiplier, attacker);
             }
             return;
         }
         if (source.is(DamageTypeTags.IS_FALL)) {
-            var fall = amount * (float) AtomicDawn.CONFIG.limbs.FALL_LIMB_DAMAGE_MULTIPLIER;
+            var fall = amount * (float) AtomicDawn.CONFIG.common.combat.limbs.damage.FALL_LIMB_DAMAGE_MULTIPLIER;
             LimbService.damage(target, BodyPart.LEFT_LEG, fall, null);
             LimbService.damage(target, BodyPart.RIGHT_LEG, fall, null);
             return;
         }
         if (source.is(DamageTypeTags.IS_EXPLOSION)) {
-            var blast = amount * (float) AtomicDawn.CONFIG.limbs.EXPLOSION_LIMB_DAMAGE_MULTIPLIER;
+            var blast = amount * (float) AtomicDawn.CONFIG.common.combat.limbs.damage.EXPLOSION_LIMB_DAMAGE_MULTIPLIER;
             for (var part : LimbProfiles.of(target).parts()) {
                 LimbService.damage(target, part, blast, attacker);
             }
@@ -88,7 +88,7 @@ public final class LimbEvents {
         if (!(event.getEntity() instanceof LivingEntity living) || !living.hasData(ADAttachments.LIMBS.get())) {
             return;
         }
-        var config = AtomicDawn.CONFIG.limbs;
+        var config = AtomicDawn.CONFIG.common.combat.limbs.penalties;
         if (
             living instanceof Player player && config.BOTH_LEGS_BLOCK_SPRINT && player.isSprinting() && LimbService
                 .legsGone(player)
@@ -117,7 +117,7 @@ public final class LimbEvents {
     }
 
     private static void regenerate(LivingEntity living, long now) {
-        var config = AtomicDawn.CONFIG.limbs;
+        var config = AtomicDawn.CONFIG.common.combat.limbs.recovery;
         var state = LimbService.state(living);
         if (state.healthy()) {
             LimbService.set(living, state);
@@ -157,7 +157,7 @@ public final class LimbEvents {
     @SubscribeEvent
     public static void onWakeUp(PlayerWakeUpEvent event) {
         var player = event.getEntity();
-        if (!player.level().isClientSide() && AtomicDawn.CONFIG.limbs.SLEEP_HEALS_LIMBS) {
+        if (!player.level().isClientSide() && AtomicDawn.CONFIG.common.combat.limbs.recovery.SLEEP_HEALS_LIMBS) {
             LimbService.healAll(player);
         }
     }

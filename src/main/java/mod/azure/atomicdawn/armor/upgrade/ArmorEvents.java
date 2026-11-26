@@ -189,7 +189,7 @@ public final class ArmorEvents {
         if (!bonuses.has(ArmorEffectType.JET_PACK) || player.onGround() || player.isInWater()) {
             return;
         }
-        var cost = (float) AtomicDawn.CONFIG.armor.ARMOR_JETPACK_AP_COST;
+        var cost = (float) AtomicDawn.CONFIG.common.equipment.armor.ARMOR_JETPACK_AP_COST;
         if (!player.hasInfiniteMaterials() && !VatsActions.spend(player, cost)) {
             return;
         }
@@ -249,7 +249,7 @@ public final class ArmorEvents {
         state.lastCombat = now;
         var reduction = reduction(player, state, bonuses, source);
         if (reduction > 0F) {
-            var cap = (float) AtomicDawn.CONFIG.armor.ARMOR_LEGENDARY_MAX_REDUCTION;
+            var cap = (float) AtomicDawn.CONFIG.common.equipment.armor.ARMOR_LEGENDARY_MAX_REDUCTION;
             event.setAmount(event.getAmount() * (1F - Math.min(reduction, cap)));
         }
         if (isMelee(source, player) && source.getEntity() instanceof LivingEntity attacker) {
@@ -591,7 +591,7 @@ public final class ArmorEvents {
             false
         );
         setModifier(player, Attributes.MAX_HEALTH, HEALTH_MODIFIER, bonuses.get(ArmorEffectType.MAX_HEALTH), false);
-        var weight = bonuses.weight() * (float) AtomicDawn.CONFIG.armor.ARMOR_WEIGHT_PENALTY_MULTIPLIER
+        var weight = bonuses.weight() * (float) AtomicDawn.CONFIG.common.equipment.armor.ARMOR_WEIGHT_PENALTY_MULTIPLIER
             * PerkHooks.armorWeightMultiplier(player);
         var speed = Math.clamp(bonuses.get(ArmorEffectType.SPEED) - weight, -0.5F, 1F);
         setModifier(player, Attributes.MOVEMENT_SPEED, SPEED_MODIFIER, speed, true);

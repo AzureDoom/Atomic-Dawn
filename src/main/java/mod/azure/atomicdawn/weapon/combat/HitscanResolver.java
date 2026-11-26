@@ -101,7 +101,7 @@ public final class HitscanResolver {
                 hitPositions.get(target),
                 entry.getFloatValue()
             );
-            if (headshots.contains(target) && AtomicDawn.CONFIG.weapons.IMPACT_PARTICLES) {
+            if (headshots.contains(target) && AtomicDawn.CONFIG.common.combat.weapons.IMPACT_PARTICLES) {
                 level.sendParticles(
                     ParticleTypes.CRIT,
                     target.getX(),
@@ -150,7 +150,7 @@ public final class HitscanResolver {
     }
 
     private static void impactBlock(ServerLevel level, Vec3 pos, BlockState state) {
-        if (!AtomicDawn.CONFIG.weapons.IMPACT_PARTICLES || state.isAir()) {
+        if (!AtomicDawn.CONFIG.common.combat.weapons.IMPACT_PARTICLES || state.isAir()) {
             return;
         }
         var particle = new BlockParticleOption(ParticleTypes.BLOCK, state);
@@ -159,7 +159,7 @@ public final class HitscanResolver {
     }
 
     private static void impactEntity(ServerLevel level, Vec3 pos) {
-        if (AtomicDawn.CONFIG.weapons.IMPACT_PARTICLES) {
+        if (AtomicDawn.CONFIG.common.combat.weapons.IMPACT_PARTICLES) {
             level.sendParticles(ParticleTypes.DAMAGE_INDICATOR, pos.x, pos.y, pos.z, 1, 0.05, 0.05, 0.05, 0.0);
         }
     }

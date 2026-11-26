@@ -42,7 +42,7 @@ public final class PipBoyNotifications {
     }
 
     public static void send(ServerPlayer player, Kind kind, int value, String detail) {
-        if (!AtomicDawn.CONFIG.pipboy.PIPBOY_NOTIFICATIONS || player.connection == null) {
+        if (!AtomicDawn.CONFIG.common.pipboy.general.PIPBOY_NOTIFICATIONS || player.connection == null) {
             return;
         }
         ADNetwork.sendTo(player, new PipBoyNotificationPayload(kind, value, detail));

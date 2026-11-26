@@ -15,7 +15,7 @@ public final class RadStormService {
     private RadStormService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.environmentalRadiation.RAD_STORMS_ENABLED;
+        return AtomicDawn.CONFIG.common.survival.radiation.storms.RAD_STORMS_ENABLED;
     }
 
     public static RadStorm state(ServerLevel level) {
@@ -38,7 +38,7 @@ public final class RadStormService {
             return;
         }
         var active = raining && enabled() && level.getRandom()
-            .nextDouble() < AtomicDawn.CONFIG.environmentalRadiation.RAD_STORM_CHANCE;
+            .nextDouble() < AtomicDawn.CONFIG.common.survival.radiation.storms.RAD_STORM_CHANCE;
         level.setData(ADAttachments.LEVEL_RAD_STORM.get(), new RadStorm(raining, active));
         if (!active) {
             return;
@@ -69,7 +69,7 @@ public final class RadStormService {
 
     public static float radiation(ServerLevel level, Player player) {
         return exposed(level, player)
-            ? (float) AtomicDawn.CONFIG.environmentalRadiation.RAD_STORM_RADS_PER_SECOND
+            ? (float) AtomicDawn.CONFIG.common.survival.radiation.storms.RAD_STORM_RADS_PER_SECOND
             : 0F;
     }
 }

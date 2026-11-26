@@ -45,8 +45,8 @@ public class StimpakItem extends Item {
             LimbService.healAll(target);
             return;
         }
-        target.heal((float) AtomicDawn.CONFIG.limbs.STIMPAK_HEALTH);
-        LimbService.restore(target, (float) AtomicDawn.CONFIG.limbs.STIMPAK_LIMB_RESTORE, true);
+        target.heal((float) AtomicDawn.CONFIG.common.combat.limbs.recovery.STIMPAK_HEALTH);
+        LimbService.restore(target, (float) AtomicDawn.CONFIG.common.combat.limbs.recovery.STIMPAK_LIMB_RESTORE, true);
     }
 
     @Override

@@ -62,7 +62,7 @@ final class LegendaryPage {
     }
 
     private static Component slotLabel(SpecialProgress progress, int index, int unlocked) {
-        var thresholds = AtomicDawn.CONFIG.perks.LEGENDARY_SLOT_LEVELS;
+        var thresholds = AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_SLOT_LEVELS;
         if (index >= unlocked) {
             var level = thresholds != null && index < thresholds.length ? thresholds[index] : -1;
             return level > 0
@@ -248,7 +248,7 @@ final class LegendaryPage {
         var listW = listWidth(area);
         var detail = area.below(TOP).rightOf(listW, 8);
 
-        if (!AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED) {
             screen.text(
                 graphics,
                 Component.translatable("special.atomicdawn.result.disabled"),

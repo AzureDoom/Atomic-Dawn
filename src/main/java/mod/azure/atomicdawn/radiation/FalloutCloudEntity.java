@@ -73,7 +73,7 @@ public class FalloutCloudEntity extends Entity {
         if (tickCount % 20 != 0) {
             return;
         }
-        var rate = (float) AtomicDawn.CONFIG.radiation.FALLOUT_RADS_PER_SECOND;
+        var rate = (float) AtomicDawn.CONFIG.common.survival.radiation.nuclear.FALLOUT_RADS_PER_SECOND;
         var area = new AABB(position(), position()).inflate(radius, radius * 0.75, radius);
         for (var living : level.getEntitiesOfClass(LivingEntity.class, area, LivingEntity::isAlive)) {
             var distance = living.position().distanceTo(position());

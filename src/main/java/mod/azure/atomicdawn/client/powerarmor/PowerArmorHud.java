@@ -84,7 +84,7 @@ public final class PowerArmorHud implements GuiLayer {
         }
         graphics.fill(x, y, x + PANEL_W, y + AP_H, 0xB0000000);
         graphics.fill(x, y, x + PANEL_W, y + 1, PipBoyTheme.border());
-        var cost = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_AP_COST;
+        var cost = (float) AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_JETPACK_AP_COST;
         var empty = !player.hasInfiniteMaterials() && ap.points() < cost;
         var blink = (player.tickCount / 5) % 2 == 0;
         bar(

@@ -51,7 +51,7 @@ public final class ScorchbeastSpawning {
     }
 
     public static void tick(ServerLevel level) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.spawning;
         if (config.SPAWN_CHANCE <= 0.0 || level.getDifficulty() == Difficulty.PEACEFUL) {
             return;
         }
@@ -90,7 +90,7 @@ public final class ScorchbeastSpawning {
     }
 
     private static boolean eligible(ServerLevel level, BlockPos site) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.spawning;
         var last = LAST_SPAWN.getOrDefault(level.dimension(), Map.of()).get(site.asLong());
         if (last != null) {
             var elapsed = Math.max(level.getGameTime() - last[0], level.getDefaultClockTime() - last[1]);
@@ -150,7 +150,7 @@ public final class ScorchbeastSpawning {
     }
 
     public static boolean siteOccupied(ServerLevel level, BlockPos center) {
-        var scan = AtomicDawn.CONFIG.scorchbeast.LEASH_RANGE + 16.0;
+        var scan = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.behavior.LEASH_RANGE + 16.0;
         var area = new AABB(center).inflate(scan);
         return !level.getEntitiesOfClass(
             ScorchbeastEntity.class,

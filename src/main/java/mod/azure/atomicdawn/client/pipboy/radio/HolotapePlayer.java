@@ -74,7 +74,7 @@ public final class HolotapePlayer {
         clearPlayback();
         current = id;
         pendingTapeSound = SoundEvent.createVariableRangeEvent(holotape.sound());
-        if (AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_PAUSES_MUSIC) {
+        if (AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_PAUSES_MUSIC) {
             minecraft.getMusicManager().stopPlaying();
         }
         startCue = new RadioSoundInstance(ADSounds.HOLOTAPE_START.get());

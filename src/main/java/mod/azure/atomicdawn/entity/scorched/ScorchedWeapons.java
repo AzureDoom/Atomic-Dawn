@@ -87,7 +87,7 @@ public final class ScorchedWeapons {
     }
 
     public static ItemStack roll(Level level, ScorchedVariant variant, RandomSource random) {
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.spawning;
         if (variant.usesGuns() && random.nextDouble() < config.GUN_CHANCE) {
             var roll = random.nextInt(9);
             Item gun = roll < 4

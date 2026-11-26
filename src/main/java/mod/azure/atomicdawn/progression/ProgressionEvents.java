@@ -29,13 +29,13 @@ public final class ProgressionEvents {
             return;
         }
         var random = victim.getRandom();
-        if (random.nextDouble() < AtomicDawn.CONFIG.workbenches.LEGENDARY_MODULE_DROP_CHANCE) {
+        if (random.nextDouble() < AtomicDawn.CONFIG.common.equipment.workbenches.LEGENDARY_MODULE_DROP_CHANCE) {
             drop(event, level, new ItemStack(ADItems.LEGENDARY_MODULE.get()));
         }
-        if (random.nextDouble() < AtomicDawn.CONFIG.workbenches.LEGENDARY_WEAPON_DROP_CHANCE) {
+        if (random.nextDouble() < AtomicDawn.CONFIG.common.equipment.workbenches.LEGENDARY_WEAPON_DROP_CHANCE) {
             drop(event, level, LegendaryRolls.randomLegendaryWeapon(level, random));
         }
-        if (random.nextDouble() < AtomicDawn.CONFIG.workbenches.LEGENDARY_ARMOR_DROP_CHANCE) {
+        if (random.nextDouble() < AtomicDawn.CONFIG.common.equipment.workbenches.LEGENDARY_ARMOR_DROP_CHANCE) {
             drop(event, level, LegendaryRolls.randomLegendaryArmor(level, random));
         }
     }

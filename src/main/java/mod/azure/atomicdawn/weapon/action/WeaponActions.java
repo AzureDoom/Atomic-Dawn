@@ -132,7 +132,8 @@ public final class WeaponActions {
         var now = level.getGameTime();
         shooter.lastChargeMultiplier = multiplier;
         if (
-            now < shooter.drawReadyTick || now + AtomicDawn.CONFIG.weapons.FIRE_TIMING_TOLERANCE < shooter.nextShotTick
+            now < shooter.drawReadyTick || now
+                + AtomicDawn.CONFIG.common.combat.weapons.FIRE_TIMING_TOLERANCE < shooter.nextShotTick
         ) {
             return false;
         }
@@ -177,7 +178,7 @@ public final class WeaponActions {
                     playSound(player, definition.sounds().dryFire().orElse(ADSounds.DRY_FIRE), 0.8F);
                 }
                 shooter.burstRemaining = 0;
-                if (AtomicDawn.CONFIG.weapons.AUTO_RELOAD_ON_EMPTY) {
+                if (AtomicDawn.CONFIG.common.combat.weapons.AUTO_RELOAD_ON_EMPTY) {
                     tryReload(player);
                 }
                 return false;
@@ -447,7 +448,7 @@ public final class WeaponActions {
             shooter.burstRemaining = 0;
             return;
         }
-        if (now + AtomicDawn.CONFIG.weapons.FIRE_TIMING_TOLERANCE < shooter.nextShotTick) {
+        if (now + AtomicDawn.CONFIG.common.combat.weapons.FIRE_TIMING_TOLERANCE < shooter.nextShotTick) {
             return;
         }
         if (!fireOnce(player, stack, definition, 1F)) {

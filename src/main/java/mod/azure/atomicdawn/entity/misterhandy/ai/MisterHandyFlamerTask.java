@@ -31,7 +31,8 @@ final class MisterHandyFlamerTask extends MisterHandyTask {
             return false;
         }
         var distance = agent.distanceTo(target);
-        return distance >= MIN_RANGE && distance <= AtomicDawn.CONFIG.misterHandy.FLAMER_RANGE
+        return distance >= MIN_RANGE
+            && distance <= AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat.FLAMER_RANGE
             && attackReady(cooldowns, MisterHandyBrain.FLAMER_COOLDOWN);
     }
 
@@ -62,7 +63,8 @@ final class MisterHandyFlamerTask extends MisterHandyTask {
     void end(MisterHandyEntity agent, Blackboard blackboard, CooldownTracker cooldowns, ActionStatus reason) {
         cooldowns.set(
             MisterHandyBrain.FLAMER_COOLDOWN,
-            AtomicDawn.CONFIG.misterHandy.FLAMER_COOLDOWN_TICKS + agent.getRandom().nextInt(60)
+            AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat.FLAMER_COOLDOWN_TICKS + agent.getRandom()
+                .nextInt(60)
         );
         finishAttack(cooldowns);
     }

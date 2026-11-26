@@ -87,7 +87,7 @@ public final class PowerArmorBonuses {
                 continue;
             }
             var upgrades = PowerArmorUpgrades.of(stack);
-            var allowed = AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_MODS_PER_PIECE;
+            var allowed = AtomicDawn.CONFIG.common.equipment.powerArmor.maintenance.POWER_ARMOR_MODS_PER_PIECE;
             for (var id : upgrades.mods().values()) {
 
                 if (allowed-- <= 0) {

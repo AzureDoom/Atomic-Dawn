@@ -99,7 +99,7 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.attributes;
         return Monster.createMonsterAttributes()
             .add(Attributes.MAX_HEALTH, config.MAX_HEALTH)
             .add(Attributes.MOVEMENT_SPEED, 0.23)
@@ -229,7 +229,7 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
     }
 
     public void slam(ServerLevel level) {
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.combat;
         var forward = Vec3.directionFromRotation(0F, getYRot());
         var center = position().add(forward.scale(1.8));
         var radius = config.SLAM_RADIUS;
@@ -397,7 +397,7 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
         @NotNull EntitySpawnReason reason,
         @Nullable SpawnGroupData data
     ) {
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior;
         var egg = reason == EntitySpawnReason.SPAWN_ITEM_USE || reason == EntitySpawnReason.DISPENSER;
         setVariant(egg ? SuperMutantVariant.random(random) : SuperMutantSpawning.variantFor(level, blockPosition()));
         if (getMainHandItem().isEmpty()) {
@@ -429,7 +429,10 @@ public class SuperMutantEntity extends Monster implements AzHitboxHolder {
     protected void readAdditionalSaveData(@NotNull ValueInput input) {
         super.readAdditionalSaveData(input);
         setVariant(SuperMutantVariant.byName(input.getStringOr("Variant", "")));
-        patrolRadius = input.getIntOr("PatrolRadius", AtomicDawn.CONFIG.superMutants.PATROL_RADIUS);
+        patrolRadius = input.getIntOr(
+            "PatrolRadius",
+            AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.PATROL_RADIUS
+        );
         home = input.getBooleanOr("HasHome", false)
             ? new BlockPos(input.getIntOr("HomeX", 0), input.getIntOr("HomeY", 0), input.getIntOr("HomeZ", 0))
             : null;

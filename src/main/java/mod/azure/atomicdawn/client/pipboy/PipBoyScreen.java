@@ -32,7 +32,7 @@ import mod.azure.atomicdawn.client.pipboy.tab.MapTab;
 import mod.azure.atomicdawn.client.pipboy.tab.PipBoyTab;
 import mod.azure.atomicdawn.client.pipboy.tab.RadioTab;
 import mod.azure.atomicdawn.client.pipboy.tab.StatTab;
-import mod.azure.atomicdawn.config.ADConfig.ClientPipBoy.PipBoyLayout;
+import mod.azure.atomicdawn.config.ADConfig.Client.PipBoy.Display.PipBoyLayout;
 import mod.azure.atomicdawn.registry.ADAttachments;
 import mod.azure.atomicdawn.registry.ADSounds;
 import mod.azure.atomicdawn.special.SpecialXp;
@@ -137,11 +137,11 @@ public class PipBoyScreen extends Screen {
 
     public PipBoyScreen() {
         super(Component.translatable("pipboy.atomicdawn.title"));
-        if (!AtomicDawn.CONFIG.clientPipboy.PIPBOY_REMEMBER_TAB) {
+        if (!AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_REMEMBER_TAB) {
             PipBoyClientState.tab = 0;
         }
         PipBoyClientState.tab = Math.floorMod(PipBoyClientState.tab, TABS.size());
-        var config = AtomicDawn.CONFIG.clientPipboy;
+        var config = AtomicDawn.CONFIG.client.pipboy.behavior;
         if (config.PIPBOY_BOOT_SEQUENCE) {
             var now = millis();
             var last = PipBoyClientState.lastClosedMillis;
@@ -289,7 +289,7 @@ public class PipBoyScreen extends Screen {
     }
 
     public void playSound(SoundEvent sound) {
-        if (minecraft != null && minecraft.player != null && AtomicDawn.CONFIG.clientPipboy.PIPBOY_SOUNDS) {
+        if (minecraft != null && minecraft.player != null && AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_SOUNDS) {
             minecraft.player.playSound(sound, 1F, 1F);
         }
     }
@@ -311,7 +311,7 @@ public class PipBoyScreen extends Screen {
         tabHits.clear();
         subtabHits.clear();
 
-        layout = PipBoyHousing.layout(width, height, AtomicDawn.CONFIG.clientPipboy.PIPBOY_FULLSCREEN);
+        layout = PipBoyHousing.layout(width, height, AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_FULLSCREEN);
         screenArea = layout.screen();
         inner = screenArea.inset(layout.fullscreen() ? 6 : 5);
         style = PipBoyModel.layout();
@@ -584,7 +584,7 @@ public class PipBoyScreen extends Screen {
         if (segment != typingSegment || now - typingSoundAt >= TYPING_REPEAT_MS) {
             typingSegment = segment;
             typingSoundAt = now;
-            if (minecraft != null && AtomicDawn.CONFIG.clientPipboy.PIPBOY_SOUNDS) {
+            if (minecraft != null && AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_SOUNDS) {
                 stopTypingSound();
                 var pitch = 0.95F + (float) Math.random() * 0.1F;
                 typingSound = SimpleSoundInstance.forUI(ADSounds.PIPBOY_BOOT_TYPING.get(), pitch, 0.55F);
@@ -745,7 +745,7 @@ public class PipBoyScreen extends Screen {
         }
         stopTypingSound();
         playSound(ADSounds.PIPBOY_CLOSE.get());
-        if (!AtomicDawn.CONFIG.clientPipboy.PIPBOY_BOOT_SEQUENCE || booting()) {
+        if (!AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_BOOT_SEQUENCE || booting()) {
             finishClose();
             return;
         }
@@ -1336,7 +1336,7 @@ public class PipBoyScreen extends Screen {
             var p = (now % period) / (float) period;
             var bandH = Math.max(8, screenArea.height() / 12);
             var by = screenArea.y() - bandH + Math.round((screenArea.height() + bandH) * p);
-            var alpha = Math.round(0x10 * (float) AtomicDawn.CONFIG.clientPipboy.PIPBOY_SCANLINES / 0.35F);
+            var alpha = Math.round(0x10 * (float) AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_SCANLINES / 0.35F);
             for (var i = 0; i < bandH; i++) {
                 var y = by + i;
                 if (y < screenArea.y() || y >= screenArea.bottom()) {

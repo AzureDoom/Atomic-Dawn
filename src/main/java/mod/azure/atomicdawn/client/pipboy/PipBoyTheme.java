@@ -9,9 +9,9 @@ public final class PipBoyTheme {
     private PipBoyTheme() {}
 
     public static int rgb() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST
             ? 0xFFFFFF
-            : ADColors.rgb(AtomicDawn.CONFIG.clientPipboy.PIPBOY_COLOR, 0x1AFF80);
+            : ADColors.rgb(AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_COLOR, 0x1AFF80);
     }
 
     public static int scaled(int rgb, float factor, int alpha) {
@@ -34,11 +34,11 @@ public final class PipBoyTheme {
     }
 
     public static int dim() {
-        return scaled(rgb(), AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0.75F : 0.6F, 0xFF);
+        return scaled(rgb(), AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0.75F : 0.6F, 0xFF);
     }
 
     public static int disabled() {
-        return scaled(rgb(), AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0.55F : 0.4F, 0xFF);
+        return scaled(rgb(), AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0.55F : 0.4F, 0xFF);
     }
 
     public static int faint() {
@@ -54,23 +54,23 @@ public final class PipBoyTheme {
     }
 
     public static int selection() {
-        return scaled(rgb(), AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0.4F : 0.32F, 0xFF);
+        return scaled(rgb(), AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0.4F : 0.32F, 0xFF);
     }
 
     public static int ink() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0xFF000000 : scaled(rgb(), 0.07F, 0xFF);
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0xFF000000 : scaled(rgb(), 0.07F, 0xFF);
     }
 
     public static int background() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0xF8000000 : scaled(rgb(), 0.06F, 0xF0);
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0xF8000000 : scaled(rgb(), 0.06F, 0xF0);
     }
 
     public static int glass() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0xFF000000 : scaled(rgb(), 0.045F, 0xFF);
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0xFF000000 : scaled(rgb(), 0.045F, 0xFF);
     }
 
     public static int panel() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0xFF000000 : scaled(rgb(), 0.1F, 0xFF);
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0xFF000000 : scaled(rgb(), 0.1F, 0xFF);
     }
 
     public static int frame() {
@@ -82,15 +82,15 @@ public final class PipBoyTheme {
     }
 
     public static int warn() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0xFFFFFF00 : 0xFFFFB13C;
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0xFFFFFF00 : 0xFFFFB13C;
     }
 
     public static int bad() {
-        return AtomicDawn.CONFIG.clientPipboy.PIPBOY_HIGH_CONTRAST ? 0xFFFF5555 : 0xFFFF6C5A;
+        return AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_HIGH_CONTRAST ? 0xFFFF5555 : 0xFFFF6C5A;
     }
 
     public static int scanline() {
-        var intensity = (float) AtomicDawn.CONFIG.clientPipboy.PIPBOY_SCANLINES;
+        var intensity = (float) AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_SCANLINES;
         return Math.round(0x50 * intensity) << 24;
     }
 }

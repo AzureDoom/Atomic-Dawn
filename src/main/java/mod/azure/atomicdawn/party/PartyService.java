@@ -39,11 +39,11 @@ public final class PartyService {
     private PartyService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.party.PARTY_ENABLED;
+        return AtomicDawn.CONFIG.common.social.party.PARTY_ENABLED;
     }
 
     public static int maxSize() {
-        return AtomicDawn.CONFIG.party.PARTY_MAX_SIZE;
+        return AtomicDawn.CONFIG.common.social.party.PARTY_MAX_SIZE;
     }
 
     public static Optional<Party> party(UUID player) {
@@ -100,7 +100,7 @@ public final class PartyService {
             fail(inviter, "party.atomicdawn.full", maxSize());
             return;
         }
-        var expires = inviter.level().getGameTime() + AtomicDawn.CONFIG.party.PARTY_INVITE_SECONDS * 20L;
+        var expires = inviter.level().getGameTime() + AtomicDawn.CONFIG.common.social.party.PARTY_INVITE_SECONDS * 20L;
         INVITES.put(target.getUUID(), new Invite(party.id(), inviter.getScoreboardName(), expires));
         inviter.sendSystemMessage(Component.translatable("party.atomicdawn.invite_sent", target.getDisplayName()));
         var accept = Component.translatable("party.atomicdawn.accept_button")

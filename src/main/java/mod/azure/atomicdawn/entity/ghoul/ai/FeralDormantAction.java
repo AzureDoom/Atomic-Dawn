@@ -25,7 +25,7 @@ final class FeralDormantAction extends FeralAction {
         }
         agent.getNavigation().stop();
         var target = target(blackboard);
-        var range = AtomicDawn.CONFIG.feralGhouls.WAKE_RANGE;
+        var range = AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.behavior.WAKE_RANGE;
         if (target != null && agent.distanceToSqr(target) <= range * range) {
             agent.requestWake();
         }

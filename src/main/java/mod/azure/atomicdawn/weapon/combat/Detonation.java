@@ -59,7 +59,8 @@ public final class Detonation {
         var radius = parameters.blastRadius();
         splash(level, projectile, owner, weapon, definition, damage, radius, at);
 
-        var breakBlocks = parameters.breakBlocks() && AtomicDawn.CONFIG.radiation.EXPLOSIONS_BREAK_BLOCKS;
+        var breakBlocks = parameters.breakBlocks()
+            && AtomicDawn.CONFIG.common.survival.radiation.nuclear.EXPLOSIONS_BREAK_BLOCKS;
         level.explode(
             projectile,
             null,
@@ -88,8 +89,12 @@ public final class Detonation {
         );
         radiationBurst(level, radius * 2F, at);
         BlastZoneService.add(level, at, radius);
-        irradiateWater(level, BlockPos.containing(at), AtomicDawn.CONFIG.radiation.NUKE_WATER_RADIUS);
-        int duration = AtomicDawn.CONFIG.radiation.FALLOUT_DURATION_TICKS;
+        irradiateWater(
+            level,
+            BlockPos.containing(at),
+            AtomicDawn.CONFIG.common.survival.radiation.nuclear.NUKE_WATER_RADIUS
+        );
+        int duration = AtomicDawn.CONFIG.common.survival.radiation.nuclear.FALLOUT_DURATION_TICKS;
         if (duration > 0) {
             level.addFreshEntity(FalloutCloudEntity.create(level, at.x, at.y, at.z, radius * 1.5F, duration));
         }
@@ -142,7 +147,7 @@ public final class Detonation {
     }
 
     private static void radiationBurst(ServerLevel level, float radius, Vec3 at) {
-        var burst = (float) AtomicDawn.CONFIG.radiation.NUKE_RADIATION_BURST;
+        var burst = (float) AtomicDawn.CONFIG.common.survival.radiation.nuclear.NUKE_RADIATION_BURST;
         if (burst <= 0F || radius <= 0F) {
             return;
         }

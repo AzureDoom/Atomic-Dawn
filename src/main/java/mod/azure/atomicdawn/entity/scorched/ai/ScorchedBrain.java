@@ -91,7 +91,7 @@ public final class ScorchedBrain {
 
     private void sense(long now) {
         var blackboard = blackboard();
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.behavior;
         blackboard.set(ScorchedBlackboardKeys.DORMANT, scorched.isDormant());
         var home = scorched.home();
         if (home != null) {
@@ -154,8 +154,8 @@ public final class ScorchedBrain {
 
     @Nullable
     private LivingEntity scan() {
-        var config = AtomicDawn.CONFIG.scorched;
-        var range = scorched.isDormant() ? config.DORMANT_DETECTION_RANGE : config.DETECTION_RANGE;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched;
+        var range = scorched.isDormant() ? config.dormancy.DORMANT_DETECTION_RANGE : config.behavior.DETECTION_RANGE;
         return scorched.level()
             .getEntitiesOfClass(
                 LivingEntity.class,
@@ -254,7 +254,7 @@ public final class ScorchedBrain {
         if (last != null) {
             blackboard.set(
                 ScorchedBlackboardKeys.INVESTIGATE_UNTIL,
-                now + AtomicDawn.CONFIG.scorched.INVESTIGATE_SECONDS * 20L
+                now + AtomicDawn.CONFIG.server.entities.mutants.scorched.behavior.INVESTIGATE_SECONDS * 20L
             );
         } else {
             blackboard.set(ScorchedBlackboardKeys.RETURNING, true);
@@ -283,7 +283,7 @@ public final class ScorchedBrain {
         if (home == null) {
             return true;
         }
-        var leash = (double) AtomicDawn.CONFIG.scorched.LEASH_RANGE;
+        var leash = (double) AtomicDawn.CONFIG.server.entities.mutants.scorched.behavior.LEASH_RANGE;
         return scorched.distanceToSqr(Vec3.atCenterOf(home)) <= leash * leash && target.distanceToSqr(
             Vec3.atCenterOf(home)
         ) <= leash * leash;
@@ -303,7 +303,7 @@ public final class ScorchedBrain {
     }
 
     private void rollDormancyDelay() {
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.dormancy;
         var min = Math.min(config.DORMANCY_MIN_SECONDS, config.DORMANCY_MAX_SECONDS);
         var max = Math.max(config.DORMANCY_MIN_SECONDS, config.DORMANCY_MAX_SECONDS);
         dormancyDelay = (min + scorched.getRandom().nextInt(max - min + 1)) * 20;
@@ -324,7 +324,7 @@ public final class ScorchedBrain {
             return npc.canFight();
         }
         if (candidate instanceof AbstractVillager) {
-            return AtomicDawn.CONFIG.scorched.ATTACK_VILLAGERS;
+            return AtomicDawn.CONFIG.server.entities.mutants.scorched.behavior.ATTACK_VILLAGERS;
         }
         return candidate instanceof AbstractGolem || holder.is(EXTRA_TARGETS);
     }

@@ -34,7 +34,8 @@ final class ScorchbeastGroundChaseTask extends ScorchbeastTask {
             return ActionOutcome.success();
         }
         agent.getLookControl().setLookAt(target, 15F, 15F);
-        var reach = AtomicDawn.CONFIG.scorchbeast.WING_SWEEP_RANGE + agent.getBbWidth() * 0.5;
+        var reach = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks.WING_SWEEP_RANGE + agent
+            .getBbWidth() * 0.5;
         var distance = horizontalDistance(agent, target);
         if (distance <= reach * 0.85) {
             agent.getNavigation().stop();

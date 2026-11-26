@@ -12,7 +12,7 @@ public final class BlastZoneService {
     private BlastZoneService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.environmentalRadiation.BLAST_ZONES_ENABLED;
+        return AtomicDawn.CONFIG.common.survival.radiation.blastZones.BLAST_ZONES_ENABLED;
     }
 
     public static BlastZones zones(ServerLevel level) {
@@ -22,7 +22,7 @@ public final class BlastZoneService {
     }
 
     public static void add(ServerLevel level, Vec3 at, float blastRadius) {
-        var config = AtomicDawn.CONFIG.environmentalRadiation;
+        var config = AtomicDawn.CONFIG.common.survival.radiation.blastZones;
         var radius = blastRadius * (float) config.BLAST_ZONE_RADIUS_MULTIPLIER;
         var duration = config.BLAST_ZONE_DURATION_TICKS;
         if (!enabled() || radius <= 0F || duration <= 0) {
@@ -69,6 +69,6 @@ public final class BlastZoneService {
             }
             best = Math.max(best, zone.proximity(pos) * zone.strength(now));
         }
-        return best * (float) AtomicDawn.CONFIG.environmentalRadiation.BLAST_ZONE_RADS_PER_SECOND;
+        return best * (float) AtomicDawn.CONFIG.common.survival.radiation.blastZones.BLAST_ZONE_RADS_PER_SECOND;
     }
 }

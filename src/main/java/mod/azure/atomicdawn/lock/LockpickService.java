@@ -95,15 +95,15 @@ public final class LockpickService {
 
     public static void begin(ServerPlayer player, LockService.Located located) {
         var lock = located.lock();
-        var config = AtomicDawn.CONFIG.locks;
-        if (lock.owner().isPresent() && !config.LOCKS_ALLOW_PICKING_PLAYER_LOCKS) {
+        var config = AtomicDawn.CONFIG.common.settlement.locks;
+        if (lock.owner().isPresent() && !config.locking.LOCKS_ALLOW_PICKING_PLAYER_LOCKS) {
             LockService.notify(player, "lock.atomicdawn.locked_owned", ChatFormatting.RED);
             denied(player, located.pos());
             return;
         }
         var required = lock.level().requiredTier();
         var extra = 0;
-        if (config.LOCKPICK_REQUIRE_PERKS) {
+        if (config.lockpicking.LOCKPICK_REQUIRE_PERKS) {
             var tier = tier(player);
             if (tier < required) {
                 LockService.notify(
@@ -126,10 +126,13 @@ public final class LockpickService {
         }
         var level = player.level();
         var random = player.getRandom();
-        var scale = (float) config.LOCKPICK_SWEET_SPOT_SCALE * (1F + 0.25F * extra);
+        var scale = (float) config.lockpicking.LOCKPICK_SWEET_SPOT_SCALE * (1F + 0.25F * extra);
         var full = Math.min(60F, lock.level().fullWidth() * scale);
         var partial = Math.clamp(lock.level().partialWidth() * scale, full + 4F, 120F);
-        var strain = lock.level().strainDamage() / (float) Math.max(0.05, config.LOCKPICK_PIN_DURABILITY_SCALE);
+        var strain = lock.level().strainDamage() / (float) Math.max(
+            0.05,
+            config.lockpicking.LOCKPICK_PIN_DURABILITY_SCALE
+        );
         var session = new Session(
             level.dimension(),
             located.pos().immutable(),
@@ -213,7 +216,8 @@ public final class LockpickService {
         }
         SESSIONS.remove(player.getUUID());
         LockService.grantAccess(level, session.pos, player.getUUID());
-        var xp = (long) AtomicDawn.CONFIG.locks.LOCKPICK_XP * (session.level.ordinal() + 1L);
+        var xp = (long) AtomicDawn.CONFIG.common.settlement.locks.lockpicking.LOCKPICK_XP * (session.level.ordinal()
+            + 1L);
         if (xp > 0L) {
             SpecialService.awardXp(player, xp);
         }

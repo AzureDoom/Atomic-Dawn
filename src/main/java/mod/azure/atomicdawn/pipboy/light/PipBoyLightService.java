@@ -78,12 +78,13 @@ public final class PipBoyLightService {
             return false;
         }
         return PowerArmorUpgradeEvents.headlamp(player) > 0
-            || (AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLED && AtomicDawn.CONFIG.pipboy.PIPBOY_LIGHT_ENABLED);
+            || (AtomicDawn.CONFIG.common.pipboy.general.PIPBOY_ENABLED
+                && AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_LIGHT_ENABLED);
     }
 
     private static int level(ServerPlayer player) {
         var headlamp = PowerArmorUpgradeEvents.headlamp(player);
-        return Math.clamp(headlamp > 0 ? headlamp : AtomicDawn.CONFIG.pipboy.PIPBOY_LIGHT_LEVEL, 1, 15);
+        return Math.clamp(headlamp > 0 ? headlamp : AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_LIGHT_LEVEL, 1, 15);
     }
 
     public static boolean claims(ServerLevel level, BlockPos pos) {

@@ -26,7 +26,7 @@ final class FeralLeapAction extends FeralAction {
     }
 
     static boolean canLeap(FeralGhoulEntity agent, LivingEntity target) {
-        if (!AtomicDawn.CONFIG.feralGhouls.LEAP_ENABLED || !agent.onGround()) {
+        if (!AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.behavior.LEAP_ENABLED || !agent.onGround()) {
             return false;
         }
         var distance = agent.distanceTo(target);

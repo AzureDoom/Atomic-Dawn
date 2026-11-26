@@ -121,7 +121,7 @@ public final class PipBoyMapRenderer {
             return;
         }
         var zoom = zoom();
-        var colorMode = AtomicDawn.CONFIG.clientPipboy.PIPBOY_MAP_COLOR;
+        var colorMode = AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_MAP_COLOR;
         var hue = PipBoyTheme.text();
         if (level.dimension() != dimension || zoom != appliedZoom || colorMode != appliedColor || hue != appliedHue) {
             dimension = level.dimension();

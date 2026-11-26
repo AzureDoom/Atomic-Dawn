@@ -130,7 +130,9 @@ final class StatusPage {
             bottom,
             PipBoyTheme.text()
         );
-        var unspent = progress.unspentPoints(AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS);
+        var unspent = progress.unspentPoints(
+            AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS
+        );
         if (unspent > 0) {
             y = line(
                 graphics,
@@ -189,7 +191,7 @@ final class StatusPage {
             PipBoyTheme.dim()
         );
 
-        if (AtomicDawn.CONFIG.limbs.LIMBS_ENABLED && LimbService.enabled(player)) {
+        if (AtomicDawn.CONFIG.common.combat.limbs.general.LIMBS_ENABLED && LimbService.enabled(player)) {
             y += 4;
             y = line(
                 graphics,

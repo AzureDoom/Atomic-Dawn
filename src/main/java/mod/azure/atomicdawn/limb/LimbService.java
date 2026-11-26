@@ -28,7 +28,7 @@ public final class LimbService {
     private LimbService() {}
 
     public static boolean enabled(LivingEntity entity) {
-        var config = AtomicDawn.CONFIG.limbs;
+        var config = AtomicDawn.CONFIG.common.combat.limbs.general;
         if (!config.LIMBS_ENABLED || entity instanceof PowerArmorEntity) {
             return false;
         }
@@ -82,8 +82,9 @@ public final class LimbService {
     public static float limbHealth(LivingEntity entity) {
         return Math.max(
             1F,
-            entity.getMaxHealth() * (float) AtomicDawn.CONFIG.limbs.LIMB_HEALTH_FRACTION * LimbProfiles.of(entity)
-                .health()
+            entity.getMaxHealth() * (float) AtomicDawn.CONFIG.common.combat.limbs.general.LIMB_HEALTH_FRACTION
+                * LimbProfiles.of(entity)
+                    .health()
         );
     }
 
@@ -97,7 +98,7 @@ public final class LimbService {
         }
         if (entity instanceof Player player) {
             if (
-                AtomicDawn.CONFIG.limbs.POWER_ARMOR_PROTECTS_LIMBS && player
+                AtomicDawn.CONFIG.common.combat.limbs.general.POWER_ARMOR_PROTECTS_LIMBS && player
                     .getVehicle() instanceof PowerArmorEntity
             ) {
                 return;
@@ -109,7 +110,9 @@ public final class LimbService {
         if (before <= 0F) {
             return;
         }
-        var loss = amount * (float) AtomicDawn.CONFIG.limbs.LIMB_DAMAGE_MULTIPLIER / limbHealth(entity);
+        var loss = amount * (float) AtomicDawn.CONFIG.common.combat.limbs.damage.LIMB_DAMAGE_MULTIPLIER / limbHealth(
+            entity
+        );
         if (loss <= 0F) {
             return;
         }
@@ -250,20 +253,24 @@ public final class LimbService {
     }
 
     public static float spreadMultiplier(Player player) {
-        return 1F + crippledArms(player) * (float) AtomicDawn.CONFIG.limbs.ARM_SPREAD_PENALTY;
+        return 1F + crippledArms(player) * (float) AtomicDawn.CONFIG.common.combat.limbs.penalties.ARM_SPREAD_PENALTY;
     }
 
     public static float apRegenMultiplier(Player player) {
-        return crippled(player, BodyPart.TORSO) ? (float) AtomicDawn.CONFIG.limbs.TORSO_AP_REGEN_MULTIPLIER : 1F;
+        return crippled(player, BodyPart.TORSO)
+            ? (float) AtomicDawn.CONFIG.common.combat.limbs.penalties.TORSO_AP_REGEN_MULTIPLIER
+            : 1F;
     }
 
     public static float vatsHitMultiplier(Player player) {
-        return crippled(player, BodyPart.HEAD) ? (float) AtomicDawn.CONFIG.limbs.HEAD_VATS_HIT_MULTIPLIER : 1F;
+        return crippled(player, BodyPart.HEAD)
+            ? (float) AtomicDawn.CONFIG.common.combat.limbs.penalties.HEAD_VATS_HIT_MULTIPLIER
+            : 1F;
     }
 
     public static float damageTakenMultiplier(LivingEntity entity) {
         return crippled(entity, BodyPart.TORSO)
-            ? (float) AtomicDawn.CONFIG.limbs.TORSO_DAMAGE_TAKEN_MULTIPLIER
+            ? (float) AtomicDawn.CONFIG.common.combat.limbs.penalties.TORSO_DAMAGE_TAKEN_MULTIPLIER
             : 1F;
     }
 }

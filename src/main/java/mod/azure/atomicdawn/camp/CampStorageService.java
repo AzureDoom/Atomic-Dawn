@@ -28,7 +28,11 @@ public final class CampStorageService {
     private CampStorageService() {}
 
     public static int maxStored() {
-        return Math.clamp(AtomicDawn.CONFIG.camp.CAMP_STORAGE_SLOTS, 0, CampStorage.MAX_OBJECTS);
+        return Math.clamp(
+            AtomicDawn.CONFIG.common.settlement.camp.storage.CAMP_STORAGE_SLOTS,
+            0,
+            CampStorage.MAX_OBJECTS
+        );
     }
 
     private static void message(ServerPlayer player, Component text, ChatFormatting color) {

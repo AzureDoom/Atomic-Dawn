@@ -98,7 +98,7 @@ public final class WorkbenchService {
                 .filter(mod -> ModUnlocks.learn(player, mod.key()))
                 .ifPresent(mod -> learned.add(ModNames.mod(mod.key())));
         }
-        if (player.getRandom().nextDouble() < AtomicDawn.CONFIG.workbenches.SCRAP_LEARN_CHANCE) {
+        if (player.getRandom().nextDouble() < AtomicDawn.CONFIG.common.equipment.workbenches.SCRAP_LEARN_CHANCE) {
             var locked = ModificationResolver.allCompatible(access, weaponItem.definitionKey())
                 .stream()
                 .filter(mod -> mod.value().requiresUnlock() && !ModUnlocks.known(player).knows(mod.key()))
@@ -161,7 +161,7 @@ public final class WorkbenchService {
     }
 
     public static int legendaryCost(int star) {
-        return star * AtomicDawn.CONFIG.workbenches.LEGENDARY_MODULES_PER_STAR;
+        return star * AtomicDawn.CONFIG.common.equipment.workbenches.LEGENDARY_MODULES_PER_STAR;
     }
 
     public static Result applyLegendary(ServerPlayer player, ItemStack weapon, ResourceKey<LegendaryEffect> effectKey) {

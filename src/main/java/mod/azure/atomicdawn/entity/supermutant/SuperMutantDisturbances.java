@@ -13,7 +13,12 @@ public final class SuperMutantDisturbances {
     private SuperMutantDisturbances() {}
 
     public static void gunfire(ServerLevel level, Entity shooter) {
-        emit(level, shooter.position(), AtomicDawn.CONFIG.superMutants.HEARING_RANGE, shooter);
+        emit(
+            level,
+            shooter.position(),
+            AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.HEARING_RANGE,
+            shooter
+        );
     }
 
     public static void emit(ServerLevel level, Vec3 pos, double radius, @Nullable Entity source) {

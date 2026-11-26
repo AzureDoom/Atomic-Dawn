@@ -22,7 +22,7 @@ public final class RadioSoundInstance extends AbstractTickableSoundInstance {
     }
 
     private static float targetVolume() {
-        return (float) AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_VOLUME;
+        return (float) AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_VOLUME;
     }
 
     @Override

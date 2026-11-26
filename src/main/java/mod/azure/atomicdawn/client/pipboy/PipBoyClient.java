@@ -32,7 +32,10 @@ public final class PipBoyClient {
             return;
         }
         while (ADKeyMappings.PIPBOY.consumeClick()) {
-            if (minecraft.gui.screen() == null && !player.isSpectator() && AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLED) {
+            if (
+                minecraft.gui.screen() == null && !player.isSpectator()
+                    && AtomicDawn.CONFIG.common.pipboy.general.PIPBOY_ENABLED
+            ) {
                 open();
             }
         }
@@ -44,14 +47,14 @@ public final class PipBoyClient {
             }
         }
         while (ADKeyMappings.WAYPOINT_HUD.consumeClick()) {
-            var config = AtomicDawn.CONFIG.clientPipboy;
-            ADConfigHelper.setClientBoolean("WAYPOINT_HUD", !config.WAYPOINT_HUD);
+            var config = AtomicDawn.CONFIG.client.hud.waypointCompass;
+            ADConfigHelper.setClientBoolean("hud.waypointCompass.WAYPOINT_HUD", !config.WAYPOINT_HUD);
         }
     }
 
     public static void open() {
         var minecraft = Minecraft.getInstance();
-        if (minecraft.player != null && AtomicDawn.CONFIG.clientPipboy.PIPBOY_SOUNDS) {
+        if (minecraft.player != null && AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_SOUNDS) {
             minecraft.player.playSound(ADSounds.PIPBOY_OPEN.get(), 1F, 1F);
         }
         minecraft.gui.setScreen(new PipBoyScreen());
@@ -70,7 +73,10 @@ public final class PipBoyClient {
         var minecraft = Minecraft.getInstance();
         var now = minecraft.level == null ? 0L : minecraft.level.getGameTime();
         PipBoyClientState.onResult(payload.result(), now);
-        if (minecraft.player != null && AtomicDawn.CONFIG.clientPipboy.PIPBOY_SOUNDS && !payload.result().success()) {
+        if (
+            minecraft.player != null && AtomicDawn.CONFIG.client.pipboy.behavior.PIPBOY_SOUNDS && !payload.result()
+                .success()
+        ) {
             minecraft.player.playSound(ADSounds.PIPBOY_ERROR.get(), 1F, 1F);
         }
         if (minecraft.gui.screen() instanceof PipBoyScreen screen) {

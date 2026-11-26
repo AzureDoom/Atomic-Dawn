@@ -41,7 +41,7 @@ public final class ScrapboxService {
 
     public static long depositAll(Player player) {
         var inventory = player.getInventory();
-        var components = AtomicDawn.CONFIG.junk.JUNK_DEPOSIT_COMPONENTS;
+        var components = AtomicDawn.CONFIG.common.equipment.junk.JUNK_DEPOSIT_COMPONENTS;
         var box = CampScrapbox.of(player);
         var moved = 0L;
         for (var i = 0; i < inventory.getContainerSize(); i++) {

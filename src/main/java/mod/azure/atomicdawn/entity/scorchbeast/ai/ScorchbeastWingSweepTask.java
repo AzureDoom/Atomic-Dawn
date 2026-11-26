@@ -34,7 +34,8 @@ final class ScorchbeastWingSweepTask extends ScorchbeastTask {
         if (!attackReady(cooldowns, ScorchbeastBrain.SWEEP_COOLDOWN)) {
             return false;
         }
-        var reach = AtomicDawn.CONFIG.scorchbeast.WING_SWEEP_RANGE + (agent.getBbWidth() + target.getBbWidth()) * 0.5;
+        var reach = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks.WING_SWEEP_RANGE + (agent
+            .getBbWidth() + target.getBbWidth()) * 0.5;
         return horizontalDistance(agent, target) <= reach && Math.abs(target.getY() - agent.getY()) < agent
             .getBbHeight();
     }

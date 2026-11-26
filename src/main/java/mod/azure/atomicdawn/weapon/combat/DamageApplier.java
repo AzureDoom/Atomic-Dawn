@@ -48,7 +48,7 @@ public final class DamageApplier {
         var category = definition.category();
         var vats = shooter.vatsActive();
         var perkBonus = SpecialStatResolver.resolve(attacker).damageBonus(category, automatic, melee);
-        var total = amount * (float) AtomicDawn.CONFIG.weapons.DAMAGE_MULTIPLIER * (1F + perkBonus)
+        var total = amount * (float) AtomicDawn.CONFIG.common.combat.weapons.DAMAGE_MULTIPLIER * (1F + perkBonus)
             * PerkCombat.outgoingMultiplier(attacker, target, category, automatic, vats);
         var penetration = PerkCombat.armorPenetration(attacker, category, automatic);
         for (var behavior : behaviors) {

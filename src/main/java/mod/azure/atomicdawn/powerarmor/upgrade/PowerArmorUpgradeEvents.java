@@ -161,7 +161,8 @@ public final class PowerArmorUpgradeEvents {
         state(pilot).lastCombat = level.getGameTime();
         var reduction = reduction(pilot, armor, bonuses, source);
         if (reduction > 0F) {
-            var cap = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_LEGENDARY_MAX_REDUCTION;
+            var cap =
+                (float) AtomicDawn.CONFIG.common.equipment.powerArmor.protection.POWER_ARMOR_LEGENDARY_MAX_REDUCTION;
             event.setAmount(event.getAmount() * (1F - Math.min(reduction, cap)));
         }
         if (isMelee(source, pilot) && source.getEntity() instanceof LivingEntity attacker && attacker != armor) {

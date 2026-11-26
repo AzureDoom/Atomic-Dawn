@@ -192,8 +192,8 @@ public final class ADItems {
         "dirty_water",
         properties -> new WaterItem(
             properties,
-            () -> AtomicDawn.CONFIG.thirst.DIRTY_WATER_THIRST,
-            () -> AtomicDawn.CONFIG.radiation.DIRTY_WATER_DRINK_RADS
+            () -> AtomicDawn.CONFIG.common.survival.thirst.drinks.DIRTY_WATER_THIRST,
+            () -> AtomicDawn.CONFIG.common.survival.radiation.consumables.DIRTY_WATER_DRINK_RADS
         ),
         WaterItem::properties
     );
@@ -202,8 +202,8 @@ public final class ADItems {
         "boiled_water",
         properties -> new WaterItem(
             properties,
-            () -> AtomicDawn.CONFIG.thirst.BOILED_WATER_THIRST,
-            () -> AtomicDawn.CONFIG.radiation.BOILED_WATER_DRINK_RADS
+            () -> AtomicDawn.CONFIG.common.survival.thirst.drinks.BOILED_WATER_THIRST,
+            () -> AtomicDawn.CONFIG.common.survival.radiation.consumables.BOILED_WATER_DRINK_RADS
         ),
         WaterItem::properties
     );
@@ -345,7 +345,10 @@ public final class ADItems {
 
     public static final DeferredItem<RadRemoverItem> NUKA_GRAPE = REGISTER.registerItem(
         "nuka_grape",
-        properties -> new RadRemoverItem(properties, () -> AtomicDawn.CONFIG.radiation.NUKA_GRAPE_RADS),
+        properties -> new RadRemoverItem(
+            properties,
+            () -> AtomicDawn.CONFIG.common.survival.radiation.consumables.NUKA_GRAPE_RADS
+        ),
         RadRemoverItem::properties
     );
 
@@ -353,7 +356,10 @@ public final class ADItems {
 
     public static final DeferredItem<RadRemoverItem> BRAHMIN_MILK = REGISTER.registerItem(
         "brahmin_milk",
-        properties -> new RadRemoverItem(properties, () -> AtomicDawn.CONFIG.radiation.BRAHMIN_MILK_RADS),
+        properties -> new RadRemoverItem(
+            properties,
+            () -> AtomicDawn.CONFIG.common.survival.radiation.consumables.BRAHMIN_MILK_RADS
+        ),
         RadRemoverItem::properties
     );
 

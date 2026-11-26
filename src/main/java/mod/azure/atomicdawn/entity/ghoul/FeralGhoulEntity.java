@@ -87,7 +87,7 @@ public class FeralGhoulEntity extends Monster implements AzHitboxHolder {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        var config = AtomicDawn.CONFIG.feralGhouls;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.attributes;
         return Monster.createMonsterAttributes()
             .add(Attributes.MAX_HEALTH, config.MAX_HEALTH)
             .add(Attributes.MOVEMENT_SPEED, 0.28)
@@ -174,7 +174,7 @@ public class FeralGhoulEntity extends Monster implements AzHitboxHolder {
     }
 
     public void alertPack(LivingEntity target) {
-        var range = AtomicDawn.CONFIG.feralGhouls.ALERT_RANGE;
+        var range = AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.behavior.ALERT_RANGE;
         for (
             var other : level().getEntitiesOfClass(
                 FeralGhoulEntity.class,
@@ -263,7 +263,10 @@ public class FeralGhoulEntity extends Monster implements AzHitboxHolder {
     public boolean doHurtTarget(@NotNull ServerLevel level, @NotNull Entity target) {
         var hit = super.doHurtTarget(level, target);
         if (hit && target instanceof LivingEntity living) {
-            RadiationService.expose(living, (float) AtomicDawn.CONFIG.feralGhouls.RADS_PER_HIT);
+            RadiationService.expose(
+                living,
+                (float) AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.attributes.RADS_PER_HIT
+            );
         }
         return hit;
     }
@@ -285,7 +288,10 @@ public class FeralGhoulEntity extends Monster implements AzHitboxHolder {
         setVariant(FeralGhoulVariant.byIndex(random.nextInt(FeralGhoulVariant.count())));
         var natural = reason == EntitySpawnReason.NATURAL || reason == EntitySpawnReason.CHUNK_GENERATION
             || reason == EntitySpawnReason.STRUCTURE;
-        if (natural && random.nextDouble() < AtomicDawn.CONFIG.feralGhouls.DORMANT_CHANCE) {
+        if (
+            natural && random
+                .nextDouble() < AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.spawning.DORMANT_CHANCE
+        ) {
             setDormant(true);
         }
         return super.finalizeSpawn(level, difficulty, reason, data);

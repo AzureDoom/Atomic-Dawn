@@ -34,7 +34,7 @@ public final class ToxicCloudEvents {
             return;
         }
         if (
-            !AtomicDawn.CONFIG.environmentalRadiation.TOXIC_CLOUDS_ENABLED || player.isCreative() || player
+            !AtomicDawn.CONFIG.common.survival.radiation.sites.TOXIC_CLOUDS_ENABLED || player.isCreative() || player
                 .isSpectator()
         ) {
             return;

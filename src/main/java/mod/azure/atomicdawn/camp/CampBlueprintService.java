@@ -60,7 +60,11 @@ public final class CampBlueprintService {
     private CampBlueprintService() {}
 
     public static int maxBlueprints() {
-        return Math.clamp(AtomicDawn.CONFIG.camp.CAMP_BLUEPRINT_SLOTS, 0, CampBlueprintLibrary.MAX_BLUEPRINTS);
+        return Math.clamp(
+            AtomicDawn.CONFIG.common.settlement.camp.blueprints.CAMP_BLUEPRINT_SLOTS,
+            0,
+            CampBlueprintLibrary.MAX_BLUEPRINTS
+        );
     }
 
     private static Direction rotate(Direction direction, Rotation rotation) {
@@ -200,7 +204,7 @@ public final class CampBlueprintService {
         }
         var blueprint = new CampBlueprint(name, kind, entries);
         player.setData(CampAttachments.BLUEPRINTS.get(), library.with(key, blueprint));
-        if (AtomicDawn.CONFIG.camp.CAMP_BLUEPRINT_EXPORT) {
+        if (AtomicDawn.CONFIG.common.settlement.camp.blueprints.CAMP_BLUEPRINT_EXPORT) {
             var id = CampBlueprintFiles.exportId(player.getScoreboardName(), key);
             CampBlueprintFiles.write(server, id, blueprint)
                 .ifPresent(path -> AtomicDawn.LOGGER.info("Exported C.A.M.P. blueprint {} to {}", id, path));

@@ -28,7 +28,7 @@ public final class WaypointHud implements GuiLayer {
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
-        var config = AtomicDawn.CONFIG.clientPipboy;
+        var config = AtomicDawn.CONFIG.client.hud.waypointCompass;
         if (!config.WAYPOINT_HUD) {
             return;
         }
@@ -105,7 +105,7 @@ public final class WaypointHud implements GuiLayer {
                 focusedDistance = (int) Math.round(distance);
             }
         }
-        if (AtomicDawn.CONFIG.clientParty.PARTY_ON_COMPASS) {
+        if (AtomicDawn.CONFIG.client.hud.party.PARTY_ON_COMPASS) {
             var dimensionId = dimension.identifier();
             for (var member : PartyClient.others()) {
                 if (!member.online() || !member.dimension().equals(dimensionId)) {

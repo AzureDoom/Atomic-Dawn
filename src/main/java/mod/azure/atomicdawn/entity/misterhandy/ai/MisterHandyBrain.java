@@ -74,7 +74,7 @@ public final class MisterHandyBrain {
     }
 
     private double detection() {
-        var range = AtomicDawn.CONFIG.misterHandy.DETECTION_RANGE;
+        var range = AtomicDawn.CONFIG.server.entities.robots.misterHandy.behavior.DETECTION_RANGE;
         return robot.opticsDamaged() ? range * 0.5 : range;
     }
 
@@ -104,7 +104,7 @@ public final class MisterHandyBrain {
                 clearTarget();
                 blackboard.set(
                     MisterHandyBlackboardKeys.INVESTIGATE_UNTIL,
-                    now + AtomicDawn.CONFIG.misterHandy.INVESTIGATE_SECONDS * 20L
+                    now + AtomicDawn.CONFIG.server.entities.robots.misterHandy.behavior.INVESTIGATE_SECONDS * 20L
                 );
                 target = null;
             }
@@ -171,7 +171,7 @@ public final class MisterHandyBrain {
         if (home == null) {
             return true;
         }
-        var leash = (double) AtomicDawn.CONFIG.misterHandy.LEASH_RANGE;
+        var leash = (double) AtomicDawn.CONFIG.server.entities.robots.misterHandy.behavior.LEASH_RANGE;
         return pos.distanceToSqr(Vec3.atCenterOf(home)) <= leash * leash;
     }
 

@@ -96,7 +96,7 @@ public final class SuperMutantBrain {
 
     private void sense(long now) {
         var blackboard = blackboard();
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior;
         var until = blackboard.get(SuperMutantBlackboardKeys.INVESTIGATE_UNTIL);
         if (until != null && now >= until) {
             blackboard.remove(SuperMutantBlackboardKeys.INVESTIGATE_UNTIL);
@@ -152,7 +152,7 @@ public final class SuperMutantBrain {
 
     @Nullable
     private LivingEntity scan() {
-        var range = AtomicDawn.CONFIG.superMutants.DETECTION_RANGE;
+        var range = AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.DETECTION_RANGE;
         return mutant.level()
             .getEntitiesOfClass(
                 LivingEntity.class,
@@ -193,7 +193,7 @@ public final class SuperMutantBrain {
     }
 
     public int tauntDelay() {
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior;
         var min = Math.min(config.TAUNT_MIN_SECONDS, config.TAUNT_MAX_SECONDS);
         var max = Math.max(config.TAUNT_MIN_SECONDS, config.TAUNT_MAX_SECONDS);
         return (min + mutant.getRandom().nextInt(max - min + 1)) * 20;
@@ -239,7 +239,7 @@ public final class SuperMutantBrain {
         if (target() != null) {
             return;
         }
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior;
         if (
             source instanceof LivingEntity living && validTarget(living) && withinLeash(living) && mutant.distanceToSqr(
                 living
@@ -291,7 +291,7 @@ public final class SuperMutantBrain {
         blackboard.set(SuperMutantBlackboardKeys.LAST_KNOWN_POS, BlockPos.containing(guess));
         blackboard.set(
             SuperMutantBlackboardKeys.INVESTIGATE_UNTIL,
-            now + AtomicDawn.CONFIG.superMutants.INVESTIGATE_SECONDS * 20L
+            now + AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.INVESTIGATE_SECONDS * 20L
         );
     }
 
@@ -321,7 +321,7 @@ public final class SuperMutantBrain {
         if (home == null) {
             return true;
         }
-        var leash = (double) AtomicDawn.CONFIG.superMutants.LEASH_RANGE;
+        var leash = (double) AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.LEASH_RANGE;
         return pos.distanceToSqr(Vec3.atCenterOf(home)) <= leash * leash;
     }
 
@@ -341,7 +341,7 @@ public final class SuperMutantBrain {
             return !npc.isInvulnerable();
         }
         if (candidate instanceof AbstractVillager) {
-            return AtomicDawn.CONFIG.superMutants.ATTACK_VILLAGERS;
+            return AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.ATTACK_VILLAGERS;
         }
         return candidate instanceof AbstractGolem || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(candidate.getType())
             .is(TARGETS);

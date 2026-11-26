@@ -110,7 +110,7 @@ public record SkillCheck(
     }
 
     public float chance(ServerPlayer player, @Nullable NpcEntity npc) {
-        var config = AtomicDawn.CONFIG.story;
+        var config = AtomicDawn.CONFIG.common.social.story.dialogue;
         var ratio = value <= 0 ? 1F : (float) current(player, npc) / value;
         var luck = SpecialStatResolver.resolve(player).effective(SpecialAttribute.LUCK);
         var chance = ratio * (float) config.DIALOGUE_CHANCE_AT_TARGET + luck * (float) config.DIALOGUE_LUCK_BONUS;
@@ -157,6 +157,6 @@ public record SkillCheck(
     }
 
     public int experience() {
-        return xp.orElse(AtomicDawn.CONFIG.story.DIALOGUE_CHECK_XP);
+        return xp.orElse(AtomicDawn.CONFIG.common.social.story.dialogue.DIALOGUE_CHECK_XP);
     }
 }

@@ -92,12 +92,12 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        var config = AtomicDawn.CONFIG.misterHandy;
+        var config = AtomicDawn.CONFIG.server.entities.robots.misterHandy;
         return Monster.createMonsterAttributes()
-            .add(Attributes.MAX_HEALTH, config.MAX_HEALTH)
+            .add(Attributes.MAX_HEALTH, config.attributes.MAX_HEALTH)
             .add(Attributes.MOVEMENT_SPEED, 0.26)
-            .add(Attributes.ATTACK_DAMAGE, config.CLAW_DAMAGE)
-            .add(Attributes.ARMOR, config.ARMOR)
+            .add(Attributes.ATTACK_DAMAGE, config.combat.CLAW_DAMAGE)
+            .add(Attributes.ARMOR, config.attributes.ARMOR)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.4)
             .add(Attributes.STEP_HEIGHT, 1.0)
             .add(Attributes.FOLLOW_RANGE, 40.0);
@@ -183,7 +183,7 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
     }
 
     public void sawHit(ServerLevel level, LivingEntity target) {
-        var damage = (float) AtomicDawn.CONFIG.misterHandy.SAW_DAMAGE;
+        var damage = (float) AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat.SAW_DAMAGE;
         if (target.hurtServer(level, damageSources().mobAttack(this), damage)) {
             target.setInvulnerableTime(0);
             level.sendParticles(
@@ -202,7 +202,7 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
     }
 
     public void clawHit(ServerLevel level, LivingEntity target) {
-        var config = AtomicDawn.CONFIG.misterHandy;
+        var config = AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat;
         if (target.hurtServer(level, damageSources().mobAttack(this), (float) config.CLAW_DAMAGE)) {
             target.knockback(
                 0.6,
@@ -217,7 +217,7 @@ public class MisterHandyEntity extends Monster implements AzHitboxHolder {
     }
 
     public void flame(ServerLevel level, @Nullable LivingEntity target, boolean damageTick) {
-        var config = AtomicDawn.CONFIG.misterHandy;
+        var config = AtomicDawn.CONFIG.server.entities.robots.misterHandy.combat;
         var origin = nozzle();
         var aim = target != null
             ? target.position().add(0, target.getBbHeight() * 0.5, 0).subtract(origin).normalize()

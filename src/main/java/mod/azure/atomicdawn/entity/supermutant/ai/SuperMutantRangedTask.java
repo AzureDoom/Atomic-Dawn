@@ -73,7 +73,7 @@ final class SuperMutantRangedTask extends SuperMutantTask {
         if (MobGunfire.needsReload(agent.getMainHandItem(), definition)) {
             return ActionOutcome.success();
         }
-        var config = AtomicDawn.CONFIG.superMutants;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.combat;
         var min = Math.min(config.MIN_ENGAGE_RANGE, config.MAX_ENGAGE_RANGE);
         var max = Math.max(config.MIN_ENGAGE_RANGE, config.MAX_ENGAGE_RANGE);
         var range = Math.min(max, definition.damage().range());

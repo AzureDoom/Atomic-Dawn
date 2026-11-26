@@ -125,12 +125,12 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast;
         return Monster.createMonsterAttributes()
-            .add(Attributes.MAX_HEALTH, config.MAX_HEALTH)
+            .add(Attributes.MAX_HEALTH, config.attributes.MAX_HEALTH)
             .add(Attributes.MOVEMENT_SPEED, 0.22)
-            .add(Attributes.ATTACK_DAMAGE, config.WING_SWEEP_DAMAGE)
-            .add(Attributes.ARMOR, config.ARMOR)
+            .add(Attributes.ATTACK_DAMAGE, config.groundAttacks.WING_SWEEP_DAMAGE)
+            .add(Attributes.ARMOR, config.attributes.ARMOR)
             .add(Attributes.ARMOR_TOUGHNESS, 4.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
             .add(Attributes.STEP_HEIGHT, 1.5)
@@ -467,7 +467,7 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
     }
 
     public void sweep(ServerLevel level, boolean left) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks;
         var reach = config.WING_SWEEP_RANGE + getBbWidth() * 0.5;
         var forward = Vec3.directionFromRotation(0F, getYRot());
         var box = getBoundingBox().inflate(reach, 1.0, reach);
@@ -504,7 +504,7 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
     }
 
     public void shockwave(ServerLevel level) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.shockwave;
         var radius = config.SHOCKWAVE_RADIUS;
         var center = position();
         for (
@@ -544,7 +544,7 @@ public class ScorchbeastEntity extends Monster implements AzHitboxHolder {
     }
 
     public void lungeContact(ServerLevel level, LivingEntity target) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks;
         if (target.hurtServer(level, damageSources().mobAttack(this), (float) config.LUNGE_DAMAGE)) {
             var push = target.position().subtract(position()).multiply(1, 0, 1).normalize().scale(1.2);
             target.setDeltaMovement(target.getDeltaMovement().add(push.x, 0.6, push.z));

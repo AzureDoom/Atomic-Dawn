@@ -419,7 +419,7 @@ final class PipBoyHousing76 {
         var player = Minecraft.getInstance().player;
         if (player != null && s.power() > 0.5F) {
             var rads = player.getData(ADAttachments.RADIATION.get()).rads();
-            fraction = Math.clamp(rads / (float) AtomicDawn.CONFIG.radiation.MAX_RADS, 0F, 1F);
+            fraction = Math.clamp(rads / (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.MAX_RADS, 0F, 1F);
             if (rads > 0.5F) {
                 fraction += (float) Math.sin(s.millis() / 37.0) * 0.012F + (float) Math.sin(s.millis() / 11.0) * 0.006F;
             }

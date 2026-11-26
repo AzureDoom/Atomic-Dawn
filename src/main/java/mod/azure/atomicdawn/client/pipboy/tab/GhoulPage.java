@@ -41,7 +41,7 @@ final class GhoulPage {
         var state = GhoulService.state(player);
         var y = area.bottom() - BUTTON_H;
         var x = area.x() + 4;
-        if (AtomicDawn.CONFIG.ghoul.ALLOW_APPEARANCE_VARIANTS) {
+        if (AtomicDawn.CONFIG.common.progression.ghoul.general.ALLOW_APPEARANCE_VARIANTS) {
             var variant = state.appearanceVariant();
             screen.button(Component.literal("<"), x, y, 14, BUTTON_H, true, () -> sendVariant(variant - 1));
             var label = Component.translatable("pipboy.atomicdawn.ghoul.variant", variant + 1);

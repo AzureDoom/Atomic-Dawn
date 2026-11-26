@@ -26,11 +26,11 @@ public final class CampPlacementService {
     private CampPlacementService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.camp.CAMP_ENABLED;
+        return AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_ENABLED;
     }
 
     public static boolean dimensionAllowed(ServerLevel level) {
-        var allowed = AtomicDawn.CONFIG.camp.CAMP_DIMENSIONS;
+        var allowed = AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_DIMENSIONS;
         return allowed.length == 0 || Arrays.asList(allowed).contains(level.dimension().identifier().toString());
     }
 
@@ -68,7 +68,7 @@ public final class CampPlacementService {
     }
 
     public static int maxSlots() {
-        return Math.clamp(AtomicDawn.CONFIG.camp.CAMP_SLOTS, 1, 10);
+        return Math.clamp(AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_SLOTS, 1, 10);
     }
 
     public static int maxActive() {
@@ -100,7 +100,7 @@ public final class CampPlacementService {
                     pos,
                     facing,
                     true,
-                    AtomicDawn.CONFIG.camp.CAMP_BUDGET,
+                    AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_BUDGET,
                     level.getGameTime(),
                     CampSlot.CURRENT_VERSION,
                     List.of(),

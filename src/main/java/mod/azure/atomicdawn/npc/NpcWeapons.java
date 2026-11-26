@@ -133,7 +133,9 @@ public final class NpcWeapons {
             }
             tracer(level, eye, end);
         }
-        var multiplier = (float) AtomicDawn.CONFIG.weapons.DAMAGE_MULTIPLIER * npc.config().combat().damageMultiplier();
+        var multiplier = (float) AtomicDawn.CONFIG.common.combat.weapons.DAMAGE_MULTIPLIER * npc.config()
+            .combat()
+            .damageMultiplier();
         for (var entry : pending.object2FloatEntrySet()) {
             var entity = entry.getKey();
             if (entity instanceof LivingEntity living) {

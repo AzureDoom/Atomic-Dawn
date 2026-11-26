@@ -452,7 +452,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
                 PowerArmorActionPayload.upgrade(action, armor.getId(), slotIndex, id)
             )
         ).pos(leftPos + PANEL_X + PANEL_W - 70, topPos + 127).size(70, 13).build();
-        var limit = AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_MODS_PER_PIECE;
+        var limit = AtomicDawn.CONFIG.common.equipment.powerArmor.maintenance.POWER_ARMOR_MODS_PER_PIECE;
         var full = !installed.mods().containsKey(mod.value().group()) && installed.mods().size() >= limit && limit > 1;
         button.active = isInstalled || (!full && canAfford(mod.value().cost()));
         addRenderableWidget(button);
@@ -486,7 +486,7 @@ public class PowerArmorStationScreen extends AbstractContainerScreen<PowerArmorS
             Component.translatable(
                 "power_armor.atomicdawn.station.mod_count",
                 installed,
-                AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_MODS_PER_PIECE
+                AtomicDawn.CONFIG.common.equipment.powerArmor.maintenance.POWER_ARMOR_MODS_PER_PIECE
             ),
             x,
             topPos + 129,

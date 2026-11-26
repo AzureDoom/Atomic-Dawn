@@ -53,12 +53,12 @@ public final class ArmorClient {
         if (thrust <= 0F) {
             return;
         }
-        var cost = (float) AtomicDawn.CONFIG.armor.ARMOR_JETPACK_AP_COST;
+        var cost = (float) AtomicDawn.CONFIG.common.equipment.armor.ARMOR_JETPACK_AP_COST;
         if (!player.hasInfiniteMaterials() && VatsActions.actionPoints(player).points() < cost) {
             return;
         }
         var motion = player.getDeltaMovement();
-        var rise = thrust * AtomicDawn.CONFIG.armor.ARMOR_JETPACK_THRUST;
+        var rise = thrust * AtomicDawn.CONFIG.common.equipment.armor.ARMOR_JETPACK_THRUST;
         player.setDeltaMovement(motion.x, Math.min(JET_PACK_MAX_RISE, motion.y + rise), motion.z);
         player.resetFallDistance();
         ClientPacketDistributor.sendToServer(ArmorBenchActionPayload.of(ArmorBenchActionPayload.Action.JET_PACK));

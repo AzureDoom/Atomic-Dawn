@@ -43,14 +43,14 @@ public final class KillCam {
         if (player == null || projectile.getOwner() != player || following != null) {
             return;
         }
-        var mode = AtomicDawn.CONFIG.killCam.KILL_CAM;
-        var wanted = mode == ADConfig.KillCam.KillCamMode.ALWAYS
-            || mode == ADConfig.KillCam.KillCamMode.VATS && VatsClient.isActive();
+        var mode = AtomicDawn.CONFIG.client.camera.killCam.KILL_CAM;
+        var wanted = mode == ADConfig.Client.Camera.KillCam.KillCamMode.ALWAYS
+            || mode == ADConfig.Client.Camera.KillCam.KillCamMode.VATS && VatsClient.isActive();
         if (!wanted) {
             return;
         }
         following = projectile;
-        holdTicks = AtomicDawn.CONFIG.killCam.KILL_CAM_HOLD_TICKS;
+        holdTicks = AtomicDawn.CONFIG.client.camera.killCam.KILL_CAM_HOLD_TICKS;
         previousCameraType = minecraft.options.getCameraType();
         minecraft.options.setCameraType(CameraType.THIRD_PERSON_BACK);
         minecraft.setCameraEntity(projectile);
@@ -80,7 +80,7 @@ public final class KillCam {
     @SubscribeEvent
     public static void onCameraDistance(CalculateDetachedCameraDistanceEvent event) {
         if (following != null) {
-            event.setDistance((float) AtomicDawn.CONFIG.killCam.KILL_CAM_DISTANCE);
+            event.setDistance((float) AtomicDawn.CONFIG.client.camera.killCam.KILL_CAM_DISTANCE);
         }
     }
 

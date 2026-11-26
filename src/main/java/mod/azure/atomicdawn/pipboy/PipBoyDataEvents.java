@@ -40,7 +40,7 @@ public final class PipBoyDataEvents {
         if (age % 20 == 0) {
             QuestService.evaluate(player);
         }
-        if (age % AtomicDawn.CONFIG.pipboy.PIPBOY_LOCATION_SCAN_TICKS == 7) {
+        if (age % AtomicDawn.CONFIG.common.pipboy.locations.PIPBOY_LOCATION_SCAN_TICKS == 7) {
             LocationService.tick(player);
         }
     }

@@ -30,7 +30,7 @@ public final class MisterHandySpawning {
         if (!natural) {
             return true;
         }
-        var config = AtomicDawn.CONFIG.misterHandy;
+        var config = AtomicDawn.CONFIG.server.entities.robots.misterHandy.spawning;
         if (random.nextDouble() >= config.SPAWN_CHANCE) {
             return false;
         }

@@ -42,7 +42,7 @@ public class ScorchbeastCloudEntity extends Entity {
     }
 
     public static ScorchbeastCloudEntity create(ServerLevel level, double x, double y, double z) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.cropDusting;
         var cloud = new ScorchbeastCloudEntity(ADEntities.SCORCHBEAST_CLOUD.get(), level);
         cloud.setPos(x, y, z);
         cloud.entityData.set(RADIUS, (float) config.DUST_CLOUD_RADIUS);
@@ -76,7 +76,8 @@ public class ScorchbeastCloudEntity extends Entity {
         if (tickCount % PULSE_TICKS != 0) {
             return;
         }
-        var rate = (float) AtomicDawn.CONFIG.scorchbeast.DUST_RADS_PER_SECOND * PULSE_TICKS / 20F;
+        var rate = (float) AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.cropDusting.DUST_RADS_PER_SECOND
+            * PULSE_TICKS / 20F;
         var area = new AABB(position(), position()).inflate(radius, radius * 1.5, radius);
         for (
             var living : level.getEntitiesOfClass(

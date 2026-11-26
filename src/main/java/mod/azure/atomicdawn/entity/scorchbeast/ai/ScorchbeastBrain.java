@@ -67,7 +67,7 @@ public final class ScorchbeastBrain {
     }
 
     public void onFlightChanged(ScorchbeastFlight next) {
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.flight;
         var random = beast.getRandom();
         if (next == ScorchbeastFlight.FLYING) {
             cooldowns().set(LAND_COOLDOWN, config.MIN_AIR_SECONDS * 20 + random.nextInt(200));
@@ -79,7 +79,7 @@ public final class ScorchbeastBrain {
 
     private void sense(long now) {
         var blackboard = blackboard();
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.behavior;
         var target = target();
         if (target == null && blackboard.has(CommonBlackboardKeys.TARGET)) {
             clearTarget();
@@ -111,7 +111,7 @@ public final class ScorchbeastBrain {
 
     @Nullable
     private LivingEntity scan() {
-        var range = AtomicDawn.CONFIG.scorchbeast.DETECTION_RANGE;
+        var range = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.behavior.DETECTION_RANGE;
         return beast.level()
             .getEntitiesOfClass(
                 LivingEntity.class,
@@ -164,7 +164,7 @@ public final class ScorchbeastBrain {
         if (home == null) {
             return true;
         }
-        var leash = (double) AtomicDawn.CONFIG.scorchbeast.LEASH_RANGE;
+        var leash = (double) AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.behavior.LEASH_RANGE;
         return pos.distanceToSqr(Vec3.atCenterOf(home)) <= leash * leash;
     }
 }

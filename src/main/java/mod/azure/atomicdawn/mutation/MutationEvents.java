@@ -465,7 +465,7 @@ public final class MutationEvents {
             return;
         }
         var rads = event.getOriginal().getData(ADAttachments.RADIATION.get()).rads();
-        var kept = rads * (float) (1.0 - AtomicDawn.CONFIG.radiation.RADS_LOST_ON_DEATH);
+        var kept = rads * (float) (1.0 - AtomicDawn.CONFIG.common.survival.radiation.sickness.RADS_LOST_ON_DEATH);
         if (kept > 0F) {
             RadiationService.set(event.getEntity(), kept);
         }

@@ -50,7 +50,7 @@ public final class RadiationEvents {
         }
         var type = ADFluids.IRRADIATED_WATER_TYPE.value();
         if (living.isInFluidType(type)) {
-            var rate = (float) AtomicDawn.CONFIG.radiation.RAD_WATER_RADS_PER_SECOND;
+            var rate = (float) AtomicDawn.CONFIG.common.survival.radiation.water.RAD_WATER_RADS_PER_SECOND;
             RadiationService.expose(living, living.isEyeInFluidType(type) ? rate * 2F : rate);
         }
         if (living instanceof Player player) {
@@ -73,13 +73,13 @@ public final class RadiationEvents {
                     RadiationService.expose(player, environmental);
                 }
             }
-            if (AtomicDawn.CONFIG.environmentalRadiation.RADIATION_HOTSPOTS_ENABLED) {
+            if (AtomicDawn.CONFIG.common.survival.radiation.sites.RADIATION_HOTSPOTS_ENABLED) {
                 float hotspot = hotspotRadiation(player);
                 if (hotspot > 0F) {
                     RadiationService.expose(player, hotspot);
                 }
             }
-            var decay = (float) AtomicDawn.CONFIG.radiation.RADS_DECAY_PER_SECOND;
+            var decay = (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.RADS_DECAY_PER_SECOND;
             if (decay > 0F && RadiationService.rads(player) > 0F) {
                 RadiationService.remove(player, decay);
             }
@@ -107,7 +107,7 @@ public final class RadiationEvents {
         if (!player.isInFluidType(type) || !player.level().getBiome(player.blockPosition()).is(ADBiomes.WASTELAND)) {
             return 0F;
         }
-        var rate = (float) AtomicDawn.CONFIG.environmentalRadiation.WASTELAND_WATER_RADS_PER_SECOND;
+        var rate = (float) AtomicDawn.CONFIG.common.survival.radiation.water.WASTELAND_WATER_RADS_PER_SECOND;
         return player.isEyeInFluidType(type) ? rate * 2F : rate;
     }
 
@@ -115,10 +115,10 @@ public final class RadiationEvents {
         var pos = player.blockPosition();
         var total = BlastZoneService.radiation(level, pos);
         total += RadStormService.radiation(level, player);
-        if (AtomicDawn.CONFIG.environmentalRadiation.RADIATION_SITES_ENABLED) {
+        if (AtomicDawn.CONFIG.common.survival.radiation.sites.RADIATION_SITES_ENABLED) {
             total += siteRadiation(level, pos);
         }
-        if (AtomicDawn.CONFIG.environmentalRadiation.BIOME_RADIATION_ENABLED) {
+        if (AtomicDawn.CONFIG.common.survival.radiation.biomes.BIOME_RADIATION_ENABLED) {
             total += biomeRadiation(level, player);
         }
         return total;
@@ -126,7 +126,7 @@ public final class RadiationEvents {
 
     private static float biomeRadiation(ServerLevel level, Player player) {
         var biome = level.getBiome(player.blockPosition());
-        var config = AtomicDawn.CONFIG.environmentalRadiation;
+        var config = AtomicDawn.CONFIG.common.survival.radiation.biomes;
         double rate;
         if (biome.is(ADBiomes.AMBIENT_RADIATION_HIGH)) {
             rate = config.BIOME_RADIATION_HIGH_RADS_PER_SECOND;
@@ -145,8 +145,8 @@ public final class RadiationEvents {
     }
 
     private static float siteRadiation(ServerLevel level, BlockPos pos) {
-        var rate = (float) AtomicDawn.CONFIG.environmentalRadiation.RADIATION_SITE_RADS_PER_SECOND;
-        var extreme = (float) AtomicDawn.CONFIG.environmentalRadiation.EXTREME_SITE_RADS_PER_SECOND;
+        var rate = (float) AtomicDawn.CONFIG.common.survival.radiation.sites.RADIATION_SITE_RADS_PER_SECOND;
+        var extreme = (float) AtomicDawn.CONFIG.common.survival.radiation.sites.EXTREME_SITE_RADS_PER_SECOND;
         if (rate <= 0F && extreme <= 0F) {
             return 0F;
         }
@@ -176,7 +176,7 @@ public final class RadiationEvents {
     }
 
     private static float hotspotRadiation(Player player) {
-        int radius = AtomicDawn.CONFIG.environmentalRadiation.RADIATION_HOTSPOT_RADIUS;
+        int radius = AtomicDawn.CONFIG.common.survival.radiation.sites.RADIATION_HOTSPOT_RADIUS;
         if (radius <= 0)
             return 0F;
         BlockPos center = player.blockPosition();
@@ -201,7 +201,7 @@ public final class RadiationEvents {
         if (!Double.isFinite(minDistanceSq))
             return 0F;
         float proximity = 1F - (float) Math.sqrt(minDistanceSq) / (radius + 1F);
-        return (float) AtomicDawn.CONFIG.environmentalRadiation.RADIATION_HOTSPOT_RADS_PER_SECOND * Math.max(
+        return (float) AtomicDawn.CONFIG.common.survival.radiation.sites.RADIATION_HOTSPOT_RADS_PER_SECOND * Math.max(
             0F,
             proximity
         );

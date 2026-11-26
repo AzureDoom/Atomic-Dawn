@@ -32,7 +32,9 @@ final class ScorchbeastShockwaveTask extends ScorchbeastTask {
         if (!attackReady(cooldowns, ScorchbeastBrain.SHOCKWAVE_COOLDOWN)) {
             return false;
         }
-        return agent.distanceTo(target) <= AtomicDawn.CONFIG.scorchbeast.SHOCKWAVE_RADIUS + 4.0;
+        return agent.distanceTo(
+            target
+        ) <= AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.shockwave.SHOCKWAVE_RADIUS + 4.0;
     }
 
     @Override
@@ -62,7 +64,8 @@ final class ScorchbeastShockwaveTask extends ScorchbeastTask {
     void end(ScorchbeastEntity agent, Blackboard blackboard, CooldownTracker cooldowns, ActionStatus reason) {
         cooldowns.set(
             ScorchbeastBrain.SHOCKWAVE_COOLDOWN,
-            AtomicDawn.CONFIG.scorchbeast.SHOCKWAVE_COOLDOWN_TICKS + agent.getRandom().nextInt(100)
+            AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.shockwave.SHOCKWAVE_COOLDOWN_TICKS + agent.getRandom()
+                .nextInt(100)
         );
         finishAttack(agent, cooldowns);
     }

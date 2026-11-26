@@ -43,14 +43,14 @@ public record CampPlans(List<Identifier> known) {
     }
 
     public static boolean unlocked(Player player, CampBuildable definition) {
-        if (!AtomicDawn.CONFIG.camp.CAMP_REQUIRE_PLANS || definition.plan().isEmpty()) {
+        if (!AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_REQUIRE_PLANS || definition.plan().isEmpty()) {
             return true;
         }
         return of(player).known().contains(definition.plan().get());
     }
 
     public static boolean unlocked(Player player, CampBlueprint blueprint) {
-        if (!AtomicDawn.CONFIG.camp.CAMP_REQUIRE_PLANS || blueprint.plan().isEmpty()) {
+        if (!AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_REQUIRE_PLANS || blueprint.plan().isEmpty()) {
             return true;
         }
         return of(player).known().contains(blueprint.plan().get());

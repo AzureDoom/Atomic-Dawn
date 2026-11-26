@@ -45,7 +45,7 @@ public final class SkylineSkyRenderer {
         var minecraft = Minecraft.getInstance();
         previousStrength = strength;
         var target = 0F;
-        if (minecraft.level != null && AtomicDawn.CONFIG.skylineVisuals.SKYLINE_SKY) {
+        if (minecraft.level != null && AtomicDawn.CONFIG.client.effects.skyline.SKYLINE_SKY) {
             var pos = minecraft.gameRenderer.mainCamera().blockPosition();
             if (minecraft.level.getBiome(pos).is(ADBiomes.SKYLINE_VALLEY)) {
                 target = 1F;
@@ -83,7 +83,7 @@ public final class SkylineSkyRenderer {
         var radius = 72F;
         var height = 48F;
         var time = (level.getGameTime() + partialTick)
-            * AtomicDawn.CONFIG.skylineVisuals.SKYLINE_SKY_SPIN;
+            * AtomicDawn.CONFIG.client.effects.skyline.SKYLINE_SKY_SPIN;
 
         var flash = 1F + 0.45F * level.getThunderLevel(partialTick);
 

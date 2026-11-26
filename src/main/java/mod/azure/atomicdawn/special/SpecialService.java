@@ -90,11 +90,11 @@ public final class SpecialService {
     }
 
     public static int unlockedLegendarySlots(int level) {
-        if (!AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED) {
             return 0;
         }
         var count = 0;
-        var thresholds = AtomicDawn.CONFIG.perks.LEGENDARY_SLOT_LEVELS;
+        var thresholds = AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_SLOT_LEVELS;
         if (thresholds == null) {
             return 0;
         }
@@ -108,7 +108,7 @@ public final class SpecialService {
 
     public static int nextLegendarySlotLevel(int level) {
         var next = Integer.MAX_VALUE;
-        var thresholds = AtomicDawn.CONFIG.perks.LEGENDARY_SLOT_LEVELS;
+        var thresholds = AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_SLOT_LEVELS;
         if (thresholds != null) {
             for (var threshold : thresholds) {
                 if (threshold > level) {
@@ -140,7 +140,9 @@ public final class SpecialService {
             if (LegendaryPerkCatalog.get(access, id).isPresent() && legendary.ownedRank(id) <= 0) {
                 legendary = legendary.withOwned(id, 1);
             }
-            legendary = legendary.addCoins(rank * AtomicDawn.CONFIG.perks.LEGENDARY_COINS_PER_SCRAPPED_RANK);
+            legendary = legendary.addCoins(
+                rank * AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_COINS_PER_SCRAPPED_RANK
+            );
         }
         return progress.withOwnedAndLegendary(owned, legendary)
             .withLoadouts(loadouts, progress.active())
@@ -159,10 +161,10 @@ public final class SpecialService {
     public static void ensureInitialized(ServerPlayer player) {
         var access = player.level().registryAccess();
         var progress = migrate(access, get(player));
-        var start = AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS;
+        var start = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS;
         if (!progress.initialized()) {
             var owned = new HashMap<Identifier, Integer>();
-            for (var entry : AtomicDawn.CONFIG.perks.PERKS_STARTER_CARDS) {
+            for (var entry : AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_STARTER_CARDS) {
                 parseStarter(entry).ifPresent(starter -> {
                     var definition = PerkCatalog.get(access, starter.id()).orElse(null);
                     if (definition != null) {
@@ -173,16 +175,20 @@ public final class SpecialService {
                 });
             }
             var loadouts = new ArrayList<SpecialLoadout>();
-            for (var i = 0; i < AtomicDawn.CONFIG.special.SPECIAL_LOADOUT_SLOTS; i++) {
+            for (var i = 0; i < AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_LOADOUT_SLOTS; i++) {
                 loadouts.add(SpecialLoadout.fresh(start));
             }
-            progress = progress.withInitialized(owned, loadouts, AtomicDawn.CONFIG.perks.PERKS_STARTING_PICKS);
+            progress = progress.withInitialized(
+                owned,
+                loadouts,
+                AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_STARTING_PICKS
+            );
         }
-        if (progress.loadouts().size() < AtomicDawn.CONFIG.special.SPECIAL_LOADOUT_SLOTS) {
+        if (progress.loadouts().size() < AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_LOADOUT_SLOTS) {
             var loadouts = new ArrayList<>(progress.loadouts());
             while (
                 loadouts.size() < Math.min(
-                    AtomicDawn.CONFIG.special.SPECIAL_LOADOUT_SLOTS,
+                    AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_LOADOUT_SLOTS,
                     SpecialProgress.MAX_LOADOUTS
                 )
             ) {
@@ -285,8 +291,8 @@ public final class SpecialService {
         PlayerForm form,
         int[] legendarySpecial
     ) {
-        var start = AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS;
-        var maxBase = AtomicDawn.CONFIG.special.SPECIAL_MAX_BASE;
+        var start = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS;
+        var maxBase = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_BASE;
         var budget = start * SpecialAttribute.COUNT + progress.earnedPoints();
         var values = new ArrayList<>(loadout.special());
         var distributionValid = loadout.allocated() <= budget;
@@ -374,7 +380,7 @@ public final class SpecialService {
     }
 
     public static boolean atStation(ServerPlayer player) {
-        var radius = AtomicDawn.CONFIG.special.SPECIAL_STATION_RADIUS;
+        var radius = AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_STATION_RADIUS;
         if (radius <= 0) {
             return false;
         }
@@ -397,10 +403,13 @@ public final class SpecialService {
         if (player.isCreative() || atStation(player)) {
             return SpecialResult.OK;
         }
-        if (!AtomicDawn.CONFIG.special.SPECIAL_ALLOW_ANYWHERE_SWITCH) {
+        if (!AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_ALLOW_ANYWHERE_SWITCH) {
             return SpecialResult.NEED_STATION;
         }
-        return inCombat(player, AtomicDawn.CONFIG.special.SPECIAL_OUT_OF_COMBAT_SWITCH_SECONDS)
+        return inCombat(
+            player,
+            AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_OUT_OF_COMBAT_SWITCH_SECONDS
+        )
             ? SpecialResult.IN_COMBAT
             : SpecialResult.OK;
     }
@@ -409,7 +418,10 @@ public final class SpecialService {
         if (player.isCreative()) {
             return SpecialResult.OK;
         }
-        return inCombat(player, AtomicDawn.CONFIG.special.SPECIAL_BUILD_EDIT_COMBAT_LOCK_SECONDS)
+        return inCombat(
+            player,
+            AtomicDawn.CONFIG.common.progression.special.loadouts.SPECIAL_BUILD_EDIT_COMBAT_LOCK_SECONDS
+        )
             ? SpecialResult.IN_COMBAT
             : SpecialResult.OK;
     }
@@ -431,20 +443,22 @@ public final class SpecialService {
     }
 
     public static void awardXp(ServerPlayer player, long amount) {
-        if (amount <= 0 || !AtomicDawn.CONFIG.special.SPECIAL_ENABLED) {
+        if (amount <= 0 || !AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_ENABLED) {
             return;
         }
         var stats = SpecialStatResolver.resolve(player);
         var bonus = stats.xpBonus + teamAura(player) + NukaColaEffects.xpBonus(player);
-        var total = Math.round(amount * (1.0 + Math.min(bonus, AtomicDawn.CONFIG.perks.PERKS_MAX_XP_BONUS)));
+        var total = Math.round(
+            amount * (1.0 + Math.min(bonus, AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_XP_BONUS))
+        );
         addXp(player, total);
     }
 
     private static float teamAura(ServerPlayer player) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_TEAM_AURAS) {
+        if (!AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_TEAM_AURAS) {
             return 0F;
         }
-        var radius = AtomicDawn.CONFIG.perks.PERKS_TEAM_AURA_RADIUS;
+        var radius = AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_TEAM_AURA_RADIUS;
         var best = 0F;
         for (var other : player.level().players()) {
             var ally = player.isAlliedTo(other) || PartyService.sameParty(player, other);
@@ -463,15 +477,24 @@ public final class SpecialService {
         }
         var progress = get(player);
         var xp = progress.xp() > Long.MAX_VALUE - amount ? Long.MAX_VALUE : progress.xp() + amount;
-        var newLevel = SpecialXp.levelFor(xp, AtomicDawn.CONFIG.special.SPECIAL_MAX_LEVEL);
+        var newLevel = SpecialXp.levelFor(
+            xp,
+            AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_LEVEL
+        );
         var oldLevel = progress.level();
         var earned = progress.earnedPoints();
         var picks = progress.perkPicks();
-        var pointCap = Math.max(0, AtomicDawn.CONFIG.special.SPECIAL_ATTRIBUTE_LEVEL_CAP - 1)
-            * AtomicDawn.CONFIG.special.SPECIAL_POINTS_PER_LEVEL;
+        var pointCap = Math.max(
+            0,
+            AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_ATTRIBUTE_LEVEL_CAP - 1
+        )
+            * AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_POINTS_PER_LEVEL;
         for (var level = oldLevel + 1; level <= newLevel; level++) {
-            if (level <= AtomicDawn.CONFIG.special.SPECIAL_ATTRIBUTE_LEVEL_CAP) {
-                earned = Math.min(pointCap, earned + AtomicDawn.CONFIG.special.SPECIAL_POINTS_PER_LEVEL);
+            if (level <= AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_ATTRIBUTE_LEVEL_CAP) {
+                earned = Math.min(
+                    pointCap,
+                    earned + AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_POINTS_PER_LEVEL
+                );
             }
             picks++;
         }
@@ -487,9 +510,9 @@ public final class SpecialService {
     }
 
     public static void awardKillXp(ServerPlayer killer, LivingEntity victim) {
-        var amount = AtomicDawn.CONFIG.special.XP_KILL_BASE + victim.getMaxHealth()
-            * AtomicDawn.CONFIG.special.XP_KILL_PER_HEALTH;
-        var cap = AtomicDawn.CONFIG.special.XP_KILL_PER_MINUTE_CAP;
+        var amount = AtomicDawn.CONFIG.common.progression.special.experience.XP_KILL_BASE + victim.getMaxHealth()
+            * AtomicDawn.CONFIG.common.progression.special.experience.XP_KILL_PER_HEALTH;
+        var cap = AtomicDawn.CONFIG.common.progression.special.experience.XP_KILL_PER_MINUTE_CAP;
         var granted = Math.round(amount);
         if (cap > 0) {
             var now = killer.level().getGameTime();
@@ -505,7 +528,7 @@ public final class SpecialService {
     }
 
     public static SpecialResult handle(ServerPlayer player, SpecialActionPayload payload) {
-        if (!AtomicDawn.CONFIG.special.SPECIAL_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_ENABLED) {
             return SpecialResult.DISABLED;
         }
         if (rateLimited(player)) {
@@ -543,9 +566,10 @@ public final class SpecialService {
             return SpecialResult.INVALID;
         }
         var current = progress.activeLoadout();
-        var maxBase = AtomicDawn.CONFIG.special.SPECIAL_MAX_BASE;
-        var budget = AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS * SpecialAttribute.COUNT + progress
-            .earnedPoints();
+        var maxBase = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_BASE;
+        var budget = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS
+            * SpecialAttribute.COUNT + progress
+                .earnedPoints();
         var total = 0;
         var decreased = false;
         var changed = false;
@@ -579,7 +603,7 @@ public final class SpecialService {
     }
 
     private static SpecialResult learn(ServerPlayer player, SpecialProgress progress, Identifier perk) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED) {
             return SpecialResult.DISABLED;
         }
         if (progress.perkPicks() <= 0) {
@@ -606,7 +630,7 @@ public final class SpecialService {
     }
 
     private static SpecialResult equip(ServerPlayer player, SpecialProgress progress, Identifier perk, int rank) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED) {
             return SpecialResult.DISABLED;
         }
         var access = player.level().registryAccess();
@@ -718,7 +742,7 @@ public final class SpecialService {
 
     public static void respec(ServerPlayer player) {
         var progress = get(player);
-        var start = AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS;
+        var start = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS;
         var fresh = SpecialLoadout.fresh(start).withName(progress.activeLoadout().name());
         set(player, progress.withActiveLoadout(fresh));
     }
@@ -783,7 +807,10 @@ public final class SpecialService {
     }
 
     private static SpecialResult scrap(ServerPlayer player, SpecialProgress progress, Identifier perk, int ranks) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED || !AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (
+            !AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED
+                || !AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED
+        ) {
             return SpecialResult.DISABLED;
         }
         var owned = progress.ownedRank(perk);
@@ -810,7 +837,7 @@ public final class SpecialService {
         } else {
             copy.remove(perk);
         }
-        var coins = ranks * AtomicDawn.CONFIG.perks.LEGENDARY_COINS_PER_SCRAPPED_RANK;
+        var coins = ranks * AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_COINS_PER_SCRAPPED_RANK;
         set(player, progress.withOwnedAndLegendary(copy, progress.legendary().addCoins(coins)));
         return SpecialResult.OK;
     }
@@ -821,7 +848,10 @@ public final class SpecialService {
         Identifier perk,
         int slot
     ) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED || !AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (
+            !AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED
+                || !AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED
+        ) {
             return SpecialResult.DISABLED;
         }
         var definition = LegendaryPerkCatalog.get(player.level().registryAccess(), perk).orElse(null);
@@ -878,7 +908,10 @@ public final class SpecialService {
         Identifier perk,
         int target
     ) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED || !AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (
+            !AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED
+                || !AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED
+        ) {
             return SpecialResult.DISABLED;
         }
         var definition = LegendaryPerkCatalog.get(player.level().registryAccess(), perk).orElse(null);

@@ -49,7 +49,7 @@ public final class GhoulHud implements GuiLayer {
         var player = minecraft.player;
         var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
         if (
-            player == null || hudHidden || player.isSpectator() || !AtomicDawn.CONFIG.clientGhoul.GHOUL_HUD
+            player == null || hudHidden || player.isSpectator() || !AtomicDawn.CONFIG.client.effects.ghoul.GHOUL_HUD
                 || !GhoulService.isGhoul(player)
         ) {
             return;
@@ -109,7 +109,7 @@ public final class GhoulHud implements GuiLayer {
             return;
         }
         var glow = GhoulService.state(player).glow();
-        if (lastGlow >= 0F && glow > lastGlow && AtomicDawn.CONFIG.clientGhoul.GHOUL_GEIGER) {
+        if (lastGlow >= 0F && glow > lastGlow && AtomicDawn.CONFIG.client.effects.ghoul.GHOUL_GEIGER) {
             pendingClicks = Math.min(24F, pendingClicks + (glow - lastGlow) * 2F);
         }
         lastGlow = glow;

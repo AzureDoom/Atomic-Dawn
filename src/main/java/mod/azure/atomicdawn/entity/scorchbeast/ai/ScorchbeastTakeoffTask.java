@@ -37,7 +37,12 @@ final class ScorchbeastTakeoffTask extends ScorchbeastTask {
         if (target.getY() - agent.getY() > ELEVATION_LIMIT) {
             return true;
         }
-        if (horizontalDistance(agent, target) > AtomicDawn.CONFIG.scorchbeast.TAKEOFF_DISTANCE) {
+        if (
+            horizontalDistance(
+                agent,
+                target
+            ) > AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.flight.TAKEOFF_DISTANCE
+        ) {
             return true;
         }
         return random.nextInt(100) == 0;

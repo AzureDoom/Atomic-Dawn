@@ -68,7 +68,7 @@ public final class RadiationHud implements GuiLayer {
         }
         graphics.fill(x, y, x + blockWidth, y + blockHeight, COLOR_BACKGROUND);
         graphics.text(font, label, x + 3, y + 3, resisting ? COLOR_RESIST : COLOR_TEXT, true);
-        var fraction = Math.clamp(rads / (float) AtomicDawn.CONFIG.radiation.MAX_RADS, 0F, 1F);
+        var fraction = Math.clamp(rads / (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.MAX_RADS, 0F, 1F);
         var barY = y + blockHeight - 4;
         graphics.fill(x + 3, barY, x + 3 + BAR_WIDTH, barY + 2, COLOR_BAR_BG);
         graphics.fill(x + 3, barY, x + 3 + Math.round(BAR_WIDTH * fraction), barY + 2, COLOR);

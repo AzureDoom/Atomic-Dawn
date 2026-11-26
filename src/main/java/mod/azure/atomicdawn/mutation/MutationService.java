@@ -22,7 +22,7 @@ public final class MutationService {
     private MutationService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.mutations.MUTATIONS_ENABLED;
+        return AtomicDawn.CONFIG.common.progression.mutations.MUTATIONS_ENABLED;
     }
 
     public static Mutations get(Player player) {
@@ -48,12 +48,15 @@ public final class MutationService {
             return;
         }
         var lock = SpecialStatResolver.resolve(player).extra(PerkEffectType.MUTATION_LOCK_RANDOM);
-        var chance = rads * AtomicDawn.CONFIG.mutations.MUTATION_CHANCE_PER_RAD * Math.max(0F, 1F - lock);
+        var chance = rads * AtomicDawn.CONFIG.common.progression.mutations.MUTATION_CHANCE_PER_RAD * Math.max(
+            0F,
+            1F - lock
+        );
         if (player.getRandom().nextDouble() >= chance) {
             return;
         }
         var mutations = get(player);
-        if (mutations.size() >= AtomicDawn.CONFIG.mutations.MUTATION_MAX) {
+        if (mutations.size() >= AtomicDawn.CONFIG.common.progression.mutations.MUTATION_MAX) {
             return;
         }
         var candidates = new ArrayList<Mutation>();
@@ -78,9 +81,15 @@ public final class MutationService {
         var mutations = get(player);
         var exclusive = mutation.exclusive();
         var replacing = exclusive != null && mutations.has(exclusive);
-        if (!mutations.has(mutation) && !replacing && mutations.size() >= AtomicDawn.CONFIG.mutations.MUTATION_MAX) {
+        if (
+            !mutations.has(mutation) && !replacing && mutations
+                .size() >= AtomicDawn.CONFIG.common.progression.mutations.MUTATION_MAX
+        ) {
             player.sendSystemMessage(
-                Component.translatable("mutation.atomicdawn.full", AtomicDawn.CONFIG.mutations.MUTATION_MAX),
+                Component.translatable(
+                    "mutation.atomicdawn.full",
+                    AtomicDawn.CONFIG.common.progression.mutations.MUTATION_MAX
+                ),
                 true
             );
             return false;
@@ -90,7 +99,8 @@ public final class MutationService {
             announce(player, "mutation.atomicdawn.lost", exclusive, ChatFormatting.GRAY);
         }
         var gained = !mutations.has(mutation);
-        var until = player.level().getGameTime() + AtomicDawn.CONFIG.mutations.MUTATION_SERUM_MINUTES * 1200L;
+        var until = player.level().getGameTime() + AtomicDawn.CONFIG.common.progression.mutations.MUTATION_SERUM_MINUTES
+            * 1200L;
         set(player, mutations.with(mutation, until));
         announce(
             player,
@@ -107,7 +117,10 @@ public final class MutationService {
             return;
         }
         var lock = SpecialStatResolver.resolve(player).extra(PerkEffectType.MUTATION_LOCK_REMOVAL);
-        var chance = AtomicDawn.CONFIG.mutations.RADAWAY_MUTATION_CURE_CHANCE * Math.max(0F, 1F - lock);
+        var chance = AtomicDawn.CONFIG.common.progression.mutations.RADAWAY_MUTATION_CURE_CHANCE * Math.max(
+            0F,
+            1F - lock
+        );
         if (player.getRandom().nextDouble() >= chance) {
             return;
         }

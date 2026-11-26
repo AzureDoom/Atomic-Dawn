@@ -54,7 +54,7 @@ public final class RadStormVisuals {
         var exposed = active && level.canSeeSky(BlockPos.containing(player.getEyePosition()));
         var target = exposed ? 1F : active ? 0.2F : 0F;
         tint += Math.clamp(target - tint, -0.02F, 0.02F);
-        if (!active || !AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_PARTICLES) {
+        if (!active || !AtomicDawn.CONFIG.client.effects.radStorm.RAD_STORM_PARTICLES) {
             return;
         }
         var random = level.getRandom();
@@ -75,7 +75,7 @@ public final class RadStormVisuals {
 
         @Override
         public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
-            if (!AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY) {
+            if (!AtomicDawn.CONFIG.client.effects.radStorm.RAD_STORM_OVERLAY) {
                 return;
             }
             var partial = deltaTracker.getGameTimeDeltaPartialTick(false);
@@ -83,9 +83,9 @@ public final class RadStormVisuals {
             if (current <= 0.01F) {
                 return;
             }
-            var color = ADColors.argb(AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY_COLOR, DEFAULT_TINT);
+            var color = ADColors.argb(AtomicDawn.CONFIG.client.effects.radStorm.RAD_STORM_OVERLAY_COLOR, DEFAULT_TINT);
             var strength = Math.clamp(current, 0F, 1F) * (float) Math.clamp(
-                AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY_INTENSITY,
+                AtomicDawn.CONFIG.client.effects.radStorm.RAD_STORM_OVERLAY_INTENSITY,
                 0.0,
                 1.0
             );
@@ -97,7 +97,7 @@ public final class RadStormVisuals {
             var window = Minecraft.getInstance().getWindow();
             var width = window.getGuiScaledWidth();
             var height = window.getGuiScaledHeight();
-            if (!AtomicDawn.CONFIG.clientRadStorm.RAD_STORM_OVERLAY_VIGNETTE) {
+            if (!AtomicDawn.CONFIG.client.effects.radStorm.RAD_STORM_OVERLAY_VIGNETTE) {
                 graphics.fill(0, 0, width, height, (Math.round(peak) << 24) | rgb);
                 return;
             }

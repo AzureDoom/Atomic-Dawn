@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.powerarmor.PowerArmorFirstPerson;
-import mod.azure.atomicdawn.config.ADConfig.ClientPipBoy.PipBoyFirstPersonMode;
+import mod.azure.atomicdawn.config.ADConfig.Client.PipBoy.WornDevice.PipBoyFirstPersonMode;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 
 @SuppressWarnings("unused")
@@ -67,7 +67,7 @@ public final class PipBoyFirstPerson {
         if (
             event.getHand() != InteractionHand.OFF_HAND
                 || !event.getItemStack().isEmpty()
-                || AtomicDawn.CONFIG.clientPipboy.PIPBOY_ARM_FIRST_PERSON != PipBoyFirstPersonMode.UNARMED_BOTH_ARMS
+                || AtomicDawn.CONFIG.client.pipboy.wornDevice.PIPBOY_ARM_FIRST_PERSON != PipBoyFirstPersonMode.UNARMED_BOTH_ARMS
         ) {
             return;
         }
@@ -92,7 +92,7 @@ public final class PipBoyFirstPerson {
 
     @Nullable
     private static HumanoidArm firstPersonArm(AbstractClientPlayer player) {
-        if (AtomicDawn.CONFIG.clientPipboy.PIPBOY_ARM_FIRST_PERSON == PipBoyFirstPersonMode.OFF) {
+        if (AtomicDawn.CONFIG.client.pipboy.wornDevice.PIPBOY_ARM_FIRST_PERSON == PipBoyFirstPersonMode.OFF) {
             return null;
         }
 
@@ -154,7 +154,7 @@ public final class PipBoyFirstPerson {
             OverlayTexture.NO_OVERLAY,
             null
         );
-        if (AtomicDawn.CONFIG.clientPipboy.PIPBOY_ARM_SCREEN_GLOW) {
+        if (AtomicDawn.CONFIG.client.pipboy.wornDevice.PIPBOY_ARM_SCREEN_GLOW) {
             collector.submitModelPart(
                 posedArm(SCREEN[s][a], arm),
                 pose,

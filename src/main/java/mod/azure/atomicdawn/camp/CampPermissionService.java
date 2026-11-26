@@ -68,6 +68,6 @@ public final class CampPermissionService {
     }
 
     public static boolean adminBypass(Player player) {
-        return AtomicDawn.CONFIG.camp.CAMP_CREATIVE_BYPASS && player.isCreative();
+        return AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_CREATIVE_BYPASS && player.isCreative();
     }
 }

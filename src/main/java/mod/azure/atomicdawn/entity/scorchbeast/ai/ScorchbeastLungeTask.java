@@ -43,7 +43,7 @@ final class ScorchbeastLungeTask extends ScorchbeastTask {
         }
         var distance = horizontalDistance(agent, target);
         return attackReady(cooldowns, ScorchbeastBrain.LUNGE_COOLDOWN) && distance >= MIN_RANGE
-            && distance <= AtomicDawn.CONFIG.scorchbeast.LUNGE_RANGE;
+            && distance <= AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks.LUNGE_RANGE;
     }
 
     @Override
@@ -106,7 +106,8 @@ final class ScorchbeastLungeTask extends ScorchbeastTask {
     void end(ScorchbeastEntity agent, Blackboard blackboard, CooldownTracker cooldowns, ActionStatus reason) {
         cooldowns.set(
             ScorchbeastBrain.LUNGE_COOLDOWN,
-            AtomicDawn.CONFIG.scorchbeast.LUNGE_COOLDOWN_TICKS + agent.getRandom().nextInt(60)
+            AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.groundAttacks.LUNGE_COOLDOWN_TICKS + agent.getRandom()
+                .nextInt(60)
         );
         finishAttack(agent, cooldowns);
     }

@@ -34,7 +34,7 @@ public final class FeralGhoulBrain {
     public FeralGhoulBrain(FeralGhoulEntity ghoul) {
         var sensor = new TargetSensor<FeralGhoulEntity>(
             TargetSensor.<FeralGhoulEntity>nearestMatching(
-                AtomicDawn.CONFIG.feralGhouls.DETECTION_RANGE,
+                AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.behavior.DETECTION_RANGE,
                 FeralGhoulBrain::validTarget
             ),
             SENSOR_INTERVAL,
@@ -69,11 +69,13 @@ public final class FeralGhoulBrain {
             if (player.isCreative() || player.isSpectator()) {
                 return false;
             }
-            return !(AtomicDawn.CONFIG.feralGhouls.IGNORE_GHOUL_PLAYERS && GhoulService.isGhoul(player));
+            return !(AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.behavior.IGNORE_GHOUL_PLAYERS && GhoulService
+                .isGhoul(player));
         }
         if (candidate instanceof NpcEntity npc) {
             return !npc.isHostile() && npc.canFight();
         }
-        return candidate instanceof AbstractVillager && AtomicDawn.CONFIG.feralGhouls.ATTACK_VILLAGERS;
+        return candidate instanceof AbstractVillager
+            && AtomicDawn.CONFIG.server.entities.mutants.feralGhouls.behavior.ATTACK_VILLAGERS;
     }
 }

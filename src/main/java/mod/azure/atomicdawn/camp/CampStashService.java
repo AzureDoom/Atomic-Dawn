@@ -27,7 +27,7 @@ public final class CampStashService {
         ) {
             return false;
         }
-        if (!AtomicDawn.CONFIG.camp.STASH_REQUIRES_OWN_CAMP) {
+        if (!AtomicDawn.CONFIG.common.settlement.camp.storage.STASH_REQUIRES_OWN_CAMP) {
             return true;
         }
         var tracked = CampManager.objectAt(level.getServer(), level.dimension(), pos);

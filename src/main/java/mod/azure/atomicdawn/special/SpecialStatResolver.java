@@ -63,7 +63,7 @@ public final class SpecialStatResolver {
     }
 
     public static SpecialStats resolve(Player player) {
-        if (!AtomicDawn.CONFIG.special.SPECIAL_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_ENABLED) {
             return SpecialStats.NEUTRAL;
         }
         var progress = progress(player);
@@ -108,7 +108,7 @@ public final class SpecialStatResolver {
         PlayerForm form,
         Consumer<PerkEffect> consumer
     ) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED) {
             return;
         }
         for (var entry : loadout.equipped().entrySet()) {
@@ -130,7 +130,10 @@ public final class SpecialStatResolver {
         PlayerForm form,
         Consumer<PerkEffect> consumer
     ) {
-        if (!AtomicDawn.CONFIG.perks.PERKS_ENABLED || !AtomicDawn.CONFIG.perks.LEGENDARY_ENABLED) {
+        if (
+            !AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED
+                || !AtomicDawn.CONFIG.common.progression.perks.legendary.LEGENDARY_ENABLED
+        ) {
             return;
         }
         var legendary = progress.legendary();
@@ -175,11 +178,14 @@ public final class SpecialStatResolver {
     public static int capacity(SpecialLoadout loadout, SpecialAttribute attribute, int[] legendary) {
         var base = loadout.base(attribute);
         var boosted = base + Math.max(0, legendary[attribute.ordinal()]);
-        return Math.max(base, Math.min(AtomicDawn.CONFIG.special.SPECIAL_MAX_BASE, boosted));
+        return Math.max(
+            base,
+            Math.min(AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_BASE, boosted)
+        );
     }
 
     public static float equippedValue(Player player, PerkEffectType type) {
-        if (!AtomicDawn.CONFIG.special.SPECIAL_ENABLED) {
+        if (!AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_ENABLED) {
             return 0F;
         }
         var progress = progress(player);
@@ -209,12 +215,12 @@ public final class SpecialStatResolver {
         PlayerForm form
     ) {
         var loadout = progress.activeLoadout();
-        var start = AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS;
-        var maxEffective = AtomicDawn.CONFIG.special.SPECIAL_MAX_EFFECTIVE;
+        var start = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS;
+        var maxEffective = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_EFFECTIVE;
 
         var acc = new Accumulator();
         var used = new int[SpecialAttribute.COUNT];
-        if (AtomicDawn.CONFIG.perks.PERKS_ENABLED) {
+        if (AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_ENABLED) {
             for (var entry : loadout.equipped().entrySet()) {
                 var definition = PerkCatalog.get(access, entry.getKey()).orElse(null);
                 if (definition == null) {
@@ -254,17 +260,21 @@ public final class SpecialStatResolver {
         }
 
         float melee = (float) (above(effective, SpecialAttribute.STRENGTH, start)
-            * AtomicDawn.CONFIG.special.SPECIAL_STRENGTH_MELEE_PER_POINT);
+            * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_STRENGTH_MELEE_PER_POINT);
         float hitBonus = (float) (above(effective, SpecialAttribute.PERCEPTION, start)
-            * AtomicDawn.CONFIG.special.SPECIAL_PERCEPTION_HIT_CHANCE_PER_POINT) + acc.hitBonus;
+            * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_PERCEPTION_HIT_CHANCE_PER_POINT)
+            + acc.hitBonus;
         float maxHealth = (float) (above(effective, SpecialAttribute.ENDURANCE, start)
-            * AtomicDawn.CONFIG.special.SPECIAL_ENDURANCE_HEALTH_PER_POINT) + acc.maxHealth;
+            * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_ENDURANCE_HEALTH_PER_POINT)
+            + acc.maxHealth;
         float condition = (float) (above(effective, SpecialAttribute.INTELLIGENCE, start)
-            * AtomicDawn.CONFIG.special.SPECIAL_INTELLIGENCE_CONDITION_PER_POINT) + acc.condition;
+            * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_INTELLIGENCE_CONDITION_PER_POINT)
+            + acc.condition;
         float maxAp = (float) (above(effective, SpecialAttribute.AGILITY, start)
-            * AtomicDawn.CONFIG.special.SPECIAL_AGILITY_AP_PER_POINT) + acc.maxAp;
+            * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_AGILITY_AP_PER_POINT) + acc.maxAp;
         float critGain = (float) (above(effective, SpecialAttribute.LUCK, start)
-            * AtomicDawn.CONFIG.special.SPECIAL_LUCK_CRIT_GAIN_PER_POINT) + acc.critGain;
+            * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_LUCK_CRIT_GAIN_PER_POINT)
+            + acc.critGain;
 
         return new SpecialStats(
             base,
@@ -273,14 +283,30 @@ public final class SpecialStatResolver {
             used,
             Math.max(0F, maxAp),
             Math.max(0F, 1F + acc.apRegen),
-            (float) Math.clamp(1F - acc.apCost, AtomicDawn.CONFIG.perks.PERKS_MIN_AP_COST_MULTIPLIER, 1F),
-            (float) Math.clamp(hitBonus, 0F, AtomicDawn.CONFIG.perks.PERKS_MAX_VATS_HIT_BONUS),
+            (float) Math.clamp(
+                1F - acc.apCost,
+                AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MIN_AP_COST_MULTIPLIER,
+                1F
+            ),
+            (float) Math.clamp(hitBonus, 0F, AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_VATS_HIT_BONUS),
             Math.max(0F, 1F + critGain),
-            (float) Math.clamp(acc.critDamage, 0F, AtomicDawn.CONFIG.perks.PERKS_MAX_CRITICAL_DAMAGE_BONUS),
+            (float) Math.clamp(
+                acc.critDamage,
+                0F,
+                AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_CRITICAL_DAMAGE_BONUS
+            ),
             Math.clamp(acc.critProc, 0F, 1F),
             Math.max(0F, maxHealth),
-            (float) Math.clamp(acc.radiation, 0F, AtomicDawn.CONFIG.perks.PERKS_MAX_RADIATION_RESISTANCE),
-            (float) Math.clamp(condition, 0F, AtomicDawn.CONFIG.perks.PERKS_MAX_CONDITION_REDUCTION),
+            (float) Math.clamp(
+                acc.radiation,
+                0F,
+                AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_RADIATION_RESISTANCE
+            ),
+            (float) Math.clamp(
+                condition,
+                0F,
+                AtomicDawn.CONFIG.common.progression.perks.caps.PERKS_MAX_CONDITION_REDUCTION
+            ),
             Math.max(0F, acc.xp),
             Math.max(0F, acc.teamXp),
             Math.max(0F, melee),

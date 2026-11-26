@@ -94,7 +94,7 @@ public class SonicBlastEntity extends ThrowableProjectile {
             return;
         }
         detonated = true;
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.sonicAttack;
         var radius = config.SONIC_BLAST_RADIUS;
         var damage = (float) config.SONIC_BLAST_DAMAGE;
         var center = position();

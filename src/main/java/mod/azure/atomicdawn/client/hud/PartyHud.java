@@ -22,7 +22,7 @@ public final class PartyHud implements GuiLayer {
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
-        if (!AtomicDawn.CONFIG.clientParty.PARTY_HUD || !PartyClient.inParty()) {
+        if (!AtomicDawn.CONFIG.client.hud.party.PARTY_HUD || !PartyClient.inParty()) {
             return;
         }
         var minecraft = Minecraft.getInstance();
@@ -33,7 +33,7 @@ public final class PartyHud implements GuiLayer {
         }
         var font = minecraft.font;
         var x = 4;
-        var y = AtomicDawn.CONFIG.clientParty.PARTY_HUD_Y;
+        var y = AtomicDawn.CONFIG.client.hud.party.PARTY_HUD_Y;
         var members = PartyClient.members();
         var height = 12 + members.size() * ROW;
         if (!HudLayout.push(graphics, HudElement.PARTY, x - 2, y - 2, WIDTH + 4, height + 2)) {

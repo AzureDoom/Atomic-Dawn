@@ -242,7 +242,7 @@ public final class CampContents {
     }
 
     public static boolean returnsBlock() {
-        return AtomicDawn.CONFIG.camp.CAMP_SCRAP_RETURNS_BLOCK;
+        return AtomicDawn.CONFIG.common.settlement.camp.building.CAMP_SCRAP_RETURNS_BLOCK;
     }
 
     public static CompoundTag objectData(ServerLevel level, CampObject object) {

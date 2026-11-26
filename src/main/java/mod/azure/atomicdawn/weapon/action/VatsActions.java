@@ -46,7 +46,9 @@ public final class VatsActions {
     }
 
     public static float maxActionPoints(Player player) {
-        return (float) (AtomicDawn.CONFIG.vats.MAX_ACTION_POINTS + SpecialStatResolver.resolve(player).maxApBonus
+        return (float) (AtomicDawn.CONFIG.common.combat.vats.MAX_ACTION_POINTS + SpecialStatResolver.resolve(
+            player
+        ).maxApBonus
             + PowerArmorBonuses.of(player).get(PowerArmorEffectType.MAX_AP) + MutationService.maxApBonus(player)
             + ArmorEvents.maxApBonus(player)) * ThirstService.apMultiplier(player);
     }
@@ -63,7 +65,7 @@ public final class VatsActions {
 
     public static float healthCharge(Player player, WeaponDefinition definition) {
         return apCost(player, definition) * PerkHooks.vatsHealthShare(player)
-            * (float) AtomicDawn.CONFIG.perks.PERKS_VATS_HEALTH_PER_AP;
+            * (float) AtomicDawn.CONFIG.common.progression.perks.cards.PERKS_VATS_HEALTH_PER_AP;
     }
 
     private static void payHealth(ServerPlayer player, WeaponDefinition definition) {
@@ -104,13 +106,13 @@ public final class VatsActions {
         if (now % 5 != 0 || shooter.vatsActive) {
             return;
         }
-        if (now - shooter.lastApSpendTick < AtomicDawn.CONFIG.vats.AP_REGEN_DELAY_TICKS) {
+        if (now - shooter.lastApSpendTick < AtomicDawn.CONFIG.common.combat.vats.AP_REGEN_DELAY_TICKS) {
             return;
         }
         var ap = actionPoints(player);
         var max = maxActionPoints(player);
         if (ap.points() < max) {
-            var gain = (float) AtomicDawn.CONFIG.vats.AP_REGEN_PER_SECOND * 5 / 20F
+            var gain = (float) AtomicDawn.CONFIG.common.combat.vats.AP_REGEN_PER_SECOND * 5 / 20F
                 * SpecialStatResolver.resolve(player).apRegenMultiplier
                 * GhoulService.apRegenMultiplier(player)
                 * (1F + PowerArmorBonuses.of(player).get(PowerArmorEffectType.AP_REGEN)
@@ -130,7 +132,7 @@ public final class VatsActions {
             return null;
         }
         var entity = player.level().getEntity(shooter.vatsTargetId);
-        var cone = AtomicDawn.CONFIG.vats.VATS_TARGET_CONE + 15.0D;
+        var cone = AtomicDawn.CONFIG.common.combat.vats.VATS_TARGET_CONE + 15.0D;
         if (
             !(entity instanceof LivingEntity target) || !VatsTargeting.isValidTarget(player, target, definition, cone)
         ) {
@@ -213,7 +215,8 @@ public final class VatsActions {
                     : 1F);
             DamageApplier.apply(level, player, weapon, definition, shooter, target, part.position(), amount);
             if (!critical) {
-                var gain = (float) AtomicDawn.CONFIG.vats.CRITICAL_GAIN_PER_HIT * stats.criticalGainMultiplier
+                var gain = (float) AtomicDawn.CONFIG.common.combat.vats.CRITICAL_GAIN_PER_HIT
+                    * stats.criticalGainMultiplier
                     * LegendaryHooks.criticalGainMultiplier(level, weapon);
                 ap = ap.withCritical(ap.critical() + gain);
                 if (stats.criticalProcChance > 0F && player.getRandom().nextFloat() < stats.criticalProcChance) {
@@ -251,7 +254,9 @@ public final class VatsActions {
     }
 
     private static void applyLimbEffect(LivingEntity target, BodyPart part) {
-        if (!AtomicDawn.CONFIG.vats.VATS_LIMB_EFFECTS || !target.isAlive() || LimbService.enabled(target)) {
+        if (
+            !AtomicDawn.CONFIG.common.combat.vats.VATS_LIMB_EFFECTS || !target.isAlive() || LimbService.enabled(target)
+        ) {
             return;
         }
         if (part.isLeg()) {

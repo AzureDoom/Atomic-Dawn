@@ -42,7 +42,7 @@ public final class LockService {
     private LockService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.locks.LOCKS_ENABLED;
+        return AtomicDawn.CONFIG.common.settlement.locks.locking.LOCKS_ENABLED;
     }
 
     public static boolean lockable(Level level, BlockPos pos, BlockState state) {
@@ -120,7 +120,7 @@ public final class LockService {
     }
 
     private static boolean creativeBypass(Player player) {
-        return AtomicDawn.CONFIG.locks.LOCKS_CREATIVE_BYPASS && player.isCreative();
+        return AtomicDawn.CONFIG.common.settlement.locks.locking.LOCKS_CREATIVE_BYPASS && player.isCreative();
     }
 
     public static boolean install(ServerPlayer player, BlockPos pos, ItemStack stack, LockLevel lockLevel) {

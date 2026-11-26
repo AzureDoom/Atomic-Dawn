@@ -43,7 +43,7 @@ final class ScorchbeastCircleTask extends ScorchbeastTask {
         if (target == null || !agent.flying()) {
             return ActionOutcome.success();
         }
-        var config = AtomicDawn.CONFIG.scorchbeast;
+        var config = AtomicDawn.CONFIG.server.entities.bosses.scorchbeast.flight;
         if (--switchTicks <= 0) {
             direction = -direction;
             switchTicks = 160 + agent.getRandom().nextInt(160);

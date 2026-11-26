@@ -43,7 +43,7 @@ public final class SuperMutantEvents {
             SuperMutantDisturbances.emit(
                 level,
                 event.getExplosion().center(),
-                AtomicDawn.CONFIG.superMutants.HEARING_RANGE * 1.5,
+                AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.HEARING_RANGE * 1.5,
                 null
             );
         }

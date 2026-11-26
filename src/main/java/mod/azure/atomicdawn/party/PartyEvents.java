@@ -126,7 +126,8 @@ public final class PartyEvents {
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
         if (
-            !AtomicDawn.CONFIG.party.PARTY_FRIENDLY_FIRE && event.getEntity() instanceof ServerPlayer victim
+            !AtomicDawn.CONFIG.common.social.party.PARTY_FRIENDLY_FIRE && event
+                .getEntity() instanceof ServerPlayer victim
                 && event.getSource().getEntity() instanceof ServerPlayer attacker && PartyService.sameParty(
                     victim,
                     attacker

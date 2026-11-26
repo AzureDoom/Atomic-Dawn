@@ -32,7 +32,10 @@ public class RadAwayItem extends Item {
         @NotNull LivingEntity entity
     ) {
         if (!level.isClientSide() && entity instanceof Player player) {
-            RadiationService.remove(player, (float) AtomicDawn.CONFIG.radiation.RADAWAY_RADS);
+            RadiationService.remove(
+                player,
+                (float) AtomicDawn.CONFIG.common.survival.radiation.consumables.RADAWAY_RADS
+            );
             if (player instanceof ServerPlayer serverPlayer) {
                 MutationService.onRadAway(serverPlayer);
                 QuestActions.trigger(serverPlayer, QuestActions.USE_RADAWAY);

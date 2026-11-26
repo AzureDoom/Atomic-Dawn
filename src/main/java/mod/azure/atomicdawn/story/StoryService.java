@@ -83,7 +83,7 @@ public final class StoryService {
         if (faction == null || amount == 0) {
             return;
         }
-        var scaled = Math.round(amount * (float) AtomicDawn.CONFIG.story.REPUTATION_MULTIPLIER);
+        var scaled = Math.round(amount * (float) AtomicDawn.CONFIG.common.social.story.factions.REPUTATION_MULTIPLIER);
         if (scaled == 0) {
             return;
         }
@@ -93,7 +93,7 @@ public final class StoryService {
             return;
         }
         set(player, state(player).withReputation(id, after));
-        if (AtomicDawn.CONFIG.story.REPUTATION_NOTIFICATIONS) {
+        if (AtomicDawn.CONFIG.common.social.story.factions.REPUTATION_NOTIFICATIONS) {
             var oldRank = faction.rank(before);
             var newRank = faction.rank(after);
             var name = Component.translatableWithFallback(faction.name(), faction.name());
@@ -121,10 +121,20 @@ public final class StoryService {
             return;
         }
         for (var ally : faction.allies()) {
-            change(player, ally, Math.round(spilled / (float) AtomicDawn.CONFIG.story.REPUTATION_MULTIPLIER), false);
+            change(
+                player,
+                ally,
+                Math.round(spilled / (float) AtomicDawn.CONFIG.common.social.story.factions.REPUTATION_MULTIPLIER),
+                false
+            );
         }
         for (var enemy : faction.enemies()) {
-            change(player, enemy, Math.round(-spilled / (float) AtomicDawn.CONFIG.story.REPUTATION_MULTIPLIER), false);
+            change(
+                player,
+                enemy,
+                Math.round(-spilled / (float) AtomicDawn.CONFIG.common.social.story.factions.REPUTATION_MULTIPLIER),
+                false
+            );
         }
     }
 
@@ -142,7 +152,10 @@ public final class StoryService {
     }
 
     public static boolean hostile(Entity entity, Player player) {
-        if (!AtomicDawn.CONFIG.story.FACTION_HOSTILITY || player.isCreative() || player.isSpectator()) {
+        if (
+            !AtomicDawn.CONFIG.common.social.story.factions.FACTION_HOSTILITY || player.isCreative() || player
+                .isSpectator()
+        ) {
             return false;
         }
         for (var id : factionsOf(entity)) {
@@ -181,7 +194,7 @@ public final class StoryService {
         var profile = companion(player.level().registryAccess(), npcId);
         var name = profile.map(value -> (Component) Component.translatableWithFallback(value.name(), value.name()))
             .orElseGet(() -> npc != null ? npc.getDisplayName() : Component.literal(npcId.getPath()));
-        if (AtomicDawn.CONFIG.story.COMPANION_REACTIONS) {
+        if (AtomicDawn.CONFIG.common.social.story.companions.COMPANION_REACTIONS) {
             player.sendSystemMessage(
                 Component.translatable(
                     after > before ? "companion.atomicdawn.liked" : "companion.atomicdawn.disliked",
@@ -199,7 +212,7 @@ public final class StoryService {
     }
 
     public static List<NpcEntity> companions(ServerPlayer player) {
-        var range = AtomicDawn.CONFIG.story.COMPANION_REACTION_RANGE;
+        var range = AtomicDawn.CONFIG.common.social.story.companions.COMPANION_REACTION_RANGE;
         return player.level()
             .getEntitiesOfClass(
                 NpcEntity.class,

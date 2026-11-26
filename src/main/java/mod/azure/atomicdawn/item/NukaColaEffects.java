@@ -34,7 +34,7 @@ public final class NukaColaEffects {
     private NukaColaEffects() {}
 
     public static void apply(ServerPlayer player, NukaCola variant) {
-        var config = AtomicDawn.CONFIG.nukaCola;
+        var config = AtomicDawn.CONFIG.common.survival.nukaCola;
         switch (variant) {
             case CLASSIC, ORANGE, WILD, VACCINATED -> restore(
                 player,
@@ -62,7 +62,7 @@ public final class NukaColaEffects {
     }
 
     public static int specialBonus(Player player, SpecialAttribute attribute) {
-        var config = AtomicDawn.CONFIG.nukaCola;
+        var config = AtomicDawn.CONFIG.common.survival.nukaCola;
         var bonus = 0;
         if (player.hasEffect(ADMobEffects.NUKA_DARK)) {
             bonus += switch (attribute) {
@@ -79,7 +79,7 @@ public final class NukaColaEffects {
 
     public static float xpBonus(Player player) {
         return player.hasEffect(ADMobEffects.NUKA_CRANBERRY)
-            ? (float) AtomicDawn.CONFIG.nukaCola.NUKA_CRANBERRY_XP_BONUS
+            ? (float) AtomicDawn.CONFIG.common.survival.nukaCola.NUKA_CRANBERRY_XP_BONUS
             : 0F;
     }
 

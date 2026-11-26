@@ -29,13 +29,13 @@ public final class LimbHud implements GuiLayer {
         var player = minecraft.player;
         var hudHidden = minecraft.gameRenderer.gameRenderState().guiRenderState.isHudHidden;
         if (
-            player == null || hudHidden || player.isSpectator() || !AtomicDawn.CONFIG.clientLimbs.LIMB_HUD
-                || !AtomicDawn.CONFIG.limbs.LIMBS_ENABLED
+            player == null || hudHidden || player.isSpectator() || !AtomicDawn.CONFIG.client.hud.limbs.LIMB_HUD
+                || !AtomicDawn.CONFIG.common.combat.limbs.general.LIMBS_ENABLED
         ) {
             return;
         }
         var state = LimbService.state(player);
-        if (state.healthy() && !AtomicDawn.CONFIG.clientLimbs.LIMB_HUD_ALWAYS) {
+        if (state.healthy() && !AtomicDawn.CONFIG.client.hud.limbs.LIMB_HUD_ALWAYS) {
             return;
         }
         var width = minecraft.getWindow().getGuiScaledWidth();

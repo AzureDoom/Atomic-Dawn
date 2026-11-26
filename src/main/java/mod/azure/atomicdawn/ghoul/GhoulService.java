@@ -61,7 +61,7 @@ public final class GhoulService {
     private GhoulService() {}
 
     public static boolean enabled() {
-        return AtomicDawn.CONFIG.ghoul.GHOUL_ENABLED;
+        return AtomicDawn.CONFIG.common.progression.ghoul.general.GHOUL_ENABLED;
     }
 
     public static GhoulState state(Player player) {
@@ -81,13 +81,16 @@ public final class GhoulService {
     }
 
     public static float maxStability() {
-        return (float) Math.max(1.0, AtomicDawn.CONFIG.ghoul.MAXIMUM_STABILITY);
+        return (float) Math.max(1.0, AtomicDawn.CONFIG.common.progression.ghoul.stability.MAXIMUM_STABILITY);
     }
 
     public static float maxGlow(Player player) {
         return (float) Math.max(
             1.0,
-            AtomicDawn.CONFIG.ghoul.GLOW_MAXIMUM + GhoulPerks.value(player, PerkEffectType.GLOW_MAX)
+            AtomicDawn.CONFIG.common.progression.ghoul.glow.GLOW_MAXIMUM + GhoulPerks.value(
+                player,
+                PerkEffectType.GLOW_MAX
+            )
         );
     }
 
@@ -109,7 +112,10 @@ public final class GhoulService {
     public static float conversion(Player player) {
         return (float) Math.max(
             0.0,
-            AtomicDawn.CONFIG.ghoul.GLOW_CONVERSION + GhoulPerks.value(player, PerkEffectType.GLOW_CONVERSION)
+            AtomicDawn.CONFIG.common.progression.ghoul.glow.GLOW_CONVERSION + GhoulPerks.value(
+                player,
+                PerkEffectType.GLOW_CONVERSION
+            )
         );
     }
 
@@ -117,7 +123,10 @@ public final class GhoulService {
         if (!isGhoul(player)) {
             return 1F;
         }
-        return lerp((float) AtomicDawn.CONFIG.ghoul.FERAL_RANGED_ACCURACY_MULTIPLIER, tier(player).rangedWeight);
+        return lerp(
+            (float) AtomicDawn.CONFIG.common.progression.ghoul.feral.FERAL_RANGED_ACCURACY_MULTIPLIER,
+            tier(player).rangedWeight
+        );
     }
 
     public static float spreadMultiplier(Player player) {
@@ -128,14 +137,20 @@ public final class GhoulService {
         if (!isGhoul(player)) {
             return 1F;
         }
-        return lerp((float) AtomicDawn.CONFIG.ghoul.FERAL_VATS_ACCURACY_MULTIPLIER, tier(player).vatsWeight);
+        return lerp(
+            (float) AtomicDawn.CONFIG.common.progression.ghoul.feral.FERAL_VATS_ACCURACY_MULTIPLIER,
+            tier(player).vatsWeight
+        );
     }
 
     public static float apRegenMultiplier(Player player) {
         if (!isGhoul(player)) {
             return 1F;
         }
-        var feral = lerp((float) AtomicDawn.CONFIG.ghoul.FERAL_AP_REGEN_MULTIPLIER, tier(player).apWeight);
+        var feral = lerp(
+            (float) AtomicDawn.CONFIG.common.progression.ghoul.feral.FERAL_AP_REGEN_MULTIPLIER,
+            tier(player).apWeight
+        );
         var glow = 1F + glowFraction(player) * Math.max(0F, GhoulPerks.value(player, PerkEffectType.GLOW_AP_REGEN));
         return Math.max(0F, feral * glow);
     }
@@ -144,7 +159,9 @@ public final class GhoulService {
         if (!isGhoul(player)) {
             return 1F;
         }
-        var bonus = (float) (AtomicDawn.CONFIG.ghoul.FERAL_MELEE_MULTIPLIER - 1.0) * tier(player).meleeWeight;
+        var bonus = (float) (AtomicDawn.CONFIG.common.progression.ghoul.feral.FERAL_MELEE_MULTIPLIER - 1.0) * tier(
+            player
+        ).meleeWeight;
         return Math.max(0F, 1F + bonus * (1F + Math.max(0F, GhoulPerks.value(player, PerkEffectType.FERAL_MELEE))));
     }
 
@@ -159,7 +176,9 @@ public final class GhoulService {
         if (!isGhoul(player)) {
             return 1F;
         }
-        var feral = 1F + (float) AtomicDawn.CONFIG.ghoul.FERAL_DAMAGE_TAKEN_BONUS * tier(player).defenseWeight;
+        var feral = 1F + (float) AtomicDawn.CONFIG.common.progression.ghoul.feral.FERAL_DAMAGE_TAKEN_BONUS * tier(
+            player
+        ).defenseWeight;
         var resist = Math.clamp(
             glowFraction(player) * GhoulPerks.value(player, PerkEffectType.GLOW_DAMAGE_RESISTANCE),
             0F,
@@ -170,11 +189,13 @@ public final class GhoulService {
 
     public static float stabilizerAmount(Player player) {
         var boost = Math.max(0F, GhoulPerks.value(player, PerkEffectType.STABILIZER_BOOST));
-        return (float) AtomicDawn.CONFIG.ghoul.STABILIZER_RESTORE * (1F + boost);
+        return (float) AtomicDawn.CONFIG.common.progression.ghoul.stability.STABILIZER_RESTORE * (1F + boost);
     }
 
     public static long cooldownMillis() {
-        return Math.round(Math.max(0.0, AtomicDawn.CONFIG.ghoul.FORM_CHANGE_COOLDOWN_HOURS) * 3_600_000.0);
+        return Math.round(
+            Math.max(0.0, AtomicDawn.CONFIG.common.progression.ghoul.general.FORM_CHANGE_COOLDOWN_HOURS) * 3_600_000.0
+        );
     }
 
     public static long cooldownRemainingMillis(Player player, long now) {
@@ -195,7 +216,7 @@ public final class GhoulService {
 
     public static boolean dimensionBlocked(ServerPlayer player) {
         var dimension = player.level().dimension().identifier().toString();
-        return Arrays.asList(AtomicDawn.CONFIG.ghoul.BLOCKED_DIMENSIONS).contains(dimension);
+        return Arrays.asList(AtomicDawn.CONFIG.common.progression.ghoul.general.BLOCKED_DIMENSIONS).contains(dimension);
     }
 
     public static TransformationResult canTransform(ServerPlayer player, TransformationContext context) {
@@ -208,10 +229,13 @@ public final class GhoulService {
         if (context.admin()) {
             return TransformationResult.SUCCESS;
         }
-        if (!AtomicDawn.CONFIG.ghoul.ALLOW_TRANSFORMATION) {
+        if (!AtomicDawn.CONFIG.common.progression.ghoul.general.ALLOW_TRANSFORMATION) {
             return TransformationResult.DISABLED;
         }
-        if (SpecialStatResolver.progress(player).level() < AtomicDawn.CONFIG.ghoul.MINIMUM_LEVEL) {
+        if (
+            SpecialStatResolver.progress(player)
+                .level() < AtomicDawn.CONFIG.common.progression.ghoul.general.MINIMUM_LEVEL
+        ) {
             return TransformationResult.LEVEL_TOO_LOW;
         }
         if (dimensionBlocked(player)) {
@@ -233,7 +257,7 @@ public final class GhoulService {
         if (context.admin()) {
             return TransformationResult.SUCCESS;
         }
-        if (!AtomicDawn.CONFIG.ghoul.ALLOW_REVERSION) {
+        if (!AtomicDawn.CONFIG.common.progression.ghoul.general.ALLOW_REVERSION) {
             return TransformationResult.DISABLED;
         }
         if (dimensionBlocked(player)) {
@@ -282,7 +306,7 @@ public final class GhoulService {
     }
 
     private static void prepareHunger(ServerPlayer player) {
-        if (!AtomicDawn.CONFIG.ghoul.DISABLE_EXHAUSTION_HUNGER_LOSS) {
+        if (!AtomicDawn.CONFIG.common.progression.ghoul.general.DISABLE_EXHAUSTION_HUNGER_LOSS) {
             return;
         }
         var food = player.getFoodData();
@@ -292,7 +316,7 @@ public final class GhoulService {
     }
 
     public static void suppressExhaustion(ServerPlayer player) {
-        if (!AtomicDawn.CONFIG.ghoul.DISABLE_EXHAUSTION_HUNGER_LOSS || !isGhoul(player)) {
+        if (!AtomicDawn.CONFIG.common.progression.ghoul.general.DISABLE_EXHAUSTION_HUNGER_LOSS || !isGhoul(player)) {
             return;
         }
         var food = player.getFoodData();
@@ -368,7 +392,7 @@ public final class GhoulService {
             return;
         }
         var state = state(player);
-        var nextVariant = AtomicDawn.CONFIG.ghoul.ALLOW_APPEARANCE_VARIANTS ? variant : 0;
+        var nextVariant = AtomicDawn.CONFIG.common.progression.ghoul.general.ALLOW_APPEARANCE_VARIANTS ? variant : 0;
         if (nextVariant == state.appearanceVariant() && visible == state.cosmeticVisible()) {
             return;
         }
@@ -419,16 +443,17 @@ public final class GhoulService {
         var runtime = runtime(player);
         var state = state(player);
         var paused = !player.isAlive() || player.isSpectator()
-            || (player.isCreative() && AtomicDawn.CONFIG.ghoul.PAUSE_DECAY_IN_CREATIVE);
+            || (player.isCreative() && AtomicDawn.CONFIG.common.progression.ghoul.stability.PAUSE_DECAY_IN_CREATIVE);
         var exposed = player.level().getGameTime() - runtime.lastExposureTick < GLOW_DECAY_GRACE_TICKS;
         if (!paused && !exposed) {
-            runtime.pendingGlowDecay += (float) AtomicDawn.CONFIG.ghoul.GLOW_DECAY_PER_SECOND
+            runtime.pendingGlowDecay += (float) AtomicDawn.CONFIG.common.progression.ghoul.glow.GLOW_DECAY_PER_SECOND
                 * PerkHooks.glowDecayMultiplier(player);
         }
         if (!paused) {
             var reduction = Math.clamp(GhoulPerks.value(player, PerkEffectType.FERAL_DECAY), 0F, 0.9F);
-            runtime.pendingStabilityDecay += (float) (AtomicDawn.CONFIG.ghoul.STABILITY_DECAY_PER_120_SECONDS / 120.0)
-                * (1F - reduction);
+            runtime.pendingStabilityDecay +=
+                (float) (AtomicDawn.CONFIG.common.progression.ghoul.stability.STABILITY_DECAY_PER_120_SECONDS / 120.0)
+                    * (1F - reduction);
         }
 
         var maxGlow = maxGlow(player);
@@ -470,7 +495,10 @@ public final class GhoulService {
         }
         var previous = runtime.warningLevel;
         runtime.warningLevel = level;
-        if (previous < 0 || level <= previous || !AtomicDawn.CONFIG.ghoul.STABILITY_WARNINGS) {
+        if (
+            previous < 0 || level <= previous
+                || !AtomicDawn.CONFIG.common.progression.ghoul.stability.STABILITY_WARNINGS
+        ) {
             return;
         }
         var color = level >= 3 ? ChatFormatting.RED : level == 2 ? ChatFormatting.GOLD : ChatFormatting.YELLOW;
@@ -499,7 +527,7 @@ public final class GhoulService {
             return 0F;
         }
         var steps = (float) Math.floor(glowFraction(player) * GLOW_HEALTH_STEPS) / GLOW_HEALTH_STEPS;
-        return (float) Math.max(0.0, AtomicDawn.CONFIG.ghoul.GLOW_MAX_HEALTH_BONUS) * steps;
+        return (float) Math.max(0.0, AtomicDawn.CONFIG.common.progression.ghoul.glow.GLOW_MAX_HEALTH_BONUS) * steps;
     }
 
     public static void updateGlowHealth(ServerPlayer player) {
@@ -513,7 +541,7 @@ public final class GhoulService {
         if (Math.abs(current - target) < 1.0E-4) {
             return;
         }
-        var maxBonus = AtomicDawn.CONFIG.ghoul.GLOW_MAX_HEALTH_BONUS;
+        var maxBonus = AtomicDawn.CONFIG.common.progression.ghoul.glow.GLOW_MAX_HEALTH_BONUS;
         if (target > 0F && target < current && maxBonus > 0.0) {
             var heldFraction = current / maxBonus;
             if (glowFraction(player) > heldFraction - GLOW_HEALTH_HYSTERESIS) {

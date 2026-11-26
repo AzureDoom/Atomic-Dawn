@@ -187,6 +187,6 @@ public final class PipBoyHousing {
             return 0F;
         }
         var rads = player.getData(ADAttachments.RADIATION.get()).rads();
-        return Math.clamp(rads / (float) AtomicDawn.CONFIG.radiation.MAX_RADS, 0F, 1F);
+        return Math.clamp(rads / (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.MAX_RADS, 0F, 1F);
     }
 }

@@ -51,7 +51,7 @@ public final class RadioTab implements PipBoyTab {
 
     @Override
     public void init(PipBoyScreen screen, Rect area, String subtab) {
-        if (!AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_RADIO) {
+        if (!AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_RADIO) {
             return;
         }
         var stations = stations();
@@ -92,14 +92,14 @@ public final class RadioTab implements PipBoyTab {
             screen.refresh();
         });
         bx += nextW + 6;
-        var volume = AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_VOLUME;
+        var volume = AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_VOLUME;
         screen.button(Component.literal("-"), bx, by, 14, 13, volume > 0.0, () -> setVolume(volume - 0.1, screen));
         screen.button(Component.literal("+"), bx + 46, by, 14, 13, volume < 1.0, () -> setVolume(volume + 0.1, screen));
     }
 
     private static void setVolume(double value, PipBoyScreen screen) {
         ADConfigHelper.setClientDouble(
-            "PIPBOY_RADIO_VOLUME",
+            "pipboy.radio.PIPBOY_RADIO_VOLUME",
             Math.round(Math.clamp(value, 0.0, 1.0) * 10.0) / 10.0
         );
         screen.refresh();
@@ -125,7 +125,7 @@ public final class RadioTab implements PipBoyTab {
         int mouseX,
         int mouseY
     ) {
-        if (!AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_RADIO) {
+        if (!AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_RADIO) {
             centered(graphics, screen, area, Component.translatable("pipboy.atomicdawn.radio.disabled"));
             return;
         }
@@ -187,7 +187,9 @@ public final class RadioTab implements PipBoyTab {
         }
         renderWave(graphics, new Rect(x, y + 4, detail.width() - 2, Math.max(16, detail.bottom() - 20 - (y + 4))));
 
-        var volume = Component.literal(Math.round(AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_VOLUME * 100) + "%");
+        var volume = Component.literal(
+            Math.round(AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_VOLUME * 100) + "%"
+        );
         var vx = detail.x() + volumeOffset(screen);
         screen.text(
             graphics,
@@ -216,7 +218,7 @@ public final class RadioTab implements PipBoyTab {
         }
         var time = (System.currentTimeMillis() % 100_000L) / 1000F;
         var barW = Math.max(1, box.width() / WAVE_BARS);
-        var amplitude = (float) (AtomicDawn.CONFIG.clientPipboy.PIPBOY_RADIO_VOLUME * (box.height() / 2F - 2F));
+        var amplitude = (float) (AtomicDawn.CONFIG.client.pipboy.radio.PIPBOY_RADIO_VOLUME * (box.height() / 2F - 2F));
         for (var i = 0; i < WAVE_BARS && box.x() + i * barW < box.right(); i++) {
             var t = i / (float) WAVE_BARS;
             var value = Mth.sin(t * 9F + time * 6F) * 0.55F + Mth.sin(t * 23F - time * 9F) * 0.3F

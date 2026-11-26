@@ -57,7 +57,7 @@ public final class ScorchedSpawning {
     }
 
     private static boolean allowNatural(ServerLevel level, BlockPos center, BlockPos pos) {
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.spawning;
         var dx = pos.getX() - center.getX();
         var dz = pos.getZ() - center.getZ();
         if (dx * dx + dz * dz > config.FISSURE_SPAWN_RADIUS * config.FISSURE_SPAWN_RADIUS) {
@@ -100,7 +100,7 @@ public final class ScorchedSpawning {
     }
 
     public static ScorchedVariant rollVariant(RandomSource random) {
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.spawning;
         if (config.SEASONAL_VARIANTS && random.nextDouble() < config.SEASONAL_CHANCE) {
             var today = LocalDate.now();
             var day = today.getDayOfMonth();

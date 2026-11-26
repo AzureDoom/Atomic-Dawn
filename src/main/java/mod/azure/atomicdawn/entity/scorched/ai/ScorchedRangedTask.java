@@ -58,7 +58,7 @@ final class ScorchedRangedTask extends ScorchedTask {
         if (MobGunfire.needsReload(agent.getMainHandItem(), definition)) {
             return ActionOutcome.success();
         }
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.combat;
         var min = Math.min(config.MIN_ENGAGE_RANGE, config.MAX_ENGAGE_RANGE);
         var max = Math.max(config.MIN_ENGAGE_RANGE, config.MAX_ENGAGE_RANGE);
         var distance = agent.distanceTo(target);

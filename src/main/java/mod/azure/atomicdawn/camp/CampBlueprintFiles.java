@@ -29,7 +29,7 @@ public final class CampBlueprintFiles {
     private CampBlueprintFiles() {}
 
     public static Path root(MinecraftServer server) {
-        return AtomicDawn.CONFIG.camp.CAMP_BLUEPRINT_EXPORT_TO_DATAPACKS
+        return AtomicDawn.CONFIG.common.settlement.camp.blueprints.CAMP_BLUEPRINT_EXPORT_TO_DATAPACKS
             ? server.getWorldPath(LevelResource.DATAPACK_DIR).resolve(PACK)
             : server.getWorldPath(LevelResource.ROOT).resolve(PACK);
     }

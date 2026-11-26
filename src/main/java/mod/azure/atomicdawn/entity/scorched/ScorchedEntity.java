@@ -108,7 +108,7 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.attributes;
         return Monster.createMonsterAttributes()
             .add(Attributes.MAX_HEALTH, config.MAX_HEALTH)
             .add(Attributes.MOVEMENT_SPEED, 0.25)
@@ -400,7 +400,7 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
         @NotNull EntitySpawnReason reason,
         @Nullable SpawnGroupData data
     ) {
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched;
         var variant = ScorchedSpawning.rollVariant(random);
         setVariant(variant);
         setItemSlot(EquipmentSlot.MAINHAND, ScorchedWeapons.roll(level.getLevel(), variant, random));
@@ -409,12 +409,12 @@ public class ScorchedEntity extends Monster implements AzHitboxHolder {
         if (reason == EntitySpawnReason.NATURAL && fissure.isPresent()) {
             ScorchedSpawning.recordNatural(level.getLevel(), fissure.get());
         }
-        var min = Math.min(config.PATROL_RADIUS_MIN, config.PATROL_RADIUS_MAX);
-        var max = Math.max(config.PATROL_RADIUS_MIN, config.PATROL_RADIUS_MAX);
+        var min = Math.min(config.behavior.PATROL_RADIUS_MIN, config.behavior.PATROL_RADIUS_MAX);
+        var max = Math.max(config.behavior.PATROL_RADIUS_MIN, config.behavior.PATROL_RADIUS_MAX);
         patrolRadius = Mth.randomBetweenInclusive(random, min, max);
         var natural = reason == EntitySpawnReason.NATURAL || reason == EntitySpawnReason.CHUNK_GENERATION
             || reason == EntitySpawnReason.STRUCTURE;
-        if (natural && random.nextDouble() < config.DORMANT_SPAWN_CHANCE) {
+        if (natural && random.nextDouble() < config.dormancy.DORMANT_SPAWN_CHANCE) {
             setDormant(true);
         }
         return super.finalizeSpawn(level, difficulty, reason, data);

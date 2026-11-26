@@ -91,7 +91,7 @@ public final class PipBoyArmLayer extends RenderLayer<AvatarRenderState, PlayerM
     }
 
     static int screenColor() {
-        return ADColors.argb(AtomicDawn.CONFIG.clientPipboy.PIPBOY_COLOR, 0xFF1AFF80) | 0xFF000000;
+        return ADColors.argb(AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_COLOR, 0xFF1AFF80) | 0xFF000000;
     }
 
     private static void addDevice(PartDefinition arm, HumanoidArm side, float inflate, boolean slim) {
@@ -130,7 +130,7 @@ public final class PipBoyArmLayer extends RenderLayer<AvatarRenderState, PlayerM
         var body = bodyModels[arm.ordinal()];
         body.setupAnim(state);
         renderColoredCutoutModel(body, TEXTURE, poseStack, collector, packedLight, state, -1, BODY_ORDER);
-        if (AtomicDawn.CONFIG.clientPipboy.PIPBOY_ARM_SCREEN_GLOW) {
+        if (AtomicDawn.CONFIG.client.pipboy.wornDevice.PIPBOY_ARM_SCREEN_GLOW) {
             var screen = screenModels[arm.ordinal()];
             screen.setupAnim(state);
             renderColoredCutoutModel(
@@ -149,10 +149,13 @@ public final class PipBoyArmLayer extends RenderLayer<AvatarRenderState, PlayerM
     @Nullable
     static HumanoidArm deviceArm(@Nullable Player player, HumanoidArm mainArm, boolean invisible) {
         var config = AtomicDawn.CONFIG;
-        if (invisible || !config.pipboy.PIPBOY_ENABLED || !config.clientPipboy.PIPBOY_ARM_DEVICE) {
+        if (
+            invisible || !config.common.pipboy.general.PIPBOY_ENABLED
+                || !config.client.pipboy.wornDevice.PIPBOY_ARM_DEVICE
+        ) {
             return null;
         }
-        var arm = switch (config.clientPipboy.PIPBOY_ARM) {
+        var arm = switch (config.client.pipboy.wornDevice.PIPBOY_ARM) {
             case LEFT -> HumanoidArm.LEFT;
             case RIGHT -> HumanoidArm.RIGHT;
             case MAIN_HAND -> mainArm;

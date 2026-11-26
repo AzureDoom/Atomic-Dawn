@@ -17,7 +17,7 @@ public final class SuperMutantPack {
         if (!brain.tryCall(target, now)) {
             return;
         }
-        var range = AtomicDawn.CONFIG.superMutants.PACK_RANGE;
+        var range = AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.PACK_RANGE;
         if (range <= 0) {
             return;
         }

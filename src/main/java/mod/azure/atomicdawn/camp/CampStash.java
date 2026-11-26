@@ -116,7 +116,7 @@ public record CampStash(List<Entry> entries) {
     }
 
     public static int limit() {
-        return AtomicDawn.CONFIG.camp.STASH_LIMIT;
+        return AtomicDawn.CONFIG.common.settlement.camp.storage.STASH_LIMIT;
     }
 
     public long total() {

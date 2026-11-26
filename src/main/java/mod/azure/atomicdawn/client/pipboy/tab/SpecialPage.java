@@ -45,7 +45,8 @@ final class SpecialPage {
     }
 
     private static int budget(SpecialProgress progress) {
-        return AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS * SpecialAttribute.COUNT + progress.earnedPoints();
+        return AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS * SpecialAttribute.COUNT
+            + progress.earnedPoints();
     }
 
     private static int rowHeight(Rect area) {
@@ -65,7 +66,7 @@ final class SpecialPage {
         var pending = pending(progress);
         var current = current(progress);
         var unspent = budget(progress) - Arrays.stream(pending).sum();
-        int maxBase = AtomicDawn.CONFIG.special.SPECIAL_MAX_BASE;
+        int maxBase = AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_BASE;
         var rh = rowHeight(area);
         var leftW = leftWidth(area);
 
@@ -195,7 +196,10 @@ final class SpecialPage {
             var used = SpecialStatResolver.capacityUsed(access, progress, progress.activeLoadout(), attribute);
             var cap = Math.max(
                 pending[i],
-                Math.min(AtomicDawn.CONFIG.special.SPECIAL_MAX_BASE, pending[i] + legendary[i])
+                Math.min(
+                    AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_MAX_BASE,
+                    pending[i] + legendary[i]
+                )
             );
             var capacity = Component.translatable("pipboy.atomicdawn.special.capacity", used, cap);
             var capX = area.x() + leftW - 34 - screen.font().width(capacity);
@@ -285,33 +289,51 @@ final class SpecialPage {
     }
 
     static Component baseline(SpecialAttribute attribute, int value) {
-        var above = Math.max(0, value - AtomicDawn.CONFIG.special.SPECIAL_STARTING_POINTS);
+        var above = Math.max(
+            0,
+            value - AtomicDawn.CONFIG.common.progression.special.attributes.SPECIAL_STARTING_POINTS
+        );
         var key = "pipboy.atomicdawn.special.effect." + attribute.getSerializedName();
         return switch (attribute) {
             case STRENGTH -> Component.translatable(
                 key,
-                pct(above * AtomicDawn.CONFIG.special.SPECIAL_STRENGTH_MELEE_PER_POINT)
+                pct(
+                    above
+                        * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_STRENGTH_MELEE_PER_POINT
+                )
             );
             case PERCEPTION -> Component.translatable(
                 key,
-                pct(above * AtomicDawn.CONFIG.special.SPECIAL_PERCEPTION_HIT_CHANCE_PER_POINT)
+                pct(
+                    above
+                        * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_PERCEPTION_HIT_CHANCE_PER_POINT
+                )
             );
             case ENDURANCE -> Component.translatable(
                 key,
-                num(above * AtomicDawn.CONFIG.special.SPECIAL_ENDURANCE_HEALTH_PER_POINT)
+                num(
+                    above
+                        * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_ENDURANCE_HEALTH_PER_POINT
+                )
             );
             case CHARISMA -> Component.translatable(key, value);
             case INTELLIGENCE -> Component.translatable(
                 key,
-                pct(above * AtomicDawn.CONFIG.special.SPECIAL_INTELLIGENCE_CONDITION_PER_POINT)
+                pct(
+                    above
+                        * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_INTELLIGENCE_CONDITION_PER_POINT
+                )
             );
             case AGILITY -> Component.translatable(
                 key,
-                num(above * AtomicDawn.CONFIG.special.SPECIAL_AGILITY_AP_PER_POINT)
+                num(above * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_AGILITY_AP_PER_POINT)
             );
             case LUCK -> Component.translatable(
                 key,
-                pct(above * AtomicDawn.CONFIG.special.SPECIAL_LUCK_CRIT_GAIN_PER_POINT)
+                pct(
+                    above
+                        * AtomicDawn.CONFIG.common.progression.special.attributeBonuses.SPECIAL_LUCK_CRIT_GAIN_PER_POINT
+                )
             );
         };
     }

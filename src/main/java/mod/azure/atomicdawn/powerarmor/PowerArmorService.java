@@ -77,7 +77,7 @@ public final class PowerArmorService {
         if (!(stack.getItem() instanceof PowerArmorPieceItem)) {
             return List.of();
         }
-        var fraction = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_SCRAP_RETURN
+        var fraction = (float) AtomicDawn.CONFIG.common.equipment.powerArmor.maintenance.POWER_ARMOR_SCRAP_RETURN
             * Math.max(0.2F, PowerArmorPieceItem.condition(stack));
         var result = new ArrayList<ItemStack>();
         for (var holder : PowerArmorRecipe.all(access)) {
@@ -132,7 +132,8 @@ public final class PowerArmorService {
         }
         var copy = piece.copy();
         var restore = Math.round(
-            copy.getMaxDamage() * (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_REPAIR_FRACTION
+            copy.getMaxDamage()
+                * (float) AtomicDawn.CONFIG.common.equipment.powerArmor.maintenance.POWER_ARMOR_REPAIR_FRACTION
         );
         copy.setDamageValue(Math.max(0, copy.getDamageValue() - restore));
         armor.setSlotItem(slot, copy);
@@ -235,7 +236,7 @@ public final class PowerArmorService {
         if (id.equals(upgrades.mods().get(group))) {
             return;
         }
-        var limit = AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_MODS_PER_PIECE;
+        var limit = AtomicDawn.CONFIG.common.equipment.powerArmor.maintenance.POWER_ARMOR_MODS_PER_PIECE;
         if (!upgrades.mods().containsKey(group) && upgrades.mods().size() >= limit) {
             if (limit > 1) {
                 player.sendSystemMessage(Component.translatable("power_armor.atomicdawn.mod_limit", limit), true);

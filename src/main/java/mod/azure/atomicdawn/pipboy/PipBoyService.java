@@ -28,7 +28,7 @@ public final class PipBoyService {
 
     public static void ensureDevice(ServerPlayer player) {
         var data = data(player);
-        if (data.initialized() || !AtomicDawn.CONFIG.pipboy.PIPBOY_GRANT_ON_FIRST_JOIN) {
+        if (data.initialized() || !AtomicDawn.CONFIG.common.pipboy.general.PIPBOY_GRANT_ON_FIRST_JOIN) {
             return;
         }
         player.setData(ADAttachments.PIPBOY.get(), data.initializedWith(UUID.randomUUID()));
@@ -41,7 +41,7 @@ public final class PipBoyService {
         var data = data(player);
         var favorites = new LinkedHashSet<>(data.favorites());
         if (!favorites.remove(item)) {
-            if (favorites.size() >= AtomicDawn.CONFIG.pipboy.PIPBOY_MAX_FAVORITES) {
+            if (favorites.size() >= AtomicDawn.CONFIG.common.pipboy.general.PIPBOY_MAX_FAVORITES) {
                 return;
             }
             favorites.add(item);

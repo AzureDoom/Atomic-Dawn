@@ -201,7 +201,7 @@ public final class VatsClient {
     }
 
     private static void retarget(LocalPlayer player, WeaponDefinition definition, boolean force) {
-        double cone = AtomicDawn.CONFIG.vats.VATS_TARGET_CONE;
+        double cone = AtomicDawn.CONFIG.common.combat.vats.VATS_TARGET_CONE;
         var current = target();
         var currentValid = current != null && current.isAlive()
             && VatsTargeting.isValidTarget(player, current, definition, cone);

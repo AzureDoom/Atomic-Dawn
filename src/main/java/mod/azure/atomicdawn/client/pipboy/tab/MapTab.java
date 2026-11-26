@@ -88,7 +88,7 @@ public final class MapTab implements PipBoyTab {
 
     @Override
     public void init(PipBoyScreen screen, Rect area, String subtab) {
-        if (!AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_MAP) {
+        if (!AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_MAP) {
             return;
         }
         if (WAYPOINTS.equals(subtab)) {
@@ -131,15 +131,15 @@ public final class MapTab implements PipBoyTab {
         x = pan(screen, x, y, "▼", 0, step);
         x = pan(screen, x, y, "▶", step, 0);
         x += 6;
-        var colorMode = AtomicDawn.CONFIG.clientPipboy.PIPBOY_MAP_COLOR;
+        var colorMode = AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_MAP_COLOR;
         var mode = Component.translatable(
             colorMode ? "pipboy.atomicdawn.map.mode.color" : "pipboy.atomicdawn.map.mode.mono"
         );
         var modeW = screen.font().width(mode) + 10;
         screen.button(mode, x, y, modeW, 12, true, () -> {
             ADConfigHelper.setClientBoolean(
-                "PIPBOY_MAP_COLOR",
-                !AtomicDawn.CONFIG.clientPipboy.PIPBOY_MAP_COLOR
+                "pipboy.display.PIPBOY_MAP_COLOR",
+                !AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_MAP_COLOR
             );
             screen.refresh();
         });
@@ -199,7 +199,10 @@ public final class MapTab implements PipBoyTab {
 
     @Override
     public boolean keyPressed(PipBoyScreen screen, String subtab, int key) {
-        if (!WORLD.equals(subtab) || key != InputConstants.KEY_M || !AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_MAP) {
+        if (
+            !WORLD.equals(subtab) || key != InputConstants.KEY_M
+                || !AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_MAP
+        ) {
             return false;
         }
         markAtCursorOrPlayer(screen);
@@ -225,7 +228,7 @@ public final class MapTab implements PipBoyTab {
         var minecraft = Minecraft.getInstance();
         if (
             WORLD.equals(subtab) && minecraft.level != null && minecraft.player != null
-                && AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_MAP
+                && AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_MAP
         ) {
             RENDERER.update(minecraft.level, minecraft.player);
         }
@@ -258,7 +261,7 @@ public final class MapTab implements PipBoyTab {
         if (player == null || level == null) {
             return;
         }
-        if (!AtomicDawn.CONFIG.pipboy.PIPBOY_ENABLE_MAP) {
+        if (!AtomicDawn.CONFIG.common.pipboy.features.PIPBOY_ENABLE_MAP) {
             var width = Math.min(area.width() - 20, 260);
             screen.wrapped(
                 graphics,

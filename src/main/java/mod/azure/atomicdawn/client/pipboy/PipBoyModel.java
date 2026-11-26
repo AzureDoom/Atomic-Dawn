@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
-import mod.azure.atomicdawn.config.ADConfig.ClientPipBoy.PipBoyLayout;
+import mod.azure.atomicdawn.config.ADConfig.Client.PipBoy.Display.PipBoyLayout;
 
 public final class PipBoyModel {
 
@@ -138,7 +138,7 @@ public final class PipBoyModel {
     private PipBoyModel() {}
 
     public static PipBoyLayout layout() {
-        var layout = AtomicDawn.CONFIG.clientPipboy.PIPBOY_LAYOUT;
+        var layout = AtomicDawn.CONFIG.client.pipboy.display.PIPBOY_LAYOUT;
         return layout == null ? PipBoyLayout.FALLOUT_76 : layout;
     }
 

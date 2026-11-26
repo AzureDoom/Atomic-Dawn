@@ -13,7 +13,7 @@ public final class ScorchedHiveMind {
         if (brain == null || !source.isAlive()) {
             return;
         }
-        var config = AtomicDawn.CONFIG.scorched;
+        var config = AtomicDawn.CONFIG.server.entities.mutants.scorched.hiveMind;
         var now = source.level().getGameTime();
         if (!brain.tryBroadcast(target, now, force ? 10 : config.HIVE_ALERT_INTERVAL)) {
             return;

@@ -19,10 +19,10 @@ public enum HudElement {
     POWER_ARMOR((w, h) -> new Rect(6, h - 92, 150, 86)),
     POWER_ARMOR_AP((w, h) -> new Rect(6, h - 110, 150, 15)),
     COMPASS((w, h) -> {
-        var width = Math.min(AtomicDawn.CONFIG.clientPipboy.WAYPOINT_HUD_WIDTH, w - 8);
-        return new Rect((w - width) / 2, AtomicDawn.CONFIG.clientPipboy.WAYPOINT_HUD_Y, width, 12);
+        var width = Math.min(AtomicDawn.CONFIG.client.hud.waypointCompass.WAYPOINT_HUD_WIDTH, w - 8);
+        return new Rect((w - width) / 2, AtomicDawn.CONFIG.client.hud.waypointCompass.WAYPOINT_HUD_Y, width, 12);
     }),
-    PARTY((w, h) -> new Rect(2, AtomicDawn.CONFIG.clientParty.PARTY_HUD_Y - 2, 96, 46)),
+    PARTY((w, h) -> new Rect(2, AtomicDawn.CONFIG.client.hud.party.PARTY_HUD_Y - 2, 96, 46)),
     QUEST_TRACKER((w, h) -> new Rect(4, 4, 140, 25)),
     NOTIFICATIONS((w, h) -> new Rect(4, 32, 140, 30));
 

@@ -66,7 +66,7 @@ public final class ThirstEvents {
     }
 
     private static double restored(ItemStack stack) {
-        var config = AtomicDawn.CONFIG.thirst;
+        var config = AtomicDawn.CONFIG.common.survival.thirst.drinks;
         if (stack.is(Items.POTION)) {
             var contents = stack.get(DataComponents.POTION_CONTENTS);
             if (contents != null && contents.is(Potions.WATER)) {
@@ -123,7 +123,10 @@ public final class ThirstEvents {
                 event.getHand(),
                 ItemUtils.createFilledResult(stack, player, new ItemStack(ADItems.DIRTY_WATER.get()))
             );
-            RadiationService.expose(player, (float) AtomicDawn.CONFIG.radiation.DIRTY_WATER_COLLECT_RADS);
+            RadiationService.expose(
+                player,
+                (float) AtomicDawn.CONFIG.common.survival.radiation.consumables.DIRTY_WATER_COLLECT_RADS
+            );
         }
         event.setCancellationResult(InteractionResult.SUCCESS);
         event.setCanceled(true);

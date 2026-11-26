@@ -151,7 +151,7 @@ public final class PowerArmorClient {
         if (player == null) {
             return false;
         }
-        var cost = (float) AtomicDawn.CONFIG.powerArmor.POWER_ARMOR_JETPACK_AP_COST;
+        var cost = (float) AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_JETPACK_AP_COST;
         return player.hasInfiniteMaterials() || cost <= 0F || VatsActions.actionPoints(player).points() >= cost;
     }
 

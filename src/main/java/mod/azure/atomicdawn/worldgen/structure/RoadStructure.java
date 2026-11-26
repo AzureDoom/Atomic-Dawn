@@ -107,14 +107,14 @@ public class RoadStructure extends Structure {
             DimensionPadding.ZERO,
             LiquidSettings.APPLY_WATERLOGGING
         );
-        if (stub.isEmpty() || !AtomicDawn.CONFIG.worldgen.ROADS_AVOID_STRUCTURES) {
+        if (stub.isEmpty() || !AtomicDawn.CONFIG.server.world.roads.ROADS_AVOID_STRUCTURES) {
             return stub;
         }
         var pieces = stub.get().getPiecesBuilder().build().pieces();
         if (pieces.isEmpty()) {
             return Optional.empty();
         }
-        var zones = blockedZones(context, area(pieces), AtomicDawn.CONFIG.worldgen.ROAD_STRUCTURE_CLEARANCE);
+        var zones = blockedZones(context, area(pieces), AtomicDawn.CONFIG.server.world.roads.ROAD_STRUCTURE_CLEARANCE);
         if (zones.isEmpty()) {
             return stub;
         }

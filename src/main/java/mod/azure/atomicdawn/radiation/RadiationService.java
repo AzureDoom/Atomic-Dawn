@@ -43,7 +43,7 @@ public final class RadiationService {
     private RadiationService() {}
 
     public static float maxRads() {
-        return (float) AtomicDawn.CONFIG.radiation.MAX_RADS;
+        return (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.MAX_RADS;
     }
 
     public static float rads(Player player) {
@@ -84,7 +84,7 @@ public final class RadiationService {
         if (immune(entity)) {
             return;
         }
-        var damage = amount * (float) AtomicDawn.CONFIG.radiation.MOB_RADIATION_DAMAGE;
+        var damage = amount * (float) AtomicDawn.CONFIG.common.survival.radiation.sickness.MOB_RADIATION_DAMAGE;
         if (damage > 0F) {
             entity.hurtServer(level, ADDamageTypes.radiation(level), damage);
         }
@@ -110,7 +110,8 @@ public final class RadiationService {
             return;
         }
         attribute.removeModifier(HEALTH_MODIFIER);
-        var fraction = rads(player) / maxRads() * AtomicDawn.CONFIG.radiation.RADS_MAX_HEALTH_LOSS;
+        var fraction = rads(player) / maxRads()
+            * AtomicDawn.CONFIG.common.survival.radiation.sickness.RADS_MAX_HEALTH_LOSS;
         var unmodified = attribute.getValue();
         var loss = Math.min(unmodified - 2.0, unmodified * fraction);
         if (loss > 0.01) {

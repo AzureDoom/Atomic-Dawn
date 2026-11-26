@@ -188,7 +188,10 @@ public final class CampEvents {
 
     @SubscribeEvent
     public static void onExplosion(ExplosionEvent.Detonate event) {
-        if (!AtomicDawn.CONFIG.camp.CAMP_PROTECT_EXPLOSIONS || !(event.getLevel() instanceof ServerLevel level)) {
+        if (
+            !AtomicDawn.CONFIG.common.settlement.camp.claims.CAMP_PROTECT_EXPLOSIONS || !(event
+                .getLevel() instanceof ServerLevel level)
+        ) {
             return;
         }
         event.getAffectedBlocks().removeIf(pos -> protectedBlock(level, pos));
