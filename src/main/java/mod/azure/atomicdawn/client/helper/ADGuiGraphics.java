@@ -20,7 +20,7 @@ public final class ADGuiGraphics {
         return new ADGuiGraphics(raw);
     }
 
-    public GuiGraphicsExtractor raw() {
+    GuiGraphicsExtractor raw() {
         return raw;
     }
 
