@@ -187,15 +187,17 @@ if (keyPropsFile.exists()) {
         }
 
         discord {
+            def discordModName = mod_name
+            def discordModVersion = mod_version
+            def discordMcVersion = minecraft_version
+
             webhookUrl = releaseProp.getProperty("discordKey")
-            username = "Azurelib Update Bot"
+            username = "${discordModName} Update Bot"
             avatarUrl = "https://cdn.modrinth.com/data/7zlUOZvb/a722b12250c1f42c63dd269f2e4aeefd7611f8fd.png"
 
             content = changelog.map { text ->
-                final String mcVersion = project.property("minecraft_version")
-
                 final String header =
-                        "# A new version of AzureLib has been released for Minecraft ${mcVersion} for StationAPI!\n\n"
+                        "# ${discordModName} ${discordModVersion} has been released for Minecraft ${discordMcVersion} on NeoForge!\n\n"
 
                 final String suffix =
                         "\n\n**Full changelog available on Modrinth below.**"
