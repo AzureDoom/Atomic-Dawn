@@ -40,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,11 +61,27 @@ public class VaultDoorBlock extends BaseEntityBlock {
 
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
-    public static final int ROLL_SIGN = 1;
+    public static final int ANIMATION_TICKS = 160;
 
-    public static final int ANIMATION_TICKS = 80;
+    public static final int UNLOCK_TICKS = 30;
 
-    public static final int PULL_TICKS = 20;
+    public static final int PULL_TICKS = 60;
+
+    public static final int ROLL_TICKS = ANIMATION_TICKS - UNLOCK_TICKS - PULL_TICKS;
+
+    public static final float PULL_DEPTH = 24.0F;
+
+    public static final float DOOR_HALF_DEPTH = 10.0F;
+
+    public static final float FRAME_HALF_DEPTH = 8.0F;
+
+    private static final double BORE_RADIUS = 34.5;
+
+    private static final double BORE_CENTER = 41.0;
+
+    private static final int SHAPE_STEP = 2;
+
+    private static final VoxelShape[] FRAME_SHAPES = buildFrameShapes();
 
     public VaultDoorBlock(Properties properties) {
         super(properties);
@@ -98,10 +115,82 @@ public class VaultDoorBlock extends BaseEntityBlock {
         return pos.relative(right(state.getValue(FACING)), CENTER - state.getValue(COLUMN)).below(state.getValue(ROW));
     }
 
-    public static boolean isCorner(BlockState state) {
-        int column = state.getValue(COLUMN);
-        int row = state.getValue(ROW);
-        return (column == 0 || column == SIZE - 1) && (row == 0 || row == SIZE - 1);
+    private static int shapeIndex(Direction facing, int column, int row) {
+        return (facing.get2DDataValue() * SIZE + row) * SIZE + column;
+    }
+
+    private static VoxelShape[] buildFrameShapes() {
+        var shapes = new VoxelShape[4 * SIZE * SIZE];
+        for (var facing : Direction.Plane.HORIZONTAL) {
+            for (var row = 0; row < SIZE; row++) {
+                for (var column = 0; column < SIZE; column++) {
+                    shapes[shapeIndex(facing, column, row)] = buildFrameShape(facing, column, row);
+                }
+            }
+        }
+        return shapes;
+    }
+
+    private static double boreHalfWidth(double y) {
+        var dy = y - BORE_CENTER;
+        var circle = Math.abs(dy) < BORE_RADIUS ? Math.sqrt(BORE_RADIUS * BORE_RADIUS - dy * dy) : 0.0;
+        return y < BORE_CENTER ? Math.max(circle, 16.0) : circle;
+    }
+
+    private static VoxelShape buildFrameShape(Direction facing, int column, int row) {
+        var shape = Shapes.empty();
+        var left = (column - CENTER) * 16.0 - 8.0;
+        var bottom = row * 16.0;
+        var half = SIZE * 8.0;
+        for (var band = 0; band < 16; band += SHAPE_STEP) {
+            var open = Math.min(boreHalfWidth(bottom + band), boreHalfWidth(bottom + band + SHAPE_STEP));
+            shape = Shapes.or(shape, span(facing, left, -half, -open, band, band + SHAPE_STEP, 0.0, 16.0));
+            shape = Shapes.or(shape, span(facing, left, open, half, band, band + SHAPE_STEP, 0.0, 16.0));
+        }
+        if (row == 0) {
+            shape = Shapes.or(
+                shape,
+                span(
+                    facing,
+                    left,
+                    -21.0,
+                    21.0,
+                    0.0,
+                    8.0,
+                    2.0,
+                    14.0
+                )
+            );
+        }
+        return shape.optimize();
+    }
+
+    private static VoxelShape span(
+        Direction facing,
+        double left,
+        double from,
+        double to,
+        double minY,
+        double maxY,
+        double minDepth,
+        double maxDepth
+    ) {
+        var start = Math.max(from, left) - left;
+        var end = Math.min(to, left + 16.0) - left;
+        if (end - start <= 1.0E-4) {
+            return Shapes.empty();
+        }
+        var right = right(facing);
+        var positive = right.getAxisDirection() == Direction.AxisDirection.POSITIVE;
+        var min = positive ? start : 16.0 - end;
+        var max = positive ? end : 16.0 - start;
+        return right.getAxis() == Direction.Axis.X
+            ? Block.box(min, minY, minDepth, max, maxY, maxDepth)
+            : Block.box(minDepth, minY, min, maxDepth, maxY, max);
+    }
+
+    public static VoxelShape frameShape(BlockState state) {
+        return FRAME_SHAPES[shapeIndex(state.getValue(FACING), state.getValue(COLUMN), state.getValue(ROW))];
     }
 
     public static AABB renderBounds(BlockPos master) {
@@ -215,25 +304,53 @@ public class VaultDoorBlock extends BaseEntityBlock {
         }
     }
 
-    public static int inward(boolean opening, int tick) {
-        return opening ? (tick >= PULL_TICKS / 2 ? 1 : 0) : (tick < ANIMATION_TICKS - PULL_TICKS / 2 ? 1 : 0);
+    private static int timeline(boolean opening, int tick) {
+        return Mth.clamp(opening ? tick : ANIMATION_TICKS - tick, 0, ANIMATION_TICKS);
+    }
+
+    public static float pullOffset(boolean opening, int tick) {
+        var progress = (timeline(opening, tick) - UNLOCK_TICKS) / (float) PULL_TICKS;
+        return PULL_DEPTH * Mth.clamp(progress, 0.0F, 1.0F);
     }
 
     public static int lateral(boolean opening, int tick) {
-        var rollTicks = ANIMATION_TICKS - PULL_TICKS;
-        var progress = opening ? tick - PULL_TICKS : rollTicks - tick;
-        return Mth.clamp(Math.round(progress * (float) SIZE / rollTicks), 0, SIZE);
+        var progress = (timeline(opening, tick) - UNLOCK_TICKS - PULL_TICKS) / (float) ROLL_TICKS;
+        return Mth.clamp(Math.round(progress * SIZE), 0, SIZE);
     }
 
-    public static List<BlockPos> doorCells(BlockPos master, Direction facing, int inward, int lateral) {
-        var cells = new ArrayList<BlockPos>(SIZE * SIZE);
+    public static boolean passable(float offset) {
+        return offset - DOOR_HALF_DEPTH >= FRAME_HALF_DEPTH;
+    }
+
+    private static float depthOverlap(int depth, float offset) {
+        var low = Math.max(depth * 16.0F - FRAME_HALF_DEPTH, offset - DOOR_HALF_DEPTH);
+        var high = Math.min(depth * 16.0F + FRAME_HALF_DEPTH, offset + DOOR_HALF_DEPTH);
+        return high - low;
+    }
+
+    private static void addLayer(
+        Collection<BlockPos> cells,
+        BlockPos master,
+        Direction facing,
+        int depth,
+        int lateral
+    ) {
         for (var row = 0; row < SIZE; row++) {
             for (var column = 0; column < SIZE; column++) {
                 cells.add(
-                    master.relative(right(facing), ROLL_SIGN * (column - CENTER + lateral))
-                        .relative(facing.getOpposite(), inward)
+                    master.relative(right(facing), (column - CENTER + lateral))
+                        .relative(facing.getOpposite(), depth)
                         .above(row)
                 );
+            }
+        }
+    }
+
+    public static List<BlockPos> doorCells(BlockPos master, Direction facing, float offset, int lateral) {
+        var cells = new ArrayList<BlockPos>(5 * 5 * 2);
+        for (var depth = 1; depth <= 2; depth++) {
+            if (depthOverlap(depth, offset) >= 4.0F) {
+                addLayer(cells, master, facing, depth, lateral);
             }
         }
         return cells;
@@ -241,8 +358,10 @@ public class VaultDoorBlock extends BaseEntityBlock {
 
     public static Set<BlockPos> sweptCells(BlockPos master, Direction facing) {
         var cells = new HashSet<BlockPos>();
-        for (var lateral = 0; lateral <= SIZE; lateral++) {
-            cells.addAll(doorCells(master, facing, 1, lateral));
+        for (var lateral = 0; lateral <= 5; lateral++) {
+            for (var depth = 1; depth <= 2; depth++) {
+                addLayer(cells, master, facing, depth, lateral);
+            }
         }
         return cells;
     }
@@ -269,7 +388,7 @@ public class VaultDoorBlock extends BaseEntityBlock {
         @NotNull BlockPos pos,
         @NotNull CollisionContext context
     ) {
-        return !state.getValue(OPEN) || isCorner(state) ? Shapes.block() : Shapes.empty();
+        return state.getValue(OPEN) ? frameShape(state) : Shapes.block();
     }
 
     @Override
@@ -279,7 +398,7 @@ public class VaultDoorBlock extends BaseEntityBlock {
         @NotNull BlockPos pos,
         @NotNull CollisionContext context
     ) {
-        return !state.getValue(OPEN) || isCorner(state) ? Shapes.block() : Shapes.empty();
+        return state.getValue(OPEN) ? frameShape(state) : Shapes.block();
     }
 
     @Override

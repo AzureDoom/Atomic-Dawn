@@ -85,18 +85,20 @@ public class VaultDoorBlockEntity extends BlockEntity {
             door.swept = true;
             sweep(level, pos, facing);
             if (state.getValue(VaultDoorBlock.OPEN)) {
-                door.syncBarriers(level, VaultDoorBlock.doorCells(pos, facing, 1, VaultDoorBlock.SIZE));
+                door.syncBarriers(
+                    level,
+                    VaultDoorBlock.doorCells(pos, facing, VaultDoorBlock.PULL_DEPTH, VaultDoorBlock.SIZE)
+                );
             }
         }
         if (door.animationTick < 0) {
             return;
         }
         var tick = door.animationTick++;
-        var inward = VaultDoorBlock.inward(door.opening, tick);
+        var offset = VaultDoorBlock.pullOffset(door.opening, tick);
         var lateral = VaultDoorBlock.lateral(door.opening, tick);
-        var passable = inward > 0;
-        VaultDoorBlock.setOpen(level, pos, facing, passable);
-        door.syncBarriers(level, passable ? VaultDoorBlock.doorCells(pos, facing, inward, lateral) : List.of());
+        VaultDoorBlock.setOpen(level, pos, facing, VaultDoorBlock.passable(offset));
+        door.syncBarriers(level, VaultDoorBlock.doorCells(pos, facing, offset, lateral));
         if (tick >= VaultDoorBlock.ANIMATION_TICKS) {
             door.animationTick = -1;
         }
