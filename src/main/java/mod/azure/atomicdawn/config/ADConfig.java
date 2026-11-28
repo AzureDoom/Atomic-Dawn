@@ -175,6 +175,22 @@ public class ADConfig {
 
         public static class Hud {
 
+            public enum HudStyle {
+                FALLOUT_76,
+                VANILLA
+            }
+
+            public enum PowerArmorHudStyle {
+                GAUGES,
+                PANEL
+            }
+
+            @Configurable
+            public Layout layout = new Layout();
+
+            @Configurable
+            public PowerArmorDisplay powerArmor = new PowerArmorDisplay();
+
             @Configurable
             public WaypointCompass waypointCompass = new WaypointCompass();
 
@@ -187,18 +203,127 @@ public class ADConfig {
             @Configurable
             public VatsColors vatsColors = new VatsColors();
 
+            public static class Layout {
+
+                @Comment("Health: FALLOUT_76 draws an HP bar in the bottom-left corner, VANILLA keeps the hearts.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle HEALTH_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Radiation: FALLOUT_76 eats into the HP bar from its far end (needs the FALLOUT_76 health style), VANILLA keeps the separate rads panel."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle RADIATION_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Armor: FALLOUT_76 shows your armor value above the HP bar (needs the FALLOUT_76 health style), VANILLA keeps the armor row."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle ARMOR_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Air: FALLOUT_76 shows a thin air bar over the HP bar (needs the FALLOUT_76 health style), VANILLA keeps the bubbles."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle AIR_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment("Food: FALLOUT_76 shows a food meter above the AP bar, VANILLA keeps the drumsticks.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle FOOD_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Thirst: FALLOUT_76 shows a water meter above the AP bar, VANILLA keeps the separate H2O panel."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle THIRST_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Action Points: FALLOUT_76 shows an always-on AP bar in the bottom-right corner, VANILLA keeps the AP/CRIT panel shown while holding a weapon."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle ACTION_POINTS_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Weapon: FALLOUT_76 shows the ammo count above the survival meters, VANILLA keeps the ammo panel."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle WEAPON_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment(
+                    "Compass: FALLOUT_76 places the compass just above the hotbar, VANILLA keeps it at the top of the screen."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public HudStyle COMPASS_STYLE = HudStyle.FALLOUT_76;
+
+                @Comment("Use the Pip-Boy colour for the Fallout 76 HUD instead of the HUD colour below.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                public boolean HUD_USE_PIPBOY_COLOR = false;
+
+                @Comment("Main Fallout 76 HUD colour: bars, labels, compass.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Gui.ColorValue(isARGB = true)
+                public String HUD_COLOR = "#FFB9F27C";
+
+                @Comment("Radiation colour on the HP bar.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Gui.ColorValue(isARGB = true)
+                public String HUD_RADS_COLOR = "#FFD8352A";
+
+                @Comment("Warning colour: low health, low ammo, low food or water.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Gui.ColorValue(isARGB = true)
+                public String HUD_WARN_COLOR = "#FFFFB347";
+
+                @Comment("Shadow drawn behind the Fallout 76 HUD bars.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Gui.ColorValue(isARGB = true)
+                public String HUD_SHADOW_COLOR = "#90000000";
+
+            }
+
+            public static class PowerArmorDisplay {
+
+                @Comment(
+                    "Power Armor HUD: GAUGES shows Fallout 4 style dials (HP, rads, core, AP), PANEL keeps the compact status panel. Only shown while inside Power Armor."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                public PowerArmorHudStyle POWER_ARMOR_HUD_STYLE = PowerArmorHudStyle.GAUGES;
+
+                @Comment(
+                    "Opacity of the Power Armor HUD backgrounds (gauge faces, bezels and panels) in percent: 100 is solid, 0 is fully see-through."
+                )
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Range(min = 0, max = 100)
+                public int POWER_ARMOR_HUD_OPACITY = 100;
+
+                @Comment("Power Armor gauge colour: needles, ticks, labels and readouts.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Gui.ColorValue(isARGB = true)
+                public String POWER_ARMOR_HUD_COLOR = "#FFFFB547";
+
+                @Comment("Power Armor warning colour: rads, low health, low core, broken pieces.")
+                @Configurable(side = Configurable.Side.CLIENT)
+                @Gui.ColorValue(isARGB = true)
+                public String POWER_ARMOR_HUD_WARN_COLOR = "#FFFF4A3A";
+
+            }
+
             public static class WaypointCompass {
 
-                @Comment("Show a compass strip at the top of the screen with your Pip-Boy waypoints.")
+                @Comment("Show the compass strip with your Pip-Boy waypoints.")
                 @Configurable(side = Configurable.Side.CLIENT)
-                public boolean WAYPOINT_HUD = false;
+                public boolean WAYPOINT_HUD = true;
 
-                @Comment("Width of the waypoint compass in GUI pixels.")
+                @Comment(
+                    "Width of the waypoint compass in GUI pixels (capped to the hotbar width in the FALLOUT_76 style)."
+                )
                 @Configurable(side = Configurable.Side.CLIENT)
                 @Range(min = 80, max = 480)
                 public int WAYPOINT_HUD_WIDTH = 200;
 
-                @Comment("Distance of the waypoint compass from the top of the screen (raise it if boss bars overlap).")
+                @Comment(
+                    "Distance of the waypoint compass from the top of the screen in the VANILLA style (raise it if boss bars overlap)."
+                )
                 @Configurable(side = Configurable.Side.CLIENT)
                 @Range(min = 0, max = 200)
                 public int WAYPOINT_HUD_Y = 2;
@@ -1327,6 +1452,20 @@ public class ADConfig {
                     @DecimalRange(min = 0.0, max = 100000.0)
                     public double DIRTY_WATER_DRINK_RADS = 15.0;
 
+                    @Comment(
+                        "Rads received per sip when drinking straight from a dirty water source (wasteland or blast zone water)."
+                    )
+                    @Configurable
+                    @Configurable.Synchronized
+                    @DecimalRange(min = 0.0, max = 100000.0)
+                    public double SOURCE_DRINK_RADS = 10.0;
+
+                    @Comment("Rads received per sip when drinking straight from an irradiated water source.")
+                    @Configurable
+                    @Configurable.Synchronized
+                    @DecimalRange(min = 0.0, max = 100000.0)
+                    public double SOURCE_DRINK_IRRADIATED_RADS = 25.0;
+
                     @Comment("Rads received from drinking Boiled Water.")
                     @Configurable
                     @Configurable.Synchronized
@@ -1338,12 +1477,6 @@ public class ADConfig {
                     @Configurable.Synchronized
                     @DecimalRange(min = 0.0, max = 100000.0)
                     public double RADAWAY_RADS = 250.0;
-
-                    @Comment("Rads removed by one Nuka-Grape (never cures mutations).")
-                    @Configurable
-                    @Configurable.Synchronized
-                    @DecimalRange(min = 0.0, max = 100000.0)
-                    public double NUKA_GRAPE_RADS = 150.0;
 
                     @Comment("Rads removed by one Brahmin Milk (never cures mutations).")
                     @Configurable
@@ -1597,6 +1730,25 @@ public class ADConfig {
                     @DecimalRange(min = 0.0, max = 20.0)
                     public double BOILED_WATER_THIRST = 6.0;
 
+                    @Comment(
+                        "Let players drink straight from water source blocks with an empty hand while thirst is enabled."
+                    )
+                    @Configurable
+                    @Configurable.Synchronized
+                    public boolean SOURCE_DRINK_ENABLED = true;
+
+                    @Comment("Thirst restored per sip from a water source block.")
+                    @Configurable
+                    @Configurable.Synchronized
+                    @DecimalRange(min = 0.0, max = 20.0)
+                    public double SOURCE_DRINK_THIRST = 3.0;
+
+                    @Comment("Ticks between sips from a water source block.")
+                    @Configurable
+                    @Configurable.Synchronized
+                    @Range(min = 1, max = 200)
+                    public int SOURCE_DRINK_COOLDOWN_TICKS = 15;
+
                     @Comment("Thirst restored by Dirty Water.")
                     @Configurable
                     @Configurable.Synchronized
@@ -1656,6 +1808,44 @@ public class ADConfig {
                 @Configurable.Synchronized
                 @DecimalRange(min = 0.0, max = 10000.0)
                 public double NUKA_COLA_AP = 25.0;
+
+                @Comment(
+                    "Health restored by Nuka-Grape over NUKA_GRAPE_HEALTH_SECONDS (Fallout 76: 150 HP of a 250 HP base, scaled to 20)."
+                )
+                @Configurable
+                @Configurable.Synchronized
+                @DecimalRange(min = 0.0, max = 1000.0)
+                public double NUKA_GRAPE_HEALTH = 12.0;
+
+                @Comment("Seconds Nuka-Grape takes to restore its health.")
+                @Configurable
+                @Configurable.Synchronized
+                @Range(min = 0, max = 600)
+                public int NUKA_GRAPE_HEALTH_SECONDS = 10;
+
+                @Comment("Action Points restored by Nuka-Grape over NUKA_GRAPE_AP_SECONDS.")
+                @Configurable
+                @Configurable.Synchronized
+                @DecimalRange(min = 0.0, max = 10000.0)
+                public double NUKA_GRAPE_AP = 50.0;
+
+                @Comment("Seconds Nuka-Grape takes to restore its Action Points.")
+                @Configurable
+                @Configurable.Synchronized
+                @Range(min = 0, max = 600)
+                public int NUKA_GRAPE_AP_SECONDS = 5;
+
+                @Comment("Rads removed by Nuka-Grape over NUKA_GRAPE_RAD_SECONDS (never cures mutations).")
+                @Configurable
+                @Configurable.Synchronized
+                @DecimalRange(min = 0.0, max = 100000.0)
+                public double NUKA_GRAPE_RADS = 400.0;
+
+                @Comment("Seconds Nuka-Grape takes to remove its rads.")
+                @Configurable
+                @Configurable.Synchronized
+                @Range(min = 0, max = 600)
+                public int NUKA_GRAPE_RAD_SECONDS = 10;
 
                 @Comment("Rads received from Nuka-Cola, Nuka-Cola Orange, Nuka-Cola Wild and Nuka-Cola Vaccinated.")
                 @Configurable
@@ -1991,6 +2181,9 @@ public class ADConfig {
             @Configurable
             public Locations locations = new Locations();
 
+            @Configurable
+            public FastTravel fastTravel = new FastTravel();
+
             public static class General {
 
                 @Comment("Whether players can open the Pip-Boy.")
@@ -2062,6 +2255,43 @@ public class ADConfig {
                 @Configurable.Synchronized
                 @Range(min = 10, max = 1200)
                 public int PIPBOY_LOCATION_SCAN_TICKS = 40;
+
+            }
+
+            public static class FastTravel {
+
+                @Comment(
+                    "Allow players to fast travel to discovered locations from the Pip-Boy. Players also need the atomicdawn.fast_travel permission node, which defaults to the setting below."
+                )
+                @Configurable
+                @Configurable.Synchronized
+                public boolean FAST_TRAVEL_ENABLED = false;
+
+                @Comment(
+                    "Default for the atomicdawn.fast_travel permission when no permission mod overrides it: true limits fast travel to operators (permission level 2)."
+                )
+                @Configurable
+                @Configurable.Synchronized
+                public boolean FAST_TRAVEL_OP_ONLY = false;
+
+                @Comment("Seconds a player must wait between fast travels.")
+                @Configurable
+                @Configurable.Synchronized
+                @Range(min = 0, max = 86400)
+                public int FAST_TRAVEL_COOLDOWN_SECONDS = 30;
+
+                @Comment(
+                    "Block fast travel for this many seconds after being hurt by a mob or player (0 disables the check)."
+                )
+                @Configurable
+                @Configurable.Synchronized
+                @Range(min = 0, max = 600)
+                public int FAST_TRAVEL_COMBAT_SECONDS = 10;
+
+                @Comment("Allow fast travel to locations discovered in other dimensions.")
+                @Configurable
+                @Configurable.Synchronized
+                public boolean FAST_TRAVEL_CROSS_DIMENSION = true;
 
             }
 
@@ -2526,10 +2756,6 @@ public class ADConfig {
                         @Configurable
                         public boolean LEAP_ENABLED = true;
 
-                        @Comment("Feral ghouls ignore players who have turned into ghouls.")
-                        @Configurable
-                        public boolean IGNORE_GHOUL_PLAYERS = true;
-
                         @Comment("Feral ghouls hunt villagers and wandering traders.")
                         @Configurable
                         public boolean ATTACK_VILLAGERS = true;
@@ -2769,6 +2995,16 @@ public class ADConfig {
                         @Configurable
                         @DecimalRange(min = 0.0, max = 10.0)
                         public double MELEE_WEAPON_DAMAGE_MULTIPLIER = 0.8;
+
+                        @Comment("Multiplier on damage Super Mutants take from other mobs (players are unaffected).")
+                        @Configurable
+                        @DecimalRange(min = 0.0, max = 10.0)
+                        public double MOB_DAMAGE_TAKEN_MULTIPLIER = 0.5;
+
+                        @Comment("Multiplier on damage Super Mutants deal to other mobs (players are unaffected).")
+                        @Configurable
+                        @DecimalRange(min = 0.0, max = 10.0)
+                        public double MOB_DAMAGE_DEALT_MULTIPLIER = 1.5;
 
                         @Comment(
                             "Chance an unarmed or melee Super Mutant uses its overhead slam when the slam is off cooldown."

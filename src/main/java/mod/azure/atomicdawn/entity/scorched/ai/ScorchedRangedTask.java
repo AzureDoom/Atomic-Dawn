@@ -5,6 +5,7 @@ import com.azure.azurecortex.api.action.ActionStatus;
 import com.azure.azurecortex.api.blackboard.Blackboard;
 import com.azure.azurecortex.runtime.CooldownTracker;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 
@@ -23,6 +24,10 @@ final class ScorchedRangedTask extends ScorchedTask {
     private static final double RETREAT_SPEED = 1.1;
 
     private static final double STRAFE_SPEED = 0.85;
+
+    private static final int PLANT_TICKS = 6;
+
+    private static final float FACING_TOLERANCE = 20F;
 
     private int ticks;
 
@@ -83,8 +88,15 @@ final class ScorchedRangedTask extends ScorchedTask {
             aimTicks++;
         }
         agent.setStance(ScorchedWeapons.stance(agent, inRange));
+        var ready = cooldowns.ready(ScorchedBrain.FIRE_COOLDOWN);
+        if (inRange && ready && aimTicks >= AIM_TICKS - PLANT_TICKS) {
+            agent.getNavigation().stop();
+            face(agent, target);
+        } else if (visible && agent.getNavigation().isDone()) {
+            face(agent, target);
+        }
         if (
-            inRange && aimTicks >= AIM_TICKS && cooldowns.ready(ScorchedBrain.FIRE_COOLDOWN)
+            inRange && aimTicks >= AIM_TICKS && ready && facing(agent, target)
                 && agent.level() instanceof ServerLevel level
         ) {
             var fired = MobGunfire.fire(
@@ -103,6 +115,24 @@ final class ScorchedRangedTask extends ScorchedTask {
             }
         }
         return ActionOutcome.running();
+    }
+
+    private static float yawTo(ScorchedEntity agent, LivingEntity target) {
+        var dx = target.getX() - agent.getX();
+        var dz = target.getZ() - agent.getZ();
+        return (float) (Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90F;
+    }
+
+    private static void face(ScorchedEntity agent, LivingEntity target) {
+        var yaw = yawTo(agent, target);
+        agent.setYRot(yaw);
+        agent.yBodyRot = yaw;
+        agent.setYHeadRot(yaw);
+        agent.getLookControl().setLookAt(target, 30F, 30F);
+    }
+
+    private static boolean facing(ScorchedEntity agent, LivingEntity target) {
+        return Math.abs(Mth.wrapDegrees(yawTo(agent, target) - agent.yBodyRot)) <= FACING_TOLERANCE;
     }
 
     private void retreat(ScorchedEntity agent, LivingEntity target) {

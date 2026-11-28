@@ -5,20 +5,45 @@ import net.minecraft.client.Minecraft;
 import java.util.Locale;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.pipboy.Rect;
+import mod.azure.atomicdawn.client.powerarmor.PowerArmorGauges;
 
 @SuppressWarnings("unused")
 public enum HudElement {
 
-    WEAPON((w, h) -> new Rect(w - 60, h - 39, 52, 31)),
+    HEALTH(FalloutHud::healthRect),
+    ACTION_POINTS(FalloutHud::actionPointsRect),
+    SURVIVAL(FalloutHud::survivalRect),
+    WEAPON(
+        (w, h) -> FalloutHud.weapon()
+            ? FalloutHud.weaponRect(w, h, 52, Minecraft.getInstance().player)
+            : new Rect(w - 60, h - 39, 52, 31)
+    ),
     VATS_METERS((w, h) -> new Rect(w - 88, h - 69, 80, 26)),
     RADIATION((w, h) -> new Rect(w / 2 - 131, h - 19, 36, 17)),
     THIRST((w, h) -> new Rect(w / 2 + 95, h - 19, 36, 17)),
-    LIMBS((w, h) -> new Rect(w / 2 - 197, h - 38, 20, 36)),
-    GHOUL((w, h) -> new Rect(w / 2 - 173, h - 47, 78, 24)),
-    POWER_ARMOR((w, h) -> new Rect(6, h - 92, 150, 86)),
+    LIMBS(
+        (w, h) -> FalloutHud.health()
+            ? new Rect(FalloutHud.healthRect(w, h).x(), FalloutHud.leftStackTop(w, h) - 36, 20, 36)
+            : new Rect(w / 2 - 197, h - 38, 20, 36)
+    ),
+    GHOUL(
+        (w, h) -> FalloutHud.health()
+            ? new Rect(FalloutHud.healthRect(w, h).x() + 24, FalloutHud.leftStackTop(w, h) - 24, 78, 24)
+            : new Rect(w / 2 - 173, h - 47, 78, 24)
+    ),
+    POWER_ARMOR(
+        (w, h) -> PowerArmorGauges.styleSelected()
+            ? PowerArmorGauges.leftRect(w, h)
+            : new Rect(6, h - 92, 150, 86)
+    ),
+    POWER_ARMOR_GAUGES(PowerArmorGauges::rightRect),
     POWER_ARMOR_AP((w, h) -> new Rect(6, h - 110, 150, 15)),
     COMPASS((w, h) -> {
+        if (FalloutHud.compass()) {
+            return FalloutHud.compassRect(w, h, AtomicDawn.CONFIG.client.hud.waypointCompass.WAYPOINT_HUD_WIDTH);
+        }
         var width = Math.min(AtomicDawn.CONFIG.client.hud.waypointCompass.WAYPOINT_HUD_WIDTH, w - 8);
         return new Rect((w - width) / 2, AtomicDawn.CONFIG.client.hud.waypointCompass.WAYPOINT_HUD_Y, width, 12);
     }),

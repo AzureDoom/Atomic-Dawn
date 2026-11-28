@@ -20,6 +20,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.ghoul.GhoulService;
 import mod.azure.atomicdawn.limb.LimbProfiles;
 import mod.azure.atomicdawn.limb.LimbService;
+import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.special.SpecialStatResolver;
 import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 
@@ -122,6 +123,7 @@ public final class VatsTargeting {
     ) {
         if (
             !(target instanceof LivingEntity living) || !living.isAlive() || target == shooter || target.isSpectator()
+                || target instanceof PowerArmorEntity || target == shooter.getVehicle()
         ) {
             return false;
         }

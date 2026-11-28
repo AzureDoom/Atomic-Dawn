@@ -10,7 +10,8 @@ public enum NukaCola {
     QUANTUM("nuka_cola_quantum"),
     TWIST("nuka_cola_twist"),
     WILD("nuka_cola_wild"),
-    VACCINATED("nuka_cola_vaccinated");
+    VACCINATED("nuka_cola_vaccinated"),
+    GRAPE("nuka_grape");
 
     private final String id;
 

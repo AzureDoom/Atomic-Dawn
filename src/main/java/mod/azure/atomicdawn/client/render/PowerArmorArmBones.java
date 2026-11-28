@@ -25,11 +25,11 @@ public final class PowerArmorArmBones {
 
     @Nullable
     public static Identifier textureOverride(AzBone bone) {
-        return isArmorBone(bone) ? PowerArmorTextures.texture(PowerArmorFirstPerson.armor()) : null;
+        return isArmorBone(bone) ? PowerArmorTextures.texture(PowerArmorFirstPerson.weaponArmor()) : null;
     }
 
     public static void apply(AzBakedModel model) {
-        var armor = PowerArmorFirstPerson.armor();
+        var armor = PowerArmorFirstPerson.consumeWeaponHand();
         for (var slot : ARM_SLOTS) {
             var frame = model.getBoneOrNull(PREFIX + slot.getSerializedName());
             if (frame == null) {

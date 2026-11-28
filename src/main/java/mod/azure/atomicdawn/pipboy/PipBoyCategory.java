@@ -6,6 +6,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.Locale;
 
@@ -44,7 +45,10 @@ public enum PipBoyCategory {
             }
         }
         var item = stack.getItem();
-        if (item instanceof WeaponItem || stack.is(ItemTags.SWORDS) || stack.is(ItemTags.AXES)) {
+        if (
+            item instanceof WeaponItem || stack.is(ItemTags.SWORDS) || stack.is(ItemTags.AXES)
+                || stack.is(Items.TRIDENT) || stack.is(Items.MACE)
+        ) {
             return WEAPONS;
         }
         if (item instanceof AmmoItem || stack.is(ItemTags.ARROWS)) {
@@ -53,7 +57,10 @@ public enum PipBoyCategory {
         if (stack.has(DataComponents.EQUIPPABLE)) {
             return APPAREL;
         }
-        if (stack.has(DataComponents.FOOD) || stack.has(DataComponents.POTION_CONTENTS)) {
+        if (
+            stack.has(DataComponents.FOOD) || stack.has(DataComponents.POTION_CONTENTS)
+                || stack.has(DataComponents.CONSUMABLE)
+        ) {
             return AID;
         }
         return MISC;

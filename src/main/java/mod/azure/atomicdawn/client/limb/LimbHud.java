@@ -7,6 +7,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.limb.LimbService;
@@ -17,9 +18,9 @@ public final class LimbHud implements ADHudLayer {
 
     private static final int UNIT = 2;
 
-    private static final int WIDTH = 8 * UNIT + 4;
+    public static final int WIDTH = 8 * UNIT + 4;
 
-    private static final int HEIGHT = 16 * UNIT + 4;
+    public static final int HEIGHT = 16 * UNIT + 4;
 
     private static final int BACKGROUND = 0x80000000;
 
@@ -42,6 +43,10 @@ public final class LimbHud implements ADHudLayer {
         var height = minecraft.getWindow().getGuiScaledHeight();
         var x = width / 2 - 173 - 4 - WIDTH;
         var y = height - HEIGHT - 2;
+        if (FalloutHud.healthDrawn(player)) {
+            x = FalloutHud.healthRect(width, height).x();
+            y = FalloutHud.leftStackTop(width, height) - HEIGHT;
+        }
         if (!HudLayout.push(graphics, HudElement.LIMBS, x, y, WIDTH, HEIGHT)) {
             return;
         }

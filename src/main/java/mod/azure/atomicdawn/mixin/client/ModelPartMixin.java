@@ -29,8 +29,25 @@ public abstract class ModelPartMixin {
         CallbackInfo ci
     ) {
         var self = MixinUtil.<ModelPart>self(this);
-        if (PowerArmorFirstPerson.suppresses(self)) {
+        if (PowerArmorFirstPerson.depth() == 0 && PowerArmorFirstPerson.suppresses(self)) {
             ci.cancel();
+            return;
         }
+        PowerArmorFirstPerson.enterPart();
+    }
+
+    @Inject(
+        method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+        at = @At("RETURN")
+    )
+    private void atomicdawn$leavePart(
+        PoseStack poseStack,
+        VertexConsumer buffer,
+        int lightCoords,
+        int overlayCoords,
+        int color,
+        CallbackInfo ci
+    ) {
+        PowerArmorFirstPerson.leavePart();
     }
 }

@@ -48,7 +48,7 @@
     "speed": 1.8,
     "gravity": 0.04,
     "blast_radius": 10,
-    "explosion_power": 6,
+    "explosion_power": 12,
     "break_blocks": true,
     "nuclear": true,
     "fuse_ticks": 200,

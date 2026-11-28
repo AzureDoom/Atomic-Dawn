@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 
 import mod.azure.atomicdawn.AtomicDawn;
+import mod.azure.atomicdawn.item.WeaponItem;
 import mod.azure.atomicdawn.powerarmor.PowerArmorEntity;
 import mod.azure.atomicdawn.powerarmor.PowerArmorSlot;
 
@@ -32,6 +33,11 @@ public final class PowerArmorFirstPerson {
 
     private static final ModelPart[] SUPPRESSED = new ModelPart[4];
 
+    private static int weaponHands;
+
+    @Nullable
+    private static PowerArmorEntity weaponArmor;
+
     private PowerArmorFirstPerson() {}
 
     public static boolean active() {
@@ -41,6 +47,22 @@ public final class PowerArmorFirstPerson {
     @Nullable
     public static PowerArmorEntity armor() {
         return handPass ? armor : null;
+    }
+
+    private static int depth;
+
+    public static int depth() {
+        return depth;
+    }
+
+    public static void enterPart() {
+        depth++;
+    }
+
+    public static void leavePart() {
+        if (depth > 0) {
+            depth--;
+        }
     }
 
     public static boolean suppresses(ModelPart part) {
@@ -83,8 +105,34 @@ public final class PowerArmorFirstPerson {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onRenderHandWeapon(RenderHandEvent event) {
+        if (PowerArmorClient.current() != null && event.getItemStack().getItem() instanceof WeaponItem) {
+            weaponHands++;
+        }
+    }
+
+    @Nullable
+    public static PowerArmorEntity consumeWeaponHand() {
+        if (weaponHands <= 0) {
+            weaponArmor = null;
+            return null;
+        }
+        weaponHands--;
+        weaponArmor = PowerArmorClient.current();
+        return weaponArmor;
+    }
+
+    @Nullable
+    public static PowerArmorEntity weaponArmor() {
+        return weaponArmor;
+    }
+
     @SubscribeEvent
     public static void onFrame(RenderFrameEvent.Pre event) {
+        weaponHands = 0;
+        weaponArmor = null;
+        depth = 0;
         end();
     }
 

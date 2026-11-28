@@ -12,6 +12,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.thirst.Thirst;
@@ -42,6 +43,7 @@ public final class ThirstHud implements ADHudLayer {
         var hudHidden = ADGuiRenderUtil.isHudHidden();
         if (
             player == null || hudHidden || !ThirstService.enabled() || player.isCreative() || player.isSpectator()
+                || FalloutHud.thirst()
         ) {
             return;
         }

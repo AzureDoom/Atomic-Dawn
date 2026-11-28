@@ -327,45 +327,59 @@
   "power_armor.land": {
     "subtitle": "subtitles.atomicdawn.power_armor.land",
     "sounds": [
-      {
-        "name": "minecraft:block.anvil.land",
-        "type": "event",
-        "volume": 1.0,
-        "pitch": 0.55
-      }
+      "atomicdawn:power_armor/land_1",
+      "atomicdawn:power_armor/land_2"
     ]
   },
   "power_armor.step": {
     "subtitle": "subtitles.atomicdawn.power_armor.step",
     "sounds": [
-      {
-        "name": "minecraft:entity.iron_golem.step",
-        "type": "event",
-        "volume": 0.8,
-        "pitch": 1.1
-      }
+      "atomicdawn:power_armor/step_1",
+      "atomicdawn:power_armor/step_2",
+      "atomicdawn:power_armor/step_3"
     ]
   },
   "power_armor.enter": {
     "subtitle": "subtitles.atomicdawn.power_armor.enter",
     "sounds": [
-      {
-        "name": "minecraft:block.piston.extend",
-        "type": "event",
-        "volume": 1.0,
-        "pitch": 0.7
-      }
+      "atomicdawn:power_armor/enter"
     ]
   },
   "power_armor.exit": {
     "subtitle": "subtitles.atomicdawn.power_armor.exit",
     "sounds": [
-      {
-        "name": "minecraft:block.piston.contract",
-        "type": "event",
-        "volume": 1.0,
-        "pitch": 0.7
-      }
+      "atomicdawn:power_armor/exit"
+    ]
+  },
+  "power_armor.jump": {
+    "subtitle": "subtitles.atomicdawn.power_armor.jump",
+    "sounds": [
+      "atomicdawn:power_armor/jump_1",
+      "atomicdawn:power_armor/jump_2"
+    ]
+  },
+  "power_armor.low_core": {
+    "subtitle": "subtitles.atomicdawn.power_armor.low_core",
+    "sounds": [
+      "atomicdawn:power_armor/low_core"
+    ]
+  },
+  "power_armor.no_core": {
+    "subtitle": "subtitles.atomicdawn.power_armor.no_core",
+    "sounds": [
+      "atomicdawn:power_armor/no_core"
+    ]
+  },
+  "power_armor.step_in": {
+    "subtitle": "subtitles.atomicdawn.power_armor.step_in",
+    "sounds": [
+      "atomicdawn:power_armor/step_in"
+    ]
+  },
+  "power_armor.opening_hiss": {
+    "subtitle": "subtitles.atomicdawn.power_armor.opening_hiss",
+    "sounds": [
+      "atomicdawn:power_armor/opening_hiss"
     ]
   },
   "power_armor.core_insert": {

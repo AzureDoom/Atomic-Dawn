@@ -13,8 +13,10 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
+import mod.azure.atomicdawn.client.limb.LimbHud;
 import mod.azure.atomicdawn.ghoul.FeralTier;
 import mod.azure.atomicdawn.ghoul.GhoulService;
 import mod.azure.atomicdawn.registry.ADSounds;
@@ -67,6 +69,10 @@ public final class GhoulHud implements ADHudLayer {
         if (x < 2) {
             x = width / 2 - 91;
             y = height - 22 - blockH - 2 - RADIATION_HUD_CLEARANCE;
+        }
+        if (FalloutHud.healthDrawn(player)) {
+            x = FalloutHud.healthRect(width, height).x() + LimbHud.WIDTH + 4;
+            y = FalloutHud.leftStackTop(width, height) - blockH;
         }
         if (!HudLayout.push(graphics, HudElement.GHOUL, x, y, blockW, blockH)) {
             return;

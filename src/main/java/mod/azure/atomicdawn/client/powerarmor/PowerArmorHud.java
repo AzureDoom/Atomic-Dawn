@@ -52,6 +52,7 @@ public final class PowerArmorHud implements ADHudLayer {
         var player = minecraft.player;
         if (
             player == null || minecraft.gui.hud.isHidden() || !(player.getVehicle() instanceof PowerArmorEntity armor)
+                || PowerArmorGauges.styleSelected()
         ) {
             return;
         }
@@ -81,7 +82,7 @@ public final class PowerArmorHud implements ADHudLayer {
         if (!HudLayout.push(graphics, HudElement.POWER_ARMOR_AP, x, y, PANEL_W, AP_H)) {
             return;
         }
-        graphics.fill(x, y, x + PANEL_W, y + AP_H, 0xB0000000);
+        graphics.fill(x, y, x + PANEL_W, y + AP_H, PowerArmorGauges.backgroundAlpha(0xB0) << 24);
         graphics.fill(x, y, x + PANEL_W, y + 1, PipBoyTheme.border());
         var cost = (float) AtomicDawn.CONFIG.common.equipment.powerArmor.movement.POWER_ARMOR_JETPACK_AP_COST;
         var empty = !player.hasInfiniteMaterials() && ap.points() < cost;
@@ -113,7 +114,7 @@ public final class PowerArmorHud implements ADHudLayer {
         if (!HudLayout.push(graphics, HudElement.POWER_ARMOR, x, y, PANEL_W, PANEL_H)) {
             return;
         }
-        graphics.fill(x, y, x + PANEL_W, y + PANEL_H, 0xB0000000);
+        graphics.fill(x, y, x + PANEL_W, y + PANEL_H, PowerArmorGauges.backgroundAlpha(0xB0) << 24);
         graphics.fill(x, y, x + PANEL_W, y + 1, PipBoyTheme.border());
 
         var blink = (player.tickCount / 5) % 2 == 0;

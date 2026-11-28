@@ -1,3 +1,14 @@
 {
-  "values": []
+  "values": [
+    "#minecraft:swords",
+    "#minecraft:axes",
+    {
+      "id": "#minecraft:spears",
+      "required": false
+    },
+    "minecraft:trident",
+    "minecraft:mace",
+    "minecraft:bow",
+    "minecraft:crossbow"
+  ]
 }

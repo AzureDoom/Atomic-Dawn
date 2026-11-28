@@ -10,6 +10,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.party.PartyClient;
@@ -42,18 +43,35 @@ public final class WaypointHud implements ADHudLayer {
         }
         var font = minecraft.font;
         var screenWidth = minecraft.getWindow().getGuiScaledWidth();
-        var width = Math.min(config.WAYPOINT_HUD_WIDTH, screenWidth - 8);
-        var left = (screenWidth - width) / 2;
-        var top = config.WAYPOINT_HUD_Y;
+        var screenHeight = minecraft.getWindow().getGuiScaledHeight();
+        var fallout = FalloutHud.compass();
+        int width;
+        int left;
+        int top;
+        if (fallout) {
+            var rect = FalloutHud.compassRect(screenWidth, screenHeight, config.WAYPOINT_HUD_WIDTH);
+            width = rect.width();
+            left = rect.x();
+            top = rect.y();
+        } else {
+            width = Math.min(config.WAYPOINT_HUD_WIDTH, screenWidth - 8);
+            left = (screenWidth - width) / 2;
+            top = config.WAYPOINT_HUD_Y;
+        }
         var centerX = left + width / 2;
         var yaw = player.getViewYRot(deltaTracker.getGameTimeDeltaPartialTick(true));
 
         if (!HudLayout.push(graphics, HudElement.COMPASS, left, top, width, HEIGHT)) {
             return;
         }
-        var color = PipBoyTheme.text();
-        graphics.fill(left, top, left + width, top + HEIGHT, PipBoyTheme.withAlpha(PipBoyTheme.background(), 0x90));
-        graphics.fill(left, top + HEIGHT - 1, left + width, top + HEIGHT, PipBoyTheme.border());
+        var color = fallout ? FalloutHud.primary() : PipBoyTheme.text();
+        var dim = fallout ? FalloutHud.dim() : PipBoyTheme.dim();
+        if (fallout) {
+            falloutStrip(graphics, left, top, width, centerX, color, dim);
+        } else {
+            graphics.fill(left, top, left + width, top + HEIGHT, PipBoyTheme.withAlpha(PipBoyTheme.background(), 0x90));
+            graphics.fill(left, top + HEIGHT - 1, left + width, top + HEIGHT, PipBoyTheme.border());
+        }
 
         var firstTick = (int) Math.ceil((yaw - HALF_SPAN) / 15F) * 15;
         for (var angle = firstTick; angle <= yaw + HALF_SPAN; angle += 15) {
@@ -66,14 +84,19 @@ public final class WaypointHud implements ADHudLayer {
                     label,
                     x - font.width(label) / 2,
                     top + 2,
-                    faded ? PipBoyTheme.dim() : color,
-                    false
+                    faded ? dim : color,
+                    fallout
                 );
             } else {
-                graphics.fill(x, top + HEIGHT - 4, x + 1, top + HEIGHT - 1, PipBoyTheme.dim());
+                graphics.fill(x, top + HEIGHT - 4, x + 1, top + HEIGHT - 1, dim);
             }
         }
-        graphics.fill(centerX, top, centerX + 1, top + 2, color);
+        if (fallout) {
+            graphics.fill(centerX - 1, top - 1, centerX + 2, top, color);
+            graphics.fill(centerX, top, centerX + 1, top + 1, color);
+        } else {
+            graphics.fill(centerX, top, centerX + 1, top + 2, color);
+        }
 
         var log = player.getData(ADAttachments.LOCATIONS.get());
         var dimension = minecraft.level.dimension();
@@ -98,7 +121,11 @@ public final class WaypointHud implements ADHudLayer {
                 continue;
             }
             var x = stripX(relative, centerX, width);
-            marker(graphics, x, top + HEIGHT, waypoint.argb());
+            if (fallout) {
+                diamond(graphics, x, top + HEIGHT / 2, waypoint.argb());
+            } else {
+                marker(graphics, x, top + HEIGHT, waypoint.argb());
+            }
             if (Math.abs(relative) < focusedOffset) {
                 focusedOffset = Math.abs(relative);
                 focused = waypoint;
@@ -116,15 +143,50 @@ public final class WaypointHud implements ADHudLayer {
                 var relative = Mth.wrapDegrees((float) Math.toDegrees(Math.atan2(-dx, dz)) - yaw);
                 if (Math.abs(relative) <= HALF_SPAN) {
                     var x = stripX(relative, centerX, width);
-                    graphics.fill(x - 1, top + 3, x + 2, top + HEIGHT - 3, PipBoyTheme.text());
-                    graphics.fill(x, top + 2, x + 1, top + HEIGHT - 2, PipBoyTheme.text());
+                    graphics.fill(x - 1, top + 3, x + 2, top + HEIGHT - 3, color);
+                    graphics.fill(x, top + 2, x + 1, top + HEIGHT - 2, color);
                 }
             }
         }
         if (focused != null && focusedOffset <= config.WAYPOINT_HUD_LABEL_ANGLE) {
-            label(graphics, font, focused, focusedDistance, centerX, top + HEIGHT + 5, config.WAYPOINT_HUD_DISTANCE);
+            var labelY = fallout ? top - font.lineHeight - 4 : top + HEIGHT + 5;
+            label(graphics, font, focused, focusedDistance, centerX, labelY, config.WAYPOINT_HUD_DISTANCE);
         }
         HudLayout.pop(graphics);
+    }
+
+    private static void falloutStrip(
+        ADGuiGraphics graphics,
+        int left,
+        int top,
+        int width,
+        int centerX,
+        int color,
+        int dim
+    ) {
+        var shadow = FalloutHud.shadow();
+        var baseAlpha = (shadow >>> 24) & 0xFF;
+        var steps = 6;
+        var fade = Math.max(1, width / (steps * 2));
+        for (var i = 0; i < steps; i++) {
+            var alpha = baseAlpha * (i + 1) / (steps + 1);
+            var band = FalloutHud.scale(shadow, 1F, alpha);
+            graphics.fill(left + i * fade, top, left + (i + 1) * fade, top + HEIGHT, band);
+            graphics.fill(left + width - (i + 1) * fade, top, left + width - i * fade, top + HEIGHT, band);
+        }
+        graphics.fill(left + steps * fade, top, left + width - steps * fade, top + HEIGHT, shadow);
+        graphics.fill(left + fade, top + HEIGHT - 1, left + width - fade, top + HEIGHT, dim);
+        graphics.fill(left + fade * 3, top + HEIGHT - 1, left + width - fade * 3, top + HEIGHT, color);
+        graphics.fill(centerX - 1, top + HEIGHT - 1, centerX + 2, top + HEIGHT, color);
+    }
+
+    private static void diamond(ADGuiGraphics graphics, int x, int y, int color) {
+        graphics.fill(x - 1, y - 3, x + 2, y + 4, 0xC0000000);
+        graphics.fill(x - 3, y - 1, x + 4, y + 2, 0xC0000000);
+        graphics.fill(x - 2, y - 2, x + 3, y + 3, 0xC0000000);
+        graphics.fill(x, y - 2, x + 1, y + 3, color);
+        graphics.fill(x - 1, y - 1, x + 2, y + 2, color);
+        graphics.fill(x - 2, y, x + 3, y + 1, color);
     }
 
     private static int stripX(float relative, int centerX, int width) {

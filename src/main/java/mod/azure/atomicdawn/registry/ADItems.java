@@ -343,15 +343,6 @@ public final class ADItems {
         PowerCoreItem::properties
     );
 
-    public static final DeferredItem<RadRemoverItem> NUKA_GRAPE = REGISTER.registerItem(
-        "nuka_grape",
-        properties -> new RadRemoverItem(
-            properties,
-            () -> AtomicDawn.CONFIG.common.survival.radiation.consumables.NUKA_GRAPE_RADS
-        ),
-        RadRemoverItem::properties
-    );
-
     public static final Map<NukaCola, DeferredItem<NukaColaItem>> NUKA_COLAS = nukaColas();
 
     public static final DeferredItem<RadRemoverItem> BRAHMIN_MILK = REGISTER.registerItem(

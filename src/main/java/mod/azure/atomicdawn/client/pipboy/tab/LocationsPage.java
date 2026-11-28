@@ -11,13 +11,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.pipboy.PipBoyScreen;
 import mod.azure.atomicdawn.client.pipboy.PipBoyTheme;
 import mod.azure.atomicdawn.client.pipboy.Rect;
+import mod.azure.atomicdawn.network.FastTravelPayload;
 import mod.azure.atomicdawn.network.WaypointActionPayload;
 import mod.azure.atomicdawn.pipboy.PipBoyNames;
 import mod.azure.atomicdawn.pipboy.location.DiscoveredLocation;
+import mod.azure.atomicdawn.pipboy.location.FastTravelService;
 import mod.azure.atomicdawn.registry.ADAttachments;
 
 final class LocationsPage {
@@ -99,16 +102,34 @@ final class LocationsPage {
         var showW = screen.font().width(show) + 10;
         screen.button(show, x, y, showW, 13, sameDimension, () -> MapTab.focus(screen, location.pos()));
         var mark = Component.translatable("pipboy.atomicdawn.locations.mark");
+        var markW = screen.font().width(mark) + 10;
         screen.button(
             mark,
             x + showW + 2,
             y,
-            screen.font().width(mark) + 10,
+            markW,
             13,
             sameDimension,
             () -> ClientPacketDistributor.sendToServer(
                 WaypointActionPayload.add(location.pos(), PipBoyNames.location(location.structure()).getString(), 1)
             )
+        );
+        if (!FastTravelService.enabled()) {
+            return;
+        }
+        var travel = Component.translatable("pipboy.atomicdawn.fast_travel.button");
+        var reachable = sameDimension || AtomicDawn.CONFIG.common.pipboy.fastTravel.FAST_TRAVEL_CROSS_DIMENSION;
+        screen.button(
+            travel,
+            x + showW + markW + 4,
+            y,
+            screen.font().width(travel) + 10,
+            13,
+            reachable,
+            () -> {
+                ClientPacketDistributor.sendToServer(new FastTravelPayload(location));
+                screen.onClose();
+            }
         );
     }
 

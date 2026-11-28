@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class ADNetwork {
 
-    private static final String PROTOCOL_VERSION = "21";
+    private static final String PROTOCOL_VERSION = "24";
 
     private ADNetwork() {}
 
@@ -35,6 +35,16 @@ public final class ADNetwork {
         );
         registrar.playToServer(VatsStatePayload.TYPE, VatsStatePayload.STREAM_CODEC, VatsStatePayload::handleOnServer);
         registrar.playToServer(
+            PipBoyItemPayload.TYPE,
+            PipBoyItemPayload.STREAM_CODEC,
+            PipBoyItemPayload::handleOnServer
+        );
+        registrar.playToServer(
+            DrinkSourcePayload.TYPE,
+            DrinkSourcePayload.STREAM_CODEC,
+            DrinkSourcePayload::handleOnServer
+        );
+        registrar.playToServer(
             SpecialActionPayload.TYPE,
             SpecialActionPayload.STREAM_CODEC,
             SpecialActionPayload::handleOnServer
@@ -43,6 +53,11 @@ public final class ADNetwork {
             PipBoyActionPayload.TYPE,
             PipBoyActionPayload.STREAM_CODEC,
             PipBoyActionPayload::handleOnServer
+        );
+        registrar.playToServer(
+            FastTravelPayload.TYPE,
+            FastTravelPayload.STREAM_CODEC,
+            FastTravelPayload::handleOnServer
         );
         registrar.playToServer(
             WaypointActionPayload.TYPE,

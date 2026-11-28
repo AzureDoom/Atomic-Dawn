@@ -131,6 +131,18 @@ public final class ADSounds {
 
     public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_CORE = register("power_armor.core_insert");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_JUMP = register("power_armor.jump");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_LOW_CORE = register("power_armor.low_core");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_NO_CORE = register("power_armor.no_core");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_STEP_IN = register("power_armor.step_in");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ARMOR_OPENING_HISS = register(
+        "power_armor.opening_hiss"
+    );
+
     public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_ATTACK = register("feral_ghoul.attack");
 
     public static final DeferredHolder<SoundEvent, SoundEvent> FERAL_GHOUL_DEATH = register("feral_ghoul.death");

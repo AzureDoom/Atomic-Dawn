@@ -1,13 +1,16 @@
 package mod.azure.atomicdawn.entity.supermutant;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import mod.azure.atomicdawn.AtomicDawn;
@@ -46,6 +49,21 @@ public final class SuperMutantEvents {
                 AtomicDawn.CONFIG.server.entities.mutants.superMutants.behavior.HEARING_RANGE * 1.5,
                 null
             );
+        }
+    }
+
+    @SubscribeEvent
+    public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        var victim = event.getEntity();
+        var attacker = event.getSource().getEntity();
+        if (victim instanceof Player || attacker instanceof Player || !(attacker instanceof LivingEntity)) {
+            return;
+        }
+        var config = AtomicDawn.CONFIG.server.entities.mutants.superMutants.combat;
+        if (victim instanceof SuperMutantEntity && !(attacker instanceof SuperMutantEntity)) {
+            event.setAmount(event.getAmount() * (float) config.MOB_DAMAGE_TAKEN_MULTIPLIER);
+        } else if (attacker instanceof SuperMutantEntity && !(victim instanceof SuperMutantEntity)) {
+            event.setAmount(event.getAmount() * (float) config.MOB_DAMAGE_DEALT_MULTIPLIER);
         }
     }
 

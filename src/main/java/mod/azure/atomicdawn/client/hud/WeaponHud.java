@@ -2,18 +2,25 @@ package mod.azure.atomicdawn.client.hud;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+
+import java.util.Locale;
 
 import mod.azure.atomicdawn.ammunition.AmmoInventory;
 import mod.azure.atomicdawn.client.ClientWeaponState;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
+import mod.azure.atomicdawn.client.powerarmor.PowerArmorGauges;
 import mod.azure.atomicdawn.client.weapon.ScopeClient;
 import mod.azure.atomicdawn.weapon.action.WeaponActions;
 import mod.azure.atomicdawn.weapon.combat.SpreadModel;
+import mod.azure.atomicdawn.weapon.definition.WeaponDefinition;
 import mod.azure.atomicdawn.weapon.instance.Weapons;
 
 public final class WeaponHud implements ADHudLayer {
@@ -73,7 +80,24 @@ public final class WeaponHud implements ADHudLayer {
         var x = width - blockWidth - 8;
         var y = height - blockHeight - 8;
 
-        if (HudLayout.push(graphics, HudElement.WEAPON, x, y, blockWidth, blockHeight)) {
+        var gauges = PowerArmorGauges.active();
+        if (!gauges && FalloutHud.weapon()) {
+            drawFallout(
+                graphics,
+                font,
+                player,
+                width,
+                height,
+                definition.usesAmmo(),
+                state.loadedAmmo(),
+                reserveCount(player, definition),
+                lowAmmo,
+                modeText,
+                showCondition,
+                condition.fraction(),
+                condition.isBroken()
+            );
+        } else if (!gauges && HudLayout.push(graphics, HudElement.WEAPON, x, y, blockWidth, blockHeight)) {
             graphics.fill(x, y, x + blockWidth, y + blockHeight, COLOR_BACKGROUND);
             var lineY = y + 4;
             if (definition.usesAmmo()) {
@@ -142,6 +166,61 @@ public final class WeaponHud implements ADHudLayer {
         var gap = (int) Math.round((height / 2.0) * Math.tan(Math.toRadians(cone)) / Math.tan(fov / 2.0));
         gap = Math.clamp(gap, 3, height / 4);
         drawBrackets(graphics, centerX, centerY, gap);
+    }
+
+    private static String reserveCount(LocalPlayer player, WeaponDefinition definition) {
+        if (!definition.usesAmmo()) {
+            return "";
+        }
+        return AmmoInventory.hasInfiniteAmmo(player)
+            ? "\u221E"
+            : String.format(Locale.ROOT, "%03d", AmmoInventory.count(player, definition.ammo().item()));
+    }
+
+    private static void drawFallout(
+        ADGuiGraphics graphics,
+        Font font,
+        LocalPlayer player,
+        int screenWidth,
+        int screenHeight,
+        boolean usesAmmo,
+        int loaded,
+        String reserve,
+        boolean lowAmmo,
+        Component modeText,
+        boolean showCondition,
+        float condition,
+        boolean broken
+    ) {
+        var ammo = usesAmmo
+            ? Component.literal(String.format(Locale.ROOT, "%03d", loaded))
+            : Component.empty();
+        var reserveText = usesAmmo ? Component.literal(" / " + reserve) : Component.empty();
+        var ammoWidth = font.width(ammo) + font.width(reserveText);
+        var modeWidth = font.width(modeText);
+        var blockWidth = Math.max(40, modeWidth + (usesAmmo ? 6 + ammoWidth : 0));
+        var rect = FalloutHud.weaponRect(screenWidth, screenHeight, blockWidth, player);
+        var x = rect.x();
+        var y = rect.y();
+        if (!HudLayout.push(graphics, HudElement.WEAPON, x, y, rect.width(), rect.height())) {
+            return;
+        }
+        var right = rect.right();
+        if (usesAmmo) {
+            var reserveX = right - font.width(reserveText);
+            FalloutHud.text(graphics, font, reserveText, reserveX, y, FalloutHud.dim());
+            var ammoColor = lowAmmo && FalloutHud.blink(player) ? FalloutHud.warn() : FalloutHud.primary();
+            FalloutHud.text(graphics, font, ammo, reserveX - font.width(ammo), y, ammoColor);
+            FalloutHud.textRight(graphics, font, modeText, right - ammoWidth - 6, y, FalloutHud.dim());
+        } else {
+            FalloutHud.textRight(graphics, font, modeText, right, y, FalloutHud.dim());
+        }
+        if (showCondition) {
+            var color = broken ? COLOR_BROKEN : condition < 0.25F ? FalloutHud.warn() : FalloutHud.dim();
+            var barWidth = Math.min(rect.width(), 48);
+            FalloutHud.thin(graphics, right - barWidth, y + font.lineHeight + 2, barWidth, condition, color);
+        }
+        HudLayout.pop(graphics);
     }
 
     private static void drawBrackets(ADGuiGraphics graphics, int cx, int cy, int gap) {

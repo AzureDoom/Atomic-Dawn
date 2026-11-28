@@ -1,6 +1,7 @@
 package mod.azure.atomicdawn.client.render.powerarmor;
 
 import mod.azure.azurelib.model.AzBakedModel;
+import mod.azure.azurelib.render.AzRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 
@@ -56,7 +57,7 @@ public final class PowerArmorModelParts {
     }
 
     public static void apply(PowerArmorEntity armor, AzBakedModel model) {
-        var hideAll = isFirstPersonRider(armor);
+        var hideAll = !AzRenderContext.isGuiRender() && isFirstPersonRider(armor);
         for (var name : FRAME_BONES) {
             var bone = model.getBoneOrNull(name);
             if (bone != null) {

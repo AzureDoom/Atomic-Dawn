@@ -106,6 +106,14 @@ public class PowerArmorEntity extends LivingEntity {
 
     public static final float FLY_SPEED_MULTIPLIER = 2.5F;
 
+    public static final int NO_CORE_INTERVAL = 40;
+
+    public static final int NO_CORE_STEP_IN_DELAY = 15;
+
+    public static final int LOW_CORE_INTERVAL = 100;
+
+    public static final float LOW_CORE_FRACTION = 0.24F;
+
     public static final float SNEAK_SPEED_MULTIPLIER = 0.35F;
 
     public static final double FLY_VERTICAL_SPEED = 0.3;
@@ -126,6 +134,18 @@ public class PowerArmorEntity extends LivingEntity {
     private double lastX;
 
     private double lastZ;
+
+    private double lastY;
+
+    private boolean lastOnGround = true;
+
+    private boolean entering;
+
+    private boolean quietDismount;
+
+    private int noCoreCooldown;
+
+    private int lowCoreTicks;
 
     private boolean warnedEmpty;
 
@@ -402,9 +422,12 @@ public class PowerArmorEntity extends LivingEntity {
         }
         if (passenger instanceof Player player && !level().isClientSide()) {
             player.setInvisible(player.hasEffect(MobEffects.INVISIBILITY));
-            playSound(ADSounds.POWER_ARMOR_EXIT.get(), 1F, 1F);
-            transitionTicks = ENTER_TICKS;
-            PowerArmorAnimations.exit(this);
+            entering = false;
+            if (quietDismount) {
+                quietDismount = false;
+            } else {
+                playExitEffects();
+            }
         }
     }
 
@@ -459,25 +482,7 @@ public class PowerArmorEntity extends LivingEntity {
                 player.sendSystemMessage(Component.translatable("power_armor.atomicdawn.bound_armor"));
                 return InteractionResult.FAIL;
             }
-
-            if (isDocked()) {
-                undock();
-            }
-
-            if (player.startRiding(this)) {
-                if (player instanceof ServerPlayer serverPlayer) {
-                    unequipArmor(serverPlayer);
-                    serverPlayer.sendSystemMessage(
-                        Component.translatable(
-                            "power_armor.atomicdawn.exit_hint",
-                            Component.keybind("key.atomicdawn.exit_power_armor")
-                        ),
-                        true
-                    );
-                }
-                playSound(ADSounds.POWER_ARMOR_ENTER.get(), 1F, 1F);
-                transitionTicks = ENTER_TICKS;
-                PowerArmorAnimations.enter(this);
+            if (enter(player)) {
                 return InteractionResult.SUCCESS_SERVER;
             }
         }
@@ -485,13 +490,56 @@ public class PowerArmorEntity extends LivingEntity {
         return InteractionResult.PASS;
     }
 
+    public boolean enter(Player player) {
+        if (!getPassengers().isEmpty()) {
+            return false;
+        }
+        if (isDocked()) {
+            undock();
+        }
+        if (!player.startRiding(this)) {
+            return false;
+        }
+        if (player instanceof ServerPlayer serverPlayer) {
+            unequipArmor(serverPlayer);
+            serverPlayer.sendSystemMessage(
+                Component.translatable(
+                    "power_armor.atomicdawn.exit_hint",
+                    Component.keybind("key.atomicdawn.exit_power_armor")
+                ),
+                true
+            );
+        }
+        playSound(ADSounds.POWER_ARMOR_OPENING_HISS.get(), 1F, 1F);
+        playSound(ADSounds.POWER_ARMOR_ENTER.get(), 1F, 1F);
+        transitionTicks = ENTER_TICKS;
+        entering = true;
+        noCoreCooldown = 0;
+        lowCoreTicks = 0;
+        PowerArmorAnimations.enter(this);
+        return true;
+    }
+
+    public void prepareQuietDismount() {
+        quietDismount = true;
+    }
+
+    public void playExitEffects() {
+        playSound(ADSounds.POWER_ARMOR_EXIT.get(), 1F, 1F);
+        transitionTicks = ENTER_TICKS;
+        PowerArmorAnimations.exit(this);
+    }
+
+    @Override
+    public void kill(@NotNull ServerLevel level) {}
+
     public static final EquipmentSlot[] PILOT_ARMOR_SLOTS = {
         EquipmentSlot.HEAD,
         EquipmentSlot.CHEST,
         EquipmentSlot.LEGS,
         EquipmentSlot.FEET };
 
-    private static boolean hasBoundArmor(Player player) {
+    public static boolean hasBoundArmor(Player player) {
         if (player.isCreative()) {
             return false;
         }
@@ -530,6 +578,16 @@ public class PowerArmorEntity extends LivingEntity {
         }
         if (transitionTicks > 0) {
             transitionTicks--;
+        }
+        if (noCoreCooldown > 0) {
+            noCoreCooldown--;
+        }
+        if (entering && transitionTicks <= 0) {
+            entering = false;
+            if (getControllingPassenger() != null) {
+                playSound(ADSounds.POWER_ARMOR_STEP_IN.get(), 1F, 1F);
+                noCoreCooldown = NO_CORE_STEP_IN_DELAY;
+            }
         }
         if (isDocked()) {
             setDeltaMovement(Vec3.ZERO);
@@ -579,17 +637,53 @@ public class PowerArmorEntity extends LivingEntity {
             } else {
                 jetPackTicks = 0;
             }
+            tickPilotSounds(player);
             if (!isFunctioning() && !getCore().isEmpty() && !warnedEmpty) {
                 warnedEmpty = true;
                 player.sendSystemMessage(Component.translatable("power_armor.atomicdawn.core_depleted"), true);
             }
         }
         lastX = getX();
+        lastY = getY();
         lastZ = getZ();
+        lastOnGround = onGround();
         if (tickCount % 20 == 0) {
             entityData.set(DRAIN_RATE, drainWindow);
             drainWindow = 0F;
         }
+    }
+
+    private void tickPilotSounds(ServerPlayer player) {
+        if (transitionTicks > 0) {
+            lowCoreTicks = 0;
+            return;
+        }
+        if (!isFunctioning()) {
+            lowCoreTicks = 0;
+            noCoreWarning();
+            return;
+        }
+        var input = player.getLastClientInput();
+        if (lastOnGround && !onGround() && !isFlying() && input.jump() && getY() - lastY > 0.05) {
+            playSound(ADSounds.POWER_ARMOR_JUMP.get(), 1F, 1F);
+        }
+        if (PowerCoreItem.fraction(getCore()) <= LOW_CORE_FRACTION) {
+            if (lowCoreTicks <= 0) {
+                playSound(ADSounds.POWER_ARMOR_LOW_CORE.get(), 1F, 1F);
+                lowCoreTicks = LOW_CORE_INTERVAL;
+            }
+            lowCoreTicks--;
+        } else {
+            lowCoreTicks = 0;
+        }
+    }
+
+    private void noCoreWarning() {
+        if (noCoreCooldown > 0) {
+            return;
+        }
+        playSound(ADSounds.POWER_ARMOR_NO_CORE.get(), 1F, 1F);
+        noCoreCooldown = NO_CORE_INTERVAL;
     }
 
     private void tickAnimation() {

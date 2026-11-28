@@ -26,12 +26,16 @@ import mod.azure.atomicdawn.client.ghoul.GhoulHud;
 import mod.azure.atomicdawn.client.hud.PartyHud;
 import mod.azure.atomicdawn.client.hud.WaypointHud;
 import mod.azure.atomicdawn.client.hud.WeaponHud;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutActionPointsHud;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHealthHud;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutSurvivalHud;
 import mod.azure.atomicdawn.client.input.ADKeyMappings;
 import mod.azure.atomicdawn.client.limb.LimbHud;
 import mod.azure.atomicdawn.client.network.ClientPayloadHandlers;
 import mod.azure.atomicdawn.client.npc.NpcRenderer;
 import mod.azure.atomicdawn.client.pipboy.PipBoyArmLayer;
 import mod.azure.atomicdawn.client.pipboy.PipBoyNotificationHud;
+import mod.azure.atomicdawn.client.powerarmor.PowerArmorGauges;
 import mod.azure.atomicdawn.client.powerarmor.PowerArmorHud;
 import mod.azure.atomicdawn.client.radiation.RadStormVisuals;
 import mod.azure.atomicdawn.client.radiation.RadiationHud;
@@ -62,6 +66,7 @@ import mod.azure.atomicdawn.client.screen.NpcGearScreen;
 import mod.azure.atomicdawn.client.screen.PowerArmorStationScreen;
 import mod.azure.atomicdawn.client.screen.TinkersBenchScreen;
 import mod.azure.atomicdawn.client.screen.WorkbenchScreen;
+import mod.azure.atomicdawn.client.thirst.DrinkPromptClient;
 import mod.azure.atomicdawn.client.thirst.ThirstHud;
 import mod.azure.atomicdawn.client.vats.VatsHud;
 import mod.azure.atomicdawn.client.weapon.ScopeClient;
@@ -170,10 +175,14 @@ public final class AtomicDawnClient {
 
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("fallout_health_hud"), new FalloutHealthHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("fallout_ap_hud"), new FalloutActionPointsHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("fallout_survival_hud"), new FalloutSurvivalHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("weapon_hud"), new WeaponHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("vats_hud"), new VatsHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("radiation_hud"), new RadiationHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("thirst_hud"), new ThirstHud());
+        event.registerAbove(VanillaGuiLayers.CROSSHAIR, AtomicDawn.id("drink_prompt"), new DrinkPromptClient.Layer());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("limb_hud"), new LimbHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("ghoul_hud"), new GhoulHud());
         event.registerAbove(
@@ -182,6 +191,7 @@ public final class AtomicDawnClient {
             new PipBoyNotificationHud()
         );
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("power_armor_hud"), new PowerArmorHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("power_armor_gauges"), new PowerArmorGauges());
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("waypoint_hud"), new WaypointHud());
         event.registerAbove(VanillaGuiLayers.BOSS_OVERLAY, AtomicDawn.id("party_hud"), new PartyHud());
         event.registerAbove(VanillaGuiLayers.HOTBAR, AtomicDawn.id("camp_workshop_hud"), new CampWorkshopHud());

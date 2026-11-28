@@ -44,7 +44,6 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.STIMPAK.get());
                 output.accept(ADItems.DOCTORS_BAG.get());
                 ADItems.NUKA_COLAS.values().forEach(cola -> output.accept(cola.get()));
-                output.accept(ADItems.NUKA_GRAPE.get());
                 output.accept(ADItems.BRAHMIN_MILK.get());
                 output.accept(ADItems.DIRTY_WATER.get());
                 output.accept(ADItems.BOILED_WATER.get());
@@ -54,14 +53,14 @@ public final class ADCreativeTabs {
                 output.accept(ADItems.NPC_WAND.get());
                 ADItems.SERUMS.values().forEach(serum -> output.accept(serum.get()));
                 output.accept(ADItems.IRRADIATED_WATER_BUCKET.get());
+                ADItems.JUNK.values().forEach(junk -> output.accept(junk.get()));
+                output.accept(ADItems.POWER_ARMOR_STATION.get());
                 output.accept(ADItems.WEAPONS_WORKBENCH.get());
                 output.accept(ADItems.TINKERS_BENCH.get());
                 output.accept(ADItems.ARMOR_BENCH.get());
                 output.accept(ADItems.CAMP_MODULE.get());
                 output.accept(ADItems.CAMP_STASH.get());
                 output.accept(ADItems.SCRAPBOX.get());
-                ADItems.JUNK.values().forEach(junk -> output.accept(junk.get()));
-                output.accept(ADItems.POWER_ARMOR_STATION.get());
                 output.accept(ADItems.VAULT_DOOR.get());
                 output.accept(ADItems.WASTE_BARREL.get());
                 output.accept(ADItems.LEAKING_WASTE_BARREL.get());

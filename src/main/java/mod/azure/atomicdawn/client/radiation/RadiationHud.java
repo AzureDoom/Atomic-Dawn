@@ -12,6 +12,7 @@ import mod.azure.atomicdawn.AtomicDawn;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.registry.ADAttachments;
@@ -43,7 +44,7 @@ public final class RadiationHud implements ADHudLayer {
         var minecraft = Minecraft.getInstance();
         var player = minecraft.player;
         var hudHidden = ADGuiRenderUtil.isHudHidden();
-        if (player == null || hudHidden || player.isSpectator()) {
+        if (player == null || hudHidden || player.isSpectator() || FalloutHud.radiation()) {
             return;
         }
         var rads = player.getData(ADAttachments.RADIATION.get()).rads();

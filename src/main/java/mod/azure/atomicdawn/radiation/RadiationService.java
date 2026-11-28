@@ -28,7 +28,7 @@ import mod.azure.atomicdawn.util.HealthClamp;
 
 public final class RadiationService {
 
-    private static final net.minecraft.resources.Identifier HEALTH_MODIFIER = AtomicDawn.id("radiation");
+    public static final net.minecraft.resources.Identifier HEALTH_MODIFIER = AtomicDawn.id("radiation");
 
     public static final TagKey<EntityType<?>> RADIATION_IMMUNE = TagKey.create(
         Registries.ENTITY_TYPE,

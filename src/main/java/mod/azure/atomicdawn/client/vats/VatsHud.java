@@ -16,9 +16,11 @@ import mod.azure.atomicdawn.client.camera.KillCam;
 import mod.azure.atomicdawn.client.helper.ADGuiGraphics;
 import mod.azure.atomicdawn.client.helper.ADGuiRenderUtil;
 import mod.azure.atomicdawn.client.helper.ADHudLayer;
+import mod.azure.atomicdawn.client.hud.fallout.FalloutHud;
 import mod.azure.atomicdawn.client.hud.layout.HudElement;
 import mod.azure.atomicdawn.client.hud.layout.HudLayout;
 import mod.azure.atomicdawn.client.limb.LimbHud;
+import mod.azure.atomicdawn.client.powerarmor.PowerArmorGauges;
 import mod.azure.atomicdawn.config.ADColors;
 import mod.azure.atomicdawn.limb.LimbService;
 import mod.azure.atomicdawn.vats.ActionPoints;
@@ -95,7 +97,9 @@ public final class VatsHud implements ADHudLayer {
                 renderTargeting(graphics, font, player, definition, ap, width, height);
             }
         }
-        renderMeters(graphics, font, player, definition, ap, max, width, height);
+        if (!FalloutHud.actionPoints() && !PowerArmorGauges.active()) {
+            renderMeters(graphics, font, player, definition, ap, max, width, height);
+        }
     }
 
     private static void renderMeters(

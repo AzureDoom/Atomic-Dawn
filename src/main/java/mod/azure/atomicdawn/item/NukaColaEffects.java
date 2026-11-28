@@ -58,6 +58,17 @@ public final class NukaColaEffects {
                 var attribute = SpecialAttribute.byIndex(player.getRandom().nextInt(SpecialAttribute.COUNT));
                 timed(player, ADMobEffects.NUKA_TWIST.get(attribute), config.NUKA_TWIST_MINUTES * 60);
             }
+            case GRAPE -> TimedRestore.add(
+                player,
+                new TimedRestore.Dose(
+                    (float) config.NUKA_GRAPE_HEALTH,
+                    config.NUKA_GRAPE_HEALTH_SECONDS * 20,
+                    (float) config.NUKA_GRAPE_AP,
+                    config.NUKA_GRAPE_AP_SECONDS * 20,
+                    (float) config.NUKA_GRAPE_RADS,
+                    config.NUKA_GRAPE_RAD_SECONDS * 20
+                )
+            );
         }
     }
 
